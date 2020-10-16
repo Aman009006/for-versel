@@ -16,7 +16,7 @@
         "runTestsWithCustomers": "npm run pretest && node ./lib/test/utilities/runTestsWithCustomers.js"
     },
     "dependencies": {
-        "@types/node": "^12.11.7",
+        "@types/node": "^12.11.7"
     },
     "devDependencies": {
         "typescript": "^3.9.7"
