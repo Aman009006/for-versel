@@ -9,7 +9,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'chown -R 111:120 "/.npm"'
+                sh 'npm cache clean --force '
                 // sh 'npm install'
                 // sh 'npm run build:prod'
             }
