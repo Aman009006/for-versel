@@ -4,11 +4,12 @@ pipeline {
         stage('createDist') {
             agent {
                 docker {
-                    image 'node:12.13.0'
+                    image 'node:12'
                     reuseNode true
                 }
             }
             steps {
+                sh 'node -v'
                 sh 'npm cache clean --force'
                 sh 'npm install'
                 sh 'npm run build:prod'
