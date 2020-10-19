@@ -24,8 +24,9 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Element Admin',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: 'ISA',
+      // TODO: Change the path when the domain is changed
+      logo: 'https://fileupload.h-s-a-g.de/chatbot/demo/ChatbotAvatar1.svg'
     }
   }
 }
