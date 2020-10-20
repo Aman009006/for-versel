@@ -42,6 +42,12 @@ const state = {
 }
 
 const mutations = {
+  /**
+   * add new routes to the store. The navigation gets updated automatically.
+   * The routes are added to the router automatically, too.
+   * use it with the function "commit"
+   * @see https://vuex.vuejs.org/guide/mutations.html
+   */
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
