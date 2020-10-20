@@ -7,7 +7,11 @@
         </el-menu-item>
       </app-link>
     </template>
-
+    <!--
+      meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
+      https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
+      This is used here for FixiOSBug.js to reference this element.
+     -->
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
