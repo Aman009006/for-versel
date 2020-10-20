@@ -1,6 +1,7 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/skillsWithIntents'
 import Layout from '@/layout'
+import routerView from '@/views/routerView'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -73,7 +74,7 @@ export async function getDynamicSkillsWithIntents() {
   skillsWithIntents.forEach(skillWithIntent => {
     route.children.push({
       path: skillWithIntent.SkillName,
-      component: Layout,
+      component: routerView,
       // do i really need the names?
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
@@ -84,10 +85,10 @@ export async function getDynamicSkillsWithIntents() {
     skillWithIntent.IntentNames.forEach(intentName => {
       route.children[route.children.length - 1].children.push({
         path: intentName,
-        component: () => import('@/views/home/index'),
+        component: () => import('@/views/intent/index'),
         name: `intent-${intentName}`,
         meta: {
-          title: `intent: ${intentName}`
+          title: `${intentName}`
         }
       })
     })
