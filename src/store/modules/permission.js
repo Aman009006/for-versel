@@ -83,8 +83,10 @@ export async function getDynamicSkillsWithIntents() {
       children: []
     })
     skillWithIntent.IntentNames.forEach(intentName => {
+      var pathCorrect = intentName.replace('(', '%28')
+      pathCorrect = pathCorrect.replace(')', '%29')
       route.children[route.children.length - 1].children.push({
-        path: intentName,
+        path: pathCorrect,
         component: () => import('@/views/intent/index'),
         name: `intent-${intentName}`,
         meta: {
