@@ -61,31 +61,38 @@ const mutations = {
 export async function getDynamicSkillsWithIntents() {
   const skillsWithIntents = await getSkillsWithIntents()
   const routes = []
+  const route = {
+    path: '/skills',
+    component: Layout,
+    name: 'skills',
+    meta: {
+      title: 'skills'
+    },
+    children: []
+  }
   skillsWithIntents.forEach(skillWithIntent => {
-    const route = {
-      path: '/skills/' + skillWithIntent.SkillName,
+    route.children.push({
+      path: skillWithIntent.SkillName,
       component: Layout,
+      // do i really need the names?
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
-        title: `skill: ${skillWithIntent.SkillName}`,
-        icon: 'user'
+        title: `${skillWithIntent.SkillName}`
       },
       children: []
-    }
+    })
     skillWithIntent.IntentNames.forEach(intentName => {
-      route.children.push({
+      route.children[route.children.length - 1].children.push({
         path: intentName,
         component: () => import('@/views/home/index'),
         name: `intent-${intentName}`,
         meta: {
-          title: `intent: ${intentName}`,
-          icon: 'user'
+          title: `intent: ${intentName}`
         }
       })
     })
-    routes.push(route)
-    // router.addRoutes(routes)
   })
+  routes.push(route)
   return routes
 }
 
