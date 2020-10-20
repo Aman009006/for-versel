@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { getSkillsWithIntents } from '@/api/skillsWithIntents'
 
 Vue.use(Router)
 
@@ -158,6 +159,39 @@ const createRouter = () => new Router({
 })
 
 const router = createRouter()
+
+async function addDynamicSkillsWithIntents() {
+  const skillsWithIntents = await getSkillsWithIntents()
+  skillsWithIntents.forEach(skillWithIntent => {
+    const routes = [
+      {
+        path: '/skills/' + skillWithIntent.SkillName,
+        component: Layout,
+        name: `skill-${skillWithIntent.SkillName}`,
+        meta: {
+          title: `skill: ${skillWithIntent.SkillName}`,
+          icon: 'user'
+        },
+        children: []
+      }
+    ]
+    skillWithIntent.IntentNames.forEach(intentName => {
+      routes[0].children.push({
+        path: intentName,
+        component: () => import('@/views/home/index'),
+        name: `intent-${intentName}`,
+        meta: {
+          title: `intent: ${intentName}`,
+          icon: 'user'
+        }
+      })
+    })
+    router.addRoutes(routes)
+  })
+  // router.addRoutes()
+}
+
+addDynamicSkillsWithIntents()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
