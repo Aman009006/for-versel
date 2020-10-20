@@ -73,18 +73,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/skills',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/skills/index'),
-        name: 'Skills',
-        meta: { title: 'Skills', icon: 'eye-open', affix: true }
-      }
-    ]
-  },
-  {
     path: '/design',
     component: Layout,
     children: [
