@@ -1,4 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import { getSkillsWithIntents } from '@/api/skillsWithIntents'
+import Layout from '@/layout'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -46,8 +48,44 @@ const mutations = {
   }
 }
 
+/**
+ * the skills and intents are pulled from the database and
+ * translated into a vue - readable form
+ */
+export async function getDynamicSkillsWithIntents() {
+  const skillsWithIntents = await getSkillsWithIntents()
+  const routes = []
+  skillsWithIntents.forEach(skillWithIntent => {
+    const route = {
+      path: '/skills/' + skillWithIntent.SkillName,
+      component: Layout,
+      name: `skill-${skillWithIntent.SkillName}`,
+      meta: {
+        title: `skill: ${skillWithIntent.SkillName}`,
+        icon: 'user'
+      },
+      children: []
+    }
+    skillWithIntent.IntentNames.forEach(intentName => {
+      route.children.push({
+        path: intentName,
+        component: () => import('@/views/home/index'),
+        name: `intent-${intentName}`,
+        meta: {
+          title: `intent: ${intentName}`,
+          icon: 'user'
+        }
+      })
+    })
+    routes.push(route)
+    // router.addRoutes(routes)
+  })
+  return routes
+}
+
 const actions = {
   generateRoutes({ commit }, roles) {
+    // add dynamic routes here
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
@@ -55,8 +93,11 @@ const actions = {
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      getDynamicSkillsWithIntents().then(additionalRoutes => {
+        const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
+        commit('SET_ROUTES', allAdditionalRoutes)
+        resolve(allAdditionalRoutes)
+      })
     })
   }
 }
