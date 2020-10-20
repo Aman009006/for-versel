@@ -56,6 +56,13 @@ const mutations = {
 }
 
 /**
+ * translates a path - component into a browser - readable name
+ */
+function encodePathComponent(pathComponent) {
+  return encodeURIComponent(pathComponent.replace('(', '%28').replace(')', '%29'))
+}
+
+/**
  * the skills and intents are pulled from the database and
  * translated into a vue - readable form
  */
@@ -73,7 +80,7 @@ export async function getDynamicSkillsWithIntents() {
   }
   skillsWithIntents.forEach(skillWithIntent => {
     route.children.push({
-      path: skillWithIntent.SkillName,
+      path: encodePathComponent(skillWithIntent.SkillName),
       component: routerView,
       // do i really need the names?
       name: `skill-${skillWithIntent.SkillName}`,
@@ -84,7 +91,7 @@ export async function getDynamicSkillsWithIntents() {
     })
     skillWithIntent.IntentNames.forEach(intentName => {
       route.children[route.children.length - 1].children.push({
-        path: encodeURIComponent(intentName.replace('(', '%28').replace(')', '%29')),
+        path: encodePathComponent(intentName),
         component: () => import('@/views/intent/index'),
         name: `intent-${intentName}`,
         meta: {
