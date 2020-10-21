@@ -66,33 +66,9 @@ export const constantRoutes = [
     children: [
       {
         path: 'home',
-        component: () => import('@/views/home/index'),
+        component: () => import('@/views/dashboard/index'),
         name: 'Home',
         meta: { title: 'Home', icon: 'user', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/design',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/design/index'),
-        name: 'Design',
-        meta: { title: 'Design', icon: 'edit', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/dashboard',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
   },
