@@ -67,7 +67,7 @@ function encodePathComponent(pathComponent) {
  * translated into a vue - readable form
  */
 export async function getDynamicSkillsWithIntents() {
-  const skillsWithIntents = await getSkillsWithIntents()
+  const { data: skillsWithIntents } = await getSkillsWithIntents()
   const routes = []
   const route = {
     path: '/skills',
