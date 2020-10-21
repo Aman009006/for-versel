@@ -25,8 +25,9 @@ export default {
   data() {
     return {
       title: 'ISA',
-      // TODO: Change the path when the domain is changed
-      logo: 'https://fileupload.h-s-a-g.de/chatbot/demo/ChatbotAvatar1.svg'
+      // Link to the logo already in new domain
+      // TODO: load dynamically
+      logo: 'https://files.stadtwerk.bot/chatbot/demo/ChatbotAvatar1.svg'
     }
   }
 }
