@@ -6,15 +6,15 @@
         <h3 class="title">Login</h3>
       </div>
 
-      <el-form-item prop="client">
+      <el-form-item prop="customer">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="client"
-          v-model="loginForm.client"
+          ref="customer"
+          v-model="loginForm.customer"
           placeholder="Mandant"
-          name="client"
+          name="customer"
           type="text"
           tabindex="1"
           autocomplete="on"
@@ -72,7 +72,7 @@ import { validEmail, isString } from '@/utils/validate'
 export default {
   name: 'Login',
   data() {
-    const validateClient = (rule, value, callback) => {
+    const validateCustomer = (rule, value, callback) => {
       if (!isString(value) || value === '') {
         callback(new Error('Bitte geben Sie den Mandantennamen ein'))
       } else {
@@ -95,12 +95,12 @@ export default {
     }
     return {
       loginForm: {
-        client: '',
+        customer: '',
         username: '',
         password: ''
       },
       loginRules: {
-        client: [{ required: true, trigger: 'blur', validator: validateClient }],
+        customer: [{ required: true, trigger: 'blur', validator: validateCustomer }],
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
@@ -127,8 +127,8 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    if (this.loginForm.client === '') {
-      this.$refs.client.focus()
+    if (this.loginForm.customer === '') {
+      this.$refs.customer.focus()
     } else if (this.loginForm.username === '') {
       this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
