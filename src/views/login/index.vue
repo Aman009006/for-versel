@@ -7,7 +7,7 @@
       </div>
 
       <el-form-item prop="client">
-        <span class="svg-container email-icon">
+        <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
