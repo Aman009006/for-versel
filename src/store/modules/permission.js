@@ -74,7 +74,7 @@ export async function getDynamicSkillsWithIntents() {
     component: Layout,
     name: 'skills',
     meta: {
-      title: 'skills', icon: 'chart'
+      title: 'Skills', icon: 'chart'
     },
     children: []
   }
