@@ -1,8 +1,11 @@
 import request from '@/utils/request'
+import backendUrl from '@/utils/backendUrl'
+
+const authentificationPath = 'auth/'
 
 export function login(data) {
   return request({
-    url: '/vue-element-admin/user/login',
+    url: backendUrl + authentificationPath + 'login',
     method: 'post',
     data
   })

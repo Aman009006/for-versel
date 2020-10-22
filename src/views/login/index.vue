@@ -3,25 +3,40 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Login</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="customer">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="customer"
+          v-model="loginForm.customer"
+          placeholder="Mandant"
+          name="customer"
           type="text"
           tabindex="1"
           autocomplete="on"
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-form-item prop="username">
+        <span class="svg-container email-icon">
+          @
+        </span>
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="E-mail"
+          name="username"
+          type="email"
+          tabindex="2"
+          autocomplete="on"
+        />
+      </el-form-item>
+
+      <el-tooltip v-model="capsTooltip" content="Caps lock ist aktiviert" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -31,9 +46,9 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="Passwort"
             name="password"
-            tabindex="2"
+            tabindex="3"
             autocomplete="on"
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
@@ -47,67 +62,51 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
     </el-form>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import SocialSign from './components/SocialSignin'
+import { validEmail, isString } from '@/utils/validate'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
   data() {
+    const validateCustomer = (rule, value, callback) => {
+      if (!isString(value) || value === '') {
+        callback(new Error('Bitte geben Sie den Mandantennamen ein'))
+      } else {
+        callback()
+      }
+    }
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (!validEmail(value)) {
+        callback(new Error('Bitte geben Sie Ihre E-mail-Adresse ein'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('Das Passwort muss mindestens 6 Zeichen beinhalten'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        customer: '',
+        username: '',
+        password: ''
       },
       loginRules: {
+        customer: [{ required: true, trigger: 'blur', validator: validateCustomer }],
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {}
     }
@@ -128,7 +127,9 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    if (this.loginForm.username === '') {
+    if (this.loginForm.customer === '') {
+      this.$refs.customer.focus()
+    } else if (this.loginForm.username === '') {
       this.$refs.username.focus()
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
@@ -265,6 +266,10 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
+    .email-icon {
+      font-weight: bold;
+    }
   }
 
   .tips {
