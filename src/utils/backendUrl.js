@@ -4,3 +4,9 @@
  */
 const backendUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://adminbackend.stadtwerk.bot/'
 export default backendUrl
+
+/**
+ * the api of the backend that is only available when
+ * the user is logged in and the token is valid.
+ */
+export const authorizedBackendUrl = backendUrl + 'authorized/'
