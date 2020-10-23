@@ -32,6 +32,8 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
+          // get new token directly after the user opened the application
+          await getNewToken()
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
@@ -73,10 +75,11 @@ router.afterEach(() => {
   NProgress.done()
 })
 
+/**
+ * @throws {Error} when the token could not be refreshed
+ */
 function getNewToken() {
-  store.dispatch('user/getNewToken')
+  return store.dispatch('user/getNewToken')
 }
-// get new token directly after the user opened the application
-getNewToken()
 // get new token every half an hour
 setInterval(getNewToken, 1000 * 60 * 30)
