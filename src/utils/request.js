@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -46,7 +47,6 @@ service.interceptors.response.use(
     return res
   },
   error => {
-    console.log('err' + error) // for debug
     Message({
       /**
        * the backend should deliver a error - message for every error - request
@@ -55,6 +55,12 @@ service.interceptors.response.use(
       type: 'error',
       duration: 5 * 1000
     })
+    if (error.request.status === 401) {
+      // the user is not authenticated (that means that the token is invalid)
+      // get the user to the login - page and remove the current token
+      store.dispatch('user/resetToken')
+      router.push('/login')
+    }
     return Promise.reject(error)
   }
 )
