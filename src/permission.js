@@ -72,3 +72,11 @@ router.afterEach(() => {
   // finish progress bar
   NProgress.done()
 })
+
+function getNewToken() {
+  store.dispatch('user/getNewToken')
+}
+// get new token directly after the user opened the application
+getNewToken()
+// get new token every half an hour
+setInterval(getNewToken, 1000 * 60 * 30)

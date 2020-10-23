@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { login, logout, getRefreshToken } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -41,6 +41,14 @@ const actions = {
         reject(error)
       })
     })
+  },
+
+  async getNewToken({ commit }) {
+    if (getToken() != null) {
+      const newToken = await getRefreshToken()
+      commit('SET_TOKEN', newToken)
+      setToken(newToken)
+    }
   },
 
   // get user info

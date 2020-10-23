@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import backendUrl from '@/utils/backendUrl'
+import backendUrl, { authorizedBackendUrl } from '@/utils/backendUrl'
 
 const authentificationPath = 'auth/'
 
@@ -8,6 +8,16 @@ export function login(data) {
     url: backendUrl + authentificationPath + 'login',
     method: 'post',
     data
+  })
+}
+
+/**
+ * gets a new token from the backend
+ */
+export function getRefreshToken() {
+  return request({
+    url: authorizedBackendUrl + 'refreshToken',
+    method: 'get'
   })
 }
 
