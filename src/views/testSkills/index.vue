@@ -14,7 +14,6 @@ export default {
   data() {
     return {
       dataReady: false,
-      skill: 'default',
       options: []
     }
   },
@@ -24,11 +23,15 @@ export default {
   async mounted() {
     const skillsWithIntents = await getSkillsWithIntents()
     skillsWithIntents.forEach(skillWithIntent => {
-      this.options.push({ value: skillWithIntent.SkillName, label: skillWithIntent.SkillName })
+      // fill the children (intents)
+      var tempChildren = []
       skillWithIntent.IntentNames.forEach(intentName => {
-        // to fill the children
+        tempChildren.push({ value: intentName, label: intentName })
       })
+      // fill in the next skill with the intents
+      this.options.push({ value: skillWithIntent.SkillName, label: skillWithIntent.SkillName, children: tempChildren })
     })
+    // now the data is filled and can be used
     this.dataReady = true
   },
   methods: {}
