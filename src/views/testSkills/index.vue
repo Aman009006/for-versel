@@ -1,7 +1,8 @@
 <template>
   <div>
+    MOCKUP
     <div v-if="dataReady">
-      <el-cascader-panel :options="options" />
+      <el-cascader :options="options" />
     </div>
   </div>
 </template>

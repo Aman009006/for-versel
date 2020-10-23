@@ -72,12 +72,22 @@ export async function getDynamicSkillsWithIntents() {
   const route = {
     path: '/skills',
     component: Layout,
-    name: 'skills',
+    name: 'Skills and intents',
     meta: {
-      title: 'Skills', icon: 'chart'
+      title: 'Skills and intents', icon: 'chart'
     },
     children: []
   }
+  // make the title in menu for skills
+  route.children.push({
+    path: '',
+    component: () => import('@/views/testSkills/index'),
+    meta: {
+      title: `SKILLS:`
+    },
+    children: []
+
+  })
   skillsWithIntents.forEach(skillWithIntent => {
     route.children.push({
       path: encodePathComponent(skillWithIntent.SkillName),
@@ -88,6 +98,14 @@ export async function getDynamicSkillsWithIntents() {
         title: `${skillWithIntent.SkillName}`
       },
       children: []
+    })
+    // make the title of the list with intents in sub menu
+    route.children[route.children.length - 1].children.push({
+      path: '',
+      component: routerView,
+      meta: {
+        title: `INTENTS:`
+      }
     })
     skillWithIntent.IntentNames.forEach(intentName => {
       route.children[route.children.length - 1].children.push({
