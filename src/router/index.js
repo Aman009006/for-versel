@@ -85,6 +85,29 @@ export const constantRoutes = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
+  },
+  {
+    path: '/snippet',
+    component: Layout,
+    redirect: '/snippet',
+    children: [
+      {
+        path: 'snippet',
+        component: () => import('@/views/snippet'),
+        name: 'snippet',
+        meta: { title: 'Snippet', icon: 'example', affix: true }
+      }
+    ]
+  },
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://hsagbpo.atlassian.net/servicedesk/customer/portal/8',
+        meta: { title: 'JIRA Service Desk', icon: 'message' }
+      }
+    ]
   }
 ]
 
