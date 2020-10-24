@@ -15,15 +15,12 @@
 
 <script>
 
-// TODO: IF we have a session object that contains the customer of the current user use it here
-var customer = 'demo'
-
 /**
    * vue js is relatively strict regarding html, especially script tags. so we have to do it using html entities. quite cumbersome argh
    * @returns {string}
    */
 var getSnippetCode = function() {
-  var snippetCodeText = '&lt;script src="https://cdn.h-s-a-g.de/chatbot/dev/' + customer + '/scripts/main.js"&gt;&lt;/script&gt;\''
+  var snippetCodeText = '&lt;script src="https://cdn.h-s-a-g.de/chatbot/dev/' + localStorage.customer + '/scripts/main.js"&gt;&lt;/script&gt;\''
   return snippetCodeText
 }
 
@@ -34,12 +31,17 @@ export default {
   data() {
     return {
       snippetCode1: '&lt;script&gt;window.hsag_chatbot_variables={dev:!0}&lt;/script&gt;',
-      snippetCode2: getSnippetCode()// '&lt;script src=\\\\"https://cdn.h-s-a-g.de/chatbot/dev/demo-sie/scripts/main.js\\\\"&gt;&lt;/script&gt;\''
+      snippetCode2: getSnippetCode(), // '&lt;script src=\\\\"https://cdn.h-s-a-g.de/chatbot/dev/demo-sie/scripts/main.js\\\\"&gt;&lt;/script&gt;\''
+      userData: {}
     }
   },
   created() {
   },
   mounted() {
+    if (localStorage.userData) {
+      this.userData = localStorage.userData
+      console.log(localStorage.userData)
+    }
   },
   methods: {
   }
