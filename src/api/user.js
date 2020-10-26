@@ -42,6 +42,10 @@ export function logout() {
 export function getAnswersforIntent(readableIntentName) {
   return request({
     url: authorizedBackendUrl + 'answersForReadableIntentName',
+    /**
+     * we have to use here post request:
+     * if we use get here, data in body will be ignored
+     */
     method: 'post',
     data: { intent: readableIntentName }
   })
