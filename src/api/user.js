@@ -39,3 +39,10 @@ export function logout() {
     method: 'post'
   })
 }
+export function getAnswersforIntent(readableIntentName) {
+  return request({
+    url: authorizedBackendUrl + 'answersForReadableIntentName',
+    method: 'get',
+    params: { readableIntentName }
+  })
+}
