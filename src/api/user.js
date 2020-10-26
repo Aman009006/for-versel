@@ -42,7 +42,7 @@ export function logout() {
 export function getAnswersforIntent(readableIntentName) {
   return request({
     url: authorizedBackendUrl + 'answersForReadableIntentName',
-    method: 'get',
+    method: 'post',
     params: { readableIntentName }
   })
 }
