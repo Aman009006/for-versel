@@ -40,10 +40,9 @@ export function logout() {
   })
 }
 export function getAnswersforIntent(readableIntentName) {
-  const req = request({
+  return request({
     url: authorizedBackendUrl + 'answersForReadableIntentName',
     method: 'post',
     data: { intent: readableIntentName }
   })
-  return req
 }
