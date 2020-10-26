@@ -47,6 +47,6 @@ export function getAnswersforIntent(readableIntentName) {
      * if we use get here, data in body will be ignored
      */
     method: 'post',
-    data: { intent: readableIntentName }
+    data: { readableIntentName }
   })
 }
