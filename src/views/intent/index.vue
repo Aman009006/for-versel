@@ -1,8 +1,9 @@
 <template>
-  <div>Ich bin der Intent: {{ $route.meta.title }}
-    <div v-if="dataReady">
-      {{ answers }}
-    </div>
+  <div v-if="dataReady">
+    <h1>{{ $route.meta.title }}</h1>
+    <el-table :data="answers">
+      <el-table-column label="Text" prop="text" />
+    </el-table>
   </div>
 </template>
 
