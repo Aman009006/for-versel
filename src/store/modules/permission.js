@@ -1,5 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import { getSkillsWithIntents } from '@/api/skillsWithIntents'
+import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout'
 import routerView from '@/views/routerView'
 
