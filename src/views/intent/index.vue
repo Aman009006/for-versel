@@ -5,7 +5,7 @@
       <el-table-column min-width="300px" align="center" label="Text" prop="text">
         <template slot-scope="{row}">
           <template v-if="row.edit">
-            <el-input v-model="row.text" class="edit-input" size="small" />
+            <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
           </template>
           <span v-else>{{ row.text }}</span>
         </template>
