@@ -1,8 +1,50 @@
 <template>
   <div v-if="dataReady">
     <h1>{{ $route.meta.title }}</h1>
-    <el-table :data="answers">
-      <el-table-column label="Text" prop="text" />
+    <el-table :data="answers" border style="width: 95%" stripe>
+      <el-table-column min-width="300px" align="center" label="Text" prop="text">
+        <template slot-scope="{row}">
+          <template v-if="row.edit">
+            <el-input v-model="row.text" class="edit-input" size="small" />
+          </template>
+          <span v-else>{{ row.text }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Actions" width="250">
+        <template slot-scope="{row}">
+          <el-button
+            v-if="row.edit"
+            class="confirm-btn"
+            type="success"
+            size="small"
+            icon="el-icon-circle-check-outline"
+            @click="confirmEdit(row)"
+          >
+            Speichern
+          </el-button>
+          <el-button
+            v-if="row.edit"
+            class="cancel-btn"
+            size="small"
+            icon="el-icon-refresh"
+            type="warning"
+            @click="cancelEdit(row)"
+          >
+            Abbrechen
+          </el-button>
+          <el-button
+            v-else
+            class="edit-btn"
+            type="primary"
+            size="small"
+            icon="el-icon-edit"
+            @click="row.edit=!row.edit"
+          >
+            Bearbeiten
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -11,6 +53,16 @@
 import { getAnswersforIntent } from '@/api/user'
 export default {
   name: 'Intent',
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   props: {},
   data() {
     return {
@@ -21,9 +73,63 @@ export default {
   created() {},
   async mounted() {
     this.answers = await getAnswersforIntent(this.$route.meta.title)
+    for (const answer of this.answers) {
+      this.$set(answer, 'edit', false)
+      answer.originalText = answer.text
+    }
     // now the data is filled and can be used
     this.dataReady = true
   },
-  methods: {}
+  methods: {
+    cancelEdit(row) {
+      row.text = row.originalText
+      row.edit = false
+      this.$message({
+        message: 'Der Text wurde auf den vorherigen Wert gesetzt.',
+        type: 'warning'
+      })
+    },
+    confirmEdit(row) {
+      row.edit = false
+      row.originalText = row.text
+      this.$message({
+        message: 'Die Änderung wurde gespeichert.',
+        type: 'success'
+      })
+
+      // input in DB speichern
+
+      //
+      // this.answers = await getAnswersforIntent(this.$route.meta.title)
+    }
+  }
 }
 </script>
+
+<style scoped>
+.cancel-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background-color:rgb(204, 58, 58);
+  border-radius:9px!important;
+  border-color: black;
+}
+.confirm-btn {
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  background-color: rgb(17, 121, 206);
+  border-radius:9px!important;
+  border-color: black;
+}
+.edit-btn {
+  position: absolute;
+  left: 65px;
+  top: 15px;
+  color: black;
+  background-color: white;
+  border-radius:9px!important;
+  border-color: black;
+}
+</style>
