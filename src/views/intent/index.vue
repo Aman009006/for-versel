@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { getAnswersforIntent } from '@/api/user'
+import { getAnswersforIntent } from '@/api/answers'
 export default {
   name: 'Intent',
   filters: {
