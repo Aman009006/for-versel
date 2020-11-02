@@ -10,9 +10,8 @@
             <el-input v-model="row.text" class="edit-input" type="textarea" autosize size="small" />
             <el-button
               class="confirm-btn"
-              type="success"
               size="small"
-              icon="el-icon-circle-check-outline"
+              icon="el-icon-download"
               @click="confirmEdit(row)"
             >
               Speichern
@@ -21,7 +20,6 @@
               class="cancel-btn"
               size="small"
               icon="el-icon-refresh"
-              type="warning"
               @click="cancelEdit(row)"
             >
               Abbrechen
@@ -33,7 +31,6 @@
             </div>
             <el-button
               class="edit-btn"
-              type="primary"
               size="small"
               icon="el-icon-edit"
               @click="row.edit=!row.edit"
@@ -114,6 +111,7 @@ export default {
   position: absolute;
   right: 15px;
   top: 10px;
+  color: white;
   background-color:rgb(204, 58, 58);
   border-radius:9px!important;
   border-color: black;
@@ -122,6 +120,7 @@ export default {
   position: absolute;
   right: 150px;
   top: 10px;
+  color: white;
   background-color: rgb(17, 121, 206);
   border-radius:9px!important;
   border-color: black;
