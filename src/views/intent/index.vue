@@ -51,16 +51,6 @@
 import { getAnswersforIntent } from '@/api/answers'
 export default {
   name: 'Intent',
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   props: {},
   data() {
     return {
@@ -69,6 +59,8 @@ export default {
     }
   },
   async created() {
+    // fetch the data when the view is created and the data is
+    // already being observed
     await this.updateAnswers()
   },
   async mounted() {},
@@ -90,7 +82,7 @@ export default {
         type: 'warning'
       })
     },
-    confirmEdit(row) {
+    async confirmEdit(row) {
       row.edit = false
       row.originalText = row.text
       this.$message({
@@ -100,8 +92,8 @@ export default {
 
       // input in DB speichern
 
-      //
-      // this.answers = await getAnswersforIntent(this.$route.meta.title)
+      // update data because it was changed in DB
+      await this.updateAnswers()
     }
   }
 }
