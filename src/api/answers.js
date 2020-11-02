@@ -24,3 +24,10 @@ export function getAnswersforIntent(readableIntentName) {
     data: { readableIntentName }
   })
 }
+// export function sendChangedData(answer) {
+//   return request({
+//     url: authorizedBackendUrl + 'MarcPleaseSayHowItCalls',
+//     method: 'post',
+//     data: { answer }
+//   })
+// }
