@@ -68,17 +68,20 @@ export default {
       answers: []
     }
   },
-  created() {},
-  async mounted() {
-    this.answers = await getAnswersforIntent(this.$route.meta.title)
-    for (const answer of this.answers) {
-      this.$set(answer, 'edit', false)
-      answer.originalText = answer.text
-    }
-    // now the data is filled and can be used
-    this.dataReady = true
+  async created() {
+    await this.updateAnswers()
   },
+  async mounted() {},
   methods: {
+    async updateAnswers() {
+      this.answers = await getAnswersforIntent(this.$route.meta.title)
+      for (const answer of this.answers) {
+        this.$set(answer, 'edit', false)
+        answer.originalText = answer.text
+      }
+      // now the data is filled and can be used
+      this.dataReady = true
+    },
     cancelEdit(row) {
       row.text = row.originalText
       row.edit = false
