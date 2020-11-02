@@ -2,47 +2,45 @@
   <div v-if="dataReady">
     <h1>{{ $route.meta.title }}</h1>
     <el-table :data="answers" border style="width: 95%" stripe>
-      <el-table-column min-width="300px" align="center" label="Text" prop="text">
+      <el-table-column align="center" label="Name" prop="name" width="100" />
+      <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
+      <el-table-column align="center" label="Antworttext" prop="text">
         <template slot-scope="{row}">
           <template v-if="row.edit">
-            <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
+            <el-input v-model="row.text" class="edit-input" size="small" />
+            <el-button
+              class="confirm-btn"
+              type="success"
+              size="small"
+              icon="el-icon-circle-check-outline"
+              @click="confirmEdit(row)"
+            >
+              Speichern
+            </el-button>
+            <el-button
+              class="cancel-btn"
+              size="small"
+              icon="el-icon-refresh"
+              type="warning"
+              @click="cancelEdit(row)"
+            >
+              Abbrechen
+            </el-button>
           </template>
-          <span v-else>{{ row.text }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="Actions" width="250">
-        <template slot-scope="{row}">
-          <el-button
-            v-if="row.edit"
-            class="confirm-btn"
-            type="success"
-            size="small"
-            icon="el-icon-circle-check-outline"
-            @click="confirmEdit(row)"
-          >
-            Speichern
-          </el-button>
-          <el-button
-            v-if="row.edit"
-            class="cancel-btn"
-            size="small"
-            icon="el-icon-refresh"
-            type="warning"
-            @click="cancelEdit(row)"
-          >
-            Abbrechen
-          </el-button>
-          <el-button
-            v-else
-            class="edit-btn"
-            type="primary"
-            size="small"
-            icon="el-icon-edit"
-            @click="row.edit=!row.edit"
-          >
-            Bearbeiten
-          </el-button>
+          <template v-else>
+            <div class="text-input">
+              <span class="text-input">{{ row.text }}</span>
+            </div>
+            <el-button
+              class="edit-btn"
+              type="primary"
+              size="small"
+              icon="el-icon-edit"
+              @click="row.edit=!row.edit"
+            >
+              Bearbeiten
+            </el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -107,6 +105,13 @@ export default {
 </script>
 
 <style scoped>
+.edit-input{
+  padding-right: 250px;
+}
+.text-input{
+  padding-right: 130px;
+}
+
 .cancel-btn {
   position: absolute;
   right: 15px;
@@ -117,7 +122,7 @@ export default {
 }
 .confirm-btn {
   position: absolute;
-  left: 15px;
+  right: 150px;
   top: 10px;
   background-color: rgb(17, 121, 206);
   border-radius:9px!important;
@@ -125,8 +130,8 @@ export default {
 }
 .edit-btn {
   position: absolute;
-  left: 65px;
-  top: 15px;
+  right: 15px;
+  top: 6px;
   color: black;
   background-color: white;
   border-radius:9px!important;
