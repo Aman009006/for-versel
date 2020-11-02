@@ -1,7 +1,7 @@
 <template>
   <div v-if="dataReady">
     <h1>{{ $route.meta.title }}</h1>
-    <el-table :data="answers" border style="width: 95%" stripe>
+    <el-table :data="answers" class="answers_table" border style="width: 95%" stripe>
       <el-table-column align="center" label="Name" prop="name" width="100" />
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
       <el-table-column align="center" label="Antworttext" prop="text">
@@ -100,6 +100,9 @@ export default {
 </script>
 
 <style scoped>
+.answers_table{
+  left: 30px;
+}
 .edit-input{
   padding-right: 250px;
 }
