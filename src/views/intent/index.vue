@@ -7,7 +7,7 @@
       <el-table-column align="center" label="Antworttext" prop="text">
         <template slot-scope="{row}">
           <template v-if="row.edit">
-            <el-input v-model="row.text" class="edit-input" size="small" />
+            <el-input v-model="row.text" class="edit-input" type="textarea" autosize size="small" />
             <el-button
               class="confirm-btn"
               type="success"
