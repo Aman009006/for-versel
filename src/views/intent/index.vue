@@ -66,34 +66,48 @@ export default {
     async updateAnswers() {
       this.answers = await getAnswersforIntent(this.$route.meta.title)
       for (const answer of this.answers) {
+        // for each answer set editing mode at false
         this.$set(answer, 'edit', false)
+        // for each answer remember the current text value
         answer.originalText = answer.text
       }
       // now the data is filled and can be used
       this.dataReady = true
     },
     cancelEdit(row) {
+      // set the text at the previous value
       row.text = row.originalText
+      // the editing mode is off now
       row.edit = false
+      // give the cancelling message
       this.$message({
         message: 'Der Text wurde auf den vorherigen Wert gesetzt.',
         type: 'warning'
       })
     },
     async confirmEdit(row) {
+      // the editing mode is off now
       row.edit = false
-      row.originalText = row.text
-      this.$message({
-        message: 'Die Änderung wurde gespeichert.',
-        type: 'success'
-      })
-
       // send the changed data to the BE which makes the changes in DB
-      const ready = await setAnswerText(row.id, row.text)
-      if (ready) {
-        // update data because it was changed in DB
-        await this.updateAnswers()
-      }
+      await setAnswerText(row.id, row.text).then(
+        function(ready) {
+          // if saving in DB was successful
+          if (ready) {
+            // update data because it was changed in DB
+            row.originalText = row.text
+            // give the confirmimg message
+            this.$message({
+              message: 'Die Änderung wurde gespeichert.',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: 'Die Änderung wurde wegen Fehlen in DB nicht gespeichert.',
+              type: 'warnung'
+            })
+          }
+        }
+      )
     }
   }
 }
