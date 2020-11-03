@@ -59,11 +59,11 @@ export default {
   async created() {
     // fetch the data when the view is created and the data is
     // already being observed
-    await this.updateAnswers()
+    await this.loadAnswers()
   },
   async mounted() {},
   methods: {
-    async updateAnswers() {
+    async loadAnswers() {
       this.answers = await getAnswersforIntent(this.$route.meta.title)
       for (const answer of this.answers) {
         // for each answer set editing mode at false
