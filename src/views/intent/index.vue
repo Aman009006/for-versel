@@ -46,7 +46,7 @@
 
 <script>
 import { getAnswersforIntent } from '@/api/answers'
-// import { sendChangedData } from '@/api/answers'
+import { setAnswerText } from '@/api/answers'
 export default {
   name: 'Intent',
   props: {},
@@ -89,11 +89,11 @@ export default {
       })
 
       // send the changed data to the BE which makes the changes in DB
-      // const ready = await sendChangedData(row.text)
-      // if (ready) {
-      // update data because it was changed in DB
-      await this.updateAnswers()
-      // }
+      const ready = await setAnswerText(row.id, row.text)
+      if (ready) {
+        // update data because it was changed in DB
+        await this.updateAnswers()
+      }
     }
   }
 }
