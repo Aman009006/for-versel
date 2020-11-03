@@ -88,6 +88,8 @@ export default {
     async confirmEdit(row) {
       // the editing mode is off now
       row.edit = false
+      let info = 'Die Änderung wurde'
+      let infoType = ''
       // send the changed data to the BE which makes the changes in DB
       await setAnswerText(row.id, row.text).then(
         function(ready) {
@@ -95,19 +97,21 @@ export default {
           if (ready) {
             // update data because it was changed in DB
             row.originalText = row.text
-            // give the confirmimg message
-            this.$message({
-              message: 'Die Änderung wurde gespeichert.',
-              type: 'success'
-            })
+            // set the confirmation message
+            info = info + ' gespeichert'
+            infoType = 'success'
           } else {
-            this.$message({
-              message: 'Die Änderung wurde wegen Fehlen in DB nicht gespeichert.',
-              type: 'warnung'
-            })
+            // set the warning message
+            info = info + ' wegen API Fehler nicht gespeichert'
+            infoType = 'warning'
           }
         }
       )
+      // send the corresponding message
+      this.$message({
+        message: info,
+        type: infoType
+      })
     }
   }
 }
