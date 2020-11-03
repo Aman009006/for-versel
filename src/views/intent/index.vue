@@ -69,7 +69,7 @@ export default {
         // for each answer set editing mode at false
         this.$set(answer, 'edit', false)
         // for each answer remember the current text value
-        answer.originalText = answer.text
+        this.$set(answer, 'originalText', answer.text)
       }
       // now the data is filled and can be used
       this.dataReady = true
@@ -88,25 +88,29 @@ export default {
     async confirmEdit(row) {
       // the editing mode is off now
       row.edit = false
-      let info = 'Die Änderung wurde'
-      let infoType = ''
-      // send the changed data to the BE which makes the changes in DB
-      await setAnswerText(row.id, row.text).then(
-        function(ready) {
+      let info = ''
+      let infoType = 'warning'
+      if (row.originalText !== row.text) {
+        // send the changed data to the BE which makes the changes in DB
+        await setAnswerText(row.id, row.text).then(
+          function(ready) {
           // if saving in DB was successful
-          if (ready) {
+            if (ready) {
             // update data because it was changed in DB
-            row.originalText = row.text
-            // set the confirmation message
-            info = info + ' gespeichert'
-            infoType = 'success'
-          } else {
+              row.originalText = row.text
+              // set the confirmation message
+              info = 'Die Änderung wurde gespeichert'
+              infoType = 'success'
+            } else {
             // set the warning message
-            info = info + ' wegen API Fehler nicht gespeichert'
-            infoType = 'warning'
+              info = info + 'Die Änderung wurde wegen API Fehler nicht gespeichert'
+              infoType = 'warning'
+            }
           }
-        }
-      )
+        )
+      } else {
+        info = 'Es wurden keine Änderungen gemacht'
+      }
       // send the corresponding message
       this.$message({
         message: info,
