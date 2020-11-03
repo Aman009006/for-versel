@@ -7,7 +7,7 @@
       <el-table-column align="center" label="Antworttext" prop="text">
         <template slot-scope="{row}">
           <template v-if="row.edit">
-            <el-input v-model="row.text" class="edit-input" type="textarea" autosize size="small" />
+            <markdown-editor v-model="row.text" class="edit-input" />
             <el-button
               class="confirm-btn"
               size="small"
@@ -47,8 +47,10 @@
 <script>
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
+import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
+  components: { MarkdownEditor },
   props: {},
   data() {
     return {
