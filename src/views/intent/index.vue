@@ -94,22 +94,24 @@ export default {
       let infoType = 'warning'
       if (row.originalText !== row.text) {
         // send the changed data to the BE which makes the changes in DB
-        await setAnswerText(row.id, row.text).then(
-          function(ready) {
-          // if saving in DB was successful
-            if (ready) {
+        await setAnswerText(row.id, row.text).then(value => {
+          // fullfilment
+          if (value) {
             // update data because it was changed in DB
-              row.originalText = row.text
-              // set the confirmation message
-              info = 'Die Änderung wurde gespeichert'
-              infoType = 'success'
-            } else {
+            row.originalText = row.text
+            // set the confirmation message
+            info = 'Die Änderung wurde gespeichert'
+            infoType = 'success'
+          } else {
+            // set the text at the previous value
+            row.text = row.originalText
             // set the warning message
-              info = info + 'Die Änderung wurde wegen API Fehler nicht gespeichert'
-              infoType = 'warning'
-            }
+            info = info + 'Die Änderung wurde wegen API Fehler nicht gespeichert'
+            infoType = 'warning'
           }
-        )
+        }, reason => {
+          // rejection
+        })
       } else {
         info = 'Es wurden keine Änderungen gemacht'
       }
