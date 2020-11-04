@@ -90,40 +90,24 @@ export default {
     async confirmEdit(row) {
       // the editing mode is off now
       row.edit = false
-      let info = ''
-      // per default message type is warning
-      let infoType = 'warning'
       // if the user has done changes in the row
       if (row.originalText !== row.text) {
         // send the changed data to the BE which makes the changes in DB
         await setAnswerText(row.id, row.text).then(value => {
-          // fullfilment
-          if (value) {
-            // update data because it was changed in DB
-            row.originalText = row.text
-            // set the confirmation message
-            info = 'Die Änderung wurde gespeichert'
-            // change message type at success
-            infoType = 'success'
-          } else {
-            // set the text at the previous value
-            row.text = row.originalText
-            // set the warning message
-            info = info + 'Die Änderung wurde wegen API Fehler nicht gespeichert'
-          }
+          // fullfilment: then update data because it was changed in DB
+          row.originalText = row.text
         }, reason => {
-          // rejection
+          // rejection: then set the answer at the previous value
+          row.text = row.originalText
         })
       // if the user has done NO changes in the row
       } else {
         // set the info message for this case
-        info = 'Es wurden keine Änderungen gemacht'
+        this.$message({
+          message: 'Es wurden keine Änderungen gemacht',
+          type: 'warning'
+        })
       }
-      // send the corresponding message
-      this.$message({
-        message: info,
-        type: infoType
-      })
     }
   }
 }
