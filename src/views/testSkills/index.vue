@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { getSkillsWithIntents } from '@/api/skillsWithIntents'
+import { getSkillsWithIntents } from '@/api/answers'
 export default {
   name: 'TestSkills',
   props: {},
