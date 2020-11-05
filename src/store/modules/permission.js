@@ -78,7 +78,6 @@ export async function getDynamicSkillsWithIntents() {
     },
     children: []
   }
-
   skillsWithIntents.forEach(skillWithIntent => {
     route.children.push({
       path: encodePathComponent(skillWithIntent.SkillName),
