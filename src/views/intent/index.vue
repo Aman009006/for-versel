@@ -7,7 +7,8 @@
       <el-table-column align="center" label="Antworttext" prop="text">
         <template slot-scope="{row}">
           <template v-if="row.edit">
-            <markdown-editor v-model="row.text" class="edit-input" />
+            <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
+            <!-- <markdown-editor v-model="row.text" class="edit-input" /> -->
             <el-button
               class="confirm-btn"
               size="small"
@@ -47,10 +48,10 @@
 <script>
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
-import MarkdownEditor from '@/components/MarkdownEditor'
+// import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
-  components: { MarkdownEditor },
+  // components: { MarkdownEditor },
   props: {},
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
       // if the user has done changes in the row
       if (row.originalText !== row.text) {
         // send the changed data to the BE which makes the changes in DB
-        await setAnswerText(row.id, row.text).then(value => {
+        await setAnswerText(row.id, row.text).then(response => {
           // fullfilment: then update data because it was changed in DB
           row.originalText = row.text
         }, reason => {
