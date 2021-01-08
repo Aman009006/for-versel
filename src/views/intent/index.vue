@@ -1,7 +1,8 @@
 <template>
   <div v-if="dataReady">
     <h1>{{ $route.meta.title }}</h1>
-    <el-table :data="answers" class="answers_table" border style="width: 95%" stripe>
+    <el-table :data="answers" class="answers_table" border style="width: 95%">
+      <el-table-column align="center" label="Id" prop="id" width="50" />
       <el-table-column align="center" label="Name" prop="name" width="100" />
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
       <el-table-column align="center" label="Antworttext" prop="text">
@@ -30,8 +31,11 @@
             <div class="text-input">
               <span class="text-input">{{ row.text }}</span>
             </div>
-            <el-table :data="answers" border style="width: 90%" stripe>
-              <el-table-column align="center" label="Buttons" prop="buttons" />
+            <el-table :data="row.buttons" border style="width: 90%" stripe>
+              <el-table-column align="center" label="Typ" prop="type" />
+              <el-table-column align="center" label="Name" prop="title" />
+              <el-table-column align="center" label="Wert" prop="value" />
+              <el-table-column align="center" label="Identifikator" prop="identificator" />
             </el-table>
             <el-button
               class="edit-btn"
