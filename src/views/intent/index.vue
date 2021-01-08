@@ -34,10 +34,10 @@
             </div>
             <el-table :data="row.buttons" :show-header="Buttons" border style="width: 90%" stripe>
               <el-header label="Buttons" />
-              <el-table-column align="center" label="Typ von Button" prop="type" />
-              <el-table-column align="center" label="Name von Button" prop="title" />
+              <el-table-column align="center" label="Typ von Button" prop="type" width="130" />
+              <el-table-column align="center" label="Name von Button" prop="title" width="260" />
               <el-table-column align="center" label="Wert von Button" prop="value" />
-              <el-table-column align="center" label="Identifikator von Button" prop="identificator" />
+              <el-table-column align="center" label="Identifikator von Button" prop="identificator" width="250" />
             </el-table>
             <el-button
               class="edit-btn"
