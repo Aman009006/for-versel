@@ -2,11 +2,11 @@
   <div v-if="dataReady">
     <h1>{{ $route.meta.title }}</h1>
     <el-table :data="answers" class="answers_table" border style="width: 95%">
-      <el-table-column align="center" label="Id" prop="id" width="50" />
       <el-table-column align="center" label="Name" prop="name" width="100" />
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
-      <el-table-column align="center" label="Antworttext" prop="text">
+      <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text">
         <template slot-scope="{row}">
+          <!-- When the editing mode is turned on: -->
           <template v-if="row.edit">
             <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
             <!-- <markdown-editor v-model="row.text" class="edit-input" /> -->
@@ -27,15 +27,17 @@
               Abbrechen
             </el-button>
           </template>
+          <!-- When the editing mode is turned off: -->
           <template v-else>
             <div class="text-input">
               <span class="text-input">{{ row.text }}</span>
             </div>
-            <el-table :data="row.buttons" border style="width: 90%" stripe>
-              <el-table-column align="center" label="Typ" prop="type" />
-              <el-table-column align="center" label="Name" prop="title" />
-              <el-table-column align="center" label="Wert" prop="value" />
-              <el-table-column align="center" label="Identifikator" prop="identificator" />
+            <el-table :data="row.buttons" :show-header="Buttons" border style="width: 90%" stripe>
+              <el-header label="Buttons" />
+              <el-table-column align="center" label="Typ von Button" prop="type" />
+              <el-table-column align="center" label="Name von Button" prop="title" />
+              <el-table-column align="center" label="Wert von Button" prop="value" />
+              <el-table-column align="center" label="Identifikator von Button" prop="identificator" />
             </el-table>
             <el-button
               class="edit-btn"
