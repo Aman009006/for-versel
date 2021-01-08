@@ -30,6 +30,9 @@
             <div class="text-input">
               <span class="text-input">{{ row.text }}</span>
             </div>
+            <el-table :data="answers" border style="width: 90%" stripe>
+              <el-table-column align="center" label="Buttons" prop="buttons" />
+            </el-table>
             <el-button
               class="edit-btn"
               size="small"
