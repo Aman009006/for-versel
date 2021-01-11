@@ -9,8 +9,6 @@
           <!-- When the editing mode is turned on: -->
           <template v-if="row.edit">
             <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
-
-            <!-- <markdown-editor v-model="row.text" class="edit-input" /> -->
             <el-button
               class="confirm-btn"
               size="small"
@@ -37,15 +35,24 @@
               class="edit-btn"
               size="small"
               icon="el-icon-edit"
-              @click="row.edit=!row.edit"
+              @click="toggleEdit(row)"
             >
               Bearbeiten
             </el-button>
           </template>
-          <el-table :data="row.buttons" :show-header="Buttons" border style="width: 90%" stripe>
+          <el-table :data="row.buttons" border style="width: 90%" stripe>
             <el-table-column align="center" label="Typ von Button" prop="type" width="130" />
             <el-table-column align="center" label="Name von Button" prop="title" width="260" />
-            <el-table-column align="center" label="Wert von Button" prop="value" />
+            <el-table-column align="center" label="Wert von Button" prop="value">
+              <template slot-scope="{row}">
+                <template v-if="row.edit">
+                  <el-input v-model="row.value" type="textarea" autosize />
+                </template>
+                <template v-else>
+                  <span>{{ row.value }}</span>
+                </template>
+              </template>
+            </el-table-column>
           </el-table>
         </template>
       </el-table-column>
@@ -75,6 +82,12 @@ export default {
   },
   async mounted() {},
   methods: {
+    toggleEdit(row) {
+      row.edit = !row.edit
+      for (const button of row.buttons) {
+        button.edit = !button.edit
+      }
+    },
     async loadAnswers() {
       this.answers = await getAnswersforIntent(this.$route.meta.title)
       for (const answer of this.answers) {
@@ -83,6 +96,11 @@ export default {
         // for each answer remember the current text value
         this.$set(answer, 'originalText', answer.text)
         // todo: for each button if exists, remember the current values of its properties
+        if (answer.buttons) {
+          for (const button of answer.buttons) {
+            this.$set(button, 'edit', false)
+          }
+        }
       }
       // now the data is filled and can be used
       this.dataReady = true
