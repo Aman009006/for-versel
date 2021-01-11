@@ -104,12 +104,6 @@ export default {
   },
   async mounted() {},
   methods: {
-    toggleEdit(row) {
-      row.edit = !row.edit
-      for (const button of row.buttons) {
-        button.edit = !button.edit
-      }
-    },
     async loadAnswers() {
       this.answers = await getAnswersforIntent(this.$route.meta.title)
       for (const answer of this.answers) {
@@ -117,22 +111,40 @@ export default {
         this.$set(answer, 'edit', false)
         // for each answer remember the current text value
         this.$set(answer, 'originalText', answer.text)
-        // todo: for each button if exists, set editing mode at false and remember the current values of its properties
+        // for each button set editing mode at false and note the current values of its props
         if (answer.buttons) {
           for (const button of answer.buttons) {
             this.$set(button, 'edit', false)
+            this.$set(button, 'originalButtonType', button.type)
+            this.$set(button, 'originalButtonTitle', button.title)
+            this.$set(button, 'originalButtonValue', button.value)
           }
         }
       }
       // now the data is filled and can be used
       this.dataReady = true
     },
+    toggleEdit(row) {
+      row.edit = !row.edit
+      for (const button of row.buttons) {
+        button.edit = !button.edit
+      }
+    },
     cancelEdit(row) {
       // set the text at the previous value
       row.text = row.originalText
-      // TODO:  set the properties of all buttons at the previous values (at first only name)
       // the editing mode is off now
       row.edit = false
+      // TODO:  set the properties of all buttons at the previous values (at first only name)
+      // for each button set editing mode at false and set props at previous values
+      if (row.buttons) {
+        for (const button of row.buttons) {
+          button.edit = false
+          button.type = button.originalButtonType
+          button.title = button.originalButtonTitle
+          button.value = button.originalButtonValue
+        }
+      }
       // give the cancelling message
       this.$message({
         message: 'Der Text wurde auf den vorherigen Wert gesetzt.',
