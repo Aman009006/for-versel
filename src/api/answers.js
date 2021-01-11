@@ -32,3 +32,13 @@ export function setAnswerText(answerId, text) {
     data: { answerId, text }
   })
 }
+/**
+ * @param {*} buttons
+ */
+export function setButtonProperties(answerId, button) {
+  return request({
+    url: authorizedBackendUrl + 'setButtonProperties',
+    method: 'post',
+    data: { answerId, button }
+  })
+}
