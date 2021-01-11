@@ -40,9 +40,31 @@
               Bearbeiten
             </el-button>
           </template>
+          <!-- Table with buttons -->
           <el-table :data="row.buttons" border style="width: 90%" stripe>
-            <el-table-column align="center" label="Typ von Button" prop="type" width="130" />
-            <el-table-column align="center" label="Name von Button" prop="title" width="260" />
+            <!-- Column for the button type -->
+            <el-table-column align="center" label="Typ von Button" prop="type" width="130">
+              <template slot-scope="{row}">
+                <template v-if="row.edit">
+                  <el-input v-model="row.type" type="textarea" autosize />
+                </template>
+                <template v-else>
+                  <span>{{ row.type }}</span>
+                </template>
+              </template>
+            </el-table-column>
+            <!-- Column for the button title -->
+            <el-table-column align="center" label="Name von Button" prop="title" width="260">
+              <template slot-scope="{row}">
+                <template v-if="row.edit">
+                  <el-input v-model="row.title" type="textarea" autosize />
+                </template>
+                <template v-else>
+                  <span>{{ row.title }}</span>
+                </template>
+              </template>
+            </el-table-column>
+            <!-- Column for the button value -->
             <el-table-column align="center" label="Wert von Button" prop="value">
               <template slot-scope="{row}">
                 <template v-if="row.edit">
@@ -95,7 +117,7 @@ export default {
         this.$set(answer, 'edit', false)
         // for each answer remember the current text value
         this.$set(answer, 'originalText', answer.text)
-        // todo: for each button if exists, remember the current values of its properties
+        // todo: for each button if exists, set editing mode at false and remember the current values of its properties
         if (answer.buttons) {
           for (const button of answer.buttons) {
             this.$set(button, 'edit', false)
