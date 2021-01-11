@@ -9,6 +9,7 @@
           <!-- When the editing mode is turned on: -->
           <template v-if="row.edit">
             <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
+
             <!-- <markdown-editor v-model="row.text" class="edit-input" /> -->
             <el-button
               class="confirm-btn"
@@ -32,13 +33,6 @@
             <div class="text-input">
               <span class="text-input">{{ row.text }}</span>
             </div>
-            <el-table :data="row.buttons" :show-header="Buttons" border style="width: 90%" stripe>
-              <el-header label="Buttons" />
-              <el-table-column align="center" label="Typ von Button" prop="type" width="130" />
-              <el-table-column align="center" label="Name von Button" prop="title" width="260" />
-              <el-table-column align="center" label="Wert von Button" prop="value" />
-              <el-table-column align="center" label="Identifikator von Button" prop="identificator" width="250" />
-            </el-table>
             <el-button
               class="edit-btn"
               size="small"
@@ -48,6 +42,11 @@
               Bearbeiten
             </el-button>
           </template>
+          <el-table :data="row.buttons" :show-header="Buttons" border style="width: 90%" stripe>
+            <el-table-column align="center" label="Typ von Button" prop="type" width="130" />
+            <el-table-column align="center" label="Name von Button" prop="title" width="260" />
+            <el-table-column align="center" label="Wert von Button" prop="value" />
+          </el-table>
         </template>
       </el-table-column>
     </el-table>
@@ -57,6 +56,7 @@
 <script>
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
+// import { setButtonProperties } from '@/api/answers'
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
@@ -82,6 +82,7 @@ export default {
         this.$set(answer, 'edit', false)
         // for each answer remember the current text value
         this.$set(answer, 'originalText', answer.text)
+        // todo: for each button if exists, remember the current values of its properties
       }
       // now the data is filled and can be used
       this.dataReady = true
@@ -89,6 +90,7 @@ export default {
     cancelEdit(row) {
       // set the text at the previous value
       row.text = row.originalText
+      // TODO:  set the properties of all buttons at the previous values (at first only name)
       // the editing mode is off now
       row.edit = false
       // give the cancelling message
@@ -97,21 +99,28 @@ export default {
         type: 'warning'
       })
     },
+    checkIfButtonsPropertiesChanged(row) {
+    // TODO
+    },
     async confirmEdit(row) {
       // the editing mode is off now
       row.edit = false
-      // if the user has done changes in the row
+      let changesMade = false
+      // if the user has changed the answer text in the current row
       if (row.originalText !== row.text) {
         // send the changed data to the BE which makes the changes in DB
         await setAnswerText(row.id, row.text).then(response => {
           // fullfilment: then update data because it was changed in DB
           row.originalText = row.text
+          changesMade = true
         }, reason => {
           // rejection: then set the answer at the previous value
           row.text = row.originalText
         })
+      }
+      // TODO: if the user has changed any button properties in the current row
       // if the user has done NO changes in the row
-      } else {
+      if (!changesMade) {
         // set the info message for this case
         this.$message({
           message: 'Es wurden keine Änderungen gemacht',
