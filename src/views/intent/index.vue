@@ -71,12 +71,7 @@
             <!-- Column for the button type -->
             <el-table-column align="center" label="Typ von Button" prop="type" width="130">
               <template slot-scope="{row}">
-                <template v-if="row.edit && row.type != 'imBack'">
-                  <el-input v-model="row.type" type="textarea" autosize />
-                </template>
-                <template v-else>
-                  <span>{{ row.type }}</span>
-                </template>
+                <span>{{ row.type }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -151,7 +146,7 @@ export default {
       }
       // give the cancelling message
       this.$message({
-        message: 'Der Text wurde auf den vorherigen Wert gesetzt.',
+        message: 'Die Änderungen wurden abgebrochen.',
         type: 'warning'
       })
     },
