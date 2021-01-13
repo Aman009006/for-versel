@@ -14,3 +14,6 @@ Folgenden Command im Terminal ausführen:
 
 # Links:
 [Vuejs - Admin Vorlage](https://github.com/PanJiaChen/vue-element-admin)
+
+# Deployment
+Chatbot-Frontend-AdminUi in Jenkins -> Jetzt bauen
