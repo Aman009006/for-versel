@@ -82,7 +82,7 @@ export async function getDynamicSkillsWithIntents() {
     route.children.push({
       path: encodePathComponent(skillWithIntent.SkillName),
       component: routerView,
-      // do i really need the names?
+      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
         title: `${skillWithIntent.SkillName}`

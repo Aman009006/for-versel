@@ -1,7 +1,12 @@
 <template>
   <div v-if="dataReady" class="intent-element-container">
     <h1>{{ $route.meta.title }}</h1>
-    <h2 v-if="answerConfig.redirect_to_intent != null" class="redirectionMessage">Weiterleitung in intent: {{ answerConfig.redirect_to_intent }}</h2>
+    <h2 v-if="answerConfig.redirect_to_intent != null" class="redirectionMessage">
+      Weiterleitung in intent:
+      <router-link :to="{name: 'intent-' + answerConfig.redirect_to_intent}">
+        {{ answerConfig.redirect_to_intent }}
+      </router-link>
+    </h2>
     <el-table :data="answers" class="answers_table" border style="width: 95%">
       <el-table-column align="center" label="Name" prop="name" width="100" />
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
@@ -221,6 +226,10 @@ export default {
 
 .redirectionMessage {
   color: red
+}
+
+.redirectionMessage a {
+  text-decoration: underline
 }
 
 .edit-input{
