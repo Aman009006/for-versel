@@ -45,10 +45,14 @@
             <!-- Column for the button title -->
             <el-table-column align="center" label="Name von Button" prop="title" width="350">
               <template slot-scope="{row}">
+                <!-- If editing mode is on and the button has no type imBack -->
                 <template v-if="row.edit && row.type != 'imBack'">
+                  <!-- Show the current title in the textarea which can be edited-->
                   <el-input v-model="row.title" type="textarea" autosize />
                 </template>
+                <!-- If editing mode is off -->
                 <template v-else>
+                  <!-- show the current value -->
                   <span>{{ row.title }}</span>
                 </template>
               </template>
@@ -98,8 +102,10 @@ export default {
     }
   },
   async created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
+    /**
+     * Fetch the data when the view is created
+     * and the data is already being observed
+     */
     await this.loadAnswers()
   },
   async mounted() {},
