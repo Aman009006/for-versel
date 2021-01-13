@@ -45,7 +45,7 @@
             <!-- Column for the button title -->
             <el-table-column align="center" label="Name von Button" prop="title" width="350">
               <template slot-scope="{row}">
-                <template v-if="row.edit">
+                <template v-if="row.edit && row.type != 'imBack'">
                   <el-input v-model="row.title" type="textarea" autosize />
                 </template>
                 <template v-else>
@@ -56,7 +56,7 @@
             <!-- Column for the button value -->
             <el-table-column align="center" label="Wert von Button" prop="value">
               <template slot-scope="{row}">
-                <template v-if="row.edit">
+                <template v-if="row.edit && row.type != 'imBack'">
                   <el-input v-model="row.value" type="textarea" autosize />
                 </template>
                 <template v-else>
@@ -67,7 +67,7 @@
             <!-- Column for the button type -->
             <el-table-column align="center" label="Typ von Button" prop="type" width="130">
               <template slot-scope="{row}">
-                <template v-if="row.edit">
+                <template v-if="row.edit && row.type != 'imBack'">
                   <el-input v-model="row.type" type="textarea" autosize />
                 </template>
                 <template v-else>
