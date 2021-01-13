@@ -136,14 +136,11 @@ export default {
       row.text = row.originalText
       // the editing mode is off now
       row.edit = false
-      // TODO:  set the properties of all buttons at the previous values (at first only name)
       // for each button set editing mode at false and set props at previous values
       if (row.buttons) {
         for (const button of row.buttons) {
           button.edit = false
-          button.title = button.originalButtonTitle
-          button.type = button.originalButtonType
-          button.value = button.originalButtonValue
+          this.resetButtonPropertiesAtPrevValues(button)
         }
       }
       // give the cancelling message
@@ -164,6 +161,11 @@ export default {
       }
       return false
     },
+    resetButtonPropertiesAtPrevValues(button) {
+      button.title = button.originalButtonTitle
+      button.type = button.originalButtonType
+      button.value = button.originalButtonValue
+    },
     async confirmEdit(row) {
       // the editing mode is off now
       row.edit = false
@@ -180,9 +182,10 @@ export default {
           row.text = row.originalText
         })
       }
-      // TODO: if the user has changed any button properties in the current row
+      // if the user has changed any button properties in the current row
       if (this.checkIfButtonsPropertiesChanged(row)) {
         for (const button of row.buttons) {
+          // save the changes in the DB
           await setButtonProperties(button.answerId, button.originalButtonTitle, button.title, button.type, button.value).then(response => {
             button.edit = false
             button.originalButtonTitle = button.title
@@ -191,9 +194,7 @@ export default {
             changesMade = true
           }, reason => {
           // rejection: then set at the previous value
-            button.title = button.originalButtonTitle
-            button.type = button.originalButtonType
-            button.value = button.originalButtonValue
+            this.resetButtonPropertiesAtPrevValues(button)
           })
         }
       }
