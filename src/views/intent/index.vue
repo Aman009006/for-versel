@@ -105,7 +105,8 @@ export default {
   async mounted() {},
   methods: {
     async loadAnswers() {
-      this.answers = await getAnswersforIntent(this.$route.meta.title)
+      const answerInfo = await getAnswersforIntent(this.$route.meta.title)
+      this.answers = answerInfo.answers
       for (const answer of this.answers) {
         // for each answer set editing mode at false
         this.$set(answer, 'edit', false)
