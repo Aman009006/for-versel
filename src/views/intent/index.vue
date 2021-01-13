@@ -1,6 +1,7 @@
 <template>
-  <div v-if="dataReady">
+  <div v-if="dataReady" class="intent-element-container">
     <h1>{{ $route.meta.title }}</h1>
+    <h2 v-if="answerConfig.redirect_to_intent != null" class="redirectionMessage">Weiterleitung in intent: {{ answerConfig.redirect_to_intent }}</h2>
     <el-table :data="answers" class="answers_table" border style="width: 95%">
       <el-table-column align="center" label="Name" prop="name" width="100" />
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
@@ -94,7 +95,8 @@ export default {
   data() {
     return {
       dataReady: false,
-      answers: []
+      answers: [],
+      answerConfig: {}
     }
   },
   async created() {
@@ -107,6 +109,7 @@ export default {
     async loadAnswers() {
       const answerInfo = await getAnswersforIntent(this.$route.meta.title)
       this.answers = answerInfo.answers
+      this.answerConfig = answerInfo.answerConfig
       for (const answer of this.answers) {
         // for each answer set editing mode at false
         this.$set(answer, 'edit', false)
@@ -212,9 +215,14 @@ export default {
 </script>
 
 <style scoped>
-.answers_table{
-  left: 30px;
+.intent-element-container {
+  margin-left: 30px;
 }
+
+.redirectionMessage {
+  color: red
+}
+
 .edit-input{
   padding-right: 250px;
 }
