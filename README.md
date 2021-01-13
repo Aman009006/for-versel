@@ -14,6 +14,7 @@ Folgenden Command im Terminal ausführen:
 
 # Links:
 [Vuejs - Admin Vorlage](https://github.com/PanJiaChen/vue-element-admin)
+[Link zu unserer AdminUI-Seite](https://admin.stadtwerk.bot/)
 
 # Deployment
 Chatbot-Frontend-AdminUi in Jenkins -> Jetzt bauen
