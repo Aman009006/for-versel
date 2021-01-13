@@ -42,19 +42,8 @@
           </template>
           <!-- Table with buttons -->
           <el-table :data="row.buttons" border style="width: 90%" stripe>
-            <!-- Column for the button type -->
-            <el-table-column align="center" label="Typ von Button" prop="type" width="130">
-              <template slot-scope="{row}">
-                <template v-if="row.edit">
-                  <el-input v-model="row.type" type="textarea" autosize />
-                </template>
-                <template v-else>
-                  <span>{{ row.type }}</span>
-                </template>
-              </template>
-            </el-table-column>
             <!-- Column for the button title -->
-            <el-table-column align="center" label="Name von Button" prop="title" width="260">
+            <el-table-column align="center" label="Name von Button" prop="title" width="350">
               <template slot-scope="{row}">
                 <template v-if="row.edit">
                   <el-input v-model="row.title" type="textarea" autosize />
@@ -75,6 +64,17 @@
                 </template>
               </template>
             </el-table-column>
+            <!-- Column for the button type -->
+            <el-table-column align="center" label="Typ von Button" prop="type" width="130">
+              <template slot-scope="{row}">
+                <template v-if="row.edit">
+                  <el-input v-model="row.type" type="textarea" autosize />
+                </template>
+                <template v-else>
+                  <span>{{ row.type }}</span>
+                </template>
+              </template>
+            </el-table-column>
           </el-table>
         </template>
       </el-table-column>
@@ -85,7 +85,7 @@
 <script>
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
-// import { setButtonProperties } from '@/api/answers'
+import { setButtonProperties } from '@/api/answers'
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
@@ -114,9 +114,10 @@ export default {
         // for each button set editing mode at false and note the current values of its props
         if (answer.buttons) {
           for (const button of answer.buttons) {
+            this.$set(button, 'answerId', answer.id)
             this.$set(button, 'edit', false)
-            this.$set(button, 'originalButtonType', button.type)
             this.$set(button, 'originalButtonTitle', button.title)
+            this.$set(button, 'originalButtonType', button.type)
             this.$set(button, 'originalButtonValue', button.value)
           }
         }
@@ -140,8 +141,8 @@ export default {
       if (row.buttons) {
         for (const button of row.buttons) {
           button.edit = false
-          button.type = button.originalButtonType
           button.title = button.originalButtonTitle
+          button.type = button.originalButtonType
           button.value = button.originalButtonValue
         }
       }
@@ -152,7 +153,16 @@ export default {
       })
     },
     checkIfButtonsPropertiesChanged(row) {
-    // TODO
+      if (row.buttons) {
+        for (const button of row.buttons) {
+          if (button.originalButtonType !== button.type ||
+              button.originalButtonValue !== button.value ||
+              button.originalButtonTitle !== button.title) {
+            return true
+          }
+        }
+      }
+      return false
     },
     async confirmEdit(row) {
       // the editing mode is off now
@@ -171,6 +181,22 @@ export default {
         })
       }
       // TODO: if the user has changed any button properties in the current row
+      if (this.checkIfButtonsPropertiesChanged(row)) {
+        for (const button of row.buttons) {
+          await setButtonProperties(button.answerId, button.originalButtonTitle, button.title, button.type, button.value).then(response => {
+            button.edit = false
+            button.originalButtonTitle = button.title
+            button.originalButtonType = button.type
+            button.originalButtonValue = button.value
+            changesMade = true
+          }, reason => {
+          // rejection: then set at the previous value
+            button.title = button.originalButtonTitle
+            button.type = button.originalButtonType
+            button.value = button.originalButtonValue
+          })
+        }
+      }
       // if the user has done NO changes in the row
       if (!changesMade) {
         // set the info message for this case

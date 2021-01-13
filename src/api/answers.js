@@ -35,10 +35,10 @@ export function setAnswerText(answerId, text) {
 /**
  * @param {*} buttons
  */
-export function setButtonProperties(answerId, button) {
+export function setButtonProperties(answerId, originalButtonTitle, newButtonTitle, newButtonType, newButtonValue) {
   return request({
     url: authorizedBackendUrl + 'setButtonProperties',
     method: 'post',
-    data: { answerId, button }
+    data: { answerId, originalButtonTitle, newButtonTitle, newButtonType, newButtonValue }
   })
 }
