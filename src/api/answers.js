@@ -33,7 +33,17 @@ export function setAnswerText(answerId, text) {
   })
 }
 /**
- * @param {*} buttons
+ * Sends the post request to the BE to save the new button properties
+ * to the button with the specified original title and answer id.
+ * @param answerId is the id of the answer which contains the current button.
+ * @param originalButtonTitle is the original title of the button, which is used to identify
+ * the current button together with the answer ID in DB table answer_buttons
+ * @param newButtonTitle is the new title of the current button
+ * which has to be saved in the DB table answer_buttons
+ * @param newButtonType is the new type of the current button
+ * which has to be saved in the DB table answer_buttons
+ * @param newButtonValue is the new value of the current button
+ * which has to be saved in the DB table answer_buttons
  */
 export function setButtonProperties(answerId, originalButtonTitle, newButtonTitle, newButtonType, newButtonValue) {
   return request({
