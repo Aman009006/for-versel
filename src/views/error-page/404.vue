@@ -45,9 +45,11 @@ export default {
   padding: 0 50px;
   overflow: hidden;
   .pic-404 {
+    padding-top: 10%;
     position: relative;
-    float: left;
+    //float: left;
     width: 600px;
+    margin: 0 auto;
     overflow: hidden;
     &__parent {
       width: 100%;
@@ -157,12 +159,14 @@ export default {
   }
   .bullshit {
     position: relative;
-    float: left;
-    width: 300px;
+    //float: left;
+    margin: 0 auto;
+    width: 400px;
     padding: 30px 0;
     overflow: hidden;
     &__oops {
-      font-size: 32px;
+      text-align: center;
+      font-size: 28px;
       font-weight: bold;
       line-height: 40px;
       color: #1482f0;
@@ -185,6 +189,7 @@ export default {
       animation-fill-mode: forwards;
     }
     &__info {
+      text-align: center;
       font-size: 13px;
       line-height: 21px;
       color: grey;
@@ -197,7 +202,8 @@ export default {
     }
     &__return-home {
       display: block;
-      float: left;
+      //float: left;
+      margin: 0 auto;
       width: 200px;
       height: 36px;
       background: #1482f0;
