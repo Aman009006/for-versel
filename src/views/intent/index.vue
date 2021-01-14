@@ -161,15 +161,11 @@ export default {
         type: 'warning'
       })
     },
-    checkIfButtonsPropertiesChanged(row) {
-      if (row.buttons) {
-        for (const button of row.buttons) {
-          if (button.originalButtonType !== button.type ||
-              button.originalButtonValue !== button.value ||
-              button.originalButtonTitle !== button.title) {
-            return true
-          }
-        }
+    checkIfButtonPropertiesChanged(button) {
+      if (button.originalButtonType !== button.type ||
+          button.originalButtonValue !== button.value ||
+          button.originalButtonTitle !== button.title) {
+        return true
       }
       return false
     },
@@ -196,8 +192,8 @@ export default {
         })
       }
       // if the user has changed any button properties in the current row
-      if (this.checkIfButtonsPropertiesChanged(row)) {
-        for (const button of row.buttons) {
+      for (const button of row.buttons) {
+        if (this.checkIfButtonPropertiesChanged(button)) {
           // save the changes in the DB
           await setButtonProperties(button.answerId, button.originalButtonTitle, button.title, button.type, button.value).then(response => {
             button.edit = false
@@ -209,6 +205,8 @@ export default {
           // rejection: then set at the previous value
             this.resetButtonPropertiesAtPrevValues(button)
           })
+        } else {
+          button.edit = false
         }
       }
       // if the user has done NO changes in the row
