@@ -1,10 +1,10 @@
 <template>
   <div v-if="dataReady" class="intent-element-container">
     <h1>{{ $route.meta.title }}</h1>
-    <h2 v-if="answerConfig.redirect_to_intent != null" class="redirectionMessage">
+    <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
       Weiterleitung in intent:
-      <router-link :to="{name: 'intent-' + answerConfig.redirect_to_intent}">
-        {{ answerConfig.redirect_to_intent }}
+      <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
+        {{ answerConfig.readable_redirect_to_intent_name }}
       </router-link>
     </h2>
     <el-table :data="answers" class="answers_table" border style="width: 95%">
