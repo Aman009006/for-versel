@@ -51,7 +51,7 @@
             <!-- Table with buttons -->
             <el-table :data="row.buttons" border style="width: 90%" stripe>
               <!-- Column for the button title -->
-              <el-table-column align="center" label="Name von Button" prop="title" width="350">
+              <el-table-column align="center" label="Button Name" prop="title" width="350">
                 <template slot-scope="{row}">
                   <!-- If editing mode is on and the button has no type imBack -->
                   <template v-if="row.edit">
@@ -66,7 +66,7 @@
                 </template>
               </el-table-column>
               <!-- Column for the button value -->
-              <el-table-column align="center" label="Wert von Button" prop="value">
+              <el-table-column align="center" label="Button Wert" prop="value">
                 <template slot-scope="{row}">
                   <template v-if="row.edit && row.type != 'imBack'">
                     <el-input v-model="row.value" type="textarea" autosize />
@@ -77,7 +77,7 @@
                 </template>
               </el-table-column>
               <!-- Column for the button type -->
-              <el-table-column align="center" label="Typ von Button" prop="type" width="130">
+              <el-table-column align="center" label="Button Typ" prop="type" width="130">
                 <template slot-scope="{row}">
                   <span>{{ row.type }}</span>
                 </template>
