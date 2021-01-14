@@ -152,7 +152,6 @@ export default {
       // for each button set editing mode at false and set props at previous values
       if (row.buttons) {
         for (const button of row.buttons) {
-          button.edit = false
           this.resetButtonPropertiesAtPrevValues(button)
         }
       }
@@ -175,6 +174,7 @@ export default {
       return false
     },
     resetButtonPropertiesAtPrevValues(button) {
+      button.edit = false
       button.title = button.originalButtonTitle
       button.type = button.originalButtonType
       button.value = button.originalButtonValue
