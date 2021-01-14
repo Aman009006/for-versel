@@ -176,7 +176,7 @@ export default {
       button.value = button.originalButtonValue
     },
     async confirmEdit(row) {
-      // the editing mode is off now
+      // the editing mode is off for the current answer
       row.edit = false
       let changesMade = false
       // if the user has changed the answer text in the current row
@@ -191,21 +191,25 @@ export default {
           row.text = row.originalText
         })
       }
-      // if the user has changed any button properties in the current row
+      // for each button check if it is changed and save it in the DB
       for (const button of row.buttons) {
         if (this.checkIfButtonPropertiesChanged(button)) {
           // save the changes in the DB
           await setButtonProperties(button.answerId, button.originalButtonTitle, button.title, button.type, button.value).then(response => {
+            // turn off the editing mode, because the changes are already received here
             button.edit = false
+            // set the old values of the button at the new ones
             button.originalButtonTitle = button.title
             button.originalButtonType = button.type
             button.originalButtonValue = button.value
+            // set the flag that changes are made
             changesMade = true
           }, reason => {
           // rejection: then set at the previous value
             this.resetButtonPropertiesAtPrevValues(button)
           })
         } else {
+          // the button was not changed, therefore just turn off the editing mode
           button.edit = false
         }
       }
