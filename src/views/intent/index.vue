@@ -54,7 +54,7 @@
               <el-table-column align="center" label="Name von Button" prop="title" width="350">
                 <template slot-scope="{row}">
                   <!-- If editing mode is on and the button has no type imBack -->
-                  <template v-if="row.edit && row.type != 'imBack'">
+                  <template v-if="row.edit">
                     <!-- Show the current title in the textarea which can be edited-->
                     <el-input v-model="row.title" type="textarea" autosize />
                   </template>
