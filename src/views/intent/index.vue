@@ -51,7 +51,7 @@
             <!-- Table with buttons -->
             <el-table :data="row.buttons" border style="width: 90%" stripe>
               <!-- Column for the button title -->
-              <el-table-column align="center" label="Button Name" prop="title" width="350">
+              <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
                 <template slot-scope="{row}">
                   <!-- If editing mode is on and the button has no type imBack -->
                   <template v-if="row.edit">
