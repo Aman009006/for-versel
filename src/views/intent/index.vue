@@ -48,6 +48,7 @@
                 Bearbeiten
               </el-button>
             </template>
+            <!-- show the table with buttons only if it is not empty -->
             <template v-if="row.buttons">
               <!-- Table with buttons -->
               <el-table :data="row.buttons" border style="width: 90%" stripe>
