@@ -48,41 +48,43 @@
                 Bearbeiten
               </el-button>
             </template>
-            <!-- Table with buttons -->
-            <el-table :data="row.buttons" border style="width: 90%" stripe>
-              <!-- Column for the button title -->
-              <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
-                <template slot-scope="{row}">
-                  <!-- If editing mode is on and the button has no type imBack -->
-                  <template v-if="row.edit">
-                    <!-- Show the current title in the textarea which can be edited-->
-                    <el-input v-model="row.title" type="textarea" autosize />
+            <template v-if="row.buttons">
+              <!-- Table with buttons -->
+              <el-table :data="row.buttons" border style="width: 90%" stripe>
+                <!-- Column for the button title -->
+                <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
+                  <template slot-scope="{row}">
+                    <!-- If editing mode is on and the button has no type imBack -->
+                    <template v-if="row.edit">
+                      <!-- Show the current title in the textarea which can be edited-->
+                      <el-input v-model="row.title" type="textarea" autosize />
+                    </template>
+                    <!-- If editing mode is off -->
+                    <template v-else>
+                      <!-- show the current value -->
+                      <span>{{ row.title }}</span>
+                    </template>
                   </template>
-                  <!-- If editing mode is off -->
-                  <template v-else>
-                    <!-- show the current value -->
-                    <span>{{ row.title }}</span>
+                </el-table-column>
+                <!-- Column for the button value -->
+                <el-table-column align="center" label="Button Wert" prop="value">
+                  <template slot-scope="{row}">
+                    <template v-if="row.edit && row.type != 'imBack'">
+                      <el-input v-model="row.value" type="textarea" autosize />
+                    </template>
+                    <template v-else>
+                      <span>{{ row.value }}</span>
+                    </template>
                   </template>
-                </template>
-              </el-table-column>
-              <!-- Column for the button value -->
-              <el-table-column align="center" label="Button Wert" prop="value">
-                <template slot-scope="{row}">
-                  <template v-if="row.edit && row.type != 'imBack'">
-                    <el-input v-model="row.value" type="textarea" autosize />
+                </el-table-column>
+                <!-- Column for the button type -->
+                <el-table-column align="center" label="Button Typ" prop="type" width="130">
+                  <template slot-scope="{row}">
+                    <span>{{ row.type }}</span>
                   </template>
-                  <template v-else>
-                    <span>{{ row.value }}</span>
-                  </template>
-                </template>
-              </el-table-column>
-              <!-- Column for the button type -->
-              <el-table-column align="center" label="Button Typ" prop="type" width="130">
-                <template slot-scope="{row}">
-                  <span>{{ row.type }}</span>
-                </template>
-              </el-table-column>
-            </el-table>
+                </el-table-column>
+              </el-table>
+            </template>
           </template>
         </el-table-column>
       </el-table>
