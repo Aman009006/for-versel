@@ -13,7 +13,7 @@
           <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
         </div> -->
         <!-- <div class="bullshit__headline">{{ message }}</div> -->
-        <div class="bullshit__info">Da die Admin-UI ein agiles Work-in-Progress Projekt ist, sind wir derzeit mit der Optimierung dieser Unterseite beschäftigt.</div>
+        <div class="bullshit__info">Liebe Chatbot Kunden, es handelt sich hierbei eine <b>Beta-Version</b> unserer Admin UI. Die wesentlichen Funktionen sind bereits implementiert, die vollumfängliche Entwicklung ist jedoch noch nicht abgeschlossen. Wir freuen uns auf Ihr Feedback!<br> Ihr Chatbot Team </div>
         <a href="" class="bullshit__return-home">Zurück zur Startseite</a>
       </div>
     </div>
@@ -162,11 +162,11 @@ export default {
     //float: left;
     margin: 0 auto;
     width: 400px;
-    padding: 30px 0;
+    padding: 0;
     overflow: hidden;
     &__oops {
       text-align: center;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
       line-height: 40px;
       color: #1482f0;
