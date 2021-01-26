@@ -58,8 +58,8 @@ const mutations = {
 /**
  * translates a path - component into a browser - readable name
  */
-function encodePathComponent(pathComponent) {
-  return encodeURIComponent(pathComponent.replace('(', '%28').replace(')', '%29'))
+export function encodePathComponent(pathComponent) {
+  return pathComponent.replace('(', '%28').replace(')', '%29')
 }
 
 /**
