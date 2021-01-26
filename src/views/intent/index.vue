@@ -10,7 +10,7 @@
     <div class="table-container">
       <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
       <el-table :data="answers" class="answers_table" border style="width: 95%">
-        <el-table-column align="center" label="Name" prop="name" width="100" />
+        <el-table-column align="center" label="Name" prop="readableName" width="100" />
         <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
         <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text">
           <template slot-scope="{row}">
