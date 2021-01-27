@@ -3,9 +3,7 @@
     <div class="description">
       <el-row>
         <el-col :span="24" :sm="2" :lg="1">
-          <img
-            src="https://fileupload.h-s-a-g.de/chatbot/demo/ChatbotAvatar1.svg"
-          >
+          <img :src="avatar_link" />
         </el-col>
         <el-col :span="24" :sm="20">
           <h1>Willkommen zurück auf Ihrer Admin UI!</h1>
@@ -23,17 +21,22 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getCustomerMetaData } from "@/api/customer";
 
 export default {
   name: "Dashboard",
   components: {},
   data() {
-    return {};
+    return {
+      avatar_link: null,
+    };
   },
   computed: {
     ...mapGetters(["roles"]),
   },
-  created() {},
+  async created() {
+    this.avatar_link = (await getCustomerMetaData()).avatar_link;
+  },
 };
 </script>
 
