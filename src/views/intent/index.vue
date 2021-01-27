@@ -13,7 +13,7 @@
         <el-table :data="answers" class="answers_table" border style="width: 95%">
           <el-table-column align="center" label="Identifikator" prop="readableName" width="110" />
           <el-table-column align="center" label="Beschreibung des Identifikators" prop="description" width="150" />
-          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" width="300">
+          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
             <template slot-scope="{row}">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
@@ -27,14 +27,14 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Button" autosize>
+          <el-table-column align="center" label="Button" width="500">
             <template slot-scope="{row}">
               <!-- show the table with buttons only if it is not empty -->
               <template v-if="row.buttons">
                 <!-- Table with buttons -->
                 <el-table :data="row.buttons" border style="width: 100%" stripe>
                   <!-- Column for the button title -->
-                  <el-table-column align="center" label="Name" prop="title" width="350">
+                  <el-table-column align="center" label="Name" prop="title" autosize>
                     <template slot-scope="{row}">
                       <!-- If editing mode is on and the button has no type imBack -->
                       <template v-if="row.edit">
@@ -60,7 +60,7 @@
                     </template>
                   </el-table-column>
                   <!-- Column for the button type -->
-                  <el-table-column align="center" label="Typ" prop="type" width="130">
+                  <el-table-column align="center" label="Typ" prop="type" width="80">
                     <template slot-scope="{row}">
                       <span>{{ row.type }}</span>
                     </template>
