@@ -40,10 +40,21 @@ export default {
 <style lang="scss">
 @import "~@/styles/element-variables.scss";
 .dashboard-container {
+  * {
+    color: $--color-text-regular;
+  }
+
   padding: 30px 50px;
+  @media (max-width: $--sm) {
+    padding: 10px 20px;
+  }
+
   .description {
     background-color: white;
     padding: 15px 25px;
+    @media (max-width: $--sm) {
+      padding: 5px 15px;
+    }
     border-radius: 20px;
 
     @media (max-width: $--sm - 1) {
