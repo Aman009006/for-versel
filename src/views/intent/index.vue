@@ -10,7 +10,7 @@
       </h2>
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
-        <el-table :data="answers" class="answers_table" border style="width: 100%">
+        <el-table :data="answers" class="answers_table" border style="width: 95%">
           <el-table-column align="center" label="Name" prop="readableName" width="100" />
           <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
           <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" width="300">
@@ -32,7 +32,7 @@
               <!-- show the table with buttons only if it is not empty -->
               <template v-if="row.buttons">
                 <!-- Table with buttons -->
-                <el-table :data="row.buttons" border style="width: 90%" stripe>
+                <el-table :data="row.buttons" border style="width: 100%" stripe>
                   <!-- Column for the button title -->
                   <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
                     <template slot-scope="{row}">
@@ -300,7 +300,7 @@ $white: #ffffff8c;
 }
 .edit-btn {
   position: absolute;
-  right: 15px;
+  right: 80px;
   top: 6px;
   color: black;
   background-color: white;
