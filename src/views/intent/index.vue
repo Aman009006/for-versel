@@ -10,10 +10,10 @@
       </h2>
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
-        <el-table :data="answers" class="answers_table" border style="width: 95%">
+        <el-table :data="answers" class="answers_table" border style="width: 100%">
           <el-table-column align="center" label="Name" prop="readableName" width="100" />
           <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
-          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text">
+          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" width="300">
             <template slot-scope="{row}">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
@@ -25,6 +25,10 @@
                   <span class="text-input">{{ row.text }}</span>
                 </div>
               </template>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="Button" autosize>
+            <template slot-scope="{row}">
               <!-- show the table with buttons only if it is not empty -->
               <template v-if="row.buttons">
                 <!-- Table with buttons -->
@@ -270,10 +274,10 @@ $white: #ffffff8c;
 }
 
 .edit-input{
-  padding-right: 250px;
+  // padding-right: 250px;
 }
 .text-input{
-  padding-right: 130px;
+  // padding-right: 130px;
 }
 
 .cancel-btn {
