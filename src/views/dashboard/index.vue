@@ -68,8 +68,12 @@ export default {
     .el-row {
       .el-col:first-child {
         img {
-          max-width: 50px;
+          max-width: 100%;
+          width: 50px;
         }
+      }
+      .el-col:last-child {
+        padding-left: 10px;
       }
     }
 
