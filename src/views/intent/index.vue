@@ -17,36 +17,12 @@
             <!-- When the editing mode is turned on: -->
             <template v-if="row.edit">
               <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
-              <el-button
-                class="confirm-btn"
-                size="small"
-                icon="el-icon-download"
-                @click="confirmEdit(row)"
-              >
-                Speichern
-              </el-button>
-              <el-button
-                class="cancel-btn"
-                size="small"
-                icon="el-icon-refresh"
-                @click="cancelEdit(row)"
-              >
-                Abbrechen
-              </el-button>
             </template>
             <!-- When the editing mode is turned off: -->
             <template v-else>
               <div class="text-input">
                 <span class="text-input">{{ row.text }}</span>
               </div>
-              <el-button
-                class="edit-btn"
-                size="small"
-                icon="el-icon-edit"
-                @click="toggleEdit(row)"
-              >
-                Bearbeiten
-              </el-button>
             </template>
             <!-- show the table with buttons only if it is not empty -->
             <template v-if="row.buttons">
@@ -85,6 +61,40 @@
                   </template>
                 </el-table-column>
               </el-table>
+            </template>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" width="280">
+          <template slot-scope="{row}">
+            <!-- When the editing mode is turned on: -->
+            <template v-if="row.edit">
+              <el-button
+                class="confirm-btn"
+                size="small"
+                icon="el-icon-download"
+                @click="confirmEdit(row)"
+              >
+                Speichern
+              </el-button>
+              <el-button
+                class="cancel-btn"
+                size="small"
+                icon="el-icon-refresh"
+                @click="cancelEdit(row)"
+              >
+                Abbrechen
+              </el-button>
+            </template>
+            <!-- When the editing mode is turned off: -->
+            <template v-else>
+              <el-button
+                class="edit-btn"
+                size="small"
+                icon="el-icon-edit"
+                @click="toggleEdit(row)"
+              >
+                Bearbeiten
+              </el-button>
             </template>
           </template>
         </el-table-column>
