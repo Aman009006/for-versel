@@ -34,7 +34,7 @@
                 <!-- Table with buttons -->
                 <el-table :data="row.buttons" border style="width: 100%" stripe>
                   <!-- Column for the button title -->
-                  <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
+                  <el-table-column align="center" label="Name" prop="title" width="350">
                     <template slot-scope="{row}">
                       <!-- If editing mode is on and the button has no type imBack -->
                       <template v-if="row.edit">
@@ -49,7 +49,7 @@
                     </template>
                   </el-table-column>
                   <!-- Column for the button value -->
-                  <el-table-column align="center" label="Button Wert" prop="value">
+                  <el-table-column align="center" label="Wert" prop="value">
                     <template slot-scope="{row}">
                       <template v-if="row.edit && row.type != 'imBack'">
                         <el-input v-model="row.value" type="textarea" autosize />
@@ -60,16 +60,19 @@
                     </template>
                   </el-table-column>
                   <!-- Column for the button type -->
-                  <el-table-column align="center" label="Button Typ" prop="type" width="130">
+                  <el-table-column align="center" label="Typ" prop="type" width="130">
                     <template slot-scope="{row}">
                       <span>{{ row.type }}</span>
                     </template>
                   </el-table-column>
                 </el-table>
               </template>
+              <template v-else>
+                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center show-icon />
+              </template>
             </template>
           </el-table-column>
-          <el-table-column align="center" width="280">
+          <el-table-column align="center" width="130">
             <template slot-scope="{row}">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
@@ -282,8 +285,8 @@ $white: #ffffff8c;
 
 .cancel-btn {
   position: absolute;
-  right: 15px;
-  top: 10px;
+  right: 10px;
+  top: 60px;
   color: white;
   background-color:rgb(204, 58, 58);
   border-radius:9px!important;
@@ -291,7 +294,7 @@ $white: #ffffff8c;
 }
 .confirm-btn {
   position: absolute;
-  right: 150px;
+  right: 10px;
   top: 10px;
   color: white;
   background-color: rgb(17, 121, 206);
@@ -300,7 +303,7 @@ $white: #ffffff8c;
 }
 .edit-btn {
   position: absolute;
-  right: 80px;
+  right: 10px;
   top: 6px;
   color: black;
   background-color: white;
