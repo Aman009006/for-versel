@@ -1,105 +1,107 @@
 <template>
-  <div v-if="dataReady" class="intent-element-container">
-    <h1>{{ $route.meta.title }}</h1>
-    <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
-      Weiterleitung in intent:
-      <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
-        {{ answerConfig.readable_redirect_to_intent_name }}
-      </router-link>
-    </h2>
-    <div class="table-container">
-      <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
-      <el-table :data="answers" class="answers_table" border style="width: 95%">
-        <el-table-column align="center" label="Name" prop="readableName" width="100" />
-        <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
-        <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text">
-          <template slot-scope="{row}">
-            <!-- When the editing mode is turned on: -->
-            <template v-if="row.edit">
-              <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
-            </template>
-            <!-- When the editing mode is turned off: -->
-            <template v-else>
-              <div class="text-input">
-                <span class="text-input">{{ row.text }}</span>
-              </div>
-            </template>
-            <!-- show the table with buttons only if it is not empty -->
-            <template v-if="row.buttons">
-              <!-- Table with buttons -->
-              <el-table :data="row.buttons" border style="width: 90%" stripe>
-                <!-- Column for the button title -->
-                <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
-                  <template slot-scope="{row}">
-                    <!-- If editing mode is on and the button has no type imBack -->
-                    <template v-if="row.edit">
-                      <!-- Show the current title in the textarea which can be edited-->
-                      <el-input v-model="row.title" type="textarea" autosize />
+  <div class="intent-element-container">
+    <template v-if="dataReady">
+      <h1>{{ $route.meta.title }}</h1>
+      <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
+        Weiterleitung in intent:
+        <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
+          {{ answerConfig.readable_redirect_to_intent_name }}
+        </router-link>
+      </h2>
+      <div class="table-container">
+        <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
+        <el-table :data="answers" class="answers_table" border style="width: 95%">
+          <el-table-column align="center" label="Name" prop="readableName" width="100" />
+          <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
+          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text">
+            <template slot-scope="{row}">
+              <!-- When the editing mode is turned on: -->
+              <template v-if="row.edit">
+                <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
+              </template>
+              <!-- When the editing mode is turned off: -->
+              <template v-else>
+                <div class="text-input">
+                  <span class="text-input">{{ row.text }}</span>
+                </div>
+              </template>
+              <!-- show the table with buttons only if it is not empty -->
+              <template v-if="row.buttons">
+                <!-- Table with buttons -->
+                <el-table :data="row.buttons" border style="width: 90%" stripe>
+                  <!-- Column for the button title -->
+                  <el-table-column align="center" label="Button Beschriftung" prop="title" width="350">
+                    <template slot-scope="{row}">
+                      <!-- If editing mode is on and the button has no type imBack -->
+                      <template v-if="row.edit">
+                        <!-- Show the current title in the textarea which can be edited-->
+                        <el-input v-model="row.title" type="textarea" autosize />
+                      </template>
+                      <!-- If editing mode is off -->
+                      <template v-else>
+                        <!-- show the current value -->
+                        <span>{{ row.title }}</span>
+                      </template>
                     </template>
-                    <!-- If editing mode is off -->
-                    <template v-else>
-                      <!-- show the current value -->
-                      <span>{{ row.title }}</span>
+                  </el-table-column>
+                  <!-- Column for the button value -->
+                  <el-table-column align="center" label="Button Wert" prop="value">
+                    <template slot-scope="{row}">
+                      <template v-if="row.edit && row.type != 'imBack'">
+                        <el-input v-model="row.value" type="textarea" autosize />
+                      </template>
+                      <template v-else>
+                        <span>{{ row.value }}</span>
+                      </template>
                     </template>
-                  </template>
-                </el-table-column>
-                <!-- Column for the button value -->
-                <el-table-column align="center" label="Button Wert" prop="value">
-                  <template slot-scope="{row}">
-                    <template v-if="row.edit && row.type != 'imBack'">
-                      <el-input v-model="row.value" type="textarea" autosize />
+                  </el-table-column>
+                  <!-- Column for the button type -->
+                  <el-table-column align="center" label="Button Typ" prop="type" width="130">
+                    <template slot-scope="{row}">
+                      <span>{{ row.type }}</span>
                     </template>
-                    <template v-else>
-                      <span>{{ row.value }}</span>
-                    </template>
-                  </template>
-                </el-table-column>
-                <!-- Column for the button type -->
-                <el-table-column align="center" label="Button Typ" prop="type" width="130">
-                  <template slot-scope="{row}">
-                    <span>{{ row.type }}</span>
-                  </template>
-                </el-table-column>
-              </el-table>
+                  </el-table-column>
+                </el-table>
+              </template>
             </template>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" width="280">
-          <template slot-scope="{row}">
-            <!-- When the editing mode is turned on: -->
-            <template v-if="row.edit">
-              <el-button
-                class="confirm-btn"
-                size="small"
-                icon="el-icon-download"
-                @click="confirmEdit(row)"
-              >
-                Speichern
-              </el-button>
-              <el-button
-                class="cancel-btn"
-                size="small"
-                icon="el-icon-refresh"
-                @click="cancelEdit(row)"
-              >
-                Abbrechen
-              </el-button>
+          </el-table-column>
+          <el-table-column align="center" width="280">
+            <template slot-scope="{row}">
+              <!-- When the editing mode is turned on: -->
+              <template v-if="row.edit">
+                <el-button
+                  class="confirm-btn"
+                  size="small"
+                  icon="el-icon-download"
+                  @click="confirmEdit(row)"
+                >
+                  Speichern
+                </el-button>
+                <el-button
+                  class="cancel-btn"
+                  size="small"
+                  icon="el-icon-refresh"
+                  @click="cancelEdit(row)"
+                >
+                  Abbrechen
+                </el-button>
+              </template>
+              <!-- When the editing mode is turned off: -->
+              <template v-else>
+                <el-button
+                  class="edit-btn"
+                  size="small"
+                  icon="el-icon-edit"
+                  @click="toggleEdit(row)"
+                >
+                  Bearbeiten
+                </el-button>
+              </template>
             </template>
-            <!-- When the editing mode is turned off: -->
-            <template v-else>
-              <el-button
-                class="edit-btn"
-                size="small"
-                icon="el-icon-edit"
-                @click="toggleEdit(row)"
-              >
-                Bearbeiten
-              </el-button>
-            </template>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+          </el-table-column>
+        </el-table>
+      </div>
+    </template>
   </div>
 </template>
 
