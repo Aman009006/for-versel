@@ -65,6 +65,7 @@ export default {
     img {
       width: 70px;
       height: 70px;
+      max-width: 100%;
     }
   }
 }
