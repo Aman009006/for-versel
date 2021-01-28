@@ -52,6 +52,22 @@ const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
+    // set the order of the routes:
+    const order = [
+      '/',
+      '/skills',
+      '/jira',
+      '/snippet',
+    ]
+    state.routes.sort((route1, route2) => {
+      const { path: path1 } = route1
+      const { path: path2 } = route2
+      if (order.indexOf(path1) > order.indexOf(path2)) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
   }
 }
 
@@ -74,7 +90,7 @@ export async function getDynamicSkillsWithIntents() {
     component: Layout,
     name: 'Skills and intents',
     meta: {
-      title: 'Skills and intents', icon: 'chart'
+      title: 'Dialoge', icon: 'chart'
     },
     children: []
   }
