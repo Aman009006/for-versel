@@ -7,11 +7,13 @@
         </el-col>
         <el-col :span="24" :sm="20">
           <h1>Willkommen zurück auf Ihrer Admin UI!</h1>
-          Es handelt sich hierbei eine <strong>Beta-Version</strong> unserer
-          Admin UI. Die wesentlichen Funktionen sind bereits implementiert, die
-          vollumfängliche Entwicklung der einzelnen Funktionen ist jedoch noch
-          nicht abgeschlossen. Daher ist uns für die Weiterentwicklung und
-          Optimierung unserer Admin UI Ihr Feedback besonders wichtig!
+          Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
+          Ändern von Textbausteinen und möchten Sie mit der Navigation der
+          graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
+          eine Beta-Version. Die wesentlichen Funktionen sind bereits
+          implementiert, die vollumfängliche Entwicklung der einzelnen
+          Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
+          Feedback für die Weiterentwicklung und Optimierung besonders wichtig!
           <p>Ihr Chatbot Team :)</p>
         </el-col>
       </el-row>
@@ -26,10 +28,17 @@
           />
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
-          <image-text-link-box
-            text="Antworttexte und Buttons bearbeiten"
-            :image="pics.editAnswersPic"
-          />
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Klicken Sie in der linken Navigation auf den Bereich 'Dialoge' und wählen Sie einen Dialog aus."
+            placement="top"
+          >
+            <image-text-link-box
+              text="Antworttexte und Buttons bearbeiten"
+              :image="pics.editAnswersPic"
+            />
+          </el-tooltip>
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
@@ -58,7 +67,7 @@ import manualPic from "@/assets/images/Bedienungsanleitung.svg";
 import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
 import chatbotTestPic from "@/assets/images/ChatbotTest.svg";
 import feedbackPic from "@/assets/images/Feedback.svg";
-import { links } from '@/constants'
+import { links } from "@/constants";
 
 export default {
   name: "Dashboard",
@@ -70,17 +79,17 @@ export default {
         manualPic,
         editAnswersPic,
         chatbotTestPic,
-        feedbackPic
+        feedbackPic,
       },
       chatbotLink: null,
-      jiraHelpDesk: links.jiraHelpDesk
+      jiraHelpDesk: links.jiraHelpDesk,
     };
   },
   computed: {
     ...mapGetters(["roles"]),
   },
   async created() {
-    const { avatar_link, customer } = await getCustomerMetaData()
+    const { avatar_link, customer } = await getCustomerMetaData();
     this.avatar_link = avatar_link;
     this.chatbotLink = `https://cdn.stadtwerk.bot/chatbotdev/${customer}/`;
   },
