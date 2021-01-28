@@ -16,26 +16,71 @@
         </el-col>
       </el-row>
     </div>
+    <div class="linkbox-container">
+      <el-row :gutter="20">
+        <el-col :span="12" :lg="6" :xs="24">
+          <image-text-link-box
+            link="https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/57803205/Bedienungsanleitung+Admin+UI"
+            text="Bedienungs&shy;anleitung lesen"
+            :image="pics.manualPic"
+          />
+        </el-col>
+        <el-col :span="12" :lg="6" :xs="24">
+          <image-text-link-box
+            text="Antworttexte und Buttons bearbeiten"
+            :image="pics.editAnswersPic"
+          />
+        </el-col>
+        <el-col :span="12" :lg="6" :xs="24">
+          <image-text-link-box
+            text="Chatbot ansehen und überprüfen"
+            :image="pics.chatbotTestPic"
+            :link="chatbotLink"
+          />
+        </el-col>
+        <el-col :span="12" :lg="6" :xs="24">
+          <image-text-link-box
+            text="Kontakt aufnehmen / Feedback geben"
+            :image="pics.feedbackPic"
+            link="https://hsagbpo.atlassian.net/servicedesk/customer/portal/8/user/login?destination=portal%2F8"
+          />
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { getCustomerMetaData } from "@/api/customer";
+import ImageTextLinkBox from "@/components/ImageTextLinkBox";
+import manualPic from "@/assets/images/Bedienungsanleitung.svg";
+import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
+import chatbotTestPic from "@/assets/images/ChatbotTest.svg";
+import feedbackPic from "@/assets/images/Feedback.svg";
 
 export default {
   name: "Dashboard",
-  components: {},
+  components: { ImageTextLinkBox },
   data() {
     return {
       avatar_link: null,
+      pics: {
+        manualPic,
+        editAnswersPic,
+        chatbotTestPic,
+        feedbackPic
+      },
+      chatbotLink: null
     };
   },
   computed: {
     ...mapGetters(["roles"]),
   },
   async created() {
-    this.avatar_link = (await getCustomerMetaData()).avatar_link;
+    const { avatar_link, customer } = await getCustomerMetaData()
+    this.avatar_link = avatar_link;
+    this.chatbotLink = `https://cdn.stadtwerk.bot/chatbotdev/${customer}/`;
   },
 };
 </script>
@@ -55,6 +100,7 @@ export default {
   .description {
     background-color: white;
     padding: 15px 25px;
+    margin-bottom: 20px;
     @media (max-width: $--sm) {
       padding: 5px 15px;
     }
@@ -80,6 +126,12 @@ export default {
     h1 {
       margin-top: 0px;
       font-size: 20px;
+    }
+  }
+
+  .linkbox-container {
+    > .el-row > .el-col {
+      margin-bottom: 15px;
     }
   }
 }
