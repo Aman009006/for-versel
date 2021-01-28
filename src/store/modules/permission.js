@@ -90,7 +90,7 @@ export async function getDynamicSkillsWithIntents() {
     component: Layout,
     name: 'Skills and intents',
     meta: {
-      title: 'Dialoge', icon: 'chart'
+      title: 'Dialoge', icon: 'el-icon-s-comment'
     },
     children: []
   }

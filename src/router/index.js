@@ -69,7 +69,7 @@ export const constantRoutes = [
         path: 'home',
         component: () => import('@/views/dashboard/index'),
         name: 'Home',
-        meta: { title: 'Home', icon: 'user', affix: true }
+        meta: { title: 'Home', icon: 'el-icon-s-home', affix: true }
       }
     ]
   },
@@ -96,7 +96,7 @@ export const constantRoutes = [
         path: 'snippet',
         component: () => import('@/views/snippet'),
         name: 'snippet',
-        meta: { title: 'Snippet', icon: 'example', affix: true }
+        meta: { title: 'Snippet', icon: 'el-icon-link', affix: true }
       }
     ]
   },
@@ -106,7 +106,7 @@ export const constantRoutes = [
     children: [
       {
         path: links.jiraHelpDesk,
-        meta: { title: 'JIRA Service Desk', icon: 'message' }
+        meta: { title: 'JIRA Service Desk', icon: 'el-icon-question' }
       }
     ]
   }
