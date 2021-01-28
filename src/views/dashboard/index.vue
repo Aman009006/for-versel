@@ -14,42 +14,42 @@
           implementiert, die vollumfängliche Entwicklung der einzelnen
           Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
           Feedback für die Weiterentwicklung und Optimierung besonders wichtig!
-          <p>Ihr Chatbot Team :)</p>
+          <p><span style=" color:#0DA4F0; font-weight: bold;">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
         </el-col>
       </el-row>
     </div>
     <div class="linkbox-container">
       <el-row :gutter="20">
-        <el-col :span="12" :lg="6" :xs="24">
+        <el-col class="1" :span="12" :lg="6" :xs="24">
           <image-text-link-box
             link="https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/57803205/Bedienungsanleitung+Admin+UI"
             text="Bedienungs&shy;anleitung lesen"
             :image="pics.manualPic"
           />
         </el-col>
-        <el-col :span="12" :lg="6" :xs="24">
+        <el-col class="editDialogButton" :span="12" :lg="6" :xs="24">
           <el-tooltip
             class="item"
             effect="dark"
-            content="Klicken Sie in der linken Navigation auf den Bereich 'Dialoge' und wählen Sie einen Dialog aus."
+            content="Dieser Button wird in Kürze aktiviert! Um Dialoge zu bearbeiten klicken Sie bitte in der linken Navigation auf den Bereich 'Dialoge' und wählen Sie im Drop-down Menü den zu bearbeitenden Dialog aus."
             placement="top"
           >
             <image-text-link-box
-              text="Antworttexte und Buttons bearbeiten"
+              text="Dialoge editieren"
               :image="pics.editAnswersPic"
             />
           </el-tooltip>
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
-            text="Chatbot ansehen und überprüfen"
+            text="Änderung ansehen und prüfen"
             :image="pics.chatbotTestPic"
             :link="chatbotLink"
           />
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
-            text="Kontakt aufnehmen / Feedback geben"
+            text="Feedback geben"
             :image="pics.feedbackPic"
             :link="jiraHelpDesk"
           />
@@ -139,6 +139,10 @@ export default {
       font-size: 20px;
     }
   }
+  .editDialogButton {
+    opacity: 0.6;
+  }
+  .item {  border-radius: 20px;}
 
   .linkbox-container {
     > .el-row > .el-col {
