@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { links } from '@/constants'
 
 Vue.use(Router)
 
@@ -100,11 +101,11 @@ export const constantRoutes = [
     ]
   },
   {
-    path: 'external-link',
+    path: '/jira',
     component: Layout,
     children: [
       {
-        path: 'https://hsagbpo.atlassian.net/servicedesk/customer/portal/8',
+        path: links.jiraHelpDesk,
         meta: { title: 'JIRA Service Desk', icon: 'message' }
       }
     ]

@@ -42,7 +42,7 @@
           <image-text-link-box
             text="Kontakt aufnehmen / Feedback geben"
             :image="pics.feedbackPic"
-            link="https://hsagbpo.atlassian.net/servicedesk/customer/portal/8/user/login?destination=portal%2F8"
+            :link="jiraHelpDesk"
           />
         </el-col>
       </el-row>
@@ -58,6 +58,7 @@ import manualPic from "@/assets/images/Bedienungsanleitung.svg";
 import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
 import chatbotTestPic from "@/assets/images/ChatbotTest.svg";
 import feedbackPic from "@/assets/images/Feedback.svg";
+import { links } from '@/constants'
 
 export default {
   name: "Dashboard",
@@ -71,7 +72,8 @@ export default {
         chatbotTestPic,
         feedbackPic
       },
-      chatbotLink: null
+      chatbotLink: null,
+      jiraHelpDesk: links.jiraHelpDesk
     };
   },
   computed: {
