@@ -6,7 +6,7 @@
           <img :src="avatar_link" />
         </el-col>
         <el-col :span="24" :sm="20">
-          <h1>Willkommen zurück auf Ihrer Admin UI!</h1>
+          <h1>Willkommen auf Ihrer Admin UI!</h1>
           Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
           Ändern von Textbausteinen und möchten Sie mit der Navigation der
           graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
