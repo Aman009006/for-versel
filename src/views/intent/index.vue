@@ -2,9 +2,13 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
-      <h3>Beispielutterances:</h3>
-      <template v-if="getUtterances && getUtterances[0]">
-        <div>{{ getUtterances[0] }}</div>
+      <template v-if="utterances && utterances[0]">
+        <h4>Beispielutterances:</h4>
+        <div class="utterances">
+          <div v-for="item in utterances" :key="item">
+            {{ item }}
+          </div>
+        </div>
       </template>
       <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
         Weiterleitung in intent:
@@ -134,7 +138,7 @@ export default {
   },
    computed: {
      // try to use the data from the state
-    getUtterances() {
+    utterances() {
       const searchedIntent = this.$route.meta.title
       const skillsWithIntents = this.$store.getters.skillsWithIntents
       for (const next of skillsWithIntents) {
@@ -287,19 +291,16 @@ $white: #ffffff8c;
   }
 }
 
+.utterances {
+  font-style: italic;
+}
+
 .redirectionMessage {
-  color: red
+  color: red;
 }
 
 .redirectionMessage a {
-  text-decoration: underline
-}
-
-.edit-input{
-  // padding-right: 250px;
-}
-.text-input{
-  // padding-right: 130px;
+  text-decoration: underline;
 }
 
 .cancel-btn {
