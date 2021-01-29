@@ -1,7 +1,7 @@
 <template>
   <div class="intent-element-container">
     <template v-if="dataReady">
-      <h1>{{ $route.meta.title }}</h1>
+      <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
         <el-col :md="20" :span="24">
           <el-alert
@@ -10,14 +10,14 @@
             show-icon
             :closable="false"
           >
-            <p>Dieser Intent wird weitergeleitet auf "{{ answerConfig.readable_redirect_to_intent_name }}".</p>
+            <p>Dieser Intent wird weitergeleitet auf <span style="font-weight:bold;">"{{ answerConfig.readable_redirect_to_intent_name }}"</span>.</p>
             <p>
               Bitte Beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
               Daher können Sie die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des Antworttextes klicken Sie bitte auf den Button
-              "Weiterleitung folgen".
+              <span style="font-weight:bold;">"Weiterleitung folgen"</span>.
             </p>
             <p>
-              Sie können diesen Intent über unseren Support aktivieren lassen. Benutzen Sie hierzu bitte den Button "Intent aktivieren".
+              Sie können diesen Intent über unseren Support aktivieren lassen. Benutzen Sie hierzu bitte den Button <span style="font-weight:bold;">"Intent aktivieren"</span>.
             </p>
           </el-alert>
         </el-col>
@@ -278,6 +278,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 $grey: #8080807a;
 $white: #ffffff8c;
 
@@ -356,4 +357,5 @@ $white: #ffffff8c;
   color: black;
   background-color: white;
 }
+
 </style>

@@ -5,16 +5,16 @@
         <el-col :span="24" :sm="2" :lg="1">
           <img :src="avatar_link" />
         </el-col>
-        <el-col :span="24" :sm="20">
+        <el-col class="text" :span="24" :sm="20">
           <h1>Willkommen auf Ihrer Admin UI!</h1>
-          Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
-          Ändern von Textbausteinen und möchten Sie mit der Navigation der
-          graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
-          eine Beta-Version. Die wesentlichen Funktionen sind bereits
-          implementiert, die vollumfängliche Entwicklung der einzelnen
-          Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
-          Feedback für die Weiterentwicklung und Optimierung besonders wichtig!
-          <p><span style=" color:#0DA4F0; font-weight: bold;">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
+          <span style="font-size:14px">Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
+            Ändern von Textbausteinen und möchten Sie mit der Navigation der
+            graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
+            eine Beta-Version. Die wesentlichen Funktionen sind bereits
+            implementiert, die vollumfängliche Entwicklung der einzelnen
+            Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
+            Feedback für die Weiterentwicklung und Optimierung besonders wichtig!</span>
+          <p style="font-size:14px"><span style=" color:#0DA4F0; font-weight: bold;">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
         </el-col>
       </el-row>
     </div>
@@ -112,6 +112,7 @@ export default {
     background-color: white;
     padding: 15px 25px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     @media (max-width: $--sm) {
       padding: 5px 15px;
     }
@@ -136,7 +137,7 @@ export default {
 
     h1 {
       margin-top: 0px;
-      font-size: 20px;
+      font-size: 18px;
     }
   }
   .editDialogButton {
@@ -145,9 +146,13 @@ export default {
   .item {  border-radius: 20px;}
 
   .linkbox-container {
+    font-size:14px;
+
     > .el-row > .el-col {
       margin-bottom: 15px;
     }
   }
 }
+
+.text{margin-left: 15px;}
 </style>
