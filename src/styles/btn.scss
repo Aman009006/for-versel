@@ -97,3 +97,30 @@
   font-size: 14px;
   border-radius: 4px;
 }
+
+.el-button {
+  font-weight: bold;
+  a {
+    text-decoration: none !important;
+  }
+
+  &.link-button {
+    padding: 0;
+
+    a {
+      padding: 10px 20px;
+      display: block;
+    }
+  }
+}
+
+.el-button--warning {
+  color: $orange !important;
+  border-color: $orange !important;
+  border-width: 2px;
+}
+
+.el-button--default {
+  border: solid $--color-primary 2px;
+  color: $--color-primary;
+}

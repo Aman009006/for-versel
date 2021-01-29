@@ -1,0 +1,17 @@
+.el-alert {
+    align-items: start;
+
+    .el-alert__icon {
+        margin-top: 17px;
+    }
+}
+
+.el-alert--warning {
+
+    &,
+    * {
+        color: $orange;
+        font-size: 17px;
+        font-weight: bold;
+    }
+}

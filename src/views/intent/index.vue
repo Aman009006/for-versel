@@ -2,15 +2,41 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
-      <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
-        Weiterleitung in intent:
-        <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
-          {{ answerConfig.readable_redirect_to_intent_name }}
-        </router-link>
-      </h2>
+      <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
+        <el-col :span="20">
+          <el-alert
+            type="warning"
+            center
+            show-icon
+            :closable="false"
+          >
+            <p>Dieser Intent wird weitergeleitet auf "{{ answerConfig.readable_redirect_to_intent_name }}".</p>
+            <p>
+              Bitte Beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
+              Daher können Sie die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des Antworttextes klicken Sie bitte auf den Button
+              "Weiterleitung folgen".
+            </p>
+            <p>
+              Sie können diesen Intent über unseren Support aktivieren lassen. Benutzen Sie hierzu bitte den Button "Intent aktivieren".
+            </p>
+          </el-alert>
+        </el-col>
+        <el-col :span="4">
+          <!-- <el-button type="warning"> -->
+          <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}" tag="button" class="el-button el-button--warning el-button--medium">
+            Weiterleitung folgen
+          </router-link>
+          <!-- </el-button> -->
+          <el-button class="link-button">
+            <a :href="jiraHelpDesk" target="_blank">
+              Intent aktivieren
+            </a>
+          </el-button>
+        </el-col>
+      </el-row>
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
-        <el-table :data="answers" class="answers_table" border style="width: 95%">
+        <el-table :data="answers" class="answers_table" border>
           <el-table-column align="center" label="Identifikator" prop="readableName" width="110" />
           <el-table-column align="center" label="Beschreibung des Identifikators" prop="description" width="150" />
           <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
@@ -116,6 +142,8 @@
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
 import { setButtonProperties } from '@/api/answers'
+import { links } from '@/constants';
+
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
@@ -125,7 +153,8 @@ export default {
     return {
       dataReady: false,
       answers: [],
-      answerConfig: {}
+      answerConfig: {},
+      jiraHelpDesk: links.jiraHelpDesk
     }
   },
   async created() {
@@ -253,6 +282,7 @@ $grey: #8080807a;
 $white: #ffffff8c;
 
 .intent-element-container {
+  width: 94%;
   margin-left: 30px;
 }
 
@@ -264,16 +294,32 @@ $white: #ffffff8c;
     z-index: 2;
     position: absolute;
     background: linear-gradient(135deg, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white);
-    width: 95%;
   }
 }
 
 .redirectionMessage {
-  color: red
-}
+  color: red;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 
-.redirectionMessage a {
+  a {
   text-decoration: underline
+  }
+
+  .el-col-4 {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      // width: 100%;
+      margin-left: 0px;
+      &:first-child{
+        margin-bottom: 20px;
+        height: 65px;
+      }
+    }
+  }
 }
 
 .edit-input{
