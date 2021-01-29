@@ -105,13 +105,13 @@ export async function getDynamicSkillsWithIntents() {
       },
       children: []
     })
-    skillWithIntent.IntentNames.forEach(intentName => {
+    skillWithIntent.Intents.forEach(intent => {
       route.children[route.children.length - 1].children.push({
-        path: encodePathComponent(intentName),
+        path: encodePathComponent(intent.name),
         component: () => import('@/views/intent/index'),
-        name: `intent-${intentName}`,
+        name: `intent-${intent.name}`,
         meta: {
-          title: `${intentName}`
+          title: `${intent.name}`
         }
       })
     })
