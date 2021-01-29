@@ -316,6 +316,7 @@ $white: #ffffff8c;
 
     button {
       margin-left: 0px;
+      white-space: normal;
       &:first-child{
         margin-bottom: 20px;
         height: 65px;
@@ -331,31 +332,28 @@ $white: #ffffff8c;
   // padding-right: 130px;
 }
 
+.cancel-btn,
+.confirm-btn,
+.edit-btn {
+  border-radius:9px!important;
+  border-color: black;
+  margin-left: 0px;
+  width: 100%;
+  + button {
+    margin-top: 5px;
+  }
+}
+
 .cancel-btn {
-  position: absolute;
-  right: 10px;
-  top: 60px;
   color: white;
   background-color:rgb(204, 58, 58);
-  border-radius:9px!important;
-  border-color: black;
 }
 .confirm-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
   color: white;
   background-color: rgb(17, 121, 206);
-  border-radius:9px!important;
-  border-color: black;
 }
 .edit-btn {
-  position: absolute;
-  right: 10px;
-  top: 6px;
   color: black;
   background-color: white;
-  border-radius:9px!important;
-  border-color: black;
 }
 </style>
