@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import { authorizedBackendUrl } from '@/utils/backendUrl'
 
 /**
- * @returns {{ SkillName: string; IntentNames: string[]; }[]}
+ * @returns {{ SkillName: string; Intents: Intent[]; }[]}
  */
 export async function getSkillsWithIntents() {
   // extract domain in const

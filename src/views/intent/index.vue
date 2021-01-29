@@ -3,7 +3,7 @@
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
       <h3>Beispielutterances:</h3>
-      <div>Bespiel 1</div>
+      <div>{{ skillArrLen }}</div>
       <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
         Weiterleitung in intent:
         <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
@@ -128,6 +128,12 @@ export default {
       dataReady: false,
       answers: [],
       answerConfig: {}
+    }
+  },
+   computed: {
+     // try to use the data from the state
+    skillArrLen() {
+      return this.$store.getters.skillsWithIntents.length
     }
   },
   async created() {

@@ -39,7 +39,8 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  skillsWithIntents: []
 }
 
 const mutations = {
@@ -68,6 +69,9 @@ const mutations = {
         return -1;
       }
     });
+  },
+  SET_SKILLS_WITH_INTENTS: (state, skillsWithIntents) => {
+    state.skillsWithIntents = skillsWithIntents
   }
 }
 
@@ -112,7 +116,7 @@ export async function getDynamicSkillsWithIntents() {
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`
-        }
+        },
       })
     })
   })
@@ -136,6 +140,12 @@ const actions = {
         resolve(allAdditionalRoutes)
       })
     })
+  },
+  async setSkillsWithIntents({ commit }) {
+    // get skills and intents from the DB
+    const skillsWithIntents = await getSkillsWithIntents()
+    // save the data in the state
+    commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
   }
 }
 
