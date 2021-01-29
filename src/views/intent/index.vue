@@ -2,15 +2,41 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
-      <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
-        Weiterleitung in intent:
-        <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
-          {{ answerConfig.readable_redirect_to_intent_name }}
-        </router-link>
-      </h2>
+      <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
+        <el-col :md="20" :span="24">
+          <el-alert
+            type="warning"
+            center
+            show-icon
+            :closable="false"
+          >
+            <p>Dieser Intent wird weitergeleitet auf "{{ answerConfig.readable_redirect_to_intent_name }}".</p>
+            <p>
+              Bitte Beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
+              Daher können Sie die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des Antworttextes klicken Sie bitte auf den Button
+              "Weiterleitung folgen".
+            </p>
+            <p>
+              Sie können diesen Intent über unseren Support aktivieren lassen. Benutzen Sie hierzu bitte den Button "Intent aktivieren".
+            </p>
+          </el-alert>
+        </el-col>
+        <el-col :md="4" :span="24" class="buttonContainer">
+          <!-- <el-button type="warning"> -->
+          <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}" tag="button" class="el-button el-button--warning el-button--medium">
+            Weiterleitung folgen
+          </router-link>
+          <!-- </el-button> -->
+          <el-button class="link-button">
+            <a :href="jiraHelpDesk" target="_blank">
+              Intent aktivieren
+            </a>
+          </el-button>
+        </el-col>
+      </el-row>
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
-        <el-table :data="answers" class="answers_table" border style="width: 95%">
+        <el-table :data="answers" class="answers_table" border>
           <el-table-column align="center" label="Identifikator" prop="readableName" width="110" />
           <el-table-column align="center" label="Beschreibung des Identifikators" prop="description" width="150" />
           <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
@@ -116,6 +142,8 @@
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
 import { setButtonProperties } from '@/api/answers'
+import { links } from '@/constants';
+
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: 'Intent',
@@ -125,7 +153,8 @@ export default {
     return {
       dataReady: false,
       answers: [],
-      answerConfig: {}
+      answerConfig: {},
+      jiraHelpDesk: links.jiraHelpDesk
     }
   },
   async created() {
@@ -253,7 +282,7 @@ $grey: #8080807a;
 $white: #ffffff8c;
 
 .intent-element-container {
-  margin-left: 30px;
+  padding: 0px 15px;
 }
 
 .table-container {
@@ -263,17 +292,37 @@ $white: #ffffff8c;
     height: 100%;
     z-index: 2;
     position: absolute;
-    background: linear-gradient(135deg, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white);
-    width: 95%;
+    background-color: rgb(239 239 239 / 77%);
   }
 }
 
 .redirectionMessage {
-  color: red
-}
+  color: red;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 
-.redirectionMessage a {
+  a {
   text-decoration: underline
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 350px;
+    margin-top: 15px;
+
+    button {
+      margin-left: 0px;
+      white-space: normal;
+      &:first-child{
+        margin-bottom: 20px;
+        height: 65px;
+      }
+    }
+  }
 }
 
 .edit-input{
@@ -283,31 +332,28 @@ $white: #ffffff8c;
   // padding-right: 130px;
 }
 
+.cancel-btn,
+.confirm-btn,
+.edit-btn {
+  border-radius:9px!important;
+  border-color: black;
+  margin-left: 0px;
+  width: 100%;
+  + button {
+    margin-top: 5px;
+  }
+}
+
 .cancel-btn {
-  position: absolute;
-  right: 10px;
-  top: 60px;
   color: white;
   background-color:rgb(204, 58, 58);
-  border-radius:9px!important;
-  border-color: black;
 }
 .confirm-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
   color: white;
   background-color: rgb(17, 121, 206);
-  border-radius:9px!important;
-  border-color: black;
 }
 .edit-btn {
-  position: absolute;
-  right: 10px;
-  top: 6px;
   color: black;
   background-color: white;
-  border-radius:9px!important;
-  border-color: black;
 }
 </style>
