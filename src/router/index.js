@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { links } from '@/constants'
 
 Vue.use(Router)
 
@@ -68,7 +69,7 @@ export const constantRoutes = [
         path: 'home',
         component: () => import('@/views/dashboard/index'),
         name: 'Home',
-        meta: { title: 'Home', icon: 'user', affix: true }
+        meta: { title: 'Home', icon: 'el-icon-s-home', affix: true }
       }
     ]
   },
@@ -95,17 +96,17 @@ export const constantRoutes = [
         path: 'snippet',
         component: () => import('@/views/snippet'),
         name: 'snippet',
-        meta: { title: 'Snippet', icon: 'example', affix: true }
+        meta: { title: 'Snippet', icon: 'el-icon-link', affix: true }
       }
     ]
   },
   {
-    path: 'external-link',
+    path: '/jira',
     component: Layout,
     children: [
       {
-        path: 'https://hsagbpo.atlassian.net/servicedesk/customer/portal/8',
-        meta: { title: 'JIRA Service Desk', icon: 'message' }
+        path: links.jiraHelpDesk,
+        meta: { title: 'JIRA Service Desk', icon: 'el-icon-question' }
       }
     ]
   }
