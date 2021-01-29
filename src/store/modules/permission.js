@@ -87,6 +87,7 @@ export function encodePathComponent(pathComponent) {
  * translated into a vue - readable form
  */
 export async function getDynamicSkillsWithIntents() {
+  // TODO: refactor, do not load the skills here again but get from the state
   const skillsWithIntents = await getSkillsWithIntents()
   const routes = []
   const route = {

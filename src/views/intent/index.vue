@@ -3,7 +3,9 @@
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
       <h3>Beispielutterances:</h3>
-      <div>{{ skillArrLen }}</div>
+      <template v-if="getUtterances && getUtterances[0]">
+        <div>{{ getUtterances[0] }}</div>
+      </template>
       <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
         Weiterleitung in intent:
         <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
@@ -132,8 +134,17 @@ export default {
   },
    computed: {
      // try to use the data from the state
-    skillArrLen() {
-      return this.$store.getters.skillsWithIntents.length
+    getUtterances() {
+      const searchedIntent = this.$route.meta.title
+      const skillsWithIntents = this.$store.getters.skillsWithIntents
+      for (const next of skillsWithIntents) {
+        for (const intent of next.Intents) {
+          if (intent.name === searchedIntent) {
+            return intent.utterances
+          }
+        }
+      }
+      return null
     }
   },
   async created() {
