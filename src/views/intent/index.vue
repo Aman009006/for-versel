@@ -293,7 +293,7 @@ $white: #ffffff8c;
     height: 100%;
     z-index: 2;
     position: absolute;
-    background: linear-gradient(135deg, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white, $grey, $white);
+    background-color: rgb(239 239 239 / 77%);
   }
 }
 
