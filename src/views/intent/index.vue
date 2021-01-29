@@ -3,7 +3,7 @@
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
-        <el-col :span="20">
+        <el-col :md="20" :span="24">
           <el-alert
             type="warning"
             center
@@ -21,7 +21,7 @@
             </p>
           </el-alert>
         </el-col>
-        <el-col :span="4">
+        <el-col :md="4" :span="24" class="buttonContainer">
           <!-- <el-button type="warning"> -->
           <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}" tag="button" class="el-button el-button--warning el-button--medium">
             Weiterleitung folgen
@@ -282,8 +282,7 @@ $grey: #8080807a;
 $white: #ffffff8c;
 
 .intent-element-container {
-  width: 94%;
-  margin-left: 30px;
+  padding: 0px 15px;
 }
 
 .table-container {
@@ -301,18 +300,21 @@ $white: #ffffff8c;
   color: red;
   margin-bottom: 20px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 
   a {
   text-decoration: underline
   }
 
-  .el-col-4 {
+  .buttonContainer {
     display: flex;
     flex-direction: column;
+    max-width: 350px;
+    margin-top: 15px;
 
     button {
-      // width: 100%;
       margin-left: 0px;
       &:first-child{
         margin-bottom: 20px;
