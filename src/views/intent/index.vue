@@ -2,6 +2,8 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
+      <h3>Beispielutterances:</h3>
+      <div>Bespiel 1</div>
       <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
         Weiterleitung in intent:
         <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}">
