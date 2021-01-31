@@ -350,15 +350,34 @@ $white: #ffffff8c;
   background-color:#f78989 !important;
   border-color: #f78989 !important;
 }
+
+.cancel-btn:hover {
+  color: white !important;
+  background-color:#f72d2d !important;
+  border-color: #f72d2d !important;
+}
+
 .confirm-btn {
   color: white !important;
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
 }
+
+.confirm-btn:hover {
+  color: white !important;
+  background-color: #57c71f !important;
+  border-color: #57c71f !important;
+}
+
 .edit-btn {
   border: solid rgb(21, 173, 255) 2px !important;
   color:white!important;
   background-color: rgb(21, 173, 255) !important;
+}
+.edit-btn:hover {
+  border: solid rgb(2, 126, 192) 2px !important;
+  color:white!important;
+  background-color: rgb(2, 126, 192) !important;
 }
 
 </style>
