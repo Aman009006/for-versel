@@ -347,37 +347,37 @@ $white: #ffffff8c;
 
 .cancel-btn {
   color: white !important;
-  background-color:#f78989 !important;
-  border-color: #f78989 !important;
+  background-color:#fa4c4c!important;
+  border-color: #fa4c4c !important;
 }
 
 .cancel-btn:hover {
   color: white !important;
-  background-color:#f72d2d !important;
-  border-color: #f72d2d !important;
+  background-color: #f78989 !important;
+  border-color: #f78989 !important;
 }
 
 .confirm-btn {
   color: white !important;
-  background-color: #85ce61 !important;
-  border-color: #85ce61 !important;
+  background-color: #63c731 !important;
+  border-color: #63c731 !important;
 }
 
 .confirm-btn:hover {
   color: white !important;
-  background-color: #57c71f !important;
-  border-color: #57c71f !important;
+  background-color:#85ce61 !important;
+  border-color: #85ce61 !important;
 }
 
 .edit-btn {
-  border: solid rgb(21, 173, 255) 2px !important;
+  border: solid #409eff 2px !important;
   color:white!important;
-  background-color: rgb(21, 173, 255) !important;
+  background-color: #409eff !important;
 }
 .edit-btn:hover {
-  border: solid rgb(2, 126, 192) 2px !important;
+  border: solid #66b1ff 2px !important;
   color:white!important;
-  background-color: rgb(2, 126, 192) !important;
+  background-color: #66b1ff !important;
 }
 
 </style>
