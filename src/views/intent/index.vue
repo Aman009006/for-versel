@@ -337,8 +337,8 @@ $white: #ffffff8c;
 .confirm-btn,
 .edit-btn {
   border-radius:9px!important;
-  border-color: black;
-  margin-left: 0px;
+  // border-color: black;
+  margin-left: 0px !important;
   width: 100%;
   + button {
     margin-top: 5px;
@@ -346,16 +346,19 @@ $white: #ffffff8c;
 }
 
 .cancel-btn {
-  color: white;
-  background-color:rgb(204, 58, 58);
+  color: white !important;
+  background-color:#f78989 !important;
+  border-color: #f78989 !important;
 }
 .confirm-btn {
-  color: white;
-  background-color: rgb(17, 121, 206);
+  color: white !important;
+  background-color: #85ce61 !important;
+  border-color: #85ce61 !important;
 }
 .edit-btn {
-  color: black;
-  background-color: white;
+  border: solid rgb(21, 173, 255) 2px !important;
+  color:white!important;
+  background-color: rgb(21, 173, 255) !important;
 }
 
 </style>

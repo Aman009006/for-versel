@@ -100,6 +100,7 @@
 
 .el-button {
   font-weight: bold;
+  cursor: pointer;
   a {
     text-decoration: none !important;
   }
@@ -115,13 +116,26 @@
 }
 
 .el-button--warning {
+  cursor: pointer;
   color: $orange !important;
   border-color: $orange !important;
-  border-width: 2px;
+  border-width: 2px !important;
   background-color:  $--color-warning-lighter !important;
+  font-weight: bold !important;
+}
+
+.el-button--warning:hover {
+  color: white !important;
+  background-color:  $orange !important;
+  font-weight: bold !important;
 }
 
 .el-button--default {
-  border: solid $--color-primary 2px;
+  border: solid $--color-primary 2px !important;
   color: $--color-primary;
+}
+
+.link-button{
+  color: $--color-primary !important;
+  font-weight: bold !important;
 }

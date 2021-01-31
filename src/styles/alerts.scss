@@ -1,8 +1,8 @@
 .el-alert {
-    align-items: start;
+    align-items: start !important;
 
     .el-alert__icon {
-        margin-top: 12px;
+        margin-top: 12px !important;
     }
 }
 
@@ -15,4 +15,5 @@
         font-weight: normal;
     }
 }
+
 
