@@ -2,8 +2,9 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1>{{ $route.meta.title }}</h1>
+      <h2>{{ $route.meta.description }}</h2>
       <template v-if="utterances && utterances[0]">
-        <h4>Beispielutterances:</h4>
+        <div>Beispielangaben:</div>
         <div class="utterances">
           <div v-for="item in utterances" :key="item">
             {{ item }}

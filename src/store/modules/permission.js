@@ -116,7 +116,8 @@ export async function getDynamicSkillsWithIntents() {
         component: () => import('@/views/intent/index'),
         name: `intent-${intent.name}`,
         meta: {
-          title: `${intent.name}`
+          title: `${intent.name}`,
+          description: `${intent.description}`
         },
       })
     })
