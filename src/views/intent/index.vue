@@ -2,6 +2,15 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
+      <div>{{ $route.meta.description }}</div>
+      <template v-if="utterances && utterances[0]">
+        <div>Beispielangaben:</div>
+        <ul class="utterances">
+          <li v-for="item in utterances" :key="item">
+            {{ item }}
+          </li>
+        </ul>
+      </template>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
         <el-col :md="20" :span="24">
           <el-alert
@@ -158,6 +167,21 @@ export default {
       jiraHelpDesk: links.jiraHelpDesk
     }
   },
+   computed: {
+     // try to use the data from the state
+    utterances() {
+      const searchedIntent = this.$route.meta.title
+      const skillsWithIntents = this.$store.getters.skillsWithIntents
+      for (const next of skillsWithIntents) {
+        for (const intent of next.Intents) {
+          if (intent.name === searchedIntent) {
+            return intent.utterances
+          }
+        }
+      }
+      return null
+    }
+  },
   async created() {
     /**
      * Fetch the data when the view is created
@@ -298,6 +322,9 @@ $white: #ffffff8c;
   }
 }
 
+.utterances {
+  font-style: italic;
+}
 .redirectionMessage {
   color: red;
   margin-bottom: 20px;
@@ -327,11 +354,8 @@ $white: #ffffff8c;
   }
 }
 
-.edit-input{
-  // padding-right: 250px;
-}
-.text-input{
-  // padding-right: 130px;
+.redirectionMessage a {
+  text-decoration: underline;
 }
 
 .cancel-btn,

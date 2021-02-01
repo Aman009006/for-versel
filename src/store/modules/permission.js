@@ -39,7 +39,8 @@ export function filterAsyncRoutes(routes, roles) {
 
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  skillsWithIntents: []
 }
 
 const mutations = {
@@ -68,6 +69,9 @@ const mutations = {
         return -1;
       }
     });
+  },
+  SET_SKILLS_WITH_INTENTS: (state, skillsWithIntents) => {
+    state.skillsWithIntents = skillsWithIntents
   }
 }
 
@@ -83,6 +87,7 @@ export function encodePathComponent(pathComponent) {
  * translated into a vue - readable form
  */
 export async function getDynamicSkillsWithIntents() {
+  // TODO: refactor, do not load the skills here again but get from the state
   const skillsWithIntents = await getSkillsWithIntents()
   const routes = []
   const route = {
@@ -105,14 +110,15 @@ export async function getDynamicSkillsWithIntents() {
       },
       children: []
     })
-    skillWithIntent.IntentNames.forEach(intentName => {
+    skillWithIntent.Intents.forEach(intent => {
       route.children[route.children.length - 1].children.push({
-        path: encodePathComponent(intentName),
+        path: encodePathComponent(intent.name),
         component: () => import('@/views/intent/index'),
-        name: `intent-${intentName}`,
+        name: `intent-${intent.name}`,
         meta: {
-          title: `${intentName}`
-        }
+          title: `${intent.name}`,
+          description: `${intent.description}`
+        },
       })
     })
   })
@@ -136,6 +142,12 @@ const actions = {
         resolve(allAdditionalRoutes)
       })
     })
+  },
+  async setSkillsWithIntents({ commit }) {
+    // get skills and intents from the DB
+    const skillsWithIntents = await getSkillsWithIntents()
+    // save the data in the state
+    commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
   }
 }
 
