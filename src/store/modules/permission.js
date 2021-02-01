@@ -127,21 +127,18 @@ export async function getDynamicSkillsWithIntents() {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  async generateRoutes({ commit }, roles) {
     // add dynamic routes here
-    return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      getDynamicSkillsWithIntents().then(additionalRoutes => {
-        const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
-        commit('SET_ROUTES', allAdditionalRoutes)
-        resolve(allAdditionalRoutes)
-      })
-    })
+    let accessedRoutes
+    if (roles.includes('admin')) {
+      accessedRoutes = asyncRoutes || []
+    } else {
+      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+    }
+    const additionalRoutes = await getDynamicSkillsWithIntents()
+    const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
+    commit('SET_ROUTES', allAdditionalRoutes)
+    return allAdditionalRoutes
   },
   async setSkillsWithIntents({ commit }) {
     // get skills and intents from the DB
