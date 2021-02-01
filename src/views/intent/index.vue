@@ -26,7 +26,7 @@
               <span style="font-weight:bold;">"Weiterleitung folgen"</span>.
             </p>
             <p>
-              Sie können diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <span style="font-weight:bold;">"Support kontaktieren"</span>.
+              Aktuell können diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <br /><span style="font-weight:bold;">Feature Info:</span> In Kürze wird die Intent Aktivierung per Klick über die Admin UI möglich sein.
             </p>
 
           </el-alert>
@@ -39,7 +39,7 @@
           <!-- </el-button> -->
           <el-button class="link-button">
             <a :href="jiraHelpDesk" target="_blank">
-              Intent aktivieren
+              Support kontaktieren
             </a>
           </el-button>
         </el-col>
