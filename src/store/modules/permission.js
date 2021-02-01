@@ -86,9 +86,7 @@ export function encodePathComponent(pathComponent) {
  * the skills and intents are pulled from the database and
  * translated into a vue - readable form
  */
-export async function getDynamicSkillsWithIntents() {
-  // TODO: refactor, do not load the skills here again but get from the state
-  const skillsWithIntents = await getSkillsWithIntents()
+export function getDynamicSkillsWithIntents(skillsWithIntents) {
   const routes = []
   const route = {
     path: '/skills',
@@ -135,7 +133,8 @@ const actions = {
     } else {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
-    const additionalRoutes = await getDynamicSkillsWithIntents()
+    const skillsWithIntents = await getSkillsWithIntents()
+    const additionalRoutes = getDynamicSkillsWithIntents(skillsWithIntents)
     const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
