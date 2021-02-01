@@ -146,28 +146,40 @@ export default {
   .editDialogButton {
     opacity: 0.6;
   }
-  .item {  border-radius: 20px;}
+  .item {border-radius: 20px;}
 
   .linkbox-container {
     font-size:14px;
-
     > .el-row > .el-col {
       margin-bottom: 15px;
     }
   }
 
   .manuelButton:hover{
-    background-color:#bbdcff;
+    border: solid 2px #40a0ff;
+    .text{color:#40a0ff;}
+  }
+
+  .manuelButton{
+    border: solid 2px #F2F6FC;
   }
 
   .seeChangesButton:hover{
-    background-color:#bbdcff;
+    border: solid 2px #40a0ff;
+    .text{color:#40a0ff;}
+  }
+
+  .seeChangesButton{
+    border: solid 2px #F2F6FC;
   }
 
 .giveFeedbackButton:hover{
-  background-color:#bbdcff;
+  border: solid 2px #40a0ff;
+    .text{color:#40a0ff;}
 }
-
+ .giveFeedbackButton{
+    border: solid 2px #F2F6FC;
+  }
 }
 
 .text{margin-left: 15px;}
