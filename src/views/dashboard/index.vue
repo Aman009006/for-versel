@@ -20,8 +20,9 @@
     </div>
     <div class="linkbox-container">
       <el-row :gutter="20">
-        <el-col class="1" :span="12" :lg="6" :xs="24">
+        <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
+            class="manuelButton"
             link="https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/57803205/Bedienungsanleitung+Admin+UI"
             text="Bedienungs&shy;anleitung lesen"
             :image="pics.manualPic"
@@ -42,6 +43,7 @@
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
+            class="seeChangesButton"
             text="Änderung ansehen und prüfen"
             :image="pics.chatbotTestPic"
             :link="chatbotLink"
@@ -49,6 +51,7 @@
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
+            class="giveFeedbackButton"
             text="Feedback geben"
             :image="pics.feedbackPic"
             :link="jiraHelpDesk"
@@ -152,6 +155,19 @@ export default {
       margin-bottom: 15px;
     }
   }
+
+  .manuelButton:hover{
+    background-color:#bbdcff;
+  }
+
+  .seeChangesButton:hover{
+    background-color:#bbdcff;
+  }
+
+.giveFeedbackButton:hover{
+  background-color:#bbdcff;
+}
+
 }
 
 .text{margin-left: 15px;}
