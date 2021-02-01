@@ -168,12 +168,13 @@ export default {
     }
   },
    computed: {
-     // try to use the data from the state
     utterances() {
       const searchedIntent = this.$route.meta.title
+      // use the data from the store
       const skillsWithIntents = this.$store.getters.skillsWithIntents
       for (const next of skillsWithIntents) {
         for (const intent of next.Intents) {
+          // find the current intent and get its utterances
           if (intent.name === searchedIntent) {
             return intent.utterances
           }
