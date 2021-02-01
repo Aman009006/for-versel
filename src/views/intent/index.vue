@@ -17,8 +17,9 @@
               <span style="font-weight:bold;">"Weiterleitung folgen"</span>.
             </p>
             <p>
-              Sie können diesen Intent über unseren Support aktivieren lassen. Benutzen Sie hierzu bitte den Button <span style="font-weight:bold;">"Intent aktivieren"</span>.
+              Sie können diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <span style="font-weight:bold;">"Support kontaktieren"</span>.
             </p>
+
           </el-alert>
         </el-col>
         <el-col :md="4" :span="24" class="buttonContainer">
