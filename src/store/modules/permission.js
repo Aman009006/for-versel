@@ -83,8 +83,8 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
- * the skills and intents are pulled from the database and
- * translated into a vue - readable form
+ * Make the routes for the given skills and intents
+ * and fill in the corresponding Vues.
  */
 export function getDynamicSkillsWithIntents(skillsWithIntents) {
   const routes = []
@@ -133,17 +133,15 @@ const actions = {
     } else {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
-    const skillsWithIntents = await getSkillsWithIntents()
-    const additionalRoutes = getDynamicSkillsWithIntents(skillsWithIntents)
-    const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
-    commit('SET_ROUTES', allAdditionalRoutes)
-    return allAdditionalRoutes
-  },
-  async setSkillsWithIntents({ commit }) {
     // get skills and intents from the DB
     const skillsWithIntents = await getSkillsWithIntents()
     // save the data in the state
     commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
+
+    const additionalRoutes = getDynamicSkillsWithIntents(skillsWithIntents)
+    const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
+    commit('SET_ROUTES', allAdditionalRoutes)
+    return allAdditionalRoutes
   }
 }
 
