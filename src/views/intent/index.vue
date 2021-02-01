@@ -5,11 +5,11 @@
       <h2>{{ $route.meta.description }}</h2>
       <template v-if="utterances && utterances[0]">
         <div>Beispielangaben:</div>
-        <div class="utterances">
-          <div v-for="item in utterances" :key="item">
+        <ul class="utterances">
+          <li v-for="item in utterances" :key="item">
             {{ item }}
-          </div>
-        </div>
+          </li>
+        </ul>
       </template>
       <h2 v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage">
         Weiterleitung in intent:
