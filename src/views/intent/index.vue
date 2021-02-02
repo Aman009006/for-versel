@@ -21,12 +21,12 @@
           >
             <p>Dieser Intent wird weitergeleitet auf <span style="font-weight:bold;">"{{ answerConfig.readable_redirect_to_intent_name }}"</span>.</p>
             <p>
-              Bitte Beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
+              Bitte beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
               Daher können Sie die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des Antworttextes klicken Sie bitte auf den Button
               <span style="font-weight:bold;">"Weiterleitung folgen"</span>.
             </p>
             <p>
-              Aktuell können diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <br /><span style="font-weight:bold;">Feature Info:</span> In Kürze wird die Intent Aktivierung per Klick über die Admin UI möglich sein.
+              Aktuell können Sie diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <br /><span style="font-weight:bold;">Feature Info:</span> In Kürze wird die Intent Aktivierung per Klick über die Admin UI möglich sein.
             </p>
 
           </el-alert>
