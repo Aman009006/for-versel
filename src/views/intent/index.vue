@@ -4,7 +4,7 @@
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
       <div>{{ $route.meta.description }}</div>
       <template v-if="utterances && utterances[0]">
-        <div>Beispielangaben:</div>
+        <h5>Beispielangaben:</h5>
         <ul class="utterances">
           <li v-for="item in utterances" :key="item">
             {{ item }}
