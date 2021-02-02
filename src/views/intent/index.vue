@@ -4,7 +4,7 @@
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
       <div>{{ $route.meta.description }}</div>
       <template v-if="utterances && utterances[0]">
-        <div>Beispielangaben:</div>
+        <h5 class="utterancesTitle">Beispieleingaben:</h5>
         <ul class="utterances">
           <li v-for="item in utterances" :key="item">
             {{ item }}
@@ -104,7 +104,7 @@
                 </el-table>
               </template>
               <template v-else>
-                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center show-icon />
+                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center />
               </template>
             </template>
           </el-table-column>
@@ -168,12 +168,13 @@ export default {
     }
   },
    computed: {
-     // try to use the data from the state
     utterances() {
       const searchedIntent = this.$route.meta.title
+      // use the data from the store
       const skillsWithIntents = this.$store.getters.skillsWithIntents
       for (const next of skillsWithIntents) {
         for (const intent of next.Intents) {
+          // find the current intent and get its utterances
           if (intent.name === searchedIntent) {
             return intent.utterances
           }
@@ -322,7 +323,11 @@ $white: #ffffff8c;
   }
 }
 
+.utterancesTitle {
+  margin-bottom: 0px;
+}
 .utterances {
+  margin-top: 5px;
   font-style: italic;
 }
 .redirectionMessage {

@@ -83,12 +83,10 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
- * the skills and intents are pulled from the database and
- * translated into a vue - readable form
+ * Make the routes for the given skills and intents
+ * and fill in the corresponding Vues.
  */
-export async function getDynamicSkillsWithIntents() {
-  // TODO: refactor, do not load the skills here again but get from the state
-  const skillsWithIntents = await getSkillsWithIntents()
+export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
   const routes = []
   const route = {
     path: '/skills',
@@ -127,23 +125,23 @@ export async function getDynamicSkillsWithIntents() {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  async generateRoutes({ commit, state, dispatch }, roles) {
     // add dynamic routes here
-    return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      getDynamicSkillsWithIntents().then(additionalRoutes => {
-        const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
-        commit('SET_ROUTES', allAdditionalRoutes)
-        resolve(allAdditionalRoutes)
-      })
-    })
+    let accessedRoutes
+    if (roles.includes('admin')) {
+      accessedRoutes = asyncRoutes || []
+    } else {
+      accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+    }
+    // call the action which gets skills and intents from the DB and saves them in the state
+    await dispatch('setSkillsAndIntents')
+
+    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(state.skillsWithIntents)
+    const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
+    commit('SET_ROUTES', allAdditionalRoutes)
+    return allAdditionalRoutes
   },
-  async setSkillsWithIntents({ commit }) {
+  async setSkillsAndIntents({ commit }) {
     // get skills and intents from the DB
     const skillsWithIntents = await getSkillsWithIntents()
     // save the data in the state
