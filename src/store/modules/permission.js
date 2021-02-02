@@ -125,7 +125,7 @@ export function getDynamicSkillsWithIntents(skillsWithIntents) {
 }
 
 const actions = {
-  async generateRoutes({ commit }, roles) {
+  async generateRoutes({ commit, state }, roles) {
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -138,7 +138,7 @@ const actions = {
     // save the data in the state
     commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
 
-    const additionalRoutes = getDynamicSkillsWithIntents(skillsWithIntents)
+    const additionalRoutes = getDynamicSkillsWithIntents(state.skillsWithIntents)
     const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
