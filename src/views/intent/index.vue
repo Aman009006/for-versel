@@ -104,7 +104,7 @@
                 </el-table>
               </template>
               <template v-else>
-                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center show-icon />
+                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center />
               </template>
             </template>
           </el-table-column>
