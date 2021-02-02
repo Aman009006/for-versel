@@ -86,7 +86,7 @@ export function encodePathComponent(pathComponent) {
  * Make the routes for the given skills and intents
  * and fill in the corresponding Vues.
  */
-export function getDynamicSkillsWithIntents(skillsWithIntents) {
+export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
   const routes = []
   const route = {
     path: '/skills',
@@ -136,7 +136,7 @@ const actions = {
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch('setSkillsAndIntents')
 
-    const additionalRoutes = getDynamicSkillsWithIntents(state.skillsWithIntents)
+    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(state.skillsWithIntents)
     const allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
