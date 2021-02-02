@@ -4,7 +4,7 @@
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
       <div>{{ $route.meta.description }}</div>
       <template v-if="utterances && utterances[0]">
-        <h5>Beispieleingaben:</h5>
+        <h5 class="utterancesTitle">Beispieleingaben:</h5>
         <ul class="utterances">
           <li v-for="item in utterances" :key="item">
             {{ item }}
@@ -323,7 +323,11 @@ $white: #ffffff8c;
   }
 }
 
+.utterancesTitle {
+  margin-bottom: 0px;
+}
 .utterances {
+  margin-top: 5px;
   font-style: italic;
 }
 .redirectionMessage {
