@@ -101,6 +101,17 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/notes',
+    component: Layout,
+    children: [
+      {
+        path: links.releaseNotes,
+        meta: { title: 'Release notes', icon: 'el-icon-reading' }
+      }
+    ]
+  },
+
+  {
     path: '/jira',
     component: Layout,
     children: [
