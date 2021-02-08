@@ -330,6 +330,10 @@ $white: #ffffff8c;
   padding: 0px 15px;
 }
 
+.el-icon-info{
+  color: #66b1ff;
+}
+
 .table-container {
   position: relative;
   .disabled-layer {

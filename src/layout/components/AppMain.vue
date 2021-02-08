@@ -55,11 +55,14 @@ export default {
   }
 }
 .el-popover {
-    background: rgb(179, 224, 245) !important;
-    border: 1px solid #caced6;
-    border-radius: 10px;
+    background: rgb(5, 5, 5) !important;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: white !important;
+    font-size: 12px !important;
   }
   .el-popper[x-placement^=top] .popper__arrow::after {
-    border-top-color: rgb(179, 224, 245) !important;
+    border-top-color: rgb(0, 0, 0) !important;
   }
 </style>
