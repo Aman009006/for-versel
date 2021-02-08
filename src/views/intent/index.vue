@@ -47,7 +47,7 @@
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
         <el-table :data="answers" class="answers_table" border>
-          <el-table-column align="center" label="Identifikator" prop="readableName" width="110" />
+          <el-table-column :render-header="renderHeader" align="center" label="Identifikator" prop="readableName" width="110" />
           <el-table-column align="center" label="Beschreibung des Identifikators" prop="description" width="150" />
           <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
             <template slot-scope="{row}">
@@ -86,6 +86,15 @@
                   </el-table-column>
                   <!-- Column for the button value -->
                   <el-table-column align="center" label="Wert" prop="value">
+                    <template slot="header">
+                      <el-popover ref="fromPopOverValue" placement="top-start" width="220" trigger="hover">
+                        <span>
+                          Werte können nur bei Buttons mit dem Typ openUrl bearbeitet werden.
+                        </span>
+                      </el-popover>
+                      <span> Wert <i v-popover:fromPopOverValue class="el-icon-info" />
+                      </span>
+                    </template>
                     <template slot-scope="{row}">
                       <template v-if="row.edit && row.type != 'imBack'">
                         <el-input v-model="row.value" type="textarea" autosize />
@@ -97,6 +106,15 @@
                   </el-table-column>
                   <!-- Column for the button type -->
                   <el-table-column align="center" label="Typ" prop="type" width="80">
+                    <template slot="header">
+                      <el-popover ref="fromPopOverType" placement="top-start" width="220" trigger="hover">
+                        <span>
+                          Der Typ eines Buttons kann nicht geädert werden.
+                        </span>
+                      </el-popover>
+                      <span> Typ <i v-popover:fromPopOverType class="el-icon-info" />
+                      </span>
+                    </template>
                     <template slot-scope="{row}">
                       <span>{{ row.type }}</span>
                     </template>
