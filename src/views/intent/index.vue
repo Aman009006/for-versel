@@ -87,10 +87,10 @@
                   <!-- Column for the button value -->
                   <el-table-column align="center" label="Wert" prop="value">
                     <template slot="header">
-                      <el-popover ref="fromPopOverValue" placement="top-start" auto trigger="hover">
-                        <span>
+                      <el-popover ref="fromPopOverValue" placement="top-start" autosize trigger="hover">
+                        <div class="popOverContent">
                           Werte können nur bei <br />Buttons mit dem Typ<br /><strong>openUrl</strong> bearbeitet werden.
-                        </span>
+                        </div>
                       </el-popover>
                       <span> Wert <i v-popover:fromPopOverValue class="el-icon-info" />
                       </span>
@@ -107,10 +107,10 @@
                   <!-- Column for the button type -->
                   <el-table-column align="center" label="Typ" prop="type" width="80">
                     <template slot="header">
-                      <el-popover ref="fromPopOverType" placement="top-start" auto trigger="hover">
-                        <span>
+                      <el-popover ref="fromPopOverType" placement="top-start" autosize trigger="hover">
+                        <div class="popOverContent">
                           Der Typ eines <br /> Buttons kann <br /> <strong> nicht </strong> geändert <br /> werden.
-                        </span>
+                        </div>
                       </el-popover>
                       <span> Typ <i v-popover:fromPopOverType class="el-icon-info" />
                       </span>
@@ -381,6 +381,9 @@ $white: #ffffff8c;
   text-decoration: underline;
 }
 
+.popOverContent {
+    text-align:center;
+}
 .cancel-btn,
 .confirm-btn,
 .edit-btn {
