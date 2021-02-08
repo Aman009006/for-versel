@@ -54,4 +54,12 @@ export default {
     padding-right: 15px;
   }
 }
+.el-popover {
+    background: rgb(179, 224, 245) !important;
+    border: 1px solid #caced6;
+    border-radius: 10px;
+  }
+  .el-popper[x-placement^=top] .popper__arrow::after {
+    border-top-color: rgb(179, 224, 245) !important;
+  }
 </style>
