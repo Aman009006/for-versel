@@ -2,15 +2,18 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
-      <div>{{ $route.meta.description }}</div>
-      <template v-if="utterances && utterances[0]">
-        <h5 class="utterancesTitle">Beispieleingaben:</h5>
-        <ul class="utterances">
-          <li v-for="item in utterances" :key="item">
-            {{ item }}
-          </li>
-        </ul>
-      </template>
+      <div class="utteranceBox">
+        <h5 class="utterancesTitle">Beschreibung:</h5>
+        <div>{{ $route.meta.description }}</div>
+        <template v-if="utterances && utterances[0]">
+          <h5 class="utterancesTitle">Beispieleingaben:</h5>
+          <ul class="utterances">
+            <li v-for="item in utterances" :key="item">
+              {{ item }}
+            </li>
+          </ul>
+        </template>
+      </div>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
         <el-col :md="20" :span="24">
           <el-alert
@@ -28,7 +31,6 @@
             <p>
               Aktuell können Sie diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <br /><span style="font-weight:bold;">Feature Info:</span> In Kürze wird die Intent Aktivierung per Klick über die Admin UI möglich sein.
             </p>
-
           </el-alert>
         </el-col>
         <el-col :md="4" :span="24" class="buttonContainer">
@@ -345,13 +347,6 @@ $white: #ffffff8c;
   }
 }
 
-.utterancesTitle {
-  margin-bottom: 0px;
-}
-.utterances {
-  margin-top: 5px;
-  font-style: italic;
-}
 .redirectionMessage {
   color: red;
   margin-bottom: 20px;
@@ -433,6 +428,25 @@ $white: #ffffff8c;
   border: solid #66b1ff 2px !important;
   color:white!important;
   background-color: #66b1ff !important;
+}
+.utteranceBox {
+    background-color: white;
+    padding: 5px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    font-size: 14px;
+    color: #606266;
+}
+ .utterancesTitle{
+   font-size: 13px;
+   color: #409eff;
+   margin-bottom: 0px;
+   text-transform: uppercase;
+ }
+
+.utterances {
+  margin-top: 5px;
 }
 
 </style>
