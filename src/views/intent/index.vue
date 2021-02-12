@@ -336,6 +336,8 @@ $white: #ffffff8c;
   color: #66b1ff;
 }
 
+.el-table{font-size: 13px !important;}
+
 .table-container {
   position: relative;
   .disabled-layer {

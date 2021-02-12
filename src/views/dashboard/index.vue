@@ -14,7 +14,7 @@
             implementiert, die vollumfängliche Entwicklung der einzelnen
             Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
             Feedback für die Weiterentwicklung und Optimierung besonders wichtig!</span>
-          <p style="font-size:14px"><span style=" color:#0DA4F0; font-weight: bold;">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
+          <p style="font-size:14px"><span style=" color:#0DA4F0; font-weight: bold;text-transform: uppercase;font-size:13px">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
         </el-col>
       </el-row>
     </div>
@@ -119,7 +119,7 @@ export default {
     @media (max-width: $--sm) {
       padding: 5px 15px;
     }
-    border-radius: 20px;
+    border-radius: 4px;
 
     @media (max-width: $--sm - 1) {
       > * {
@@ -141,12 +141,13 @@ export default {
     h1 {
       margin-top: 0px;
       font-size: 18px;
+      color: #303133;
     }
   }
   .editDialogButton {
     opacity: 0.6;
   }
-  .item {border-radius: 20px;}
+  .item {border-radius: 4px;}
 
   .linkbox-container {
     font-size:14px;

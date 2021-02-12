@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
 .imageTextLinkBox {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 4px;
 
   height: 100%;
   display: flex;

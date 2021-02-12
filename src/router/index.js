@@ -106,7 +106,7 @@ export const constantRoutes = [
     children: [
       {
         path: links.releaseNotes,
-        meta: { title: 'Release notes', icon: 'el-icon-reading' }
+        meta: { title: 'Release Notes', icon: 'el-icon-reading' }
       }
     ]
   },
