@@ -60,6 +60,7 @@ const mutations = {
       '/jira',
       '/notes',
       '/snippet',
+      '/manual'
     ]
     state.routes.sort((route1, route2) => {
       const { path: path1 } = route1

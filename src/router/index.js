@@ -120,6 +120,16 @@ export const constantRoutes = [
         meta: { title: 'JIRA Service Desk', icon: 'el-icon-question' }
       }
     ]
+  },
+  {
+    path: '/manual',
+    component: Layout,
+    children: [
+      {
+        path: links.manual,
+        meta: { title: 'Bedienungsanleitung', icon: 'el-icon-reading' }
+      }
+    ]
   }
 ]
 
