@@ -127,7 +127,17 @@ export const constantRoutes = [
     children: [
       {
         path: links.manual,
-        meta: { title: 'Bedienungsanleitung', icon: 'el-icon-reading' }
+        meta: { title: 'Bedienungsanleitung', icon: 'icon_external_link' }
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    children: [
+      {
+        path: links.manual,
+        meta: { title: 'KPI Dashboard', icon: 'icon_external_link' }
       }
     ]
   }
