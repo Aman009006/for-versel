@@ -130,16 +130,6 @@ export const constantRoutes = [
         meta: { title: 'Bedienungsanleitung', icon: 'icon_external_link' }
       }
     ]
-  },
-  {
-    path: '/dashboard',
-    component: Layout,
-    children: [
-      {
-        path: links.manual,
-        meta: { title: 'KPI Dashboard', icon: 'icon_external_link' }
-      }
-    ]
   }
 ]
 
