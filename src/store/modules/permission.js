@@ -166,11 +166,14 @@ const actions = {
 
     // get the powerBI link from the DB for the current customer
     const { powerBI_link } = await getCustomerMetaData()
-    // make dynamic route for the powerBI Daashboard
-    const powerBIRoute = makeURLRouteForPowerBI(powerBI_link)
+    let powerBIRoute
+    if (powerBI_link) {
+      // make dynamic route for the powerBI Daashboard
+      powerBIRoute = makeURLRouteForPowerBI(powerBI_link)
+      // add it to the existing dynamic routes
+      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
+    }
 
-    // add it to the existing dynamic routes
-    allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
   },
