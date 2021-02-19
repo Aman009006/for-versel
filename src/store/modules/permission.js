@@ -59,9 +59,9 @@ const mutations = {
     const order = [
       '/',
       '/skills',
+      '/snippet',
       '/jira',
       '/notes',
-      '/snippet',
       '/manual',
       '/powerBI'
     ]

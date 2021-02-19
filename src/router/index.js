@@ -106,7 +106,7 @@ export const constantRoutes = [
     children: [
       {
         path: links.releaseNotes,
-        meta: { title: 'Release Notes', icon: 'el-icon-reading' }
+        meta: { title: 'Release Notes', icon: 'external_link' }
       }
     ]
   },
@@ -117,7 +117,7 @@ export const constantRoutes = [
     children: [
       {
         path: links.jiraHelpDesk,
-        meta: { title: 'JIRA Service Desk', icon: 'el-icon-question' }
+        meta: { title: 'JIRA Service Desk', icon: 'external_link' }
       }
     ]
   },
