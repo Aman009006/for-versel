@@ -129,6 +129,24 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
   return routes
 }
 
+/**
+ * @param powerBI_link is the given powerBI URL of the current customer.
+ * @return the route which redirects at the given PowerBI URL.
+ */
+export function makeURLRouteForPowerBI(powerBI_link) {
+  const powerBIRoute = {
+    path: '/powerBI',
+    component: Layout,
+    children: [
+      {
+      path: `${powerBI_link}`,
+      meta: { title: 'KPI Dashboard', icon: 'icon_external_link' }
+      }
+    ]
+  }
+  return powerBIRoute
+}
+
 const actions = {
   async generateRoutes({ commit, state, dispatch }, roles) {
     // add dynamic routes here
@@ -146,25 +164,13 @@ const actions = {
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
+    // get the powerBI link from the DB for the current customer
     const { powerBI_link } = await getCustomerMetaData()
-    console.log('Link:' + powerBI_link)
-    // const link = powerBI_link
-    const link = 'https://app.powerbi.com/groups/aaf839c8-bbf7-46d4-afb0-19832c9b8b1b/reports/7ec29e52-3f8b-4cd9-b518-5c008a90f198/ReportSection3f54145046b3409026bd'
     // make dynamic route for the powerBI Daashboard
-    const dashboardRoute = {
-      path: '/powerBI',
-      component: Layout,
-      children: [
-        {
-        path: `${link}`,
-        // path: 'https://app.powerbi.com/groups/aaf839c8-bbf7-46d4-afb0-19832c9b8b1b/reports/7ec29e52-3f8b-4cd9-b518-5c008a90f198/ReportSection3f54145046b3409026bd?ctid=58edcd46-9a0e-4d7f-9e4d-8da23bf52b1c&openReportSource=ReportInvitation',
-        meta: { title: 'KPI Dashboard', icon: 'icon_external_link' }
-        }
-      ]
-    }
+    const powerBIRoute = makeURLRouteForPowerBI(powerBI_link)
 
     // add it to the existing dynamic routes
-    allAdditionalRoutes = allAdditionalRoutes.concat(dashboardRoute)
+    allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
   },
