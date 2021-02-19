@@ -127,7 +127,7 @@ export const constantRoutes = [
     children: [
       {
         path: links.manual,
-        meta: { title: 'Bedienungsanleitung', icon: 'icon_external_link' }
+        meta: { title: 'Bedienungsanleitung', icon: 'external_link' }
       }
     ]
   }

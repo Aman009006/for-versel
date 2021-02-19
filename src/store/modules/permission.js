@@ -140,7 +140,7 @@ export function makeURLRouteForPowerBI(powerBI_link) {
     children: [
       {
       path: `${powerBI_link}`,
-      meta: { title: 'KPI Dashboard', icon: 'icon_external_link' }
+      meta: { title: 'KPI Dashboard', icon: 'external_link' }
       }
     ]
   }
