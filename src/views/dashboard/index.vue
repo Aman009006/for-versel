@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { getCustomerMetaData } from "@/api/customer";
 import ImageTextLinkBox from "@/components/ImageTextLinkBox";
 import manualPic from "@/assets/images/Bedienungsanleitung.svg";
@@ -87,9 +86,6 @@ export default {
       chatbotLink: null,
       jiraHelpDesk: links.jiraHelpDesk,
     };
-  },
-  computed: {
-    ...mapGetters(["roles"]),
   },
   async created() {
     const { avatar_link, customer } = await getCustomerMetaData();

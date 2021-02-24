@@ -58,6 +58,7 @@ export default {
     Search
   },
   computed: {
+    // maps store getters to local computed properties:
     ...mapGetters([
       'sidebar',
       'avatar',
