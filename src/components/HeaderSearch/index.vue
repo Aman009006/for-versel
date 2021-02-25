@@ -1,6 +1,10 @@
 <template>
-  <div :class="{'show':show}" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+  <div :class="{ show: show }" class="header-search">
+    <svg-icon
+      class-name="search-icon"
+      icon-class="search"
+      @click.stop="click"
+    />
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -12,80 +16,85 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option
+        v-for="item in options"
+        :key="item.path"
+        :value="item"
+        :label="item.title.join(' > ')"
+      />
     </el-select>
   </div>
 </template>
 
 <script>
 // Fuzzy searching finds strings that are approximately equal to a given pattern
-import Fuse from 'fuse.js'
-import { encodePathComponent } from '@/store/modules/permission'
-import path from 'path'
+import Fuse from "fuse.js";
+import { encodePathComponent } from "@/store/modules/permission";
+import path from "path";
 
 export default {
-  name: 'HeaderSearch',
+  name: "HeaderSearch",
   data() {
     return {
-      search: '',
+      search: "",
       options: [],
       searchPool: [],
       show: false,
-      fuse: undefined
-    }
+      fuse: undefined,
+    };
   },
   computed: {
     routes() {
-      return this.$store.getters.permission_routes
+      return this.$store.getters.permission_routes;
     },
     intentTexts() {
-      return this.$store.getters.skillsWithIntents
-    }
+      return this.$store.getters.skillsWithIntents;
+    },
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
   watch: {
     routes() {
-      this.searchPool = this.generateRoutes(this.routes)
+      this.searchPool = this.generateRoutes(this.routes);
     },
     intentTexts() {
       // the intentTexts can change over time (when texts are changed for example)
-      this.searchPool = this.generateRoutes(this.routes)
+      this.searchPool = this.generateRoutes(this.routes);
     },
     searchPool(list) {
-      this.initFuse(list)
+      this.initFuse(list);
     },
     show(value) {
       if (value) {
-        document.body.addEventListener('click', this.close)
+        document.body.addEventListener("click", this.close);
       } else {
-        document.body.removeEventListener('click', this.close)
+        document.body.removeEventListener("click", this.close);
       }
-    }
+    },
   },
   mounted() {
-    this.searchPool = this.generateRoutes(this.routes)
+    this.searchPool = this.generateRoutes(this.routes);
   },
   methods: {
     click() {
-      this.show = !this.show
+      this.show = !this.show;
       if (this.show) {
-        this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus()
+        this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus();
       }
     },
     close() {
-      this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur()
-      this.options = []
-      this.show = false
+      this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur();
+      this.options = [];
+      this.show = false;
     },
     change(val) {
-      this.$router.push(val.path)
-      this.search = ''
-      this.options = []
+      this.$router.push(val.path);
+      this.search = "";
+      this.options = [];
       // nextTick is a comfortable way to execute a function after the data has been set and the DOM has updated.
       this.$nextTick(() => {
         // Inside the callback, the DOM has been updated so we can interact with the “most updated” version of it.
-        this.show = false
-      })
+        this.show = false;
+      });
     },
     initFuse(list) {
       /**
@@ -115,67 +124,73 @@ export default {
          */
         minMatchCharLength: 1,
         // List of keys that will be searched.
-        keys: [
-          'title',
-          'path',
-          'texts.text',
-          'texts.buttons.title'
-        ]
-      })
+        keys: ["title", "path", "texts.text", "texts.buttons.title"],
+      });
     },
     findTextForRoute(router) {
       // add the texts for the intent
       const intentText = this.intentTexts
-        .map(intentText => intentText.Intents).flat()
+        .map((intentText) => intentText.Intents)
+        .flat()
         // intent - routes doesn't have children (right now)
-        .find(intentElement => encodePathComponent(intentElement.name) === router.path && router.children == null);
-        return intentText?.texts;
+        .find(
+          (intentElement) =>
+            encodePathComponent(intentElement.name) === router.path &&
+            router.children == null
+        );
+      return intentText?.texts;
     },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
-    generateRoutes(routes, basePath = '/', prefixTitle = []) {
-      let res = []
+    generateRoutes(routes, basePath = "/", prefixTitle = []) {
+      let res = [];
 
       for (const router of routes) {
         // skip hidden router
-        if (router.hidden) { continue }
+        if (router.hidden) {
+          continue;
+        }
 
         const data = {
           path: path.resolve(basePath, router.path),
           title: [...prefixTitle],
-          texts: this.findTextForRoute(router)
-        }
+          texts: this.findTextForRoute(router),
+        };
 
         if (router.meta && router.meta.title) {
-          data.title = [...data.title, router.meta.title]
+          data.title = [...data.title, router.meta.title];
 
-          if (router.redirect !== 'noRedirect') {
+          if (router.redirect !== "noRedirect") {
             // only push the routes with title
             // special case: need to exclude parent router without redirect
-            res.push(data)
+            res.push(data);
           }
         }
 
         // recursive child routes
         if (router.children) {
-          const tempRoutes = this.generateRoutes(router.children, data.path, data.title)
+          const tempRoutes = this.generateRoutes(
+            router.children,
+            data.path,
+            data.title
+          );
           if (tempRoutes.length >= 1) {
-            res = [...res, ...tempRoutes]
+            res = [...res, ...tempRoutes];
           }
         }
       }
-      return res
+      return res;
     },
     querySearch(query) {
-      if (query !== '') {
+      if (query !== "") {
         // get the result of the search
-        this.options = this.fuse.search(query)
+        this.options = this.fuse.search(query);
       } else {
-        this.options = []
+        this.options = [];
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
