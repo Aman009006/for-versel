@@ -20,6 +20,7 @@
 <script>
 // Fuzzy searching finds strings that are approximately equal to a given pattern
 import Fuse from 'fuse.js'
+import { encodePathComponent } from '@/store/modules/permission'
 import path from 'path'
 
 export default {
@@ -36,6 +37,9 @@ export default {
   computed: {
     routes() {
       return this.$store.getters.permission_routes
+    },
+    intentTexts() {
+      return this.$store.getters.skillsWithIntents
     }
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
@@ -107,15 +111,21 @@ export default {
          */
         minMatchCharLength: 1,
         // List of keys that will be searched.
-        keys: [{
-          name: 'title',
-          // weighted search
-          weight: 0.7
-        }, {
-          name: 'path',
-          weight: 0.3
-        }]
+        keys: [
+          'title',
+          'path',
+          'texts.text',
+          'texts.buttons.title'
+        ]
       })
+    },
+    findTextForRoute(router) {
+      // add the texts for the intent
+      const intentText = this.intentTexts
+        .map(intentText => intentText.Intents).flat()
+        // intent - routes doesn't have children (right now)
+        .find(intentElement => encodePathComponent(intentElement.name) === router.path && router.children == null);
+        return intentText?.texts;
     },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
@@ -128,7 +138,8 @@ export default {
 
         const data = {
           path: path.resolve(basePath, router.path),
-          title: [...prefixTitle]
+          title: [...prefixTitle],
+          texts: this.findTextForRoute(router)
         }
 
         if (router.meta && router.meta.title) {
