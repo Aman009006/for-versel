@@ -47,6 +47,9 @@ export default {
     routes() {
       this.searchPool = this.generateRoutes(this.routes)
     },
+    intentTexts() {
+      this.searchPool = this.generateRoutes(this.routes)
+    },
     searchPool(list) {
       this.initFuse(list)
     },

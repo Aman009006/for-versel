@@ -158,6 +158,8 @@ const actions = {
     }
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch('setSkillsAndIntents')
+    // get this informations in a defined interval. The answerTexts can change over time
+    setInterval(() => dispatch('setSkillsAndIntents'), 1000 * 60)
 
     // make dynamic routes for skills and intents
     const additionalRoutes = makeRoutesForGivenSkillsAndIntents(state.skillsWithIntents)
