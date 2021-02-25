@@ -137,8 +137,13 @@ export default {
       });
     },
     getSearchKeys() {
+      /**
+       * when no filter is selected, all filterElements should be treated
+       * as selected. Sometimes I don't understand user experience o.0
+       */
+      const relevantFilterElements = this.filteredElements.length ? this.filteredElements : this.filterElementOptions;
       return filterElementValues
-        .filter((el) => this.filteredElements.includes(el.label))
+        .filter((el) => relevantFilterElements.includes(el.label))
         .map((el) => el.searchKey);
     },
     initFuse() {
