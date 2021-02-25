@@ -5,6 +5,23 @@
       icon-class="search"
       @click.stop="click"
     />
+
+    <el-select
+      v-model="filteredElements"
+      collapse-tags
+      multiple
+      placeholder="Filter"
+      class="header-search-select"
+      @change="initFuse"
+    >
+      <el-option
+        v-for="item in filterElementOptions"
+        :key="item"
+        :label="item"
+        :value="item"
+      />
+    </el-select>
+
     <el-select
       ref="headerSearchSelect"
       v-model="search"
@@ -32,6 +49,25 @@ import Fuse from "fuse.js";
 import { encodePathComponent } from "@/store/modules/permission";
 import path from "path";
 
+const filterElementValues = [
+  {
+    label: "Intent",
+    searchKey: "title",
+  },
+  {
+    label: "Antworttext",
+    searchKey: "texts.text",
+  },
+  {
+    label: "Buttons",
+    searchKey: "texts.buttons.title",
+  },
+];
+
+const filterElementOptions = filterElementValues.map(
+  (filterElement) => filterElement.label
+);
+
 export default {
   name: "HeaderSearch",
   data() {
@@ -41,6 +77,8 @@ export default {
       searchPool: [],
       show: false,
       fuse: undefined,
+      filterElementOptions,
+      filteredElements: filterElementOptions,
     };
   },
   computed: {
@@ -60,8 +98,8 @@ export default {
       // the intentTexts can change over time (when texts are changed for example)
       this.searchPool = this.generateRoutes(this.routes);
     },
-    searchPool(list) {
-      this.initFuse(list);
+    searchPool() {
+      this.initFuse();
     },
     show(value) {
       if (value) {
@@ -96,12 +134,17 @@ export default {
         this.show = false;
       });
     },
-    initFuse(list) {
+    getSearchKeys() {
+      return filterElementValues
+        .filter((el) => this.filteredElements.includes(el.label))
+        .map((el) => el.searchKey);
+    },
+    initFuse() {
       /**
        * Fuse gets two arguments: list (collection where the search happens)
        * and options
        */
-      this.fuse = new Fuse(list, {
+      this.fuse = new Fuse(this.searchPool, {
         shouldSort: true,
         /**
          * Defines when the match algorithm gives up:
@@ -124,7 +167,7 @@ export default {
          */
         minMatchCharLength: 1,
         // List of keys that will be searched.
-        keys: ["title", "path", "texts.text", "texts.buttons.title"],
+        keys: this.getSearchKeys(),
       });
     },
     findTextForRoute(router) {
