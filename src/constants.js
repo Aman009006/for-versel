@@ -8,3 +8,10 @@ export const links = {
 export const paths = {
     skills: '/skills'
 }
+
+const setSkillsAndIntents = 'setSkillsAndIntents';
+
+export const dispatchNames = {
+    setSkillsAndIntents,
+    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents
+}

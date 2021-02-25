@@ -172,7 +172,7 @@
 import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
 import { setButtonProperties } from '@/api/answers'
-import { links } from '@/constants';
+import { links, dispatchNames } from '@/constants';
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
@@ -317,6 +317,8 @@ export default {
           message: 'Es wurden keine Änderungen gemacht',
           type: 'warning'
         })
+      } else {
+        this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified)
       }
     }
   }
