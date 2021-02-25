@@ -34,10 +34,10 @@
       @change="change"
     >
       <el-option
-        v-for="item in options"
-        :key="item.path"
-        :value="item"
-        :label="item.title.join(' > ')"
+        v-for="element in options"
+        :key="element.item.path"
+        :value="element.item"
+        v-html="getFoundElementHtml(element)"
       />
     </el-select>
   </div>
@@ -89,7 +89,7 @@ export default {
     },
     filterElementOptions() {
       return filterElementOptions;
-    }
+    },
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
   watch: {
@@ -175,6 +175,7 @@ export default {
         minMatchCharLength: 1,
         // List of keys that will be searched.
         keys: this.getSearchKeys(),
+        includeMatches: true,
       });
     },
     findTextForRoute(router) {
@@ -239,11 +240,42 @@ export default {
         this.options = [];
       }
     },
+    getFoundElementHtml(element) {
+      const match = element.matches[0];
+      const { title } = element.item;
+      // eslint-disable-next-line prefer-const
+      let [textIndex1, textIndex2] = match.indices[0];
+      textIndex2++;
+      /**
+       * the index in the array of the element that was found.
+       */
+      const foundTextArrayIndex = title.findIndex(
+        (_title) => _title === match.value
+      );
+      let pathText = "";
+      title.forEach((_title, i) => {
+        if (foundTextArrayIndex === i) {
+          // first part of the text
+          pathText += _title.substring(0, textIndex1)
+          // text that was found
+          pathText += `<span class="text-marker">${_title.substring(textIndex1, textIndex2)}</span>`
+          // last part of the text
+          pathText += _title.substring(textIndex2, _title.length)
+        } else {
+          pathText += _title
+        }
+        if (i < title.length - 1) {
+          pathText += ' > ';
+        }
+      });
+      return pathText;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
 .header-search {
   font-size: 0 !important;
 

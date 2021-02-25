@@ -1,4 +1,5 @@
 // base color
+$primary: #409EFF;
 $blue:#324157;
 $light-blue:#3A71A8;
 $red:#C03639;
@@ -12,7 +13,7 @@ $orange: #c06336;
 
 // sidebar
 $menuText:#bfcbd9;
-$menuActiveText:#409EFF;
+$menuActiveText:$primary;
 $subMenuActiveText:#f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
 $menuBg:#304156;
