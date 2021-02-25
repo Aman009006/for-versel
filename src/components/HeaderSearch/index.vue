@@ -77,7 +77,6 @@ export default {
       searchPool: [],
       show: false,
       fuse: undefined,
-      filterElementOptions,
       filteredElements: filterElementOptions,
     };
   },
@@ -88,6 +87,9 @@ export default {
     intentTexts() {
       return this.$store.getters.skillsWithIntents;
     },
+    filterElementOptions() {
+      return filterElementOptions;
+    }
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
   watch: {
