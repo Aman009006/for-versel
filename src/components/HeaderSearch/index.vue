@@ -48,6 +48,7 @@ export default {
       this.searchPool = this.generateRoutes(this.routes)
     },
     intentTexts() {
+      // the intentTexts can change over time (when texts are changed for example)
       this.searchPool = this.generateRoutes(this.routes)
     },
     searchPool(list) {
