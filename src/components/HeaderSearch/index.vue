@@ -270,6 +270,13 @@ export default {
     },
     markText(text, textIndex1, textIndex2) {
       let pathText = '';
+      if (textIndex1 > textIndex2) {
+        /**
+         * dont understand why this happens, but sometimes
+         * the first index is smaller than the second.
+         */
+        [textIndex1, textIndex2] = [textIndex2, textIndex1]
+      }
       // first part of the text
       pathText += text.substring(0, textIndex1)
       // text that was found
