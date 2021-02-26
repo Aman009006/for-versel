@@ -273,7 +273,7 @@ export default {
       if (textIndex1 > textIndex2) {
         /**
          * dont understand why this happens, but sometimes
-         * the first index is smaller than the second.
+         * the first index is greater than the second.
          */
         [textIndex1, textIndex2] = [textIndex2, textIndex1]
       }
