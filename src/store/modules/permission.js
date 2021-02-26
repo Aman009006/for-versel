@@ -3,6 +3,7 @@ import { getSkillsWithIntents } from '@/api/answers'
 import { getCustomerMetaData } from '@/api/customer'
 import Layout from '@/layout'
 import routerView from '@/views/routerView'
+import { paths } from '@/constants'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -94,7 +95,7 @@ export function encodePathComponent(pathComponent) {
 export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
   const routes = []
   const route = {
-    path: '/skills',
+    path: paths.skills,
     component: Layout,
     name: 'Skills and intents',
     meta: {
