@@ -1,0 +1,14 @@
+.el-select-dropdown {
+    .header-search-option {
+        height: auto;
+        min-height: 34px;
+        border-bottom: 1px solid $darkGrey;
+
+        .answer-text {
+            max-width: 400px;
+            white-space: normal;
+            line-height: normal;
+            font-size: 0.8em;
+        }
+    }
+}

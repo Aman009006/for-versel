@@ -37,6 +37,7 @@
         v-for="element in options"
         :key="element.item.path"
         :value="element.item"
+        class="header-search-option"
         v-html="getFoundElementHtml(element)"
       />
     </el-select>
@@ -49,19 +50,25 @@ import Fuse from "fuse.js";
 import { encodePathComponent } from "@/store/modules/permission";
 import path from "path";
 
-const filterElementValues = [
-  {
+const filterElementObject = {
+  intent: {
     label: "Intent",
     searchKey: "intent",
   },
-  {
+  answerText: {
     label: "Antworttext",
     searchKey: "texts.text",
   },
-  {
+  buttonTitle: {
     label: "Buttons",
     searchKey: "texts.buttons.title",
-  },
+  }
+}
+
+const filterElementValues = [
+  filterElementObject.intent,
+  filterElementObject.answerText,
+  filterElementObject.buttonTitle,
 ];
 
 const filterElementOptions = filterElementValues.map(
@@ -279,7 +286,7 @@ export default {
       );
       let pathText = "";
       title.forEach((_title, i) => {
-        if (foundTextArrayIndex === i) {
+        if (foundTextArrayIndex === i && match.key === filterElementObject.intent.searchKey) {
           // first part of the text
           pathText += _title.substring(0, textIndex1)
           // text that was found
@@ -293,6 +300,10 @@ export default {
           pathText += ' > ';
         }
       });
+      if (match.key === filterElementObject.answerText.searchKey) {
+        // add the text to the result - text
+        pathText += `<p class="answer-text"><strong>${filterElementObject.answerText.label}</strong>: ${match.value}</p>`
+      }
       return pathText;
     },
   },
