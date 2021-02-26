@@ -268,6 +268,16 @@ export default {
         this.options = [];
       }
     },
+    markText(text, textIndex1, textIndex2) {
+      let pathText = '';
+      // first part of the text
+      pathText += text.substring(0, textIndex1)
+      // text that was found
+      pathText += `<span class="text-marker">${text.substring(textIndex1, textIndex2)}</span>`
+      // last part of the text
+      pathText += text.substring(textIndex2, text.length)
+      return pathText;
+    },
     getFoundElementHtml(element) {
       const match = element.matches[0];
       const { title } = element.item;
@@ -287,12 +297,7 @@ export default {
       let pathText = "";
       title.forEach((_title, i) => {
         if (foundTextArrayIndex === i && match.key === filterElementObject.intent.searchKey) {
-          // first part of the text
-          pathText += _title.substring(0, textIndex1)
-          // text that was found
-          pathText += `<span class="text-marker">${_title.substring(textIndex1, textIndex2)}</span>`
-          // last part of the text
-          pathText += _title.substring(textIndex2, _title.length)
+          pathText += this.markText(_title, textIndex1, textIndex2)
         } else {
           pathText += _title
         }
@@ -302,7 +307,12 @@ export default {
       });
       if (match.key === filterElementObject.answerText.searchKey) {
         // add the text to the result - text
-        pathText += `<p class="answer-text"><strong>${filterElementObject.answerText.label}</strong>: ${match.value}</p>`
+        pathText += `
+        <p class="answer-text">
+          <strong>
+            ${filterElementObject.answerText.label}
+          </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
+        </p>`
       }
       return pathText;
     },
