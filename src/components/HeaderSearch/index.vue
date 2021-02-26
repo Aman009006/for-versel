@@ -178,7 +178,7 @@ export default {
          * A distance of 1000 would require a perfect match to be within 800 characters
          * of the location to be found using a threshold of 0.8.
          */
-        distance: 100, // default 100
+        distance: 5000, // default 100
         maxPatternLength: 32,
         /**
          * Only the matches whose length exceeds this value will be returned.
