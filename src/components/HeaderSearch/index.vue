@@ -265,7 +265,11 @@ export default {
       const match = element.matches[0];
       const { title } = element.item;
       // eslint-disable-next-line prefer-const
-      let [textIndex1, textIndex2] = match.indices[0];
+      // get the index with the longest distance from eachother
+      const distances = match.indices.map(index => index[1] - index[0]);
+      const arrayIndexOfHighestDistanceIndex = distances.indexOf(Math.max(...distances));
+      // eslint-disable-next-line prefer-const
+      let [textIndex1, textIndex2] = match.indices[arrayIndexOfHighestDistanceIndex];
       textIndex2++;
       /**
        * the index in the array of the element that was found.
