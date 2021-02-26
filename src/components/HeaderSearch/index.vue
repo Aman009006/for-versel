@@ -275,7 +275,7 @@ export default {
        * the index in the array of the element that was found.
        */
       const foundTextArrayIndex = title.findIndex(
-        (_title) => _title === match.value
+        (_title, i) => _title === match.value && i === this.intentArrayIndexInTitle
       );
       let pathText = "";
       title.forEach((_title, i) => {
