@@ -52,7 +52,7 @@ import path from "path";
 const filterElementValues = [
   {
     label: "Intent",
-    searchKey: "title",
+    searchKey: "intent",
   },
   {
     label: "Antworttext",
@@ -90,15 +90,18 @@ export default {
     filterElementOptions() {
       return filterElementOptions;
     },
+    intentArrayIndexInTitle() {
+      return 2;
+    },
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
   watch: {
     routes() {
-      this.searchPool = this.generateRoutes(this.routes);
+      this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     intentTexts() {
       // the intentTexts can change over time (when texts are changed for example)
-      this.searchPool = this.generateRoutes(this.routes);
+      this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     searchPool() {
       this.initFuse();
@@ -112,7 +115,7 @@ export default {
     },
   },
   mounted() {
-    this.searchPool = this.generateRoutes(this.routes);
+    this.searchPool = this.generateAndFilterRoutes(this.routes);
   },
   methods: {
     click() {
@@ -141,7 +144,9 @@ export default {
        * when no filter is selected, all filterElements should be treated
        * as selected. Sometimes I don't understand user experience o.0
        */
-      const relevantFilterElements = this.filteredElements.length ? this.filteredElements : this.filterElementOptions;
+      const relevantFilterElements = this.filteredElements.length
+        ? this.filteredElements
+        : this.filterElementOptions;
       return filterElementValues
         .filter((el) => relevantFilterElements.includes(el.label))
         .map((el) => el.searchKey);
@@ -178,16 +183,19 @@ export default {
         includeMatches: true,
       });
     },
+    checkIfRouteIsIntent(route) {
+      // intent - routes doesn't have children (right now)
+      return route.children == null;
+    },
     findTextForRoute(router) {
       // add the texts for the intent
       const intentText = this.intentTexts
         .map((intentText) => intentText.Intents)
         .flat()
-        // intent - routes doesn't have children (right now)
         .find(
           (intentElement) =>
             encodePathComponent(intentElement.name) === router.path &&
-            router.children == null
+            this.checkIfRouteIsIntent(router)
         );
       return intentText?.texts;
     },
@@ -230,6 +238,19 @@ export default {
           }
         }
       }
+      return res;
+    },
+    /**
+     * filters out the non intent - routes. We only want to find intents
+     */
+    generateAndFilterRoutes(routes) {
+      const generatedRoutes = this.generateRoutes(routes);
+      const res = generatedRoutes
+        .filter((route) => this.checkIfRouteIsIntent(route))
+        .map((route) => {
+          route.intent = route.title[this.intentArrayIndexInTitle];
+          return route;
+        });
       return res;
     },
     querySearch(query) {
@@ -275,7 +296,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .header-search {
   font-size: 0 !important;
 
