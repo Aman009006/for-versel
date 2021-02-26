@@ -29,7 +29,7 @@
       filterable
       default-first-option
       remote
-      placeholder="Search"
+      placeholder="Suche"
       class="header-search-select"
       @change="change"
     >
