@@ -305,12 +305,16 @@ export default {
           pathText += ' > ';
         }
       });
-      if (match.key === filterElementObject.answerText.searchKey) {
+      if (match.key === filterElementObject.answerText.searchKey || match.key === filterElementObject.buttonTitle.searchKey) {
+        let label = filterElementObject.answerText.label;
+        if (match.key === filterElementObject.buttonTitle.searchKey) {
+          label = filterElementObject.buttonTitle.label;
+        }
         // add the text to the result - text
         pathText += `
         <p class="answer-text">
           <strong>
-            ${filterElementObject.answerText.label}
+            ${label}
           </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
         </p>`
       }
