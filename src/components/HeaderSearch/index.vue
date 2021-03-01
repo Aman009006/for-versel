@@ -60,7 +60,7 @@ const filterElementObject = {
     searchKey: "texts.text",
   },
   buttonTitle: {
-    label: "Buttons",
+    label: "Button Name",
     searchKey: "texts.buttons.title",
   }
 }
