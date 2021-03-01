@@ -1,16 +1,20 @@
-.el-select-dropdown {
-    .header-search-option {
-        height: auto;
-        min-height: 34px;
-        border-bottom: 1px solid $darkGrey;
-        min-width: 810px !important;
+.header-search-popper {
+    .el-select-dropdown__wrap {
+        max-height: 550px;
 
-        .answer-text {
-            max-width: 400px;
-            white-space: normal;
-            line-height: normal;
-            font-size: 0.8em;
-            margin-top: 0px;
+        .header-search-option {
+            height: auto;
+            min-height: 34px;
+            border-bottom: 1px solid $darkGrey;
+            min-width: 810px !important;
+
+            .answer-text {
+                max-width: 400px;
+                white-space: normal;
+                line-height: normal;
+                font-size: 0.8em;
+                margin-top: 0px;
+            }
         }
     }
 }

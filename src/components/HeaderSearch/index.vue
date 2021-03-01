@@ -31,6 +31,7 @@
       remote
       placeholder="Suche"
       class="header-search-select"
+      popper-class="header-search-popper"
       @change="change"
     >
       <el-option
