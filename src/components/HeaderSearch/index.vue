@@ -86,6 +86,10 @@ export default {
       show: false,
       fuse: undefined,
       filteredElements: filterElementOptions,
+      /**
+       * the text that the user searches for
+       */
+      userQuery: ''
     };
   },
   computed: {
@@ -262,6 +266,7 @@ export default {
       return res;
     },
     querySearch(query) {
+      this.userQuery = query;
       if (query !== "") {
         // get the result of the search
         this.options = this.fuse.search(query);
@@ -287,7 +292,7 @@ export default {
       return pathText;
     },
     getFoundElementHtml(element) {
-      const match = element.matches[0];
+      const match = element.matches.find(el => el.value.includes(this.userQuery)) ?? element.matches[0];
       const { title } = element.item;
       // eslint-disable-next-line prefer-const
       // get the index with the longest distance from eachother
