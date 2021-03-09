@@ -164,11 +164,14 @@ export default {
         .map((el) => el.searchKey);
     },
     initFuse() {
+      this.fuse = this.getFuseInstance(this.searchPool, this.getSearchKeys())
+    },
+    getFuseInstance(searchPool, searchKeys) {
       /**
        * Fuse gets two arguments: list (collection where the search happens)
        * and options
        */
-      this.fuse = new Fuse(this.searchPool, {
+      return new Fuse(searchPool, {
         shouldSort: true,
         /**
          * Defines when the match algorithm gives up:
@@ -191,8 +194,8 @@ export default {
          */
         minMatchCharLength: 1,
         // List of keys that will be searched.
-        keys: this.getSearchKeys(),
-        includeMatches: true,
+        keys: searchKeys,
+        includeMatches: true
       });
     },
     checkIfRouteIsIntent(route) {
@@ -292,7 +295,10 @@ export default {
       return pathText;
     },
     getFoundElementHtml(element) {
-      const match = element.matches.find(el => el.value.includes(this.userQuery)) ?? element.matches[0];
+      // search the matches to get the scores
+      const fuseRes = this.getFuseInstance(element.matches, ['value']).search(this.userQuery);
+      // the items are sorted by scores. Get the element with the highest score
+      const match = fuseRes[0].item;
       const { title } = element.item;
       // eslint-disable-next-line prefer-const
       // get the index with the longest distance from eachother
