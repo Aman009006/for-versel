@@ -1,12 +1,13 @@
 <template>
   <aside>
-    <div>Hier müssen wir noch eine schöne Erklärung einfügen wie man das Chatbot-Snippet einbaut.</div>
+    <div>Hier wird in Kürze ein Chatbot-Snippet erscheinen, welches Sie auf Ihren Webseiten einbinden können.</div>
 
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>Chatbot-Snippet für Ihre Webseite</span>
       </div>
-      <span v-html="snippetCode1" /><br>
+      <span style="color:red"> [Beispiel Code-Snippet]</span><br />
+      <span v-html="snippetCode1" /><br />
       <span v-html="snippetCode2" />
     </el-card>
     <!--{{{&lt;script&gt;window.hsag_chatbot_variables={dev:!0}&lt;/script&gt;\n&lt;script src=\"https://cdn.h-s-a-g.de/chatbot/dev/demo-sie/scripts/main.js\"&gt;&lt;/script&gt;}}}-->
