@@ -8,7 +8,10 @@
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item disabled class="dropdown-headline">
-          Neue Intents
+          <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
+          <span v-if="newIntentRoutes.length == 0">
+            Es gibt aktuell keine Neuigkeiten
+          </span>
         </el-dropdown-item>
         <el-dropdown-item
           v-for="newIntent in newIntentRoutes"
