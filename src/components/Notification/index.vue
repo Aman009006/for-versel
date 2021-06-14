@@ -2,7 +2,7 @@
   <div class="right-menu-item">
     <el-dropdown @command="goToPath">
       <span class="el-dropdown-link">
-        <el-badge value="!" class="item" :hidden="newIntentRoutes.length == 0">
+        <el-badge :value="newIntentRoutes.length" class="item" :hidden="newIntentRoutes.length == 0">
           <i class="el-icon-message-solid" />
         </el-badge>
       </span>

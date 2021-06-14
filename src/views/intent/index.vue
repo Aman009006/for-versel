@@ -173,6 +173,8 @@ import { getAnswersforIntent } from '@/api/answers'
 import { setAnswerText } from '@/api/answers'
 import { setButtonProperties } from '@/api/answers'
 import { links, dispatchNames } from '@/constants';
+import refreshRoutes from "@/utils/routes/refreshRoutes";
+import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
@@ -201,7 +203,10 @@ export default {
         }
       }
       return null
-    }
+    },
+    permissionRoutes: function () {
+      return this.$store.getters.permission_routes;
+    },
   },
   async created() {
     /**
@@ -212,8 +217,16 @@ export default {
   },
   async mounted() {},
   methods: {
+    async refreshRoutesIfNewIntentWasClicked() {
+      const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
+      const routeNames = newIntentRoutes.map(intentRoute => intentRoute.name);
+      if (routeNames.includes(this.$route.name)) {
+        await refreshRoutes();
+      }
+    },
     async loadAnswers() {
       const answerInfo = await getAnswersforIntent(this.$route.meta.title)
+      this.refreshRoutesIfNewIntentWasClicked();
       this.answers = answerInfo.answers
       this.answerConfig = answerInfo.answerConfig
       for (const answer of this.answers) {
