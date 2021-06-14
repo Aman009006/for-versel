@@ -49,7 +49,7 @@
       <div class="table-container">
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
         <el-table :data="answers" class="answers_table" border>
-          <el-table-column :render-header="renderHeader" align="center" label="Identifikator" prop="readableName" width="110" />
+          <el-table-column align="center" label="Identifikator" prop="readableName" width="110" />
           <el-table-column align="center" label="Beschreibung des Identifikators" prop="description" width="150" />
           <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
             <template slot-scope="{row}">
