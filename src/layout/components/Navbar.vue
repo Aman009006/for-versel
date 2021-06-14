@@ -10,6 +10,8 @@
 
         <error-log class="errLog-container right-menu-item hover-effect" />
 
+        <notification />
+
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
@@ -47,6 +49,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import Notification from '@/components/Notification'
 
 export default {
   components: {
@@ -55,7 +58,8 @@ export default {
     ErrorLog,
     Screenfull,
     SizeSelect,
-    Search
+    Search,
+    Notification
   },
   computed: {
     // maps store getters to local computed properties:
