@@ -2,9 +2,14 @@
   <div class="right-menu-item">
     <el-dropdown @command="goToPath">
       <span class="el-dropdown-link">
-        <i class="el-icon-message-solid" />
+        <el-badge value="!" class="item" :hidden="newIntentRoutes.length == 0">
+          <i class="el-icon-message-solid" />
+        </el-badge>
       </span>
       <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item disabled class="dropdown-headline">
+          Neue Intents
+        </el-dropdown-item>
         <el-dropdown-item
           v-for="newIntent in newIntentRoutes"
           :key="newIntent.name"
@@ -52,5 +57,8 @@ export default {
 <style lang="scss" scoped>
 .el-dropdown-link {
   font-size: 18px;
+}
+.el-badge {
+  display: inline;
 }
 </style>
