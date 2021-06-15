@@ -102,6 +102,7 @@ export default {
 
 <style lang="scss">
   .sidebar-container .el-badge {
+    display: block;
     sup.el-badge__content {
       right: 50px;
       top: 10px;
