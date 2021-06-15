@@ -2,9 +2,11 @@
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
+        <el-badge value="Neu" class="item" :hidden="!(item.meta && item.meta.newIntent)">
+          <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+            <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
+          </el-menu-item>
+        </el-badge>
       </app-link>
     </template>
     <!--
@@ -97,3 +99,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .sidebar-container .el-badge {
+    display: block;
+    sup.el-badge__content {
+      right: 50px;
+      top: 10px;
+    }
+  }
+
+  .nest-menu .el-badge {
+    display: block;
+  }
+
+  // for the vertical menu (when the small sidebar is used)
+  .el-menu--vertical .el-badge sup.el-badge__content {
+    right: 50px;
+    top: 50%;
+  }
+</style>

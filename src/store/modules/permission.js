@@ -121,7 +121,9 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
-          description: `${intent.description}`
+          description: `${intent.description}`,
+          newIntent: intent.newIntent,
+          creationTimestamp: intent.creationTimestamp
         },
       })
     })
@@ -140,8 +142,8 @@ export function makeURLRouteForPowerBI(powerBI_link) {
     component: Layout,
     children: [
       {
-      path: `${powerBI_link}`,
-      meta: { title: 'KPI Dashboard', icon: 'external_link' }
+        path: `${powerBI_link}`,
+        meta: { title: 'KPI Dashboard', icon: 'external_link' }
       }
     ]
   }
@@ -149,7 +151,7 @@ export function makeURLRouteForPowerBI(powerBI_link) {
 }
 
 const actions = {
-  async generateRoutes({ commit, state, dispatch }, roles) {
+  async pullIntentsAndSetRoutes({ commit, state, dispatch }, roles) {
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -158,10 +160,7 @@ const actions = {
       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
     // call the action which gets skills and intents from the DB and saves them in the state
-    await dispatch('setSkillsAndIntents')
-    // get this informations in a defined interval. The answerTexts can change over time
-    setInterval(() => dispatch('setSkillsAndIntents'), 1000 * 60)
-
+    await dispatch(actions.setSkillsAndIntents.name)
     // make dynamic routes for skills and intents
     const additionalRoutes = makeRoutesForGivenSkillsAndIntents(state.skillsWithIntents)
     // add them to the existing dynamic routes
@@ -176,10 +175,17 @@ const actions = {
       // add it to the existing dynamic routes
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
     }
-
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
   },
+
+  async generateRoutes({ dispatch }, roles) {
+    // get this informations in a defined interval. The answerTexts can change over time
+    setInterval(() => dispatch(actions.setSkillsAndIntents.name), 1000 * 60)
+    const allAdditionalRoutes = dispatch(actions.pullIntentsAndSetRoutes.name, roles);
+    return allAdditionalRoutes
+  },
+
   async setSkillsAndIntents({ commit }) {
     // get skills and intents from the DB
     const skillsWithIntents = await getSkillsWithIntents()
