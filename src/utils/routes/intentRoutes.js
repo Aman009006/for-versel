@@ -22,6 +22,7 @@ export function getNewIntentRoutes(permissionRoutes) {
                     // the intent is marked as new intent.
                     newIntentRoutes.push({
                         name: intentRoute.name,
+                        creationTimestamp: intentRoute.meta.creationTimestamp,
                         pathTitles: [
                             skillRoutes.meta.title,
                             skillRoute.meta.title,
@@ -32,5 +33,8 @@ export function getNewIntentRoutes(permissionRoutes) {
             });
         }
     }
+    newIntentRoutes.sort((routeA, routeB) => {
+        return new Date(routeA.creationTimestamp) > new Date(routeB.creationTimestamp) ? -1 : 1;
+    });
     return newIntentRoutes
 }

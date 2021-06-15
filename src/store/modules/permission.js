@@ -122,7 +122,8 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
         meta: {
           title: `${intent.name}`,
           description: `${intent.description}`,
-          newIntent: intent.newIntent
+          newIntent: intent.newIntent,
+          creationTimestamp: intent.creationTimestamp
         },
       })
     })
