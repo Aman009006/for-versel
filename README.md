@@ -12,6 +12,9 @@ Folgenden Command im Terminal ausführen:
 
     npm run dev
 
+# Backend - URL anpassen
+Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll. Die Datei befindet sich in dem Pfad: `src\utils\backendUrl.js`.
+
 # Links:
 [Vuejs - Admin Vorlage](https://github.com/PanJiaChen/vue-element-admin)
 
