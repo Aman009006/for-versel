@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+	# Enable URL rewriting
+	RewriteEngine On
+	# Redirect to https
+	RewriteCond %{SERVER_PORT} !^443$
+	RewriteRule (.*)  https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+</IfModule>
+<IfModule mod_headers.c>
+     # ------------ Cache nur für 2 Tage:
+     Header set Cache-Control max-age=900
+     # ------------ Security - header:
+     Header set Strict-Transport-Security max-age=1800
+     Header set X-Content-Type-Options nosniff
+     # the big one..
+     # Header set Content-Security-Policy 
+</IfModule>
