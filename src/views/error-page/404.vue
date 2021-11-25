@@ -2,7 +2,7 @@
   <div class="wscn-http404-container">
     <div class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" src="@/assets/404_images/page_under_construction.png" alt="404">
+        <img class="pic-404__parent" src="@/assets/404_images/page_under_construction.png" alt="404" />
         <!-- <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
         <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
         <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404"> -->
@@ -13,7 +13,7 @@
           <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
         </div> -->
         <!-- <div class="bullshit__headline">{{ message }}</div> -->
-        <div class="bullshit__info">Liebe Chatbot Kunden, es handelt sich hierbei eine <b>Beta-Version</b> unserer Admin UI. Die wesentlichen Funktionen sind bereits implementiert, die vollumfängliche Entwicklung ist jedoch noch nicht abgeschlossen. Wir freuen uns auf Ihr Feedback!<br> Ihr Chatbot Team </div>
+        <div class="bullshit__info">Liebe Chatbot Kunden, es handelt sich hierbei eine <b>Beta-Version</b> unserer Admin UI. Die wesentlichen Funktionen sind bereits implementiert, die vollumfängliche Entwicklung ist jedoch noch nicht abgeschlossen. Wir freuen uns auf Ihr Feedback!<br /> Ihr Chatbot Team </div>
         <a href="" class="bullshit__return-home">Zurück zur Startseite</a>
       </div>
     </div>
