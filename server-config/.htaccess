@@ -12,6 +12,7 @@
      Header set Strict-Transport-Security max-age=1800
      Header set X-Content-Type-Options nosniff
      Header set X-Frame-Options DENY
+     Header set Referrer-Policy no-referrer
      # the big one..
      # Header set Content-Security-Policy 
 </IfModule>
