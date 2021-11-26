@@ -89,8 +89,12 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
+            /**
+             * This prevented us from using the csp - header.
+             * All scripts must be loaded in a javaScript - file. Otherwise we must use
+             * "unsafe-inline" in the csp, which is unsafe.
+             */
+              // inline: /runtime\..*\.js$/
             }])
             .end()
           config
