@@ -1,6 +1,8 @@
+/* eslint-disable no-async-promise-executor */
 import { login, logout, getRefreshToken } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import { getCustomerMetaData } from '@/api/customer.js'
 
 const state = {
   token: getToken(),
@@ -53,7 +55,7 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       /**
        * static info is added at the moment.
        * In the future you can get informations about the user
@@ -61,7 +63,8 @@ const actions = {
        */
       const roles = ['admin']
       const name = 'name'
-      const avatar = 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+      const { avatar_link } = await getCustomerMetaData();
+      const avatar = avatar_link
       const introduction = 'introduction'
       commit('SET_ROLES', roles)
       commit('SET_NAME', name)
