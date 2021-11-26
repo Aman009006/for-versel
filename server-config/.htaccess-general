@@ -9,7 +9,7 @@
      # ------------ Cache nur für 2 Tage:
      Header set Cache-Control max-age=900
      # ------------ Security - header:
-     Header set Strict-Transport-Security max-age=1800
+     Header set Strict-Transport-Security max-age=2592000
      Header set X-Content-Type-Options nosniff
      Header set X-Frame-Options DENY
      Header set Referrer-Policy no-referrer
