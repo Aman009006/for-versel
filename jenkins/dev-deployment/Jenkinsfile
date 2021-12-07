@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('createDist') {
+            agent {
+                docker {
+                    image 'node:12'
+                    reuseNode true
+                }
+            }
+            environment {
+                 HOME = '.'
+            }
+            steps {
+                sh 'npm install'
+                sh 'npm run build:stage'
+            }
+        }
+        stage('uploadToServer') {
+            steps {
+                sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminui-dev'
+            } 
+        }
+    }
+}

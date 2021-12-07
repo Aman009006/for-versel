@@ -50,6 +50,7 @@
 import Fuse from "fuse.js";
 import { encodePathComponent } from "@/store/modules/permission";
 import path from "path";
+import HtmlEncode from "@/utils/HtmlEncode";
 
 const filterElementObject = {
   intent: {
@@ -287,11 +288,11 @@ export default {
         [textIndex1, textIndex2] = [textIndex2, textIndex1]
       }
       // first part of the text
-      pathText += text.substring(0, textIndex1)
+      pathText += HtmlEncode(text.substring(0, textIndex1))
       // text that was found
-      pathText += `<span class="text-marker">${text.substring(textIndex1, textIndex2)}</span>`
+      pathText += `<span class="text-marker">${HtmlEncode(text.substring(textIndex1, textIndex2))}</span>`
       // last part of the text
-      pathText += text.substring(textIndex2, text.length)
+      pathText += HtmlEncode(text.substring(textIndex2, text.length))
       return pathText;
     },
     getFoundElementHtml(element) {
@@ -318,10 +319,10 @@ export default {
         if (foundTextArrayIndex === i && match.key === filterElementObject.intent.searchKey) {
           pathText += this.markText(_title, textIndex1, textIndex2)
         } else {
-          pathText += _title
+          pathText += HtmlEncode(_title)
         }
         if (i < title.length - 1) {
-          pathText += ' > ';
+          pathText += HtmlEncode(' > ');
         }
       });
       if (match.key === filterElementObject.answerText.searchKey || match.key === filterElementObject.buttonTitle.searchKey) {
@@ -333,7 +334,7 @@ export default {
         pathText += `
         <p class="answer-text">
           <strong>
-            ${label}
+            ${HtmlEncode(label)}
           </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
         </p>`
       }
