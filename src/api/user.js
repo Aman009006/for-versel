@@ -24,6 +24,16 @@ export function getRefreshToken() {
     method: 'get'
   })
 }
+/**
+ * Gets the information from the backend
+ * whether the user is already logged in
+ */
+ export function isLoggedIn() {
+  return request({
+    url: authorizedBackendUrl + 'isLoggedIn',
+    method: 'get'
+  })
+}
 
 export function getInfo(token) {
   return request({
