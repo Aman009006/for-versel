@@ -17,10 +17,17 @@ router.beforeEach(async(to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-
-  // determine whether the user has logged in
-  const loggedIn = await isLoggedIn()
-
+  let loggedIn;
+  try {
+    // determine whether the user has logged in
+    loggedIn = await isLoggedIn()
+  } catch (error) {
+    /**
+     * If the user was not authorized then 404 error comes from BE from tokenMiddleware.
+     * Therefore it is catched here and it is known that the user was not logged in
+     */
+    loggedIn = false;
+  }
   if (loggedIn) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
@@ -59,7 +66,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()

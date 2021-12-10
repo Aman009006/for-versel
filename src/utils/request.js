@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+// import { getToken } from '@/utils/auth'
 import router from '@/router'
 
 // create an axios instance
@@ -19,7 +19,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       // let each request carry token
       // https://jwt.io/introduction/
-      config.headers['Authorization'] = 'Bearer ' + getToken()
+      // config.headers['Authorization'] = 'Bearer ' + getToken()
     }
     return config
   },
@@ -55,10 +55,12 @@ service.interceptors.response.use(
       type: 'error',
       duration: 5 * 1000
     })
-    if (error.request.status === 401) {
-      // the user is not authenticated (that means that the token is invalid)
-      // get the user to the login - page and remove the current token
-      store.dispatch('user/resetToken')
+    /**
+     * make redirect at /login in case of error for all requests except for /isLoggedIn-request
+     * Otherwise, there exists an endless loop in permision.js
+     */
+    if (!error.request.responseURL.includes('isLoggedIn') && error.request.status === 401) {
+      // The user is not authenticated; therefore, get the user to the login - page
       router.push('/login')
     }
     return Promise.reject(error)
