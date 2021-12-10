@@ -4,14 +4,14 @@ import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import getPageTitle from '@/utils/get-page-title'
-import { isLoggedIn } from './api/user'
+import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
 
@@ -41,7 +41,7 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get new token directly after the user opened the application
-          await getNewToken()
+          await getNewTokenInCookies()
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
@@ -85,8 +85,8 @@ router.afterEach(() => {
 /**
  * @throws {Error} when the token could not be refreshed
  */
-function getNewToken() {
-  return store.dispatch('user/getNewToken')
+async function getNewTokenInCookies() {
+  await getRefreshToken()
 }
 // get new token every half an hour
-setInterval(getNewToken, 1000 * 60 * 30)
+setInterval(getNewTokenInCookies, 1000 * 60 * 30)
