@@ -36,6 +36,10 @@ export function getRefreshToken() {
 }
 /**
  * Request to the backend to remove the token from the cookie
+ * Note that you can see the following warning in the console in browser:
+ * "Das Cookie "token" wurde abgelehnt, da es bereits abgelaufen ist."
+ * This happens because in order to delete the token in the cookie, the expiration date has to be in the past.
+ * @see https://stackoverflow.com/questions/5285940/correct-way-to-delete-cookies-server-side
  */
 export function logOutAndRemoveCookie() {
   return request({
