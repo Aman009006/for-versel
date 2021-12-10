@@ -19,8 +19,16 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   let loggedIn;
   try {
-    // determine whether the user has logged in
-    loggedIn = await isLoggedIn()
+    /**
+     * If it should be redirected to login,
+     * then the user should not have the status loggedIn anymore
+     */
+    if (to.path === '/login') {
+      loggedIn = false;
+    } else {
+      // determine whether the user has logged in
+      loggedIn = await isLoggedIn()
+    }
   } catch (error) {
     /**
      * If the user was not authorized then 404 error comes from BE from tokenMiddleware.
