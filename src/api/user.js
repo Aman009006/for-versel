@@ -34,6 +34,15 @@ export function getRefreshToken() {
     method: 'get'
   })
 }
+/**
+ * Request to the backend to remove the token from the cookie
+ */
+export function logOutAndRemoveCookie() {
+  return request({
+    url: authorizedBackendUrl + 'logOutAndRemoveCookie',
+    method: 'get'
+  })
+}
 
 export function getInfo(token) {
   return request({
@@ -43,9 +52,9 @@ export function getInfo(token) {
   })
 }
 
-export function logout() {
-  return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post'
-  })
-}
+// export function logout() {
+//   return request({
+//     url: '/vue-element-admin/user/logout',
+//     method: 'post'
+//   })
+// }

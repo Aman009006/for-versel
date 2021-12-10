@@ -1,5 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-import { login, logout, getRefreshToken } from '@/api/user'
+import { login, logOutAndRemoveCookie, getRefreshToken } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { getCustomerMetaData } from '@/api/customer.js'
@@ -75,12 +75,10 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state, dispatch }) {
+  logout({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
+      logOutAndRemoveCookie().then(() => {
         commit('SET_ROLES', [])
-        removeToken()
         resetRouter()
 
         // reset visited views and cached views
