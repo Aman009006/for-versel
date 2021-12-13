@@ -68,17 +68,5 @@ module.exports = [
         data: info
       }
     }
-  },
-
-  // user logout
-  // {
-  //   url: '/vue-element-admin/user/logout',
-  //   type: 'post',
-  //   response: _ => {
-  //     return {
-  //       code: 20000,
-  //       data: 'success'
-  //     }
-  //   }
-  // }
+  }
 ]
