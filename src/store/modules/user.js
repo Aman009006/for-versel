@@ -1,11 +1,9 @@
 /* eslint-disable no-async-promise-executor */
-import { login, logout, getRefreshToken } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login, logOutAndRemoveCookie } from '@/api/user'
 import router, { resetRouter } from '@/router'
 import { getCustomerMetaData } from '@/api/customer.js'
 
 const state = {
-  token: getToken(),
   name: '',
   avatar: '',
   introduction: '',
@@ -13,9 +11,6 @@ const state = {
 }
 
 const mutations = {
-  SET_TOKEN: (state, token) => {
-    state.token = token
-  },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
   },
@@ -36,21 +31,11 @@ const actions = {
     const { customer, username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ customer: customer, email: username.trim(), password: password }).then(response => {
-        commit('SET_TOKEN', response)
-        setToken(response)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
-  },
-
-  async getNewToken({ commit }) {
-    if (getToken() != null) {
-      const newToken = await getRefreshToken()
-      commit('SET_TOKEN', newToken)
-      setToken(newToken)
-    }
   },
 
   // get user info
@@ -75,12 +60,10 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state, dispatch }) {
+  logout({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
+      logOutAndRemoveCookie().then(() => {
         commit('SET_ROLES', [])
-        removeToken()
         resetRouter()
 
         // reset visited views and cached views
@@ -94,27 +77,18 @@ const actions = {
     })
   },
 
-  // remove token
-  resetToken({ commit }) {
+  // remove roles
+  resetRoles({ commit }) {
     return new Promise(resolve => {
-      commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
       resolve()
     })
   },
 
   // dynamically modify permissions
-  async changeRoles({ commit, dispatch }, role) {
-    const token = role + '-token'
-
-    commit('SET_TOKEN', token)
-    setToken(token)
-
+  async changeRoles({ dispatch }) {
     const { roles } = await dispatch('getInfo')
-
     resetRouter()
-
     // generate accessible routes map based on roles
     const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
     // dynamically add accessible routes

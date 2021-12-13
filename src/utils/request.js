@@ -1,26 +1,18 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
 import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
+  withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token
-      // https://jwt.io/introduction/
-      config.headers['Authorization'] = 'Bearer ' + getToken()
-    }
+    // here you can do something before request is sent
     return config
   },
   error => {
@@ -47,18 +39,23 @@ service.interceptors.response.use(
     return res
   },
   error => {
-    Message({
-      /**
-       * the backend should deliver a error - message for every error - request
-       */
-      message: error?.response?.data,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    if (error.request.status === 401) {
-      // the user is not authenticated (that means that the token is invalid)
-      // get the user to the login - page and remove the current token
-      store.dispatch('user/resetToken')
+    // the user does not see the error message that the user is not logged in if so
+    if (!error.request.responseURL.includes('isLoggedIn')) {
+      Message({
+        /**
+         * the backend should deliver a error - message for every error - request
+         */
+        message: error?.response?.data,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
+    /**
+     * make redirect at /login in case of error for all requests except for /isLoggedIn-request
+     * Otherwise, there exists an endless loop in permision.js
+     */
+    if (!error.request.responseURL.includes('isLoggedIn') && error.request.status === 401) {
+      // The user is not authenticated; therefore, get the user to the login - page
       router.push('/login')
     }
     return Promise.reject(error)
