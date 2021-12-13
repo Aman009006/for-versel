@@ -10,7 +10,7 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  loggedOut: false
+  loggedOut: true
 }
 
 const mutations = {
