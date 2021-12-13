@@ -19,12 +19,9 @@ router.beforeEach(async (to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   let loggedIn;
   try {
-    /**
-     * If it should be redirected to login,
-     * then the user should not have the status loggedIn anymore
-     */
-    if (to.path === '/login') {
-      loggedIn = false;
+    // if the user has logged out, set logged in status at false
+    if (store.getters.loggedOut === true) {
+      loggedIn = false
     } else {
       // determine whether the user has logged in
       loggedIn = await isLoggedIn()
@@ -64,8 +61,8 @@ router.beforeEach(async (to, from, next) => {
           // set the replace: true, so the navigation will not leave a history record
           next({ path: encodePathComponent(to.path), replace: true })
         } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
+          // remove roles and go to login page to re-login
+          await store.dispatch('user/resetRoles')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()

@@ -1,6 +1,6 @@
 /* eslint-disable no-async-promise-executor */
 import { login, logOutAndRemoveCookie } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { getCustomerMetaData } from '@/api/customer.js'
 
@@ -9,7 +9,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  loggedOut: false
 }
 
 const mutations = {
@@ -27,6 +28,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_LOGGED_OUT: (state, loggedOut) => {
+    state.loggedOut = loggedOut
   }
 }
 
@@ -36,8 +40,9 @@ const actions = {
     const { customer, username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ customer: customer, email: username.trim(), password: password }).then(response => {
-        commit('SET_TOKEN', response)
-        setToken(response)
+        commit('SET_LOGGED_OUT', false)
+        // commit('SET_TOKEN', response)
+        // setToken(response)
         resolve()
       }).catch(error => {
         reject(error)
@@ -70,6 +75,7 @@ const actions = {
   logout({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       logOutAndRemoveCookie().then(() => {
+        commit('SET_LOGGED_OUT', true)
         commit('SET_ROLES', [])
         resetRouter()
 
@@ -84,22 +90,22 @@ const actions = {
     })
   },
 
-  // remove token
-  resetToken({ commit }) {
+  // remove roles
+  resetRoles({ commit }) {
     return new Promise(resolve => {
-      commit('SET_TOKEN', '')
+      // commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      removeToken()
+      // removeToken()
       resolve()
     })
   },
 
   // dynamically modify permissions
   async changeRoles({ commit, dispatch }, role) {
-    const token = role + '-token'
+    // const token = role + '-token'
 
-    commit('SET_TOKEN', token)
-    setToken(token)
+    // commit('SET_TOKEN', token)
+    // setToken(token)
 
     const { roles } = await dispatch('getInfo')
 
