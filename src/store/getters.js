@@ -9,8 +9,8 @@ const getters = {
   name: state => state.user.name,
   introduction: state => state.user.introduction,
   roles: state => state.user.roles,
-  // the flag which stores the information whether the user is logged out or not
-  loggedOut: state => state.user.loggedOut,
+  // the flag which stores the information whether the user has clicked on log out
+  loggedOutIsClicked: state => state.user.loggedOutIsClicked,
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
   skillsWithIntents: state => state.permission.skillsWithIntents

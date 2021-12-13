@@ -10,8 +10,8 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  // the user is logged out per default
-  loggedOut: true
+  // whether the user has clicked on the log out
+  loggedOutIsClicked: false
 }
 
 const mutations = {
@@ -30,8 +30,8 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     state.roles = roles
   },
-  SET_LOGGED_OUT: (state, loggedOut) => {
-    state.loggedOut = loggedOut
+  SET_LOGGED_OUT_IS_CLICKED: (state, loggedOutIsClicked) => {
+    state.loggedOutIsClicked = loggedOutIsClicked
   }
 }
 
@@ -42,12 +42,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ customer: customer, email: username.trim(), password: password }).then(response => {
         // call the set fct (mutation) which sets the logged-out-flag at false
-        commit('SET_LOGGED_OUT', false)
+        commit('SET_LOGGED_OUT_IS_CLICKED', false)
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
+  },
+  isLoggedOutClicked({ commit }, value) {
+    commit('SET_LOGGED_OUT_IS_CLICKED', value)
   },
 
   // get user info
@@ -75,7 +78,7 @@ const actions = {
   logout({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       logOutAndRemoveCookie().then(() => {
-        commit('SET_LOGGED_OUT', true)
+        commit('SET_LOGGED_OUT_IS_CLICKED', true)
         commit('SET_ROLES', [])
         resetRouter()
 
