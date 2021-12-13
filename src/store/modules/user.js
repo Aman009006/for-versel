@@ -1,11 +1,9 @@
 /* eslint-disable no-async-promise-executor */
 import { login, logOutAndRemoveCookie } from '@/api/user'
-import { getToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { getCustomerMetaData } from '@/api/customer.js'
 
 const state = {
-  token: getToken(),
   name: '',
   avatar: '',
   introduction: '',
@@ -13,9 +11,6 @@ const state = {
 }
 
 const mutations = {
-  SET_TOKEN: (state, token) => {
-    state.token = token
-  },
   SET_INTRODUCTION: (state, introduction) => {
     state.introduction = introduction
   },
@@ -91,7 +86,7 @@ const actions = {
   },
 
   // dynamically modify permissions
-  async changeRoles({ commit, dispatch }, role) {
+  async changeRoles({ dispatch }) {
     const { roles } = await dispatch('getInfo')
     resetRouter()
     // generate accessible routes map based on roles
