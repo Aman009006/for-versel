@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import store from '@/store'
 // import { getToken } from '@/utils/auth'
 import router from '@/router'
 
@@ -14,13 +13,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
-    if (store.getters.token) {
-      // let each request carry token
-      // https://jwt.io/introduction/
-      // config.headers['Authorization'] = 'Bearer ' + getToken()
-    }
+    // here you can do something before request is sent
     return config
   },
   error => {
