@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-// import { getToken } from '@/utils/auth'
 import router from '@/router'
 
 // create an axios instance
