@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 // import { getToken } from '@/utils/auth'
 import router from '@/router'
-import store from '@/store'
 
 // create an axios instance
 const service = axios.create({
@@ -41,8 +40,8 @@ service.interceptors.response.use(
     return res
   },
   error => {
-    // if the user has not clicked at log out
-    if (store.getters.loggedOutIsClicked === false) {
+    // the user does not see the error message that the user is not logged in if so
+    if (!error.request.responseURL.includes('isLoggedIn')) {
       Message({
         /**
          * the backend should deliver a error - message for every error - request
@@ -51,16 +50,7 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-    } else {
-      /**
-       * Here: loggedOutIsClicked === true
-       * If the user has just logged out (i.e. the user has just clicked on the log out),
-       * do not show error messages
-       * and set the flag again at false
-       */
-      store.dispatch('user/isLoggedOutClicked', false)
     }
-    console.log(router.currentRoute.path)
     /**
      * make redirect at /login in case of error for all requests except for /isLoggedIn-request
      * Otherwise, there exists an endless loop in permision.js
