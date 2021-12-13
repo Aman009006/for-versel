@@ -10,6 +10,7 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
+  // the user is logged out per default
   loggedOut: true
 }
 
@@ -40,9 +41,8 @@ const actions = {
     const { customer, username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ customer: customer, email: username.trim(), password: password }).then(response => {
+        // call the set fct (mutation) which sets the logged-out-flag at false
         commit('SET_LOGGED_OUT', false)
-        // commit('SET_TOKEN', response)
-        // setToken(response)
         resolve()
       }).catch(error => {
         reject(error)
@@ -93,24 +93,15 @@ const actions = {
   // remove roles
   resetRoles({ commit }) {
     return new Promise(resolve => {
-      // commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
-      // removeToken()
       resolve()
     })
   },
 
   // dynamically modify permissions
   async changeRoles({ commit, dispatch }, role) {
-    // const token = role + '-token'
-
-    // commit('SET_TOKEN', token)
-    // setToken(token)
-
     const { roles } = await dispatch('getInfo')
-
     resetRouter()
-
     // generate accessible routes map based on roles
     const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
     // dynamically add accessible routes

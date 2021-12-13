@@ -20,13 +20,13 @@ router.beforeEach(async (to, from, next) => {
   let loggedIn;
   try {
     /**
-     * If the user has logged out, set logged in status at false
-     * and do not call the isLoggedIn webservice.
-     * It does not make sense to call this fct if it is known that
+     * If the user has logged out, set logged-in-status at false
+     * and do not call isLoggedIn-webservice.
+     * It does not make sense to call this fct (isLoggedIn) if it is known that
      * the user is already logged out. This fct call would provoke error notification from tokenMiddleware
      * that the user is not authorized anymore. The user does not need this notification.
-     * Besides, the fct generateRoutes would be called in this case as well in this case and will also return error
-     * status.But this fct should not be called, if the user is logged out.
+     * Besides, the fct generateRoutes would be called in this case as well and will also return an error
+     * status. But this fct should not be called, if the user is logged out.
      */
     if (store.getters.loggedOut === true) {
       loggedIn = false

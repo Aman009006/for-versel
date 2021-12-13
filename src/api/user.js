@@ -26,7 +26,12 @@ export function getRefreshToken() {
 }
 /**
  * Gets the information from the backend
- * whether the user is already logged in
+ * whether the user is already logged in.
+ * The autorized backend url is used here
+ * which allow us to use the logic of the tokenMiddleware in the backend.
+ * if the user was not logged in, an error comes from tokenMiddleware.
+ * @returns {true}, if the user was logged in
+ * @throws {Error}, if the user was not logged in.
  */
  export function isLoggedIn() {
   return request({
@@ -56,9 +61,3 @@ export function getInfo(token) {
   })
 }
 
-// export function logout() {
-//   return request({
-//     url: '/vue-element-admin/user/logout',
-//     method: 'post'
-//   })
-// }
