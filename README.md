@@ -14,11 +14,13 @@ Folgenden Command im Terminal ausführen:
 
 # Backend - URL anpassen
 Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll. Die Datei befindet sich in dem Pfad: `src\utils\backendUrl.js`.
+Für lokale Entwicklung: http://localhost:3000/
 
 # Links:
 [Vuejs - Admin Vorlage](https://github.com/PanJiaChen/vue-element-admin)
 
 [Link zu unserer AdminUI-Seite](https://admin.stadtwerk.bot/)
+[Link zu unserer Dev AdminUI-Seite](https://adminuidev.stadtwerk.bot/)
 
 [Element-UI](https://element.eleme.io/)
 

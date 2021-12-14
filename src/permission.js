@@ -3,25 +3,32 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-
-  // determine whether the user has logged in
-  const hasToken = getToken()
-
-  if (hasToken) {
+  let loggedIn;
+  try {
+    // determine whether the user has logged in
+    loggedIn = await isLoggedIn()
+  } catch (error) {
+    /**
+     * If the user was not authorized then 404 error comes from BE from tokenMiddleware.
+     * Therefore it is catched here and it is known that the user was not logged in
+     */
+    loggedIn = false;
+  }
+  if (loggedIn) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -34,7 +41,7 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get new token directly after the user opened the application
-          await getNewToken()
+          await getNewTokenInCookies()
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
@@ -49,8 +56,8 @@ router.beforeEach(async(to, from, next) => {
           // set the replace: true, so the navigation will not leave a history record
           next({ path: encodePathComponent(to.path), replace: true })
         } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
+          // remove roles and go to login page to re-login
+          await store.dispatch('user/resetRoles')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
@@ -59,7 +66,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
@@ -79,8 +85,8 @@ router.afterEach(() => {
 /**
  * @throws {Error} when the token could not be refreshed
  */
-function getNewToken() {
-  return store.dispatch('user/getNewToken')
+async function getNewTokenInCookies() {
+  await getRefreshToken()
 }
 // get new token every half an hour
-setInterval(getNewToken, 1000 * 60 * 30)
+setInterval(getNewTokenInCookies, 1000 * 60 * 30)
