@@ -5,7 +5,6 @@
 
 - [vue - Extension für vscode installieren](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
 - [Vue - Debug extension für Chrome installieren](https://github.com/vuejs/vue-devtools)
-- [Vue - Anleitung zum Debuggen innerhalb von VS-code](https://vuejs.org/v2/cookbook/debugging-in-vscode.html) -> Die Launch.json ist im repository und kann verwendet werden
 
 # Starten der App
 Folgenden Command im Terminal ausführen:
@@ -15,6 +14,13 @@ Folgenden Command im Terminal ausführen:
 # Backend - URL anpassen
 Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll. Die Datei befindet sich in dem Pfad: `src\utils\backendUrl.js`.
 Für lokale Entwicklung: http://localhost:3000/
+
+# Debugging von JavaScript
+## Empfohlen
+https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/410550273/Lokales+Debugging+von+JavaScript+im+Frontend
+
+## nicht empfohlen (Fehleranfällig)
+- [Vue - Anleitung zum Debuggen innerhalb von VS-code](https://vuejs.org/v2/cookbook/debugging-in-vscode.html) -> Die Launch.json ist im repository und kann verwendet werden
 
 # Links:
 [Vuejs - Admin Vorlage](https://github.com/PanJiaChen/vue-element-admin)
