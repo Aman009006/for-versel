@@ -74,16 +74,21 @@
       <el-button
         :loading="loading"
         type="primary"
-        style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-        >Login</el-button
-      >
+        >Login</el-button>
+
+      <el-button
+        type="secondary"
+        @click="startMicrosoftLogin"
+        >Login mit Microsoft Konto</el-button>
+
     </el-form>
   </div>
 </template>
 
 <script>
 import { validEmail, isString } from "@/utils/validate";
+import startKeycloakAuthentication from "@/utils/keycloakUtils";
 
 export default {
   name: "Login",
@@ -207,24 +212,9 @@ export default {
         return acc;
       }, {});
     },
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
+    startMicrosoftLogin() {
+      startKeycloakAuthentication();
+    }
   },
 };
 </script>
@@ -286,6 +276,12 @@ $light_gray: #eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+
+  button {
+    width: 100%;
+    margin-bottom: 30px;
+    margin-left: 0px;
+  }
 
   .login-form {
     position: relative;
