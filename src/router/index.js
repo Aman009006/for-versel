@@ -130,6 +130,17 @@ export const constantRoutes = [
         meta: { title: 'Bedienungsanleitung', icon: 'external_link' }
       }
     ]
+  },
+   {
+    path: '/manualChatbot',
+    component: Layout,
+    children: [
+      {
+        path: links.manualChatbot,
+        meta: { title: 'API-Dokumentation', icon: 'external_link' }
+
+      }
+    ]
   }
 ]
 
