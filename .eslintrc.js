@@ -14,6 +14,7 @@ module.exports = {
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    "require-atomic-updates": 0,
     "vue/html-indent": 0,
     "vue/html-closing-bracket-newline": 0,
     "vue/max-attributes-per-line": [2, {
@@ -148,7 +149,7 @@ module.exports = {
       'defaultAssignment': false
     }],
     'no-unreachable': 2,
-    'no-unsafe-finally': 2,
+    'no-unsafe-finally': 0,
     'no-unused-vars': [2, {
       'vars': 'all',
       'args': 'none'
