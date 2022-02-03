@@ -15,11 +15,17 @@ async function initKeyCloak() {
     let auth;
     try {
         if (!initialized) {
-            auth = await keycloak.init();
+            auth = await keycloak.init({
+                /**
+                 * This option is mandatory, even if the options suggests that
+                 * the option is optional. Currently an error - message is printed
+                 * when the option is skipped.
+                 * @see https://github.com/keycloak/keycloak/issues/8952
+                 */
+                messageReceiveTimeout: 10000
+            });
             initialized = true;
         }
-    } catch (e) {
-        console.log(e);
     } finally {
         return auth;
     }
@@ -35,11 +41,8 @@ export async function getToken() {
 }
 
 export default async function startKeycloakAuthentication() {
-    const auth = await initKeyCloak();
-    /**
-     * @todo move the console - output to another position
-     */
-    if (!auth) {
+    await initKeyCloak();
+    if (!initialized) {
         Message({
             message: 'Der Service ist aktuell nicht verfügbar',
             type: 'error'
@@ -49,8 +52,11 @@ export default async function startKeycloakAuthentication() {
     }
 }
 
-// async function log() {
-//     console.log(await getToken());
-// }
+/**
+ * @todo remove this log..
+ */
+async function log() {
+    console.log(await getToken());
+}
 
-// log();
+log();
