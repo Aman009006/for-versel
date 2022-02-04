@@ -88,7 +88,7 @@
 
 <script>
 import { validEmail, isString } from "@/utils/validate";
-import startKeycloakAuthentication from "@/utils/keycloakUtils";
+import KeycloakUtils from "@/utils/KeycloakUtils";
 
 export default {
   name: "Login",
@@ -152,8 +152,14 @@ export default {
       immediate: true,
     },
   },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
+  async beforeCreate() {
+    // when a access - token from keycloak exists, login with that token
+    const accessToken = await KeycloakUtils.getToken();
+    if (accessToken != null) {
+      this.callLoginWebservice({
+        accessToken
+      })
+    }
   },
   mounted() {
     if (this.loginForm.customer === "") {
@@ -163,9 +169,6 @@ export default {
     } else if (this.loginForm.password === "") {
       this.$refs.password.focus();
     }
-  },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
     checkCapslock(e) {
@@ -182,22 +185,30 @@ export default {
         this.$refs.password.focus();
       });
     },
+    /**
+     * @param loginData either the { customer, username, password } or { accessToken } from keycloak.
+     */
+    callLoginWebservice(loginData) {
+      this.loading = true;
+      this.$store
+        .dispatch("user/login", loginData)
+        .then(() => {
+          // the session - cookie is set now
+          this.$router.push({
+            path: this.redirect || "/",
+            query: this.otherQuery,
+          });
+          this.loading = false;
+        })
+        .catch(() => {
+          // the session - cookie could not be set.
+          this.loading = false;
+        });
+    },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({
-                path: this.redirect || "/",
-                query: this.otherQuery,
-              });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
+          this.callLoginWebservice(this.loginForm)
         } else {
           console.log("error submit!!");
           return false;
@@ -213,7 +224,7 @@ export default {
       }, {});
     },
     startMicrosoftLogin() {
-      startKeycloakAuthentication();
+      KeycloakUtils.startKeycloakAuthentication();
     }
   },
 };
