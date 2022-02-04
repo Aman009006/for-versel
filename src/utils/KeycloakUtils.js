@@ -10,6 +10,7 @@ const initOptions = {
 
 const keycloak = Keycloak(initOptions);
 let initialized = false;
+let tokenAlreadySent = false;
 
 export default class KeycloakUtils {
     /**
@@ -37,8 +38,11 @@ export default class KeycloakUtils {
      * through keycloak, the token will be set. Otherwise null will be returned.
      */
     static async getToken() {
-        await KeycloakUtils.initKeyCloak();
-        return keycloak.token;
+        if (!tokenAlreadySent) {
+            await KeycloakUtils.initKeyCloak();
+            tokenAlreadySent = true;
+            return keycloak.token;
+        }
     }
 
     static async startKeycloakAuthentication() {
