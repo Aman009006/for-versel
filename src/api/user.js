@@ -4,8 +4,6 @@ import backendUrl, { authorizedBackendUrl } from '@/utils/backendUrl'
 const authentificationPath = 'auth/'
 
 export function login(data) {
-  localStorage.customer = data.customer
-
   return request({
     url: backendUrl + authentificationPath + 'login',
     method: 'post',
