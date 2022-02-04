@@ -191,11 +191,12 @@ export default {
     /**
      * @param loginData either the { customer, username, password } or { accessToken } from keycloak.
      */
-    callLoginWebservice(loginData) {
+    async callLoginWebservice(loginData) {
       this.loading = true;
       this.$store
         .dispatch("user/login", loginData)
-        .then(() => {
+        .then(async () => {
+          await this.$store.dispatch('user/getCustomerMetainfo')
           // the session - cookie is set now
           this.$router.push({
             path: this.redirect || "/",

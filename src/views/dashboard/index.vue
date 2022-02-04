@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import { getCustomerMetaData } from "@/api/customer";
 import ImageTextLinkBox from "@/components/ImageTextLinkBox";
 import manualPic from "@/assets/images/Bedienungsanleitung.svg";
 import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
@@ -88,7 +87,7 @@ export default {
     };
   },
   async created() {
-    const { avatar_link, customer } = await getCustomerMetaData();
+    const { avatar_link, customer } = this.$store.getters.metainfo
     this.avatar_link = avatar_link;
     this.chatbotLink = `https://cdn.stadtwerk.bot/chatbotdev/${customer}/`;
   },

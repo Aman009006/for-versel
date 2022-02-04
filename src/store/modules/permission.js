@@ -1,6 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
-import { getCustomerMetaData } from '@/api/customer'
 import Layout from '@/layout'
 import routerView from '@/views/routerView'
 import { paths } from '@/constants'
@@ -167,7 +166,7 @@ const actions = {
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
     // get the powerBI link from the DB for the current customer
-    const { powerBI_link } = await getCustomerMetaData()
+    const { powerBI_link } = state.metainfo
     let powerBIRoute
     if (powerBI_link) {
       // make dynamic route for the powerBI Daashboard

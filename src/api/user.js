@@ -5,7 +5,6 @@ const authentificationPath = 'auth/'
 
 export function login(data) {
   localStorage.customer = data.customer
-  localStorage.username = data.email
 
   return request({
     url: backendUrl + authentificationPath + 'login',

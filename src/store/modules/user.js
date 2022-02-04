@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  metainfo: { avatar_link: null, customer: null, powerBI_link: null }
 }
 
 const mutations = {
@@ -22,6 +23,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_METAINFO: (state, metainfo) => {
+    state.metainfo = metainfo
   }
 }
 
@@ -43,6 +47,11 @@ const actions = {
     })
   },
 
+  async getCustomerMetainfo({ commit }) {
+    const customerMetainfo = await getCustomerMetaData();
+    commit('SET_METAINFO', customerMetainfo)
+  },
+
   // get user info
   getInfo({ commit, state }) {
     return new Promise(async (resolve, reject) => {
@@ -53,7 +62,7 @@ const actions = {
        */
       const roles = ['admin']
       const name = 'name'
-      const { avatar_link } = await getCustomerMetaData();
+      const { avatar_link } = state.metainfo
       const avatar = avatar_link
       const introduction = 'introduction'
       commit('SET_ROLES', roles)
