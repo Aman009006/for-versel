@@ -36,6 +36,11 @@ export default class KeycloakUtils {
     /**
      * @returns the token, if the user is already authenticated
      * through keycloak, the token will be set. Otherwise null will be returned.
+     * The token will not be returned, when it was returned already once.
+     * The token is stored in memory as long as the admin - UI remains open.
+     * When the user would login with keycloak and immediately logout, the token would
+     * lead to a login immediately after the logout. The user wouldn't be able to
+     * logout properly as he gets logged in everytime he logs out.
      */
     static async getToken() {
         if (!tokenAlreadySent) {
