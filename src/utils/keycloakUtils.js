@@ -12,10 +12,9 @@ const keycloak = Keycloak(initOptions);
 let initialized = false;
 
 async function initKeyCloak() {
-    let auth;
     try {
         if (!initialized) {
-            auth = await keycloak.init({
+            await keycloak.init({
                 /**
                  * This option is mandatory, even if the options suggests that
                  * the option is optional. Currently an error - message is printed
@@ -26,9 +25,7 @@ async function initKeyCloak() {
             });
             initialized = true;
         }
-    } finally {
-        return auth;
-    }
+    } finally { }
 }
 
 /**
@@ -51,12 +48,3 @@ export default async function startKeycloakAuthentication() {
         keycloak.login();
     }
 }
-
-/**
- * @todo remove this log..
- */
-async function log() {
-    console.log(await getToken());
-}
-
-log();
