@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div v-if="visible" class="login-container">
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -138,6 +138,7 @@ export default {
       loading: false,
       redirect: undefined,
       otherQuery: {},
+      visible: false
     };
   },
   watch: {
@@ -159,6 +160,8 @@ export default {
       this.callLoginWebservice({
         accessToken
       })
+    } else {
+      this.visible = true;
     }
   },
   mounted() {
