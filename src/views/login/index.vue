@@ -165,11 +165,11 @@ export default {
     }
   },
   mounted() {
-    if (this.loginForm.customer === "") {
+    if (this.loginForm.customer === "" && this.$refs.customer != null) {
       this.$refs.customer.focus();
-    } else if (this.loginForm.username === "") {
+    } else if (this.loginForm.username === "" && this.$refs.username != null) {
       this.$refs.username.focus();
-    } else if (this.loginForm.password === "") {
+    } else if (this.loginForm.password === "" && this.$refs.password != null) {
       this.$refs.password.focus();
     }
   },
