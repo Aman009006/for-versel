@@ -3,6 +3,8 @@
     <template v-if="dataReady">
       <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
       <div class="utteranceBox">
+        <h5 class="utterancesTitle">Intentname:</h5>
+        <div>{{ $route.meta.intent }}</div>
         <h5 class="utterancesTitle">Beschreibung:</h5>
         <div>{{ $route.meta.description }}</div>
         <template v-if="utterances && utterances[0]">
