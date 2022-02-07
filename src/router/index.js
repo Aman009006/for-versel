@@ -88,19 +88,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/snippet',
-    component: Layout,
-    redirect: '/snippet',
-    children: [
-      {
-        path: 'snippet',
-        component: () => import('@/views/snippet'),
-        name: 'snippet',
-        meta: { title: 'Snippet', icon: 'el-icon-link', affix: true }
-      }
-    ]
-  },
-  {
     path: '/notes',
     component: Layout,
     children: [

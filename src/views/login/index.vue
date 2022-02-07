@@ -1,7 +1,13 @@
 <template>
-  <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
+  <div v-if="visible" class="login-container">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">Login</h3>
       </div>
@@ -22,9 +28,7 @@
       </el-form-item>
 
       <el-form-item prop="username">
-        <span class="svg-container email-icon">
-          @
-        </span>
+        <span class="svg-container email-icon"> @ </span>
         <el-input
           ref="username"
           v-model="loginForm.username"
@@ -36,7 +40,12 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock ist aktiviert" placement="right" manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock ist aktiviert"
+        placement="right"
+        manual
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
@@ -55,158 +64,183 @@
             @keyup.enter.native="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+            <svg-icon
+              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+            />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        @click.native.prevent="handleLogin"
+        >Login</el-button>
+
+      <el-button
+        type="secondary"
+        @click="startMicrosoftLogin"
+        >Login mit Microsoft Konto</el-button>
 
     </el-form>
   </div>
 </template>
 
 <script>
-import { validEmail, isString } from '@/utils/validate'
+import { validEmail, isString } from "@/utils/validate";
+import KeycloakUtils from "@/utils/KeycloakUtils";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     const validateCustomer = (rule, value, callback) => {
-      if (!isString(value) || value === '') {
-        callback(new Error('Bitte geben Sie den Mandantennamen ein'))
+      if (!isString(value) || value === "") {
+        callback(new Error("Bitte geben Sie den Mandantennamen ein"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validateUsername = (rule, value, callback) => {
       if (!validEmail(value)) {
-        callback(new Error('Bitte geben Sie Ihre E-mail-Adresse ein'))
+        callback(new Error("Bitte geben Sie Ihre E-mail-Adresse ein"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('Das Passwort muss mindestens 6 Zeichen beinhalten'))
+        callback(
+          new Error("Das Passwort muss mindestens 6 Zeichen beinhalten")
+        );
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        customer: '',
-        username: '',
-        password: ''
+        customer: "",
+        username: "",
+        password: "",
       },
       loginRules: {
-        customer: [{ required: true, trigger: 'blur', validator: validateCustomer }],
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        customer: [
+          { required: true, trigger: "blur", validator: validateCustomer },
+        ],
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
-      passwordType: 'password',
+      passwordType: "password",
       capsTooltip: false,
       loading: false,
       redirect: undefined,
-      otherQuery: {}
-    }
+      otherQuery: {},
+      visible: false
+    };
   },
   watch: {
     $route: {
-      handler: function(route) {
-        const query = route.query
+      handler: function (route) {
+        const query = route.query;
         if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
+          this.redirect = query.redirect;
+          this.otherQuery = this.getOtherQuery(query);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
-  created() {
-    // window.addEventListener('storage', this.afterQRScan)
+  async beforeCreate() {
+    // when a access - token from keycloak exists, login with that token
+    const accessToken = await KeycloakUtils.getToken();
+    if (accessToken != null) {
+      this.callLoginWebservice({
+        accessToken
+      })
+    } else {
+      this.visible = true;
+    }
   },
   mounted() {
-    if (this.loginForm.customer === '') {
-      this.$refs.customer.focus()
-    } else if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
-      this.$refs.password.focus()
+    if (this.loginForm.customer === "" && this.$refs.customer != null) {
+      this.$refs.customer.focus();
+    } else if (this.loginForm.username === "" && this.$refs.username != null) {
+      this.$refs.username.focus();
+    } else if (this.loginForm.password === "" && this.$refs.password != null) {
+      this.$refs.password.focus();
     }
-  },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
     checkCapslock(e) {
-      const { key } = e
-      this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
+      const { key } = e;
+      this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
     },
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
+    },
+    /**
+     * @param loginData either the { customer, username, password } or { accessToken } from keycloak.
+     */
+    callLoginWebservice(loginData) {
+      this.loading = true;
+      this.$store
+        .dispatch("user/login", loginData)
+        .then(async () => {
+          await this.$store.dispatch('user/getCustomerMetainfo')
+          // the session - cookie is set now
+          this.$router.push({
+            path: this.redirect || "/",
+            query: this.otherQuery,
+          });
+          this.loading = false;
+        })
+        .catch(() => {
+          // the session - cookie could not be set.
+          this.loading = false;
+          this.visible = true;
+        });
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-              this.loading = false
-            })
-            .catch(() => {
-              this.loading = false
-            })
+          this.callLoginWebservice(this.loginForm)
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
+      });
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
+        if (cur !== "redirect") {
+          acc[cur] = query[cur];
         }
-        return acc
-      }, {})
+        return acc;
+      }, {});
+    },
+    startMicrosoftLogin() {
+      KeycloakUtils.startKeycloakAuthentication();
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -249,15 +283,21 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+
+  button {
+    width: 100%;
+    margin-bottom: 30px;
+    margin-left: 0px;
+  }
 
   .login-form {
     position: relative;
