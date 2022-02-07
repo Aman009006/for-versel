@@ -191,7 +191,7 @@ export default {
     /**
      * @param loginData either the { customer, username, password } or { accessToken } from keycloak.
      */
-    async callLoginWebservice(loginData) {
+    callLoginWebservice(loginData) {
       this.loading = true;
       this.$store
         .dispatch("user/login", loginData)
@@ -207,6 +207,7 @@ export default {
         .catch(() => {
           // the session - cookie could not be set.
           this.loading = false;
+          this.visible = true;
         });
     },
     handleLogin() {
