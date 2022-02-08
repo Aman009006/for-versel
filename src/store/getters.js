@@ -10,6 +10,7 @@ const getters = {
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
-  skillsWithIntents: state => state.permission.skillsWithIntents
+  skillsWithIntents: state => state.permission.skillsWithIntents,
+  metainfo: state => state.user.metainfo
 }
 export default getters

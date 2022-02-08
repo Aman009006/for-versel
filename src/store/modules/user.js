@@ -7,7 +7,8 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  metainfo: { avatar_link: null, customer: null, powerBI_link: null }
 }
 
 const mutations = {
@@ -22,20 +23,33 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_METAINFO: (state, metainfo) => {
+    state.metainfo = metainfo
   }
 }
 
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { customer, username, password } = userInfo
+    const { customer, username, password, accessToken } = userInfo
     return new Promise((resolve, reject) => {
-      login({ customer: customer, email: username.trim(), password: password }).then(response => {
+      login({
+        customer: customer ? customer.trim() : null,
+        email: username ? username.trim() : null,
+        password: password,
+        accessToken
+      }).then(response => {
         resolve()
       }).catch(error => {
         reject(error)
       })
     })
+  },
+
+  async getCustomerMetainfo({ commit }) {
+    const customerMetainfo = await getCustomerMetaData();
+    commit('SET_METAINFO', customerMetainfo)
   },
 
   // get user info
@@ -48,7 +62,7 @@ const actions = {
        */
       const roles = ['admin']
       const name = 'name'
-      const { avatar_link } = await getCustomerMetaData();
+      const { avatar_link } = state.metainfo
       const avatar = avatar_link
       const introduction = 'introduction'
       commit('SET_ROLES', roles)

@@ -29,6 +29,9 @@ router.beforeEach(async (to, from, next) => {
     loggedIn = false;
   }
   if (loggedIn) {
+    if (store.getters.metainfo.customer == null) {
+      await store.dispatch('user/getCustomerMetainfo')
+    }
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
