@@ -12,7 +12,30 @@ export async function getSkillsWithIntents() {
   })
   return res
 }
-
+/**
+ * A button as it is described in the database
+ * @typedef {{ type: string, title: string, value: string, identificator: string}} Button
+ */
+/**
+ * The configuration informations of an answer as described in the database
+ * @typedef {{ type: string, readable_redirect_to_intent_name: string}} AnswerConfig
+ */
+/**
+ * All informations concerning an answer.
+ * @typedef {Object} Answer
+ * @property {string} id - answer id
+ * @property {string} text - text for answer
+ * @property {string} readableName - human readable name of intent
+ * @property {string} description - description of this perticular answer
+ * @property {Button[]} buttons - buttons mapped to this answer
+ */
+/**
+ * @typedef {{ answers: Answer[], answerConfig: AnswerConfig}} AnswerInfo
+ */
+/**
+ * @param {string} readableIntentName human readable name for a particular intent
+ * @returns {AnswerInfo} an information object containing all the information for an intent
+ */
 export function getAnswersforIntent(readableIntentName) {
   return request({
     url: authorizedBackendUrl + 'answersForReadableIntentName',
