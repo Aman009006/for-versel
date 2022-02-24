@@ -36,14 +36,17 @@ export default class ChatbotWidgetUtils {
     }
 
     /**
-     * inserts the chatbot, if it's not inserted, yet.
+     * inserts the chatbot, if...
+     * - it's not inserted, yet.
+     * - and the admin_ui_test_page_link was not set in the database
+     *
      * The insert will take place after 1 second to
      * prevent the chatbot from being visible in loading
      * screens.
      * @param {string} customer
      */
     static insertChatbotWidget() {
-        if (this.chatbotScript == null) {
+        if (this.chatbotScript == null && store.getters.metainfo.admin_ui_test_page_link == null) {
             this.activateDevMode();
             const script = this.createChatbotScript();
             setTimeout(function () {
