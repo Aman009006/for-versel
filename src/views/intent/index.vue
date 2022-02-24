@@ -357,6 +357,8 @@ $white: #ffffff8c;
 
 .table-container {
   position: relative;
+  // The chatbot, which has a fixed position, should not cover the table
+  margin-bottom: 120px;
   .disabled-layer {
     width: 100%;
     height: 100%;
