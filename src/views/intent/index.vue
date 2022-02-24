@@ -15,9 +15,16 @@
             </li>
           </ul>
         </template>
-        <div>
-          <el-button @click="startDialogForcurrentIntent()">
+        <div class="testButtonContainer">
+          <el-button
+          v-if="$store.getters.metainfo.admin_ui_test_page_link == null"
+          @click="startDialogForcurrentIntent()">
             Antwort im Bot prüfen
+          </el-button>
+          <el-button
+          v-if="$store.getters.metainfo.admin_ui_test_page_link != null"
+          @click="openLink($store.getters.metainfo.admin_ui_test_page_link)">
+            Testseite öffnen
           </el-button>
         </div>
       </div>
@@ -224,6 +231,9 @@ export default {
   },
   async mounted() {},
   methods: {
+    openLink(link) {
+      window.open(link, '_blank')
+    },
     startDialogForcurrentIntent() {
       window.hsag_chatbot.api.startDialog(this.$route.meta.intent);
     },
@@ -476,6 +486,10 @@ $white: #ffffff8c;
 
 .utterances {
   margin-top: 5px;
+}
+
+.testButtonContainer {
+  margin-top: 10px;
 }
 
 </style>
