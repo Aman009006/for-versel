@@ -15,6 +15,11 @@
             </li>
           </ul>
         </template>
+        <div>
+          <el-button @click="startDialogForcurrentIntent()">
+            Antwort im Bot prüfen
+          </el-button>
+        </div>
       </div>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
         <el-col :md="20" :span="24">
@@ -219,6 +224,9 @@ export default {
   },
   async mounted() {},
   methods: {
+    startDialogForcurrentIntent() {
+      window.hsag_chatbot.api.startDialog(this.$route.meta.intent);
+    },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
       const routeNames = newIntentRoutes.map(intentRoute => intentRoute.name);
