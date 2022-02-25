@@ -1,3 +1,3 @@
 <IfModule mod_headers.c>
-    Header set Content-Security-Policy "default-src 'self' keycloak-hsag.azurewebsites.net fileupload.h-s-a-g.de files.stadtwerk.bot adminbackend.stadtwerk.bot; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'"
+    Header set Content-Security-Policy "default-src 'self' *.stadtwerk.bot directline.botframework.com *.azurewebsites.net blob: data: wss: keycloak-hsag.azurewebsites.net fileupload.h-s-a-g.de files.stadtwerk.bot adminbackend.stadtwerk.bot; script-src 'self' *.stadtwerk.bot 'unsafe-eval'; style-src 'self' 'unsafe-inline'"
 </IfModule>
