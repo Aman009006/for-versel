@@ -84,7 +84,7 @@ export default {
        * @see https://hsagchatbot.atlassian.net/browse/CHAT-1156
        * @see https://stackoverflow.com/a/47005895/6458608
        */
-      this.$router.go(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.go()
     }
   }
 }
