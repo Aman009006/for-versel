@@ -81,9 +81,12 @@ export default {
        * admin - UI.
        * When we would not reload the window, the dynamically loaded components, like
        * css and JavaScript, would stay in the admin - UI.
+       * Additionaly the sessionStorage is cleared so that the
+       * conversationId of the chatbot will not be persisted
        * @see https://hsagchatbot.atlassian.net/browse/CHAT-1156
        * @see https://stackoverflow.com/a/47005895/6458608
        */
+      sessionStorage.clear();
       this.$router.go()
     }
   }
