@@ -75,7 +75,19 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      /**
+       * We need to reload the page when logging out.
+       * The reason lies in the chatbot - widget, which is shown in the
+       * admin - UI.
+       * When we would not reload the window, the dynamically loaded components, like
+       * css and JavaScript, would stay in the admin - UI.
+       * Additionaly the sessionStorage is cleared so that the
+       * conversationId of the chatbot will not be persisted
+       * @see https://hsagchatbot.atlassian.net/browse/CHAT-1156
+       * @see https://stackoverflow.com/a/47005895/6458608
+       */
+      sessionStorage.clear();
+      this.$router.go()
     }
   }
 }

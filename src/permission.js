@@ -6,6 +6,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import getPageTitle from '@/utils/get-page-title'
 import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'
+import ChatbotWidgetUtils from './utils/ChatbotWidgetUtils'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -29,9 +30,12 @@ router.beforeEach(async (to, from, next) => {
     loggedIn = false;
   }
   if (loggedIn) {
+    // get Meta Info for the logged in customer
     if (store.getters.metainfo.customer == null) {
       await store.dispatch('user/getCustomerMetainfo')
     }
+    // insert the chatbotWidget
+    ChatbotWidgetUtils.insertChatbotWidget();
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })

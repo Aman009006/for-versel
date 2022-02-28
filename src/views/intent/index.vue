@@ -15,6 +15,18 @@
             </li>
           </ul>
         </template>
+        <div class="testButtonContainer">
+          <el-button
+          v-if="$store.getters.metainfo.admin_ui_test_page_link == null"
+          @click="startDialogForcurrentIntent()">
+            Antwort im Bot prüfen
+          </el-button>
+          <el-button
+          v-if="$store.getters.metainfo.admin_ui_test_page_link != null"
+          @click="openLink($store.getters.metainfo.admin_ui_test_page_link)">
+            Testseite öffnen
+          </el-button>
+        </div>
       </div>
       <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
         <el-col :md="20" :span="24">
@@ -219,6 +231,12 @@ export default {
   },
   async mounted() {},
   methods: {
+    openLink(link) {
+      window.open(link, '_blank')
+    },
+    startDialogForcurrentIntent() {
+      window.hsag_chatbot.api.startDialog(this.$route.meta.intent);
+    },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
       const routeNames = newIntentRoutes.map(intentRoute => intentRoute.name);
@@ -357,6 +375,8 @@ $white: #ffffff8c;
 
 .table-container {
   position: relative;
+  // The chatbot, which has a fixed position, should not cover the table
+  margin-bottom: 120px;
   .disabled-layer {
     width: 100%;
     height: 100%;
@@ -466,6 +486,10 @@ $white: #ffffff8c;
 
 .utterances {
   margin-top: 5px;
+}
+
+.testButtonContainer {
+  margin-top: 10px;
 }
 
 </style>

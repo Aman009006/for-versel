@@ -43,14 +43,6 @@
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
           <image-text-link-box
-            class="seeChangesButton"
-            text="Änderung ansehen und prüfen"
-            :image="pics.chatbotTestPic"
-            :link="chatbotLink"
-          />
-        </el-col>
-        <el-col :span="12" :lg="6" :xs="24">
-          <image-text-link-box
             class="giveFeedbackButton"
             text="Feedback geben"
             :image="pics.feedbackPic"
@@ -66,7 +58,6 @@
 import ImageTextLinkBox from "@/components/ImageTextLinkBox";
 import manualPic from "@/assets/images/Bedienungsanleitung.svg";
 import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
-import chatbotTestPic from "@/assets/images/ChatbotTest.svg";
 import feedbackPic from "@/assets/images/Feedback.svg";
 import { links } from "@/constants";
 
@@ -79,17 +70,14 @@ export default {
       pics: {
         manualPic,
         editAnswersPic,
-        chatbotTestPic,
         feedbackPic,
       },
-      chatbotLink: null,
       jiraHelpDesk: links.jiraHelpDesk,
     };
   },
   async created() {
-    const { avatar_link, customer } = this.$store.getters.metainfo
+    const { avatar_link } = this.$store.getters.metainfo
     this.avatar_link = avatar_link;
-    this.chatbotLink = `https://cdn.stadtwerk.bot/chatbotdev/${customer}/`;
   },
 };
 </script>
@@ -157,15 +145,6 @@ export default {
   }
 
   .manuelButton{
-    border: solid 2px #F2F6FC;
-  }
-
-  .seeChangesButton:hover{
-    border: solid 2px #40a0ff;
-    .text{color:#40a0ff;}
-  }
-
-  .seeChangesButton{
     border: solid 2px #F2F6FC;
   }
 
