@@ -64,7 +64,7 @@
         <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
         <el-table :data="answers" class="answers_table" border>
           <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
-          <el-table-column align="center" label="Antworttext (ggf. mit Buttons in der Tabelle)" prop="text" autosize>
+          <el-table-column align="center" label="Antworttext" prop="text" autosize>
             <template slot-scope="{row}">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
