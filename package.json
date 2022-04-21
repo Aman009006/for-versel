@@ -20,15 +20,12 @@
     "fuse.js": "^3.6.1",
     "js-cookie": "^2.2.1",
     "keycloak-js": "^16.1.1",
-    "normalize.css": "^7.0.0",
+    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^2.4.0",
     "screenfull": "^4.2.1",
     "vue": "^2.6.14",
-    "vue-count-to": "^1.0.13",
     "vue-router": "^3.5.3",
-    "vue-splitpane": "^1.0.6",
-    "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
