@@ -144,10 +144,6 @@ export default {
       }
     })
 
-    if (this.couldPaste) {
-      document.addEventListener('paste', this.pasteImg)
-    }
-
     this.dropzone.on('success', file => {
       vm.$emit('dropzone-success', file, vm.dropzone.element)
     })
@@ -164,22 +160,12 @@ export default {
       vm.$emit('dropzone-successmultiple', file, error, xhr)
     })
   },
-  destroyed() {
-    document.removeEventListener('paste', this.pasteImg)
-    this.dropzone.destroy()
-  },
   methods: {
     removeAllFiles() {
       this.dropzone.removeAllFiles(true)
     },
     processQueue() {
       this.dropzone.processQueue()
-    },
-    pasteImg(event) {
-      const items = (event.clipboardData || event.originalEvent.clipboardData).items
-      if (items[0].kind === 'file') {
-        this.dropzone.addFile(items[0].getAsFile())
-      }
     },
     initImages(val) {
       if (!val) return
