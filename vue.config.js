@@ -32,9 +32,11 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
-    overlay: {
-      warnings: false,
-      errors: true
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true
+      }
     }
   },
   configureWebpack: {
@@ -44,6 +46,9 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src')
+      },
+      fallback: {
+        path: require.resolve("path-browserify")
       }
     },
     devtool: 'source-map'
@@ -51,6 +56,7 @@ module.exports = {
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     // it can improve the speed of the first screen, it is recommended to turn on preload
+    /* @todo
     config.plugin('preload').tap(() => [
       {
         rel: 'preload',
@@ -60,6 +66,7 @@ module.exports = {
         include: 'initial'
       }
     ])
+    */
 
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
