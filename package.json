@@ -4,7 +4,7 @@
   "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "dev": "vue-cli-service serve",
+    "dev": "vue-cli-service serve --hot",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging"
   },
@@ -35,7 +35,7 @@
     "eslint-plugin-vue": "^8.7.1",
     "path-browserify": "^1.0.1",
     "runjs": "^4.4.2",
-    "sass": "^1.50.1",
+    "sass": "^1.51.0",
     "sass-loader": "^12.6.0",
     "serve-static": "^1.15.0",
     "svg-sprite-loader": "^6.0.11",
