@@ -78,10 +78,6 @@ module.exports = {
       .when(process.env.NODE_ENV !== 'development',
         config => {
           config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .end()
-          config
             .optimization.splitChunks({
               chunks: 'all',
               cacheGroups: {
