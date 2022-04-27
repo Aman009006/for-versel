@@ -75,13 +75,15 @@
         :loading="loading"
         type="primary"
         @click.native.prevent="handleLogin"
-        >Login</el-button>
+        >Login</el-button
+      >
 
       <el-button
         type="secondary"
         @click="startMicrosoftLogin"
-        >Login mit Microsoft Konto</el-button>
-
+      >
+        Login mit Microsoft Konto
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -196,12 +198,19 @@ export default {
       this.$store
         .dispatch("user/login", loginData)
         .then(async () => {
-          await this.$store.dispatch('user/getCustomerMetainfo')
+          await this.$store.dispatch("user/getCustomerMetainfo");
           // the session - cookie is set now
-          this.$router.push({
-            path: this.redirect || "/",
-            query: this.otherQuery,
-          });
+          this.$router
+            .push({
+              path: this.redirect || "/",
+              query: this.otherQuery,
+              /**
+               * the catch is a quick fix, otherwise we get a constant error. Needed till we can update to new version of vue-router.
+               * see: https://stackoverflow.com/a/65326844
+               */
+            })
+            .catch(() => {});
+
           this.loading = false;
         })
         .catch(() => {
@@ -213,7 +222,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.callLoginWebservice(this.loginForm)
+          this.callLoginWebservice(this.loginForm);
         } else {
           console.log("error submit!!");
           return false;
@@ -230,7 +239,7 @@ export default {
     },
     startMicrosoftLogin() {
       KeycloakUtils.startKeycloakAuthentication();
-    }
+    },
   },
 };
 </script>

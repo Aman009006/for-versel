@@ -105,7 +105,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
   }
   skillsWithIntents.forEach(skillWithIntent => {
     route.children.push({
-      path: encodePathComponent(skillWithIntent.SkillName),
+      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
       component: routerView,
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
@@ -116,7 +116,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     })
     skillWithIntent.Intents.forEach(intent => {
       route.children[route.children.length - 1].children.push({
-        path: encodePathComponent(intent.name),
+        path: encodeURIComponent(encodePathComponent(intent.name)),
         component: () => import('@/views/intent/index'),
         name: `intent-${intent.name}`,
         meta: {
