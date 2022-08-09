@@ -30,5 +30,5 @@ https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/410550273/Lokales+Debu
 
 [Element-UI](https://element.eleme.io/)
 
-# Deployment
-Chatbot-Frontend-AdminUi in Jenkins -> Jetzt bauen
+# Deployment für Dev und Prod Admin UI
+https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/436928516/Admin-UI-Karten
