@@ -1,7 +1,7 @@
 <template>
   <div class="intent-element-container">
     <template v-if="dataReady">
-      <h1 style="font-size:18px;">{{ $route.meta.title }}</h1>
+      <h1 style="font-size: 18px">{{ $route.meta.title }}</h1>
       <div class="utteranceBox">
         <h5 class="utterancesTitle">Intentname:</h5>
         <div>{{ $route.meta.intent }}</div>
@@ -17,58 +17,98 @@
         </template>
         <div class="testButtonContainer">
           <el-button
-          v-if="$store.getters.metainfo.admin_ui_test_page_link == null"
-          @click="startDialogForcurrentIntent()">
+            v-if="$store.getters.metainfo.admin_ui_test_page_link == null"
+            @click="startDialogForcurrentIntent()"
+          >
             Antwort im Bot prüfen
           </el-button>
           <el-button
-          v-if="$store.getters.metainfo.admin_ui_test_page_link != null"
-          @click="openLink($store.getters.metainfo.admin_ui_test_page_link)">
+            v-if="$store.getters.metainfo.admin_ui_test_page_link != null"
+            @click="openLink($store.getters.metainfo.admin_ui_test_page_link)"
+          >
             Testseite öffnen
           </el-button>
         </div>
       </div>
-      <el-row v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="redirectionMessage" :gutter="20">
+      <el-row
+        v-if="
+          answerConfig != null &&
+          answerConfig.readable_redirect_to_intent_name != null
+        "
+        class="redirectionMessage"
+        :gutter="20"
+      >
         <el-col :md="20" :span="24">
-          <el-alert
-            type="warning"
-            center
-            show-icon
-            :closable="false"
-          >
-            <p>Dieser Intent wird weitergeleitet auf <span style="font-weight:bold;">"{{ answerConfig.readable_redirect_to_intent_name }}"</span>.</p>
+          <el-alert type="warning" center show-icon :closable="false">
             <p>
-              Bitte beachten Sie: Bei Weiterleitungen wird der Antworttext des Intents angezeigt, auf den weitergeleitet wurde.
-              Daher können Sie die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des Antworttextes klicken Sie bitte auf den Button
-              <span style="font-weight:bold;">"Weiterleitung folgen"</span>.
+              Dieser Intent wird weitergeleitet auf
+              <span style="font-weight: bold"
+                >"{{ answerConfig.readable_redirect_to_intent_name }}"</span
+              >.
             </p>
             <p>
-              Aktuell können Sie diesen Intent über unseren Support aktivieren lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket System. <br /><span style="font-weight:bold;">Feature Info:</span> In Kürze wird die Intent Aktivierung per Klick über die Admin UI möglich sein.
+              Bitte beachten Sie: Bei Weiterleitungen wird der Antworttext des
+              Intents angezeigt, auf den weitergeleitet wurde. Daher können Sie
+              die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des
+              Antworttextes klicken Sie bitte auf den Button
+              <span style="font-weight: bold">"Weiterleitung folgen"</span>.
+            </p>
+            <p>
+              Aktuell können Sie diesen Intent über unseren Support aktivieren
+              lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket
+              System. <br /><span style="font-weight: bold">Feature Info:</span>
+              In Kürze wird die Intent Aktivierung per Klick über die Admin UI
+              möglich sein.
             </p>
           </el-alert>
         </el-col>
         <el-col :md="4" :span="24" class="buttonContainer">
           <!-- <el-button type="warning"> -->
-          <router-link :to="{name: 'intent-' + answerConfig.readable_redirect_to_intent_name}" tag="button" class="el-button el-button--warning el-button--medium">
+          <router-link
+            :to="{
+              name: 'intent-' + answerConfig.readable_redirect_to_intent_name,
+            }"
+            tag="button"
+            class="el-button el-button--warning el-button--medium"
+          >
             Weiterleitung folgen
           </router-link>
           <!-- </el-button> -->
           <el-button class="link-button">
-            <a :href="jiraHelpDesk" target="_blank">
-              Support kontaktieren
-            </a>
+            <a :href="jiraHelpDesk" target="_blank"> Support kontaktieren </a>
           </el-button>
         </el-col>
       </el-row>
       <div class="table-container">
-        <div v-if="answerConfig != null && answerConfig.readable_redirect_to_intent_name != null" class="disabled-layer" />
+        <div
+          v-if="
+            answerConfig != null &&
+            answerConfig.readable_redirect_to_intent_name != null
+          "
+          class="disabled-layer"
+        />
         <el-table :data="answers" class="answers_table" border>
-          <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
-          <el-table-column align="center" label="Antworttext" prop="text" autosize>
-            <template slot-scope="{row}">
+          <el-table-column
+            align="center"
+            label="Beschreibung"
+            prop="description"
+            width="150"
+          />
+          <el-table-column
+            align="center"
+            label="Antworttext"
+            prop="text"
+            autosize
+          >
+            <template slot-scope="{ row }">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
-                <el-input v-model="row.text" type="textarea" autosize class="edit-input" />
+                <el-input
+                  v-model="row.text"
+                  type="textarea"
+                  autosize
+                  class="edit-input"
+                />
               </template>
               <!-- When the editing mode is turned off: -->
               <template v-else>
@@ -79,18 +119,27 @@
             </template>
           </el-table-column>
           <el-table-column align="center" label="Button" width="500">
-            <template slot-scope="{row}">
+            <template slot-scope="{ row }">
               <!-- show the table with buttons only if it is not empty -->
               <template v-if="row.buttons">
                 <!-- Table with buttons -->
                 <el-table :data="row.buttons" border style="width: 100%" stripe>
                   <!-- Column for the button title -->
-                  <el-table-column align="center" label="Name" prop="title" autosize>
-                    <template slot-scope="{row}">
+                  <el-table-column
+                    align="center"
+                    label="Name"
+                    prop="title"
+                    autosize
+                  >
+                    <template slot-scope="{ row }">
                       <!-- If editing mode is on and the button has no type imBack -->
                       <template v-if="row.edit">
                         <!-- Show the current title in the textarea which can be edited-->
-                        <el-input v-model="row.title" type="textarea" autosize />
+                        <el-input
+                          v-model="row.title"
+                          type="textarea"
+                          autosize
+                        />
                       </template>
                       <!-- If editing mode is off -->
                       <template v-else>
@@ -102,17 +151,31 @@
                   <!-- Column for the button value -->
                   <el-table-column align="center" label="Wert" prop="value">
                     <template slot="header">
-                      <el-popover ref="fromPopOverValue" placement="top-start" autosize trigger="hover">
+                      <el-popover
+                        ref="fromPopOverValue"
+                        placement="top-start"
+                        autosize
+                        trigger="hover"
+                      >
                         <div class="popOverContent">
-                          Werte können nur bei <br />Buttons mit dem Typ<br /><strong>openUrl</strong> bearbeitet werden.
+                          Werte können nur bei <br />Buttons mit dem Typ<br /><strong
+                            >openUrl</strong
+                          >
+                          bearbeitet werden.
                         </div>
                       </el-popover>
-                      <span> Wert <i v-popover:fromPopOverValue class="el-icon-info" />
+                      <span>
+                        Wert
+                        <i v-popover:fromPopOverValue class="el-icon-info" />
                       </span>
                     </template>
-                    <template slot-scope="{row}">
+                    <template slot-scope="{ row }">
                       <template v-if="row.edit && row.type != 'imBack'">
-                        <el-input v-model="row.value" type="textarea" autosize />
+                        <el-input
+                          v-model="row.value"
+                          type="textarea"
+                          autosize
+                        />
                       </template>
                       <template v-else>
                         <span>{{ row.value }}</span>
@@ -120,29 +183,48 @@
                     </template>
                   </el-table-column>
                   <!-- Column for the button type -->
-                  <el-table-column align="center" label="Typ" prop="type" width="80">
+                  <el-table-column
+                    align="center"
+                    label="Typ"
+                    prop="type"
+                    width="80"
+                  >
                     <template slot="header">
-                      <el-popover ref="fromPopOverType" placement="top-start" autosize trigger="hover">
+                      <el-popover
+                        ref="fromPopOverType"
+                        placement="top-start"
+                        autosize
+                        trigger="hover"
+                      >
                         <div class="popOverContent">
-                          Der Typ eines <br /> Buttons kann <br /> <strong> nicht </strong> geändert <br /> werden.
+                          Der Typ eines <br />
+                          Buttons kann <br />
+                          <strong> nicht </strong> geändert <br />
+                          werden.
                         </div>
                       </el-popover>
-                      <span> Typ <i v-popover:fromPopOverType class="el-icon-info" />
+                      <span>
+                        Typ <i v-popover:fromPopOverType class="el-icon-info" />
                       </span>
                     </template>
-                    <template slot-scope="{row}">
+                    <template slot-scope="{ row }">
                       <span>{{ row.type }}</span>
                     </template>
                   </el-table-column>
                 </el-table>
               </template>
               <template v-else>
-                <el-alert title="Diese Antwort hat keine Buttons" type="info" :closable="false" center />
+                <el-alert
+                  title="Diese Antwort hat keine Buttons"
+                  type="info"
+                  :closable="false"
+                  center
+                />
               </template>
             </template>
           </el-table-column>
           <el-table-column align="center" width="130">
-            <template slot-scope="{row}">
+            <template slot-scope="{ row }">
               <!-- When the editing mode is turned on: -->
               <template v-if="row.edit">
                 <el-button
@@ -182,16 +264,16 @@
 </template>
 
 <script>
-import { getAnswersforIntent } from '@/api/answers'
-import { setAnswerText } from '@/api/answers'
-import { setButtonProperties } from '@/api/answers'
-import { links, dispatchNames } from '@/constants';
+import { getAnswersforIntent } from "@/api/answers";
+import { setAnswerText } from "@/api/answers";
+import { setButtonProperties } from "@/api/answers";
+import { links, dispatchNames } from "@/constants";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
-  name: 'Intent',
+  name: "Intent",
   // components: { MarkdownEditor },
   props: {},
   data() {
@@ -199,23 +281,23 @@ export default {
       dataReady: false,
       answers: [],
       answerConfig: {},
-      jiraHelpDesk: links.jiraHelpDesk
-    }
+      jiraHelpDesk: links.jiraHelpDesk,
+    };
   },
-   computed: {
+  computed: {
     utterances() {
-      const searchedIntent = this.$route.meta.title
+      const searchedIntent = this.$route.meta.title;
       // use the data from the store
-      const skillsWithIntents = this.$store.getters.skillsWithIntents
+      const skillsWithIntents = this.$store.getters.skillsWithIntents;
       for (const next of skillsWithIntents) {
         for (const intent of next.Intents) {
           // find the current intent and get its utterances
           if (intent.name === searchedIntent) {
-            return intent.utterances
+            return intent.utterances;
           }
         }
       }
-      return null
+      return null;
     },
     permissionRoutes: function () {
       return this.$store.getters.permission_routes;
@@ -226,139 +308,152 @@ export default {
      * Fetch the data when the view is created
      * and the data is already being observed
      */
-    await this.loadAnswers()
+    await this.loadAnswers();
   },
   async mounted() {},
   methods: {
     openLink(link) {
-      window.open(link, '_blank')
+      window.open(link, "_blank");
     },
     startDialogForcurrentIntent() {
       window.hsag_chatbot.api.startDialog(this.$route.meta.intent);
     },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
-      const routeNames = newIntentRoutes.map(intentRoute => intentRoute.name);
+      const routeNames = newIntentRoutes.map((intentRoute) => intentRoute.name);
       if (routeNames.includes(this.$route.name)) {
         await refreshRoutes();
       }
     },
     async loadAnswers() {
-      const answerInfo = await getAnswersforIntent(this.$route.meta.title)
+      const answerInfo = await getAnswersforIntent(this.$route.meta.title);
       this.refreshRoutesIfNewIntentWasClicked();
-      this.answers = answerInfo.answers
-      this.answerConfig = answerInfo.answerConfig
+      this.answers = answerInfo.answers;
+      this.answerConfig = answerInfo.answerConfig;
       for (const answer of this.answers) {
         // for each answer set editing mode at false
-        this.$set(answer, 'edit', false)
+        this.$set(answer, "edit", false);
         // for each answer remember the current text value
-        this.$set(answer, 'originalText', answer.text)
+        this.$set(answer, "originalText", answer.text);
         // for each button set editing mode at false and note the current values of its props
         if (answer.buttons) {
           for (const button of answer.buttons) {
-            this.$set(button, 'answerId', answer.id)
-            this.$set(button, 'edit', false)
-            this.$set(button, 'originalButtonTitle', button.title)
-            this.$set(button, 'originalButtonType', button.type)
-            this.$set(button, 'originalButtonValue', button.value)
+            this.$set(button, "answerId", answer.id);
+            this.$set(button, "edit", false);
+            this.$set(button, "originalButtonTitle", button.title);
+            this.$set(button, "originalButtonType", button.type);
+            this.$set(button, "originalButtonValue", button.value);
           }
         }
       }
       // now the data is filled and can be used
-      this.dataReady = true
+      this.dataReady = true;
     },
     toggleEdit(row) {
-      row.edit = !row.edit
+      row.edit = !row.edit;
       for (const button of row.buttons) {
-        button.edit = !button.edit
+        button.edit = !button.edit;
       }
     },
     cancelEdit(row) {
       // set the text at the previous value
-      row.text = row.originalText
+      row.text = row.originalText;
       // the editing mode is off now
-      row.edit = false
+      row.edit = false;
       // for each button set editing mode at false and set props at previous values
       if (row.buttons) {
         for (const button of row.buttons) {
-          this.resetButtonPropertiesAtPrevValues(button)
+          this.resetButtonPropertiesAtPrevValues(button);
         }
       }
       // give the cancelling message
       this.$message({
-        message: 'Die Änderungen wurden abgebrochen.',
-        type: 'warning'
-      })
+        message: "Die Änderungen wurden abgebrochen.",
+        type: "warning",
+      });
     },
     checkIfButtonPropertiesChanged(button) {
-      if (button.originalButtonType !== button.type ||
-          button.originalButtonValue !== button.value ||
-          button.originalButtonTitle !== button.title) {
-        return true
+      if (
+        button.originalButtonType !== button.type ||
+        button.originalButtonValue !== button.value ||
+        button.originalButtonTitle !== button.title
+      ) {
+        return true;
       }
-      return false
+      return false;
     },
     resetButtonPropertiesAtPrevValues(button) {
-      button.edit = false
-      button.title = button.originalButtonTitle
-      button.type = button.originalButtonType
-      button.value = button.originalButtonValue
+      button.edit = false;
+      button.title = button.originalButtonTitle;
+      button.type = button.originalButtonType;
+      button.value = button.originalButtonValue;
     },
     async confirmEdit(row) {
       // the editing mode is off for the current answer
-      row.edit = false
-      let changesMade = false
+      row.edit = false;
+      let changesMade = false;
       // if the user has changed the answer text in the current row
       if (row.originalText !== row.text) {
         // send the changed data to the BE which makes the changes in DB
-        await setAnswerText(row.id, row.text).then(response => {
-          // fullfilment: then update data because it was changed in DB
-          row.originalText = row.text
-          changesMade = true
-        }, reason => {
-          // rejection: then set the answer at the previous value
-          row.text = row.originalText
-        })
+        await setAnswerText(row.id, row.text).then(
+          (response) => {
+            // fullfilment: then update data because it was changed in DB
+            row.originalText = row.text;
+            changesMade = true;
+          },
+          (reason) => {
+            // rejection: then set the answer at the previous value
+            row.text = row.originalText;
+          }
+        );
       }
       // for each button check if it is changed and save it in the DB
       for (const button of row.buttons) {
         if (this.checkIfButtonPropertiesChanged(button)) {
           // save the changes in the DB
-          await setButtonProperties(button.answerId, button.originalButtonTitle, button.title, button.type, button.value).then(response => {
-            // turn off the editing mode, because the changes are already received here
-            button.edit = false
-            // set the old values of the button at the new ones
-            button.originalButtonTitle = button.title
-            button.originalButtonType = button.type
-            button.originalButtonValue = button.value
-            // set the flag that changes are made
-            changesMade = true
-          }, reason => {
-          // rejection: then set at the previous value
-            this.resetButtonPropertiesAtPrevValues(button)
-          })
+          await setButtonProperties(
+            button.answerId,
+            button.originalButtonTitle,
+            button.title,
+            button.type,
+            button.value
+          ).then(
+            (response) => {
+              // turn off the editing mode, because the changes are already received here
+              button.edit = false;
+              // set the old values of the button at the new ones
+              button.originalButtonTitle = button.title;
+              button.originalButtonType = button.type;
+              button.originalButtonValue = button.value;
+              // set the flag that changes are made
+              changesMade = true;
+            },
+            (reason) => {
+              // rejection: then set at the previous value
+              this.resetButtonPropertiesAtPrevValues(button);
+            }
+          );
         } else {
           // the button was not changed, therefore just turn off the editing mode
-          button.edit = false
+          button.edit = false;
         }
       }
       // if the user has done NO changes in the row
       if (!changesMade) {
         // set the info message for this case
         this.$message({
-          message: 'Es wurden keine Änderungen gemacht',
-          type: 'warning'
-        })
+          message: "Es wurden keine Änderungen gemacht",
+          type: "warning",
+        });
       } else {
-        this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified)
+        this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-
 $grey: #8080807a;
 $white: #ffffff8c;
 
@@ -366,11 +461,13 @@ $white: #ffffff8c;
   padding: 0px 15px;
 }
 
-.el-icon-info{
+.el-icon-info {
   color: #66b1ff;
 }
 
-.el-table{font-size: 13px !important;}
+.el-table {
+  font-size: 13px !important;
+}
 
 .table-container {
   position: relative;
@@ -394,7 +491,7 @@ $white: #ffffff8c;
   align-items: center;
 
   a {
-  text-decoration: underline
+    text-decoration: underline;
   }
 
   .buttonContainer {
@@ -406,7 +503,7 @@ $white: #ffffff8c;
     button {
       margin-left: 0px;
       white-space: normal;
-      &:first-child{
+      &:first-child {
         margin-bottom: 20px;
         height: 65px;
       }
@@ -419,12 +516,12 @@ $white: #ffffff8c;
 }
 
 .popOverContent {
-    text-align:center;
+  text-align: center;
 }
 .cancel-btn,
 .confirm-btn,
 .edit-btn {
-  border-radius:9px!important;
+  border-radius: 9px !important;
   // border-color: black;
   margin-left: 0px !important;
   width: 100%;
@@ -435,7 +532,7 @@ $white: #ffffff8c;
 
 .cancel-btn {
   color: white !important;
-  background-color:#fa4c4c!important;
+  background-color: #fa4c4c !important;
   border-color: #fa4c4c !important;
 }
 
@@ -453,35 +550,35 @@ $white: #ffffff8c;
 
 .confirm-btn:hover {
   color: white !important;
-  background-color:#85ce61 !important;
+  background-color: #85ce61 !important;
   border-color: #85ce61 !important;
 }
 
 .edit-btn {
   border: solid #409eff 2px !important;
-  color:white!important;
+  color: white !important;
   background-color: #409eff !important;
 }
 .edit-btn:hover {
   border: solid #66b1ff 2px !important;
-  color:white!important;
+  color: white !important;
   background-color: #66b1ff !important;
 }
 .utteranceBox {
-    background-color: white;
-    padding: 5px 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    font-size: 14px;
-    color: #606266;
+  background-color: white;
+  padding: 5px 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  font-size: 14px;
+  color: #606266;
 }
- .utterancesTitle{
-   font-size: 13px;
-   color: #409eff;
-   margin-bottom: 0px;
-   text-transform: uppercase;
- }
+.utterancesTitle {
+  font-size: 13px;
+  color: #409eff;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+}
 
 .utterances {
   margin-top: 5px;
@@ -490,5 +587,4 @@ $white: #ffffff8c;
 .testButtonContainer {
   margin-top: 10px;
 }
-
 </style>
