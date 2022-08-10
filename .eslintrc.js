@@ -14,6 +14,7 @@ module.exports = {
   // add your custom rules here
   // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    "vue/attribute-hyphenation": 0,
     "vue/no-unused-vars": 2,
     "require-atomic-updates": 0,
     "vue/html-indent": 0,
