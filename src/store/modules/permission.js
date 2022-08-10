@@ -60,6 +60,7 @@ const mutations = {
     const order = [
       '/',
       '/skills',
+      '/placeholders',
       '/jira',
       '/notes',
       '/manual',

@@ -6,6 +6,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import { paths } from '@/constants'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -88,6 +89,15 @@ export const constantRoutes = [
     ]
   },
   {
+    path: paths.placeholders,
+    component: Layout,
+    name: 'Placeholders',
+    meta: {
+      title: 'Platzhalter', icon: 'el-icon-s-flag'
+    },
+    children: []
+  },
+  {
     path: '/notes',
     component: Layout,
     children: [
@@ -97,7 +107,6 @@ export const constantRoutes = [
       }
     ]
   },
-
   {
     path: '/jira',
     component: Layout,

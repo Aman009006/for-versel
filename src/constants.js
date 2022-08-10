@@ -7,7 +7,8 @@ export const links = {
 }
 
 export const paths = {
-    skills: '/skills'
+    skills: '/skills',
+    placeholders: '/placeholders'
 }
 
 const setSkillsAndIntents = 'setSkillsAndIntents';
