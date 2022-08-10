@@ -118,100 +118,10 @@
               </template>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="Button" width="500">
+          <el-table-column align="center" label="Buttons" width="500">
             <template slot-scope="{ row }">
-              <!-- show the table with buttons only if it is not empty -->
               <template v-if="row.buttons">
-                <!-- Table with buttons -->
-                <el-table :data="row.buttons" border style="width: 100%" stripe>
-                  <!-- Column for the button title -->
-                  <el-table-column
-                    align="center"
-                    label="Name"
-                    prop="title"
-                    autosize
-                  >
-                    <template slot-scope="{ row }">
-                      <!-- If editing mode is on and the button has no type imBack -->
-                      <template v-if="row.edit">
-                        <!-- Show the current title in the textarea which can be edited-->
-                        <el-input
-                          v-model="row.title"
-                          type="textarea"
-                          autosize
-                        />
-                      </template>
-                      <!-- If editing mode is off -->
-                      <template v-else>
-                        <!-- show the current value -->
-                        <span>{{ row.title }}</span>
-                      </template>
-                    </template>
-                  </el-table-column>
-                  <!-- Column for the button value -->
-                  <el-table-column align="center" label="Wert" prop="value">
-                    <template slot="header">
-                      <el-popover
-                        ref="fromPopOverValue"
-                        placement="top-start"
-                        autosize
-                        trigger="hover"
-                      >
-                        <div class="popOverContent">
-                          Werte können nur bei <br />Buttons mit dem Typ<br /><strong
-                            >openUrl</strong
-                          >
-                          bearbeitet werden.
-                        </div>
-                      </el-popover>
-                      <span>
-                        Wert
-                        <i v-popover:fromPopOverValue class="el-icon-info" />
-                      </span>
-                    </template>
-                    <template slot-scope="{ row }">
-                      <template v-if="row.edit && row.type != 'imBack'">
-                        <el-input
-                          v-model="row.value"
-                          type="textarea"
-                          autosize
-                        />
-                      </template>
-                      <template v-else>
-                        <span>{{ row.value }}</span>
-                      </template>
-                    </template>
-                  </el-table-column>
-                  <!-- Column for the button type -->
-                  <el-table-column
-                    align="center"
-                    label="Typ"
-                    prop="type"
-                    width="80"
-                  >
-                    <template slot="header">
-                      <el-popover
-                        ref="fromPopOverType"
-                        placement="top-start"
-                        autosize
-                        trigger="hover"
-                      >
-                        <div class="popOverContent">
-                          Der Typ eines <br />
-                          Buttons kann <br />
-                          <strong> nicht </strong> geändert <br />
-                          werden.
-                        </div>
-                      </el-popover>
-                      <span>
-                        Typ <i v-popover:fromPopOverType class="el-icon-info" />
-                      </span>
-                    </template>
-                    <template slot-scope="{ row }">
-                      <span>{{ row.type }}</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
+                <ButtonList :buttons="row.buttons"/>
               </template>
               <template v-else>
                 <el-alert
@@ -270,11 +180,14 @@ import { setButtonProperties } from "@/api/answers";
 import { links, dispatchNames } from "@/constants";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
+import ButtonList from "@/components/ButtonList";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: "Intent",
-  // components: { MarkdownEditor },
+  components: {
+    ButtonList
+  },
   props: {},
   data() {
     return {
@@ -351,9 +264,6 @@ export default {
     },
     toggleEdit(row) {
       row.edit = !row.edit;
-      for (const button of row.buttons) {
-        button.edit = !button.edit;
-      }
     },
     cancelEdit(row) {
       // set the text at the previous value
@@ -459,10 +369,6 @@ $white: #ffffff8c;
 
 .intent-element-container {
   padding: 0px 15px;
-}
-
-.el-icon-info {
-  color: #66b1ff;
 }
 
 .el-table {
