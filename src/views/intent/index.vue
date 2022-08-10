@@ -2,34 +2,14 @@
   <div class="intent-element-container">
     <template v-if="dataReady">
       <h1 style="font-size: 18px">{{ $route.meta.title }}</h1>
-      <div class="utteranceBox">
-        <h5 class="utterancesTitle">Intentname:</h5>
-        <div>{{ $route.meta.intent }}</div>
-        <h5 class="utterancesTitle">Beschreibung:</h5>
-        <div>{{ $route.meta.description }}</div>
-        <template v-if="utterances && utterances[0]">
-          <h5 class="utterancesTitle">Beispieleingaben:</h5>
-          <ul class="utterances">
-            <li v-for="item in utterances" :key="item">
-              {{ item }}
-            </li>
-          </ul>
-        </template>
-        <div class="testButtonContainer">
-          <el-button
-            v-if="$store.getters.metainfo.admin_ui_test_page_link == null"
-            @click="startDialogForcurrentIntent()"
-          >
-            Antwort im Bot prüfen
-          </el-button>
-          <el-button
-            v-if="$store.getters.metainfo.admin_ui_test_page_link != null"
-            @click="openLink($store.getters.metainfo.admin_ui_test_page_link)"
-          >
-            Testseite öffnen
-          </el-button>
-        </div>
-      </div>
+
+      <DialogInfoBox
+        :intent="$route.meta.intent"
+        :description="$route.meta.description"
+        :utterances="utterances"
+        :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
+      />
+
       <el-row
         v-if="
           answerConfig != null &&
@@ -121,7 +101,7 @@
           <el-table-column align="center" label="Buttons" width="500">
             <template slot-scope="{ row }">
               <template v-if="row.buttons">
-                <ButtonList :buttons="row.buttons"/>
+                <ButtonList :buttons="row.buttons" />
               </template>
               <template v-else>
                 <el-alert
@@ -181,12 +161,14 @@ import { links, dispatchNames } from "@/constants";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 import ButtonList from "@/components/ButtonList";
+import DialogInfoBox from "@/components/DialogInfoBox";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: "Intent",
   components: {
-    ButtonList
+    ButtonList,
+    DialogInfoBox,
   },
   props: {},
   data() {
@@ -225,12 +207,6 @@ export default {
   },
   async mounted() {},
   methods: {
-    openLink(link) {
-      window.open(link, "_blank");
-    },
-    startDialogForcurrentIntent() {
-      window.hsag_chatbot.api.startDialog(this.$route.meta.intent);
-    },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
       const routeNames = newIntentRoutes.map((intentRoute) => intentRoute.name);
@@ -469,28 +445,5 @@ $white: #ffffff8c;
   border: solid #66b1ff 2px !important;
   color: white !important;
   background-color: #66b1ff !important;
-}
-.utteranceBox {
-  background-color: white;
-  padding: 5px 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  font-size: 14px;
-  color: #606266;
-}
-.utterancesTitle {
-  font-size: 13px;
-  color: #409eff;
-  margin-bottom: 0px;
-  text-transform: uppercase;
-}
-
-.utterances {
-  margin-top: 5px;
-}
-
-.testButtonContainer {
-  margin-top: 10px;
 }
 </style>
