@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: '@babel/eslint-parser',
     sourceType: 'module'
   },
   env: {
@@ -12,18 +12,13 @@ module.exports = {
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
   // add your custom rules here
-  //it is base on https://github.com/vuejs/eslint-config-vue
+  // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    "vue/no-unused-vars": 2,
     "require-atomic-updates": 0,
     "vue/html-indent": 0,
     "vue/html-closing-bracket-newline": 0,
-    "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
-      "multiline": {
-        "max": 1,
-        "allowFirstLine": false
-      }
-    }],
+    "vue/max-attributes-per-line": 0,
     "vue/html-self-closing": ["error", {
       "html": {
         "void": "always",
