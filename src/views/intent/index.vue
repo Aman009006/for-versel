@@ -10,61 +10,15 @@
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
       />
 
-      <el-row
-        v-if="
-          answerConfig != null &&
-          answerConfig.readable_redirect_to_intent_name != null
+      <RedirectionInfoBox
+        :readableRedirectToIntentName="
+          answerConfig.readable_redirect_to_intent_name
         "
-        class="redirectionMessage"
-        :gutter="20"
-      >
-        <el-col :md="20" :span="24">
-          <el-alert type="warning" center show-icon :closable="false">
-            <p>
-              Dieser Intent wird weitergeleitet auf
-              <span style="font-weight: bold"
-                >"{{ answerConfig.readable_redirect_to_intent_name }}"</span
-              >.
-            </p>
-            <p>
-              Bitte beachten Sie: Bei Weiterleitungen wird der Antworttext des
-              Intents angezeigt, auf den weitergeleitet wurde. Daher können Sie
-              die untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des
-              Antworttextes klicken Sie bitte auf den Button
-              <span style="font-weight: bold">"Weiterleitung folgen"</span>.
-            </p>
-            <p>
-              Aktuell können Sie diesen Intent über unseren Support aktivieren
-              lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket
-              System. <br /><span style="font-weight: bold">Feature Info:</span>
-              In Kürze wird die Intent Aktivierung per Klick über die Admin UI
-              möglich sein.
-            </p>
-          </el-alert>
-        </el-col>
-        <el-col :md="4" :span="24" class="buttonContainer">
-          <!-- <el-button type="warning"> -->
-          <router-link
-            :to="{
-              name: 'intent-' + answerConfig.readable_redirect_to_intent_name,
-            }"
-            tag="button"
-            class="el-button el-button--warning el-button--medium"
-          >
-            Weiterleitung folgen
-          </router-link>
-          <!-- </el-button> -->
-          <el-button class="link-button">
-            <a :href="jiraHelpDesk" target="_blank"> Support kontaktieren </a>
-          </el-button>
-        </el-col>
-      </el-row>
+      />
+
       <div class="table-container">
         <div
-          v-if="
-            answerConfig != null &&
-            answerConfig.readable_redirect_to_intent_name != null
-          "
+          v-if="answerConfig.readable_redirect_to_intent_name != null"
           class="disabled-layer"
         />
         <el-table :data="answers" class="answers_table" border>
@@ -157,11 +111,12 @@
 import { getAnswersforIntent } from "@/api/answers";
 import { setAnswerText } from "@/api/answers";
 import { setButtonProperties } from "@/api/answers";
-import { links, dispatchNames } from "@/constants";
+import { dispatchNames } from "@/constants";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 import ButtonList from "@/components/ButtonList";
 import DialogInfoBox from "@/components/DialogInfoBox";
+import RedirectionInfoBox from "@/components/RedirectionInfoBox";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
@@ -169,6 +124,7 @@ export default {
   components: {
     ButtonList,
     DialogInfoBox,
+    RedirectionInfoBox,
   },
   props: {},
   data() {
@@ -176,7 +132,6 @@ export default {
       dataReady: false,
       answers: [],
       answerConfig: {},
-      jiraHelpDesk: links.jiraHelpDesk,
     };
   },
   computed: {
@@ -362,39 +317,6 @@ $white: #ffffff8c;
     position: absolute;
     background-color: rgb(239 239 239 / 77%);
   }
-}
-
-.redirectionMessage {
-  color: red;
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
-  a {
-    text-decoration: underline;
-  }
-
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    max-width: 350px;
-    margin-top: 15px;
-
-    button {
-      margin-left: 0px;
-      white-space: normal;
-      &:first-child {
-        margin-bottom: 20px;
-        height: 65px;
-      }
-    }
-  }
-}
-
-.redirectionMessage a {
-  text-decoration: underline;
 }
 
 .popOverContent {
