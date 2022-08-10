@@ -50,7 +50,10 @@
             geändert werden.
           </div>
         </el-popover>
-        <span> Typ <i v-popover:PopOverType class="el-icon-info" /> </span>
+        <span>
+          Typ
+          <i v-popover:PopOverType class="el-icon-info" />
+        </span>
       </template>
       <template slot-scope="{ row: button }">
         <span>{{ button.type }}</span>
