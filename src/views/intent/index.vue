@@ -114,9 +114,9 @@ import { setButtonProperties } from "@/api/answers";
 import { dispatchNames } from "@/constants";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
-import ButtonList from "@/components/ButtonList";
-import DialogInfoBox from "@/components/DialogInfoBox";
-import RedirectionInfoBox from "@/components/RedirectionInfoBox";
+import ButtonList from "@/components/Dialogs/ButtonList";
+import DialogInfoBox from "@/components/Dialogs/DialogInfoBox";
+import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox";
 
 // import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
