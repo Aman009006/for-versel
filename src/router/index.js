@@ -92,10 +92,15 @@ export const constantRoutes = [
     path: paths.placeholders,
     component: Layout,
     name: 'Placeholders',
-    meta: {
-      title: 'Platzhalter', icon: 'el-icon-s-flag'
-    },
-    children: []
+    children: [
+      {
+        path: paths.placeholders,
+        component: () => import('@/views/placeholders/index'),
+        meta: {
+          title: 'Platzhalter', icon: 'el-icon-edit-outline'
+        }
+      }
+    ]
   },
   {
     path: '/notes',
@@ -127,7 +132,7 @@ export const constantRoutes = [
       }
     ]
   },
-   {
+  {
     path: '/manualChatbot',
     component: Layout,
     children: [
