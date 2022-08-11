@@ -62,7 +62,6 @@
   </el-table>
 </template>
 
-
 <script>
 export default {
   name: "ButtonTable",
@@ -74,3 +73,9 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.popOverContent {
+  text-align: center;
+}
+</style>

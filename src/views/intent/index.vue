@@ -100,19 +100,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$grey: #8080807a;
-$white: #ffffff8c;
 
 .intent-element-container {
   padding: 0px 15px;
-}
-
-.el-table {
-  font-size: 13px !important;
-}
-
-.popOverContent {
-  text-align: center;
 }
 
 </style>
