@@ -93,9 +93,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .intent-element-container {
   padding: 0px 15px;
 }
-
 </style>
