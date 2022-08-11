@@ -11,7 +11,7 @@
 
       <el-table-column
         align="center"
-        label="Antworttext"
+        :label="answerText"
         prop="text"
         autosize
       />
@@ -34,14 +34,7 @@
 
       <el-table-column align="center" width="130">
         <template slot-scope="{ row: answer }">
-          <el-button
-            class="edit-btn"
-            size="small"
-            icon="el-icon-edit"
-            @click="openEditModal(answer)"
-          >
-            Bearbeiten
-          </el-button>
+          <EditAnswerModal :answer="answer" />
         </template>
       </el-table-column>
     </el-table>
@@ -50,16 +43,19 @@
 
 <script>
 import ButtonList from "@/components/Dialogs/ButtonList";
+import EditAnswerModal from "@/components/Dialogs/EditAnswerModal";
+import { humanReadableLabels } from "@/constants";
 
 export default {
   components: {
     ButtonList,
+    EditAnswerModal,
   },
   props: ["disabled", "answers"],
-  methods: {
-    openEditModal(row) {
-      // TODO: implement
-    },
+  data() {
+    return {
+      answerText: humanReadableLabels.answerText,
+    };
   },
 };
 </script>

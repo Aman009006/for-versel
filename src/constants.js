@@ -18,5 +18,7 @@ export const dispatchNames = {
 }
 
 export const humanReadableLabels = {
-    answerText: "Antworttext"
+    answerText: "Antworttext",
+    edit: "Bearbeiten",
+    description: "Beschreibung"
 }
