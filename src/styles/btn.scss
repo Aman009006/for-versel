@@ -145,3 +145,18 @@
   font-weight: bold !important;
   background-color: $--color-primary !important;
 }
+
+.edit-btn {
+  border: solid #409eff 2px !important;
+  border-radius: 9px !important;
+  color: white !important;
+  background-color: #409eff !important;
+  margin-left: 0px !important;
+  width: 100%;
+
+  &:hover {
+    border: solid #66b1ff 2px !important;
+    color: white !important;
+    background-color: #66b1ff !important;
+  }
+}

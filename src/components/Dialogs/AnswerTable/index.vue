@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <div v-if="disabled" class="disabled-layer" />
-    <el-table :data="answers" class="answers_table" border>
+    <el-table :data="answers" border>
       <el-table-column
         align="center"
         label="Beschreibung"
@@ -49,8 +49,13 @@
 </template>
 
 <script>
+import ButtonList from "@/components/Dialogs/ButtonList";
+
 export default {
-  props: ["disabled"],
+  components: {
+    ButtonList,
+  },
+  props: ["disabled", "answers"],
   methods: {
     openEditModal(row) {
       // TODO: implement
@@ -58,3 +63,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.table-container {
+  position: relative;
+  // The chatbot, which has a fixed position, should not cover the table
+  margin-bottom: 120px;
+  .disabled-layer {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: absolute;
+    background-color: rgb(239 239 239 / 77%);
+  }
+}
+</style>
