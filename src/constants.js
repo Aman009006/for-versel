@@ -16,3 +16,7 @@ export const dispatchNames = {
     setSkillsAndIntents,
     setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents
 }
+
+export const humanReadableLabels = {
+    answerText: "Antworttext"
+}

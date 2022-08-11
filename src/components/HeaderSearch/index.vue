@@ -51,6 +51,7 @@ import Fuse from "fuse.js";
 import { encodePathComponent } from "@/store/modules/permission";
 import path from "path";
 import HtmlEncode from "@/utils/HtmlEncode";
+import { humanReadableLabels } from "@/constants";
 
 const filterElementObject = {
   intent: {
@@ -58,7 +59,7 @@ const filterElementObject = {
     searchKey: "intent",
   },
   answerText: {
-    label: "Antworttext",
+    label: humanReadableLabels.answerText,
     searchKey: "texts.text",
   },
   buttonTitle: {
