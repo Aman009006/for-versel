@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <ckeditor
+      v-model="copiedText"
       :editor="editor"
-      v-model="text"
       :config="editorConfig"
       @ready="onReady(editor)"
-    ></ckeditor>
+    />
   </div>
 </template>
 
@@ -34,6 +34,7 @@ export default {
       editorConfig: {
         // The configuration of the editor.
       },
+      copiedText: this.text,
     };
   },
   methods: {
@@ -83,7 +84,7 @@ Editor.defaultConfig = {
       "|",
       "sourceEditing",
       "|",
-      "imageInsert"
+      "imageInsert",
     ],
   },
   image: {
