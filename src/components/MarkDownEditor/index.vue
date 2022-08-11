@@ -16,6 +16,7 @@ import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold.js";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials.js";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading.js";
 import Image from "@ckeditor/ckeditor5-image/src/image.js";
+import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsert.js";
 import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption.js";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic.js";
 import Link from "@ckeditor/ckeditor5-link/src/link.js";
@@ -62,6 +63,7 @@ Editor.builtinPlugins = [
   List,
   SourceEditing,
   MarkDown,
+  ImageInsert,
 ];
 
 // Editor configuration.
@@ -80,6 +82,8 @@ Editor.defaultConfig = {
       "redo",
       "|",
       "sourceEditing",
+      "|",
+      "imageInsert"
     ],
   },
   image: {
