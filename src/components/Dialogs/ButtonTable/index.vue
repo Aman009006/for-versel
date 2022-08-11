@@ -1,5 +1,5 @@
-<template v-if="buttons">
-  <el-table :data="buttons" border>
+<template v-if="copiedButtons">
+  <el-table :data="copiedButtons" border>
     <el-table-column label="Name" align="center">
       <template slot-scope="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
@@ -66,6 +66,15 @@
 export default {
   name: "ButtonTable",
   props: ["buttons"],
+  computed: {
+    copiedButtons() {
+      if (this.buttons != null) {
+        const copiedButtons = JSON.parse(JSON.stringify(this.buttons));
+        return copiedButtons;
+      }
+      return null;
+    },
+  },
   methods: {
     isImbackButton(button) {
       return button.type == "imBack";
