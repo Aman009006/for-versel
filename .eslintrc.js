@@ -55,7 +55,7 @@ module.exports = {
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
     'eol-last': 0,
-    'eqeqeq': ["error", "always", {"null": "ignore"}],
+    'eqeqeq': 0,
     'generator-star-spacing': [2, {
       'before': true,
       'after': true
