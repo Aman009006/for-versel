@@ -29,7 +29,6 @@ import DialogInfoBox from "@/components/Dialogs/DialogInfoBox";
 import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox";
 import AnswerTable from "@/components/Dialogs/AnswerTable";
 
-// import MarkdownEditor from '@/components/MarkdownEditor'
 export default {
   name: "Intent",
   components: {
@@ -48,11 +47,9 @@ export default {
   computed: {
     utterances() {
       const searchedIntent = this.readableIntentName;
-      // use the data from the store
       const skillsWithIntents = this.$store.getters.skillsWithIntents;
       for (const next of skillsWithIntents) {
         for (const intent of next.Intents) {
-          // find the current intent and get its utterances
           if (intent.name === searchedIntent) {
             return intent.utterances;
           }
@@ -68,10 +65,6 @@ export default {
     },
   },
   async created() {
-    /**
-     * Fetch the data when the view is created
-     * and the data is already being observed
-     */
     await this.loadAnswers();
     this.refreshRoutesIfNewIntentWasClicked();
   },
