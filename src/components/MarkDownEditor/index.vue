@@ -93,3 +93,8 @@ Editor.defaultConfig = {
 };
 </script>
 
+<style lang="scss">
+:root {
+  --ck-z-modal: 1002;
+}
+</style>
