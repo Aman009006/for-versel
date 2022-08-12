@@ -36,20 +36,15 @@ export default {
     };
   },
   methods: {
-    printWarning(warningText) {
-      this.$message({
-        message: warningText,
-        type: "warning",
-      });
-    },
     /**
      * This method must be used from the parent - element.
      * The parent - element must decide when the answer should be saved.
      * Like this we have the flexibility to reuse the EditAnswer - component.
      */
     async saveAnswerAndButtons() {
-      await this.saveAnswer();
-      await this.saveButtons();
+      const answersSaved = await this.saveAnswer();
+      const buttonsSaved = await this.saveButtons();
+      this.printSavedAnswerMessage(answersSaved, buttonsSaved);
     },
     async saveAnswer() {
       const currentAnswer = this.answer.text;
@@ -58,11 +53,13 @@ export default {
         try {
           await setAnswerText(this.answer.id, changedAnswer);
         } catch {
-          this.printWarning("Der Antworttext konnte nicht geändert werden.");
+          return false;
         }
       }
+      return true;
     },
     async saveButtons() {
+      let res = true;
       const currentButtons = this.answer.buttons;
       const newButtons = this.$refs.buttonTable.copiedButtons;
       if (currentButtons != null) {
@@ -79,16 +76,36 @@ export default {
                 newButton.value
               );
             } catch {
-              this.printWarning("Ein Button konnte nicht gespeichert werden");
+              res = false;
             }
           }
         }
       }
+      return res;
     },
     buttonDiffers(button1, button2) {
       const titleDiffers = button1.title != button2.title;
       const valueDiffers = button1.value != button2.value;
       return titleDiffers || valueDiffers;
+    },
+    printSavedAnswerMessage(answersSaved, buttonsSaved) {
+      if (answersSaved && buttonsSaved) {
+        this.printSuccess("Die Speicherung war erfolgreich");
+      } else {
+        this.printWarning("Es ist ein Fehler beim Speichern aufgetreten");
+      }
+    },
+    printSuccess(text) {
+      this.$message({
+        message: text,
+        type: "success",
+      });
+    },
+    printWarning(text) {
+      this.$message({
+        message: text,
+        type: "warning",
+      });
     },
   },
 };
