@@ -1,12 +1,12 @@
 <template v-if="copiedButtons">
   <el-table :data="copiedButtons" border>
-    <el-table-column label="Name" align="center">
+    <el-table-column label="Name" align="center" :min-width="columnMinWidth">
       <template slot-scope="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
       </template>
     </el-table-column>
 
-    <el-table-column align="center">
+    <el-table-column align="center" :min-width="columnMinWidth">
       <template slot="header">
         <el-popover
           ref="PopOverValue"
@@ -36,7 +36,7 @@
       </template>
     </el-table-column>
 
-    <el-table-column align="center">
+    <el-table-column align="center" :min-width="columnMinWidth">
       <template slot="header">
         <el-popover
           ref="PopOverType"
@@ -66,6 +66,11 @@
 export default {
   name: "ButtonTable",
   props: ["buttons"],
+  data() {
+    return {
+      columnMinWidth: 200,
+    };
+  },
   computed: {
     copiedButtons() {
       if (this.buttons != null) {

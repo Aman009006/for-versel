@@ -13,10 +13,10 @@
         align="center"
         :label="answerText"
         prop="text"
-        autosize
+        min-width="500"
       />
 
-      <el-table-column align="center" label="Buttons" width="500">
+      <el-table-column align="center" label="Buttons" width="200">
         <template slot-scope="{ row: answer }">
           <template v-if="answer.buttons">
             <ButtonList :buttons="answer.buttons" />
