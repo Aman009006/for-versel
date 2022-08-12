@@ -29,60 +29,76 @@ export default {
         async cancelEdit(row) {
             row.edit = false;
 
+            row.placeholderValue = row.originalValue;
+
             this.$message({
                 message: 'Die Änderungen wurden abgebrochen.',
                 type: 'warning'
             })
         },
         async confirmEdit(row) {
+            row.edit = false;
+            let changesMade = false;
 
+            if (row.originalValue !== row.placeholderValue) {
+                /**
+                 * @todo send data to the backend
+                 */
+                row.originalValue = row.placeholderValue;
+                changesMade = true;
+            }
+            if (!changesMade) {
+                // set the info message for this case
+                this.$message({
+                    message: 'Es wurden keine Änderungen gemacht',
+                    type: 'warning'
+                })
+            }
         }
+
     }
 }
 </script>
 
 <style scoped lang="scss">
-.cancel-btn {
+.cancel-btn, .confirm-btn, .edit-btn, .cancel-btn:hover, .confirm-btn:hover, .edit-btn:hover {
     color: white !important;
+    border-radius: 9px !important;
+    margin-left: 0px !important;
+    width: 100%;
+
+    button {
+        margin-top: 5px;
+    }
+}
+
+.cancel-btn {
     background-color: #fa4c4c !important;
     border-color: #fa4c4c !important;
 }
 
 .cancel-btn:hover {
-    color: white !important;
     background-color: #f78989 !important;
     border-color: #f78989 !important;
 }
 
 .confirm-btn {
-    color: white !important;
     background-color: #63c731 !important;
     border-color: #63c731 !important;
 }
 
 .confirm-btn:hover {
-    color: white !important;
     background-color: #85ce61 !important;
     border-color: #85ce61 !important;
 }
 
 .edit-btn {
-    border-radius: 9px !important;
-    margin-left: 0px !important;
-    width: 100%;
-
-    +button {
-        margin-top: 5px;
-    }
-
     border: solid #409eff 2px !important;
-    color: white !important;
     background-color: #409eff !important;
 }
 
 .edit-btn:hover {
     border: solid #66b1ff 2px !important;
-    color: white !important;
     background-color: #66b1ff !important;
 }
 </style>
