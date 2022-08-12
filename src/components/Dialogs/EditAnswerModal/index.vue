@@ -13,7 +13,11 @@
       <div class="modalContent">
         <EditAnswer ref="editAnswerRef" :answer="answer" />
         <div class="buttonsContainer">
-          <el-button class="confirm-btn" @click="saveAnswerAndRefreshAnswers()">
+          <el-button
+            class="confirm-btn"
+            :disabled="confirmButtonDisabled"
+            @click="saveAnswer()"
+          >
             Speichern
           </el-button>
           <el-button class="cancel-btn" @click="closeEditModal()">
@@ -37,6 +41,7 @@ export default {
   data() {
     return {
       editModalOpened: false,
+      confirmButtonDisabled: false,
     };
   },
   computed: {
@@ -46,14 +51,17 @@ export default {
   },
   methods: {
     openEditModal() {
+      this.confirmButtonDisabled = false;
       this.editModalOpened = true;
     },
     closeEditModal() {
       this.editModalOpened = false;
     },
-    async saveAnswerAndRefreshAnswers() {
+    async saveAnswer() {
+      this.confirmButtonDisabled = true;
       await this.$refs.editAnswerRef.saveAnswerAndButtons();
       this.refreshAnswers();
+      this.closeEditModal();
     },
     async refreshAnswers() {
       this.$store.dispatch(
