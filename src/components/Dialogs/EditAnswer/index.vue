@@ -61,8 +61,8 @@ export default {
     async saveButtons() {
       let res = true;
       const currentButtons = this.answer.buttons;
-      const newButtons = this.$refs.buttonTable.copiedButtons;
       if (currentButtons != null) {
+        const newButtons = this.$refs.buttonTable.copiedButtons;
         for (let i = 0; i < currentButtons.length; i++) {
           const currentButton = currentButtons[i];
           const newButton = newButtons[i];
