@@ -8,9 +8,18 @@
     >
       Bearbeiten
     </el-button>
+
     <div v-if="editModalOpened" class="modalBox">
       <div class="modalContent">
-        <EditAnswer :answer="answer" />
+        <EditAnswer ref="editAnswerRef" :answer="answer" />
+        <div class="buttonsContainer">
+          <el-button class="confirm-btn" @click="saveAnswerAndRefreshAnswers()">
+            Speichern
+          </el-button>
+          <el-button class="cancel-btn" @click="closeEditModal()">
+            Abbrechen
+          </el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -18,6 +27,7 @@
 
 <script>
 import EditAnswer from "@/components/Dialogs/EditAnswer";
+import { dispatchNames } from "@/constants";
 
 export default {
   components: {
@@ -29,9 +39,31 @@ export default {
       editModalOpened: false,
     };
   },
+  computed: {
+    readableIntentName() {
+      return this.$route.meta.title;
+    },
+  },
   methods: {
     openEditModal() {
       this.editModalOpened = true;
+    },
+    closeEditModal() {
+      this.editModalOpened = false;
+    },
+    async saveAnswerAndRefreshAnswers() {
+      await this.$refs.editAnswerRef.saveAnswerAndButtons();
+      this.refreshAnswers();
+    },
+    async refreshAnswers() {
+      this.$store.dispatch(
+        dispatchNames.getAndSetIntentAnswers,
+        this.readableIntentName
+      );
+      this.setSkillsAndIntents();
+    },
+    setSkillsAndIntents() {
+      this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
     },
   },
 };
@@ -49,6 +81,7 @@ export default {
   z-index: 1001;
   background-color: rgb(0 0 0 / 38%);
   overflow-y: scroll;
+
   .modalContent {
     width: 95%;
     margin: auto;
@@ -56,6 +89,10 @@ export default {
     padding: 25px;
     background-color: white;
     text-align: left;
+
+    .buttonsContainer {
+      margin-top: 15px;
+    }
   }
 }
 </style>

@@ -7,21 +7,12 @@
 
     <div>
       <h2>{{ humanReadableLabels.answerText }}</h2>
-      <MarkDownEditor :text="answer.text" />
+      <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
 
     <div v-if="answer.buttons">
       <h2>Buttons</h2>
-      <ButtonTable :buttons="answer.buttons" />
-    </div>
-
-    <div class="buttonsContainer">
-      <el-button class="confirm-btn" size="small" @click="confirmEdit(row)">
-        Speichern
-      </el-button>
-      <el-button class="cancel-btn" size="small" @click="cancelEdit(row)">
-        Abbrechen
-      </el-button>
+      <ButtonTable ref="buttonTable" :buttons="answer.buttons" />
     </div>
   </div>
 </template>
@@ -30,6 +21,8 @@
 import { humanReadableLabels } from "@/constants";
 import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
+import { setAnswerText } from "@/api/answers";
+import { setButtonProperties } from "@/api/answers";
 
 export default {
   components: {
@@ -42,15 +35,67 @@ export default {
       humanReadableLabels,
     };
   },
+  methods: {
+    printWarning(warningText) {
+      this.$message({
+        message: warningText,
+        type: "warning",
+      });
+    },
+    /**
+     * This method must be used from the parent - element.
+     * The parent - element must decide when the answer should be saved.
+     * Like this we have the flexibility to reuse the EditAnswer - component.
+     */
+    async saveAnswerAndButtons() {
+      await this.saveAnswer();
+      await this.saveButtons();
+    },
+    async saveAnswer() {
+      const currentAnswer = this.answer.text;
+      const changedAnswer = this.$refs.markDownEditor.copiedText;
+      if (currentAnswer != changedAnswer) {
+        try {
+          await setAnswerText(this.answer.id, changedAnswer);
+        } catch {
+          this.printWarning("Der Antworttext konnte nicht geändert werden.");
+        }
+      }
+    },
+    async saveButtons() {
+      const currentButtons = this.answer.buttons;
+      const newButtons = this.$refs.buttonTable.copiedButtons;
+      if (currentButtons != null) {
+        for (let i = 0; i < currentButtons.length; i++) {
+          const currentButton = currentButtons[i];
+          const newButton = newButtons[i];
+          if (this.buttonDiffers(currentButton, newButton)) {
+            try {
+              await setButtonProperties(
+                this.answer.id,
+                currentButton.title,
+                newButton.title,
+                newButton.type,
+                newButton.value
+              );
+            } catch {
+              this.printWarning("Ein Button konnte nicht gespeichert werden");
+            }
+          }
+        }
+      }
+    },
+    buttonDiffers(button1, button2) {
+      const titleDiffers = button1.title != button2.title;
+      const valueDiffers = button1.value != button2.value;
+      return titleDiffers || valueDiffers;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
-
-.buttonsContainer {
-  margin-top: 15px;
-}
 
 .editHeadline {
   color: $primary;

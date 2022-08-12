@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import { getAnswersforIntent } from "@/api/answers";
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 import DialogInfoBox from "@/components/Dialogs/DialogInfoBox";
 import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox";
 import AnswerTable from "@/components/Dialogs/AnswerTable";
+import { dispatchNames } from "@/constants";
 
 export default {
   name: "Intent",
@@ -40,11 +40,18 @@ export default {
   data() {
     return {
       dataReady: false,
-      answers: [],
-      answerConfig: {},
     };
   },
   computed: {
+    intentInfo() {
+      return this.$store.getters.intents[this.readableIntentName]
+    },
+    answers() {
+      return this.intentInfo.answers;
+    },
+    answerConfig() {
+      return this.intentInfo.answerConfig;
+    },
     utterances() {
       const searchedIntent = this.readableIntentName;
       const skillsWithIntents = this.$store.getters.skillsWithIntents;
@@ -68,7 +75,6 @@ export default {
     await this.loadAnswers();
     this.refreshRoutesIfNewIntentWasClicked();
   },
-  async mounted() {},
   methods: {
     isRedirectedToOtherIntent() {
       return this.answerConfig.readable_redirect_to_intent_name != null;
@@ -83,9 +89,10 @@ export default {
     },
 
     async loadAnswers() {
-      const answerInfo = await getAnswersforIntent(this.readableIntentName);
-      this.answers = answerInfo.answers;
-      this.answerConfig = answerInfo.answerConfig;
+      await this.$store.dispatch(
+        dispatchNames.getAndSetIntentAnswers,
+        this.readableIntentName
+      );
       this.dataReady = true;
     },
   },
