@@ -2,14 +2,14 @@
     <div class="table-container">
         <template v-if="dataReady">
             <el-table :data="placeholders" class="placeholder_table" border>
-                <el-table-column align="center" label="Platzhalterbezeichnung" prop="placeholderKey" autosize />
-                <el-table-column align="center" label="Wert" prop="placeholderValue" autosize>
+                <el-table-column align="center" label="Platzhalterbezeichnung" prop="key" autosize />
+                <el-table-column align="center" label="Wert" prop="value" autosize>
                     <template slot-scope="{row}">
                         <template v-if="row.edit">
-                            <el-input v-model="row.placeholderValue" type="textarea" autosize class="edit-input" />
+                            <el-input v-model="row.value" type="textarea" autosize class="edit-input" />
                         </template>
                         <template v-else>
-                            <span class="text-input">{{ row.placeholderValue }}</span>
+                            <span class="text-input">{{ row.value }}</span>
                         </template>
                     </template>
                 </el-table-column>
@@ -21,6 +21,7 @@
 
 <script>
 import editButtons from './editButtons.vue'
+import { getPlaceholders } from '@/api/placeholders';
 
 export default {
     components: {
@@ -41,20 +42,11 @@ export default {
     },
     methods: {
         async loadData() {
-            const placeholderData = [
-                {
-                    placeholderKey: 'offshore',
-                    placeholderValue: '0,419'
-                },
-                {
-                    placeholderKey: 'year',
-                    placeholderValue: '2022'
-                }
-            ]
+            const placeholderData = await getPlaceholders();
 
             for (const data of placeholderData) {
                 this.$set(data, 'edit', false);
-                this.$set(data, 'originalValue', data.placeholderValue);
+                this.$set(data, 'originalValue', data.value);
             }
 
             this.placeholders = placeholderData;
