@@ -17,6 +17,7 @@ import Link from "@ckeditor/ckeditor5-link/src/link.js";
 import List from "@ckeditor/ckeditor5-list/src/list.js";
 import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.js";
 import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
+import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
 
 export default {
   name: "MarkDownEditor",
@@ -57,6 +58,7 @@ Editor.builtinPlugins = [
   ImageCaption,
   Italic,
   Link,
+  AutoLink,
   List,
   SourceEditing,
   MarkDown,
@@ -92,5 +94,15 @@ Editor.defaultConfig = {
 <style lang="scss">
 :root {
   --ck-z-modal: 1002;
+}
+
+.ck-editor {
+  a {
+    text-decoration: underline;
+    color: blue;
+    &:hover {
+      color: lightblue;
+    }
+  }
 }
 </style>
