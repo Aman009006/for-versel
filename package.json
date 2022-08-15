@@ -21,7 +21,6 @@
     "@ckeditor/ckeditor5-markdown-gfm": "^35.0.1",
     "@ckeditor/ckeditor5-source-editing": "^35.0.1",
     "@ckeditor/ckeditor5-theme-lark": "^35.0.1",
-    "@ckeditor/ckeditor5-vue2": "^3.0.1",
     "axios": "^0.26.1",
     "element-ui": "^2.15.8",
     "fuse.js": "^6.5.3",

@@ -1,16 +1,8 @@
 <template>
-  <div id="app">
-    <ckeditor
-      v-model="copiedText"
-      :editor="editor"
-      :config="editorConfig"
-      @ready="onReady(editor)"
-    />
-  </div>
+  <div ref="ckEditor" />
 </template>
 
 <script>
-import CKEditor from "@ckeditor/ckeditor5-vue2";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor.js";
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold.js";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials.js";
@@ -26,26 +18,28 @@ import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
 
 export default {
   name: "MarkDownEditor",
-  components: { ckeditor: CKEditor.component },
-  props: { text: { type: String } },
+  props: {
+    text: { type: String },
+  },
   data() {
     return {
-      editor: Editor,
-      editorConfig: {
-        // The configuration of the editor.
-      },
-      copiedText: this.text,
+      editor: null,
     };
   },
+  async mounted() {
+    const ckEditorElement = this.$refs.ckEditor;
+    const editor = await Editor.create(ckEditorElement, {
+      initialData: this.text,
+    });
+    this.editor = editor;
+  },
   methods: {
-    onReady(editor) {
-      // Insert the toolbar before the editable area.
-      editor.ui
-        .getEditableElement()
-        .parentElement.insertBefore(
-          editor.ui.view.toolbar.element,
-          editor.ui.getEditableElement()
-        );
+    /**
+     * This method is considered to be "public". The parent may use this
+     * method to get the current data of the editor.
+     */
+    getData() {
+      return this.editor?.getData();
     },
   },
 };

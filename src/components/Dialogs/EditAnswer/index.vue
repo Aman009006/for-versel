@@ -48,7 +48,7 @@ export default {
     },
     async saveAnswer() {
       const currentAnswer = this.answer.text;
-      const changedAnswer = this.$refs.markDownEditor.copiedText;
+      const changedAnswer = this.$refs.markDownEditor.getData();
       if (currentAnswer != changedAnswer) {
         try {
           await setAnswerText(this.answer.id, changedAnswer);
