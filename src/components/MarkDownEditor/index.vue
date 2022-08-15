@@ -1,5 +1,7 @@
 <template>
-  <div ref="ckEditor" />
+  <div>
+    <div ref="ckEditor" />
+  </div>
 </template>
 
 <script>
