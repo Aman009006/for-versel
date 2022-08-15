@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline.js"
 import Stirkethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough.js"
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold.js";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic.js";
@@ -55,7 +54,6 @@ class Editor extends ClassicEditor {}
 Editor.builtinPlugins = [
   Bold,
   Italic,
-  Underline,
   Stirkethrough,
   Essentials,
   Heading,
@@ -76,7 +74,6 @@ Editor.defaultConfig = {
       "heading",
       "bold",
       "italic",
-      "underline",
       "strikethrough",
       "link",
       "linkimage",
