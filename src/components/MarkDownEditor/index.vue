@@ -94,12 +94,13 @@ Editor.defaultConfig = {
   --ck-z-modal: 1002;
 }
 
-a {
-  text-decoration:underline;
-  color: blue;
-}
-
-a:hover {
-    color: lightblue;
+.ck-editor {
+  a {
+    text-decoration: underline;
+    color: blue;
+    &:hover {
+      color: lightblue;
+    }
+  }
 }
 </style>
