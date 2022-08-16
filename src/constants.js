@@ -14,5 +14,12 @@ const setSkillsAndIntents = 'setSkillsAndIntents';
 
 export const dispatchNames = {
     setSkillsAndIntents,
-    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents
+    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
+    getAndSetIntentAnswers: "dialogs/getAndSetIntentAnswers"
+}
+
+export const humanReadableLabels = {
+    answerText: "Antworttext",
+    edit: "Bearbeiten",
+    description: "Beschreibung"
 }
