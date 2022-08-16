@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import Stirkethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough.js"
 import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold.js";
 import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic.js";
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor.js";
@@ -54,7 +53,6 @@ class Editor extends ClassicEditor {}
 Editor.builtinPlugins = [
   Bold,
   Italic,
-  Stirkethrough,
   Essentials,
   Heading,
   Image,
@@ -74,7 +72,6 @@ Editor.defaultConfig = {
       "heading",
       "bold",
       "italic",
-      "strikethrough",
       "link",
       "bulletedList",
       "numberedList",
