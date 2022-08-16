@@ -6,7 +6,7 @@
                 <el-button class="confirm-btn" size="small" icon="el-icon-download" @click="confirmEdit(row)">
                     Speichern
                 </el-button>
-                <el-button class="cancel-btn" size="small" icon="el-icon-refresh" @click="cancelEdit(row)">
+                <el-button class="cancel-btn" size="small" icon="el-icon-refresh" @click="cancelEdit()">
                     Abbrechen
                 </el-button>
             </template>
@@ -21,39 +21,41 @@
 </template>
 
 <script>
+import { updatePlaceholder } from '@/api/placeholders';
+import { dispatchNames } from '@/constants';
+
 export default {
+    computed: {
+        currentPlaceholders() {
+            return this.$store.getters.placeholders;
+        }
+    },
     methods: {
         async toggleEdit(row) {
-            row.edit = !row.edit;
+            this.$set(row, 'originalKey', row.key);
+            this.$set(row, 'originalValue', row.value);
+            this.$set(row, 'edit', true);
         },
-        async cancelEdit(row) {
-            row.edit = false;
-
-            row.placeholderValue = row.originalValue;
-
-            this.$message({
-                message: 'Die Änderungen wurden abgebrochen.',
-                type: 'warning'
-            })
+        async cancelEdit() {
+            await this.$store.dispatch(dispatchNames.fetchPlaceholders)
         },
         async confirmEdit(row) {
-            row.edit = false;
-            let changesMade = false;
-
-            if (row.originalValue !== row.placeholderValue) {
-                /**
-                 * @todo send data to the backend
-                 */
-                row.originalValue = row.placeholderValue;
-                changesMade = true;
-            }
-            if (!changesMade) {
-                // set the info message for this case
+            if (row.originalKey !== row.key || row.originalValue !== row.value) {
+                const updateSuccessful = await updatePlaceholder(row.key, row.value, row.originalKey);
+                if (updateSuccessful) {
+                    this.$message({
+                        message: 'Die Änderungen wurden erfolgreich gespeichert',
+                        type: 'success'
+                    })
+                }
+            } else {
                 this.$message({
                     message: 'Es wurden keine Änderungen gemacht',
                     type: 'warning'
                 })
             }
+            
+            await this.$store.dispatch(dispatchNames.fetchPlaceholders)
         }
 
     }
@@ -61,7 +63,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.cancel-btn, .confirm-btn, .edit-btn, .cancel-btn:hover, .confirm-btn:hover, .edit-btn:hover {
+.cancel-btn,
+.confirm-btn,
+.edit-btn,
+.cancel-btn:hover,
+.confirm-btn:hover,
+.edit-btn:hover {
     color: white !important;
     border-radius: 9px !important;
     margin-left: 0px !important;

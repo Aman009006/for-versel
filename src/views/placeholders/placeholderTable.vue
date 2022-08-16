@@ -1,8 +1,17 @@
 <template>
     <div class="table-container">
         <template v-if="dataReady">
-            <el-table :data="placeholders" class="placeholder_table" border>
-                <el-table-column align="center" label="Platzhalterbezeichnung" prop="key" autosize />
+            <el-table :data="currentPlaceholders" class="placeholder_table" border>
+                <el-table-column align="center" label="Platzhalterbezeichnung" prop="key" autosize>
+                    <template slot-scope="{row}">
+                        <template v-if="row.edit">
+                            <el-input v-model="row.key" type="textarea" autosize class="edit-input" />
+                        </template>
+                        <template v-else>
+                            <span class="text-input">{{ row.key }}</span>
+                        </template>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" label="Wert" prop="value" autosize>
                     <template slot-scope="{row}">
                         <template v-if="row.edit">
@@ -13,24 +22,40 @@
                         </template>
                     </template>
                 </el-table-column>
+
                 <editButtons />
+
+                <deleteButton />
+
+                <addButton />
             </el-table>
         </template>
     </div>
+
+
 </template>
 
 <script>
-import editButtons from './editButtons.vue'
-import { getPlaceholders } from '@/api/placeholders';
+import editButtons from './editButtons.vue';
+import addButton from './addButton.vue';
+import deleteButton from './deleteButton.vue';
+import { dispatchNames } from '@/constants';
 
 export default {
     components: {
-        editButtons
+        editButtons,
+        addButton,
+        deleteButton
     },
     data() {
         return {
             dataReady: false,
             placeholders: []
+        }
+    },
+    computed: {
+        currentPlaceholders() {
+            return this.$store.getters.placeholders;
         }
     },
     async created() {
@@ -42,14 +67,8 @@ export default {
     },
     methods: {
         async loadData() {
-            const placeholderData = await getPlaceholders();
-
-            for (const data of placeholderData) {
-                this.$set(data, 'edit', false);
-                this.$set(data, 'originalValue', data.value);
-            }
-
-            this.placeholders = placeholderData;
+            await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+            this.placeholders = this.currentPlaceholders;
             this.dataReady = true;
         }
     }

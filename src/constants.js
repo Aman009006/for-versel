@@ -15,5 +15,6 @@ const setSkillsAndIntents = 'setSkillsAndIntents';
 
 export const dispatchNames = {
     setSkillsAndIntents,
-    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents
+    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
+    fetchPlaceholders: 'placeholders/fetchPlaceholders'
 }
