@@ -76,7 +76,6 @@ Editor.defaultConfig = {
       "italic",
       "strikethrough",
       "link",
-      "linkimage",
       "bulletedList",
       "numberedList",
       "|",
