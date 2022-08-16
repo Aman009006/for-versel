@@ -19,6 +19,7 @@ import List from "@ckeditor/ckeditor5-list/src/list.js";
 import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.js";
 import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
 import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
+import Table from '@ckeditor/ckeditor5-table/src/table';
 
 export default {
   name: "MarkDownEditor",
@@ -63,6 +64,7 @@ Editor.builtinPlugins = [
   AutoLink,
   List,
   SourceEditing,
+  Table,
   MarkDown,
   ImageInsert,
 ];
