@@ -8,9 +8,19 @@
     <div>
       <h2>
         {{ humanReadableLabels.answerText }}
-        <Information
-          title="Sie können Emojis mit der Tastenkombination 'Windowstaste .' einfügen. Der Cursor muss sich hierfür an der gewünschten Stelle befinden."
-        />
+        <el-popover
+          ref="emojiInfo"
+          placement="top-start"
+          autosize
+          trigger="hover"
+        >
+          <div>
+            Sie können Emojis mit der Tastenkombination 'Windowstaste .'
+            einfügen, wenn Sie einen Windows Rechner verwenden.
+            Der Cursor muss sich hierfür an der gewünschten Stelle befinden.
+          </div>
+        </el-popover>
+        <i v-popover:emojiInfo class="el-icon-info" />
       </h2>
       <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
@@ -26,7 +36,6 @@
 import { humanReadableLabels } from "@/constants";
 import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
-import Information from "@/components/Information";
 import { setAnswerText } from "@/api/answers";
 import { setButtonProperties } from "@/api/answers";
 
@@ -34,7 +43,6 @@ export default {
   components: {
     ButtonTable,
     MarkDownEditor,
-    Information,
   },
   props: ["answer"],
   data() {
