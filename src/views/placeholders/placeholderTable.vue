@@ -26,8 +26,6 @@
                 <editButtons />
 
                 <deleteButton />
-
-
             </el-table>
 
             <addButton />

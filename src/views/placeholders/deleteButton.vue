@@ -1,7 +1,10 @@
 <template>
     <el-table-column align="center" width="70">
         <template slot-scope="{row}">
-            <el-button class="delete-btn" size="small" icon="el-icon-delete" @click="deletePlaceholder(row)" />
+            <template v-if="!row.edit">
+                        <el-button class="delete-btn" size="small" icon="el-icon-delete" @click="deletePlaceholder(row)" />
+            </template>
+            <template v-else />
         </template>
     </el-table-column>
 </template>
