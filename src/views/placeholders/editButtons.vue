@@ -21,10 +21,16 @@
 </template>
 
 <script>
-import { updatePlaceholder } from '@/api/placeholders';
+import { updatePlaceholder, setPlaceholder } from '@/api/placeholders';
 import { dispatchNames } from '@/constants';
 
 export default {
+    data() {
+        return {
+            isEdit: false,
+            currentPlaceholderData: []
+        }
+    },
     computed: {
         currentPlaceholders() {
             return this.$store.getters.placeholders;
@@ -35,12 +41,41 @@ export default {
             this.$set(row, 'originalKey', row.key);
             this.$set(row, 'originalValue', row.value);
             this.$set(row, 'edit', true);
+            this.isEdit = true;
+            this.currentPlaceholderData = this.currentPlaceholders
         },
         async cancelEdit() {
-            await this.$store.dispatch(dispatchNames.fetchPlaceholders)
+            this.isEdit = false;
+            await this.$store.dispatch(dispatchNames.fetchPlaceholders);
         },
         async confirmEdit(row) {
-            if (row.originalKey !== row.key || row.originalValue !== row.value) {
+            let fetchPlaceholders = true;
+            if ((row.key !== '' && row.value !== '')) {
+                if (this.isEdit) {
+                    fetchPlaceholders = await this.updatePlaceholder(row);
+                } else {
+                    fetchPlaceholders = await this.setPlaceholder(row);
+                }
+            } else {
+                this.$message({
+                    message: 'Bitte Platzhalterbezeichnung und Wert eingeben',
+                    type: 'warning'
+                })
+                fetchPlaceholders = false;
+            }
+
+            if (fetchPlaceholders) {
+                await this.$store.dispatch(dispatchNames.fetchPlaceholders)
+            }
+        },
+        async updatePlaceholder(row) {
+            if (row.key == row.originalKey && row.value == row.originalValue) {
+                this.$message({
+                    message: 'Es wurden keine Änderungen erkannt',
+                    type: 'warning'
+                })
+                return false;
+            } else {
                 const updateSuccessful = await updatePlaceholder(row.key, row.value, row.originalKey);
                 if (updateSuccessful) {
                     this.$message({
@@ -48,16 +83,19 @@ export default {
                         type: 'success'
                     })
                 }
-            } else {
+                return updateSuccessful;
+            }
+        },
+        async setPlaceholder(row) {
+            const setSuccessful = await setPlaceholder(row.key, row.value);
+            if (setSuccessful) {
                 this.$message({
-                    message: 'Es wurden keine Änderungen gemacht',
-                    type: 'warning'
+                    message: 'Der neue Platzhalter wurde erfolgreich gespeichert',
+                    type: 'success'
                 })
             }
-            
-            await this.$store.dispatch(dispatchNames.fetchPlaceholders)
+            return setSuccessful;
         }
-
     }
 }
 </script>

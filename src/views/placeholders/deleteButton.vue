@@ -11,6 +11,11 @@ import { deletePlaceholder } from '@/api/placeholders';
 import { dispatchNames } from '@/constants';
 
 export default {
+    computed: {
+        currentPlaceholders() {
+            return this.$store.getters.placeholders;
+        }
+    },
     methods: {
         async deletePlaceholder(row) {
             this.$confirm(

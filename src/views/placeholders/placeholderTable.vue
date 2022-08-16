@@ -27,8 +27,10 @@
 
                 <deleteButton />
 
-                <addButton />
+
             </el-table>
+
+            <addButton />
         </template>
     </div>
 
