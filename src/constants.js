@@ -7,7 +7,8 @@ export const links = {
 }
 
 export const paths = {
-    skills: '/skills'
+    skills: '/skills',
+    placeholders: '/placeholders'
 }
 
 const setSkillsAndIntents = 'setSkillsAndIntents';
@@ -15,6 +16,7 @@ const setSkillsAndIntents = 'setSkillsAndIntents';
 export const dispatchNames = {
     setSkillsAndIntents,
     setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
+    fetchPlaceholders: 'placeholders/fetchPlaceholders',
     getAndSetIntentAnswers: "dialogs/getAndSetIntentAnswers"
 }
 

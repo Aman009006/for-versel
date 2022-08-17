@@ -12,6 +12,7 @@ const getters = {
   errorLogs: state => state.errorLog.logs,
   skillsWithIntents: state => state.permission.skillsWithIntents,
   metainfo: state => state.user.metainfo,
+  placeholders: state => state.placeholders.placeholders,
   intents: state => state.dialogs.intents
 }
 export default getters
