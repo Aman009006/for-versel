@@ -1,6 +1,5 @@
 <template>
     <div class="placeholder-element-container">
-        <h1 style="font-size:18px;">Platzhalter</h1>
         <placeholderInfoBox />
 
         <placeholderTable />
@@ -21,6 +20,6 @@ export default {
 
 <style scoped lang="scss">
 .placeholder-element-container {
-    padding: 0px 15px;
+    padding: 30px 50px;
 }
 </style>

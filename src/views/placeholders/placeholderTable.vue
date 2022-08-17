@@ -84,14 +84,6 @@ export default {
 .table-container {
     position: relative;
     // The chatbot, which has a fixed position, should not cover the table
-    margin-bottom: 120px;
-
-    .disabled-layer {
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        position: absolute;
-        background-color: rgb(239 239 239 / 77%);
-    }
+    margin-bottom: 50px;
 }
 </style>

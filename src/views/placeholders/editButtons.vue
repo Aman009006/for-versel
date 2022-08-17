@@ -111,10 +111,8 @@ export default {
     border-radius: 9px !important;
     margin-left: 0px !important;
     width: 100%;
-
-    button {
-        margin-top: 5px;
-    }
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .cancel-btn {

@@ -21,3 +21,23 @@ export default ({
     }
 })
 </script>
+
+<style lang="scss">
+.add-btn,
+.add-btn:hover {
+    color: white !important;
+    border-radius: 9px !important;
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+}
+
+.add-btn {
+    background-color: #63c731 !important;
+    border-color: #63c731 !important;
+}
+
+.add-btn:hover {
+    background-color: #85ce61 !important;
+    border-color: #85ce61 !important;
+}
+</style>
