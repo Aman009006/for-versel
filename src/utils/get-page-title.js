@@ -1,7 +1,4 @@
-import defaultSettings from '@/settings'
-import { pageTitle } from '@/constants';
-
-const title = pageTitle
+const title = 'Chatbot Admin UI'
 
 export default function getPageTitle(pageTitle) {
   if (pageTitle) {

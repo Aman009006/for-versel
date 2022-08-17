@@ -1,5 +1,3 @@
-import { pageTitle } from '@/constants';
-
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
@@ -8,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = pageTitle // page title
+const name = 'Chatbot Admin UI'
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
