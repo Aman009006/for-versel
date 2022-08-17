@@ -18,7 +18,7 @@ import List from "@ckeditor/ckeditor5-list/src/list.js";
 import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.js";
 import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
 import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
-import Table from '@ckeditor/ckeditor5-table/src/table';
+import Table from "@ckeditor/ckeditor5-table/src/table";
 
 export default {
   name: "MarkDownEditor",
@@ -103,6 +103,16 @@ Editor.defaultConfig = {
     color: blue;
     &:hover {
       color: lightblue;
+    }
+  }
+  /*
+  svg - images are not rendering correctly without
+  a min-width. An example can be found in
+  https://hsagchatbot.atlassian.net/browse/CHAT-686
+  */
+  .image-inline {
+    img {
+      min-width: 70px;
     }
   }
 }
