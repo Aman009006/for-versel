@@ -18,3 +18,5 @@ export const dispatchNames = {
     setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
     fetchPlaceholders: 'placeholders/fetchPlaceholders'
 }
+
+export const pageTitle = 'Chatbot Admin UI'

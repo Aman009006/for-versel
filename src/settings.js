@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Vue Element Admin',
+  title: 'Chatbot Admin UI',
 
   /**
    * @type {boolean} true | false
