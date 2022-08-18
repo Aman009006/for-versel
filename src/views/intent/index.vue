@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     intentInfo() {
-      return this.$store.getters.intents[this.readableIntentName]
+      return this.$store.getters.intents[this.readableIntentName];
     },
     answers() {
       return this.intentInfo.answers;

@@ -1,24 +1,21 @@
 <template>
   <div>
-    <aside>
-      Design page
-    </aside>
+    <aside>Design page</aside>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Design',
+  name: "Design",
   props: {},
   data() {
-    return {}
+    return {};
   },
   created() {},
   mounted() {},
-  methods: {}
-}
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

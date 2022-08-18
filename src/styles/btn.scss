@@ -101,6 +101,7 @@
 .el-button {
   font-weight: bold;
   cursor: pointer;
+
   a {
     text-decoration: none !important;
   }
@@ -117,16 +118,16 @@
 
 .el-button--warning {
   cursor: pointer;
-  color: $orange !important;
-  border-color: $orange !important;
+  color: $orange  !important;
+  border-color: $orange  !important;
   border-width: 2px !important;
-  background-color:  $--color-warning-lighter !important;
+  background-color: $--color-warning-lighter  !important;
   font-weight: bold !important;
 }
 
 .el-button--warning:hover {
   color: white !important;
-  background-color:  $orange !important;
+  background-color: $orange  !important;
   font-weight: bold !important;
 }
 
@@ -135,15 +136,15 @@
   color: $--color-primary;
 }
 
-.link-button{
-  color: $--color-primary !important;
+.link-button {
+  color: $--color-primary  !important;
   font-weight: bold !important;
 }
 
-.link-button:hover{
+.link-button:hover {
   color: white !important;
   font-weight: bold !important;
-  background-color: $--color-primary !important;
+  background-color: $--color-primary  !important;
 }
 
 .edit-btn {
