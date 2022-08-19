@@ -1,7 +1,5 @@
 import Vue from 'vue'
 
-import 'normalize.css/normalize.css'
-
 import Element from 'element-ui'
 import './styles/element-variables.module.scss'
 import enLang from 'element-ui/lib/locale/lang/en'

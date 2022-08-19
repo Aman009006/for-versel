@@ -26,7 +26,6 @@
     "element-ui": "^2.15.9",
     "fuse.js": "^6.6.2",
     "keycloak-js": "^19.0.1",
-    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.1",
     "postcss-loader": "^7.0.1",
