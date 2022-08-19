@@ -1,5 +1,4 @@
 const { run } = require('runjs')
-const chalk = require('chalk')
 const config = require('../vue.config.js')
 const rawArgv = process.argv.slice(2)
 const args = rawArgv.join(' ')
@@ -24,9 +23,9 @@ if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
   )
 
   app.listen(port, function () {
-    console.log(chalk.green(`> Preview at  http://localhost:${port}${publicPath}`))
+    console.log(`> Preview at  http://localhost:${port}${publicPath}`)
     if (report) {
-      console.log(chalk.green(`> Report at  http://localhost:${port}${publicPath}report.html`))
+      console.log(`> Report at  http://localhost:${port}${publicPath}report.html`)
     }
 
   })
