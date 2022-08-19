@@ -27,7 +27,6 @@
     "fuse.js": "^6.6.2",
     "keycloak-js": "^19.0.1",
     "nprogress": "^0.2.0",
-    "path-to-regexp": "^6.2.1",
     "postcss-loader": "^7.0.1",
     "raw-loader": "^4.0.2",
     "sass": "^1.54.4",
