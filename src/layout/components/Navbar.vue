@@ -13,8 +13,6 @@
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
         <notification />
       </template>
 
@@ -46,7 +44,6 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import ErrorLog from "@/components/ErrorLog";
 import Search from "@/components/HeaderSearch";
 import Notification from "@/components/Notification";
 
@@ -54,7 +51,6 @@ export default {
   components: {
     Breadcrumb,
     Hamburger,
-    ErrorLog,
     Search,
     Notification,
   },

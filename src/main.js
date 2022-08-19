@@ -12,7 +12,6 @@ import router from './router'
 
 import './icons'
 import './permission'
-import './utils/error-log'
 
 import * as filters from './filters'
 
