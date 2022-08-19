@@ -1,28 +1,26 @@
 import Vue from 'vue'
 
-import Cookies from 'js-cookie'
-
-import 'normalize.css/normalize.css' 
+import 'normalize.css/normalize.css'
 
 import Element from 'element-ui'
 import './styles/element-variables.module.scss'
 import enLang from 'element-ui/lib/locale/lang/en'
 
-import '@/styles/index.scss' 
+import '@/styles/index.scss'
 
 import App from './App'
 import store from './store'
 import router from './router'
 
-import './icons' 
-import './permission' 
-import './utils/error-log' 
+import './icons'
+import './permission'
+import './utils/error-log'
 
-import * as filters from './filters' 
+import * as filters from './filters'
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', 
-  locale: enLang 
+  size: 'medium',
+  locale: enLang
 })
 
 Object.keys(filters).forEach(key => {
