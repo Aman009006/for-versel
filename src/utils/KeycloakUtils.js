@@ -8,7 +8,7 @@ const initOptions = {
     clientId: keycloakId + '-frontend'
 }
 
-const keycloak = Keycloak(initOptions);
+const keycloak = new Keycloak(initOptions);
 let initialized = false;
 let tokenAlreadySent = false;
 
