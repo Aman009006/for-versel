@@ -1,5 +1,3 @@
 <template>
-  <aside>
-    List of skills
-  </aside>
+  <aside>List of skills</aside>
 </template>

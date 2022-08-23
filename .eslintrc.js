@@ -21,6 +21,8 @@ module.exports = {
     "vue/html-indent": 0,
     "vue/html-closing-bracket-newline": 0,
     "vue/max-attributes-per-line": 0,
+    "vue/valid-attribute-name": "always",
+    "vue/valid-model-definition": "always",
     "vue/html-self-closing": ["error", {
       "html": {
         "void": "always",
@@ -31,7 +33,7 @@ module.exports = {
       "math": "always"
     }],
     "vue/singleline-html-element-content-newline": "off",
-    "vue/multiline-html-element-content-newline":"off",
+    "vue/multiline-html-element-content-newline": "off",
     "vue/name-property-casing": ["error", "PascalCase"],
     "vue/no-v-html": "off",
     'accessor-pairs': 2,

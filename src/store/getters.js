@@ -9,7 +9,6 @@ const getters = {
   introduction: state => state.user.introduction,
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
-  errorLogs: state => state.errorLog.logs,
   skillsWithIntents: state => state.permission.skillsWithIntents,
   metainfo: state => state.user.metainfo,
   placeholders: state => state.placeholders.placeholders,

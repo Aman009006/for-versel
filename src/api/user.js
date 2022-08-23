@@ -29,7 +29,7 @@ export function getRefreshToken() {
  * @returns {true}, if the user was logged in
  * @throws {Error}, if the user was not logged in.
  */
- export function isLoggedIn() {
+export function isLoggedIn() {
   return request({
     url: authorizedBackendUrl + 'isLoggedIn',
     method: 'get'
