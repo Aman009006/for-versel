@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: '@babel/eslint-parser',
     sourceType: 'module'
   },
   env: {
@@ -12,18 +12,15 @@ module.exports = {
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
   // add your custom rules here
-  //it is base on https://github.com/vuejs/eslint-config-vue
+  // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
+    "vue/multi-word-component-names": 0,
+    "vue/attribute-hyphenation": 0,
+    "vue/no-unused-vars": 2,
     "require-atomic-updates": 0,
     "vue/html-indent": 0,
     "vue/html-closing-bracket-newline": 0,
-    "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
-      "multiline": {
-        "max": 1,
-        "allowFirstLine": false
-      }
-    }],
+    "vue/max-attributes-per-line": 0,
     "vue/html-self-closing": ["error", {
       "html": {
         "void": "always",
@@ -57,8 +54,8 @@ module.exports = {
     'constructor-super': 2,
     'curly': [2, 'multi-line'],
     'dot-location': [2, 'property'],
-    'eol-last': 2,
-    'eqeqeq': ["error", "always", {"null": "ignore"}],
+    'eol-last': 0,
+    'eqeqeq': 0,
     'generator-star-spacing': [2, {
       'before': true,
       'after': true

@@ -7,12 +7,21 @@ export const links = {
 }
 
 export const paths = {
-    skills: '/skills'
+    skills: '/skills',
+    placeholders: '/placeholders'
 }
 
 const setSkillsAndIntents = 'setSkillsAndIntents';
 
 export const dispatchNames = {
     setSkillsAndIntents,
-    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents
+    setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
+    fetchPlaceholders: 'placeholders/fetchPlaceholders',
+    getAndSetIntentAnswers: "dialogs/getAndSetIntentAnswers"
+}
+
+export const humanReadableLabels = {
+    answerText: "Antworttext",
+    edit: "Bearbeiten",
+    description: "Beschreibung"
 }

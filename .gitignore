@@ -17,5 +17,4 @@ selenium-debug.log
 *.njsproj
 *.sln
 *.local
-.vscode/settings.json
 yarn.lock
