@@ -15,9 +15,8 @@
           trigger="hover"
         >
           <div>
-            Sie können Emojis mit der Tastenkombination 'Windowstaste .'
-            einfügen, wenn Sie einen Windows Rechner verwenden.
-            Der Cursor muss sich hierfür an der gewünschten Stelle befinden.
+            Wenn Sie Microsoft Windows verwenden,
+            können Sie Emojis mit der Tastenkombination “⊞“ (Windowstaste) + “.” (Punkt) einfügen
           </div>
         </el-popover>
         <i v-popover:emojiInfo class="el-icon-info" />
