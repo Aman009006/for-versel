@@ -30,14 +30,9 @@ https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/410550273/Lokales+Debu
 
 [Element-UI](https://element.eleme.io/)
 
-<<<<<<< HEAD
-# Deployment
-Chatbot-Frontend-AdminUi in Jenkins -> Jetzt bauen
+# Deployment für Dev und Prod Admin UI
+https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/436928516/Admin-UI-Karten
 
 # ngrok url
 If you started the backend with ngrok do not forget to add the ngrok url here in backendUrl.js using slash at the end!
 E.g.: https://f8e5-77-185-100-154.ngrok.io/
-=======
-# Deployment für Dev und Prod Admin UI
-https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/436928516/Admin-UI-Karten
->>>>>>> develop
