@@ -9,12 +9,11 @@
         width="150"
       />
 
-      <el-table-column
-        align="center"
-        :label="answerText"
-        prop="text"
-        min-width="500"
-      />
+      <el-table-column :label="answerText" prop="text" min-width="500">
+        <template slot-scope="scope">
+          <div class="answerTextBox" v-html="renderToMarkdown(scope.row.text)"></div>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="Buttons" width="200">
         <template slot-scope="{ row: answer }">
@@ -45,6 +44,8 @@
 import ButtonList from "@/components/Dialogs/ButtonList";
 import EditAnswerModal from "@/components/Dialogs/EditAnswerModal";
 import { humanReadableLabels } from "@/constants";
+import MarkdownIt from "markdown-it";
+const md = MarkdownIt("commonmark", {html: false})
 
 export default {
   components: {
@@ -57,6 +58,11 @@ export default {
       answerText: humanReadableLabels.answerText,
     };
   },
+  methods: {
+    renderToMarkdown(text){
+      return md.render(text);
+    }
+  }
 };
 </script>
 
@@ -73,4 +79,5 @@ export default {
     background-color: rgb(239 239 239 / 77%);
   }
 }
+
 </style>
