@@ -19,6 +19,7 @@ import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.
 import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
 import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
 import Table from "@ckeditor/ckeditor5-table/src/table";
+import AutoImage from "@ckeditor/ckeditor5-image/src/autoimage";
 
 export default {
   name: "MarkDownEditor",
@@ -64,7 +65,7 @@ Editor.builtinPlugins = [
   SourceEditing,
   Table,
   MarkDown,
-  ImageInsert,
+  AutoImage,
 ];
 
 // Editor configuration.
@@ -82,7 +83,6 @@ Editor.defaultConfig = {
       "redo",
       "|",
       "sourceEditing",
-      "|"
     ],
   },
   image: {
