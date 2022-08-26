@@ -82,8 +82,7 @@ Editor.defaultConfig = {
       "redo",
       "|",
       "sourceEditing",
-      "|",
-      "imageInsert",
+      "|"
     ],
   },
   image: {
