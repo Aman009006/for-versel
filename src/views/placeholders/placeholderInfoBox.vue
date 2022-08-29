@@ -41,16 +41,16 @@
 
 <style lang="scss">
 .placeholderInfoBox {
-    background-color: white;
-    padding: 15px 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 15px 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
-    h1 {
-        margin-top: 0px;
-        font-size: 18px;
-        color: #303133;
-    }
+  h1 {
+    margin-top: 0px;
+    font-size: 18px;
+    color: #303133;
+  }
 }
 
 .text {

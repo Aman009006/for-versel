@@ -11,7 +11,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor.
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials.js";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading.js";
 import Image from "@ckeditor/ckeditor5-image/src/image.js";
-import ImageInsert from "@ckeditor/ckeditor5-image/src/imageinsertviaurl.js";
 import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption.js";
 import Link from "@ckeditor/ckeditor5-link/src/link.js";
 import List from "@ckeditor/ckeditor5-list/src/list.js";
@@ -19,6 +18,7 @@ import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.
 import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
 import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
 import Table from "@ckeditor/ckeditor5-table/src/table";
+import AutoImage from "@ckeditor/ckeditor5-image/src/autoimage";
 
 export default {
   name: "MarkDownEditor",
@@ -64,7 +64,7 @@ Editor.builtinPlugins = [
   SourceEditing,
   Table,
   MarkDown,
-  ImageInsert,
+  AutoImage,
 ];
 
 // Editor configuration.
@@ -82,8 +82,6 @@ Editor.defaultConfig = {
       "redo",
       "|",
       "sourceEditing",
-      "|",
-      "imageInsert",
     ],
   },
   image: {

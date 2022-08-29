@@ -78,10 +78,7 @@
         >Login</el-button
       >
 
-      <el-button
-        type="secondary"
-        @click="startMicrosoftLogin"
-      >
+      <el-button type="secondary" @click="startMicrosoftLogin">
         Login mit Microsoft Konto
       </el-button>
     </el-form>
@@ -140,7 +137,7 @@ export default {
       loading: false,
       redirect: undefined,
       otherQuery: {},
-      visible: false
+      visible: false,
     };
   },
   watch: {
@@ -160,8 +157,8 @@ export default {
     const accessToken = await KeycloakUtils.getToken();
     if (accessToken != null) {
       this.callLoginWebservice({
-        accessToken
-      })
+        accessToken,
+      });
     } else {
       this.visible = true;
     }

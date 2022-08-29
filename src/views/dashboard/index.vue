@@ -7,14 +7,29 @@
         </el-col>
         <el-col class="text" :span="24" :sm="20">
           <h1>Willkommen auf Ihrer Admin UI!</h1>
-          <span style="font-size:14px">Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
+          <span style="font-size: 14px"
+            >Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
             Ändern von Textbausteinen und möchten Sie mit der Navigation der
             graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
             eine Beta-Version. Die wesentlichen Funktionen sind bereits
             implementiert, die vollumfängliche Entwicklung der einzelnen
             Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
-            Feedback für die Weiterentwicklung und Optimierung besonders wichtig!</span>
-          <p style="font-size:14px"><span style=" color:#0DA4F0; font-weight: bold;text-transform: uppercase;font-size:13px">Dialoge bearbeiten: </span> Bitte wählen Sie links in der Navigation im Drop-down Menü unter Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.</p>
+            Feedback für die Weiterentwicklung und Optimierung besonders
+            wichtig!</span
+          >
+          <p style="font-size: 14px">
+            <span
+              style="
+                color: #0da4f0;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 13px;
+              "
+              >Dialoge bearbeiten:
+            </span>
+            Bitte wählen Sie links in der Navigation im Drop-down Menü unter
+            Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.
+          </p>
         </el-col>
       </el-row>
     </div>
@@ -76,7 +91,7 @@ export default {
     };
   },
   async created() {
-    const { avatar_link } = this.$store.getters.metainfo
+    const { avatar_link } = this.$store.getters.metainfo;
     this.avatar_link = avatar_link;
   },
 };
@@ -130,32 +145,40 @@ export default {
   .editDialogButton {
     opacity: 0.6;
   }
-  .item {border-radius: 4px;}
+  .item {
+    border-radius: 4px;
+  }
 
   .linkbox-container {
-    font-size:14px;
+    font-size: 14px;
     > .el-row > .el-col {
       margin-bottom: 15px;
     }
   }
 
-  .manuelButton:hover{
+  .manuelButton:hover {
     border: solid 2px #40a0ff;
-    .text{color:#40a0ff;}
+    .text {
+      color: #40a0ff;
+    }
   }
 
-  .manuelButton{
-    border: solid 2px #F2F6FC;
+  .manuelButton {
+    border: solid 2px #f2f6fc;
   }
 
-.giveFeedbackButton:hover{
-  border: solid 2px #40a0ff;
-    .text{color:#40a0ff;}
+  .giveFeedbackButton:hover {
+    border: solid 2px #40a0ff;
+    .text {
+      color: #40a0ff;
+    }
+  }
+  .giveFeedbackButton {
+    border: solid 2px #f2f6fc;
+  }
 }
- .giveFeedbackButton{
-    border: solid 2px #F2F6FC;
-  }
-}
 
-.text{margin-left: 15px;}
+.text {
+  margin-left: 15px;
+}
 </style>

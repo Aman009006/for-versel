@@ -65,8 +65,8 @@ const filterElementObject = {
   buttonTitle: {
     label: "Button Name",
     searchKey: "texts.buttons.title",
-  }
-}
+  },
+};
 
 const filterElementValues = [
   filterElementObject.intent,
@@ -91,7 +91,7 @@ export default {
       /**
        * the text that the user searches for
        */
-      userQuery: ''
+      userQuery: "",
     };
   },
   computed: {
@@ -166,7 +166,7 @@ export default {
         .map((el) => el.searchKey);
     },
     initFuse() {
-      this.fuse = this.getFuseInstance(this.searchPool, this.getSearchKeys())
+      this.fuse = this.getFuseInstance(this.searchPool, this.getSearchKeys());
     },
     getFuseInstance(searchPool, searchKeys) {
       /**
@@ -197,7 +197,7 @@ export default {
         minMatchCharLength: 1,
         // List of keys that will be searched.
         keys: searchKeys,
-        includeMatches: true
+        includeMatches: true,
       });
     },
     checkIfRouteIsIntent(route) {
@@ -280,53 +280,67 @@ export default {
       }
     },
     markText(text, textIndex1, textIndex2) {
-      let pathText = '';
+      let pathText = "";
       if (textIndex1 > textIndex2) {
         /**
          * dont understand why this happens, but sometimes
          * the first index is greater than the second.
          */
-        [textIndex1, textIndex2] = [textIndex2, textIndex1]
+        [textIndex1, textIndex2] = [textIndex2, textIndex1];
       }
       // first part of the text
-      pathText += HtmlEncode(text.substring(0, textIndex1))
+      pathText += HtmlEncode(text.substring(0, textIndex1));
       // text that was found
-      pathText += `<span class="text-marker">${HtmlEncode(text.substring(textIndex1, textIndex2))}</span>`
+      pathText += `<span class="text-marker">${HtmlEncode(
+        text.substring(textIndex1, textIndex2)
+      )}</span>`;
       // last part of the text
-      pathText += HtmlEncode(text.substring(textIndex2, text.length))
+      pathText += HtmlEncode(text.substring(textIndex2, text.length));
       return pathText;
     },
     getFoundElementHtml(element) {
       // search the matches to get the scores
-      const fuseRes = this.getFuseInstance(element.matches, ['value']).search(this.userQuery);
+      const fuseRes = this.getFuseInstance(element.matches, ["value"]).search(
+        this.userQuery
+      );
       // the items are sorted by scores. Get the element with the highest score
       const match = fuseRes[0].item;
       const { title } = element.item;
       // eslint-disable-next-line prefer-const
       // get the index with the longest distance from eachother
-      const distances = match.indices.map(index => index[1] - index[0]);
-      const arrayIndexOfHighestDistanceIndex = distances.indexOf(Math.max(...distances));
+      const distances = match.indices.map((index) => index[1] - index[0]);
+      const arrayIndexOfHighestDistanceIndex = distances.indexOf(
+        Math.max(...distances)
+      );
       // eslint-disable-next-line prefer-const
-      let [textIndex1, textIndex2] = match.indices[arrayIndexOfHighestDistanceIndex];
+      let [textIndex1, textIndex2] =
+        match.indices[arrayIndexOfHighestDistanceIndex];
       textIndex2++;
       /**
        * the index in the array of the element that was found.
        */
       const foundTextArrayIndex = title.findIndex(
-        (_title, i) => _title === match.value && i === this.intentArrayIndexInTitle
+        (_title, i) =>
+          _title === match.value && i === this.intentArrayIndexInTitle
       );
       let pathText = "";
       title.forEach((_title, i) => {
-        if (foundTextArrayIndex === i && match.key === filterElementObject.intent.searchKey) {
-          pathText += this.markText(_title, textIndex1, textIndex2)
+        if (
+          foundTextArrayIndex === i &&
+          match.key === filterElementObject.intent.searchKey
+        ) {
+          pathText += this.markText(_title, textIndex1, textIndex2);
         } else {
-          pathText += HtmlEncode(_title)
+          pathText += HtmlEncode(_title);
         }
         if (i < title.length - 1) {
-          pathText += HtmlEncode(' > ');
+          pathText += HtmlEncode(" > ");
         }
       });
-      if (match.key === filterElementObject.answerText.searchKey || match.key === filterElementObject.buttonTitle.searchKey) {
+      if (
+        match.key === filterElementObject.answerText.searchKey ||
+        match.key === filterElementObject.buttonTitle.searchKey
+      ) {
         let label = filterElementObject.answerText.label;
         if (match.key === filterElementObject.buttonTitle.searchKey) {
           label = filterElementObject.buttonTitle.label;
@@ -337,7 +351,7 @@ export default {
           <strong>
             ${HtmlEncode(label)}
           </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
-        </p>`
+        </p>`;
       }
       return pathText;
     },
@@ -365,7 +379,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
 
-    ::v-deep .el-input__inner {
+    :deep(.el-input__inner) {
       border-radius: 0;
       border: 0;
       padding-left: 0;
