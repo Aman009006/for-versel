@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "SidebarLogo",
+  name: 'SidebarLogo',
   props: {
     collapse: {
       type: Boolean,
@@ -29,13 +29,13 @@ export default {
   },
   data() {
     return {
-      title: "ISA",
+      title: 'ISA',
       // Link to the logo already in new domain
       // TODO: load dynamically
-      logo: "https://files.stadtwerk.bot/chatbot/demo/ChatbotAvatar1.svg",
-    };
+      logo: 'https://files.stadtwerk.bot/chatbot/demo/ChatbotAvatar1.svg',
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

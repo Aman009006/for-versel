@@ -9,7 +9,7 @@
     >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-badge
-          value="Neu"
+          model-value="Neu"
           class="item"
           :hidden="!(item.meta && item.meta.newIntent)"
         >
@@ -26,17 +26,17 @@
       </app-link>
     </template>
     <!--
-      meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
-      https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
-      This is used here for FixiOSBug.js to reference this element.
-     -->
-    <el-submenu
+        meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
+        https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
+        This is used here for FixiOSBug.js to reference this element.
+       -->
+    <el-sub-menu
       v-else
       ref="subMenu"
       :index="resolvePath(item.path)"
       popper-append-to-body
     >
-      <template slot="title">
+      <template #title="title">
         <item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
@@ -51,7 +51,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-    </el-submenu>
+    </el-sub-menu>
   </div>
 </template>
 

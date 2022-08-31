@@ -12,7 +12,7 @@ import store from '../index';
  */
 function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+    return roles.some((role) => route.meta.roles.includes(role))
   } else {
     return true
   }
@@ -26,7 +26,7 @@ function hasPermission(roles, route) {
 export function filterAsyncRoutes(routes, roles) {
   const res = []
 
-  routes.forEach(route => {
+  routes.forEach((route) => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
@@ -42,7 +42,7 @@ export function filterAsyncRoutes(routes, roles) {
 const state = {
   routes: [],
   addRoutes: [],
-  skillsWithIntents: []
+  skillsWithIntents: [],
   // link: 'https://app.powerbi.com/groups/aaf839c8-bbf7-46d4-afb0-19832c9b8b1b/reports/7ec29e52-3f8b-4cd9-b518-5c008a90f198/ReportSection3f54145046b3409026bd?ctid=58edcd46-9a0e-4d7f-9e4d-8da23bf52b1c&openReportSource=ReportInvitation'
 }
 
@@ -65,21 +65,21 @@ const mutations = {
       '/notes',
       '/manual',
       '/powerBI',
-      '/manualChatbot'
+      '/manualChatbot',
     ]
     state.routes.sort((route1, route2) => {
       const { path: path1 } = route1
       const { path: path2 } = route2
       if (order.indexOf(path1) > order.indexOf(path2)) {
-        return 1;
+        return 1
       } else {
-        return -1;
+        return -1
       }
-    });
+    })
   },
   SET_SKILLS_WITH_INTENTS: (state, skillsWithIntents) => {
     state.skillsWithIntents = skillsWithIntents
-  }
+  },
 }
 
 /**
@@ -100,22 +100,23 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     component: Layout,
     name: 'Skills and intents',
     meta: {
-      title: 'Dialoge', icon: 'el-icon-s-comment'
+      title: 'Dialoge',
+      icon: 'el-icon-s-comment',
     },
-    children: []
+    children: [],
   }
-  skillsWithIntents.forEach(skillWithIntent => {
+  skillsWithIntents.forEach((skillWithIntent) => {
     route.children.push({
       path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
       component: routerView,
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
-        title: `${skillWithIntent.SkillName}`
+        title: `${skillWithIntent.SkillName}`,
       },
-      children: []
+      children: [],
     })
-    skillWithIntent.Intents.forEach(intent => {
+    skillWithIntent.Intents.forEach((intent) => {
       route.children[route.children.length - 1].children.push({
         path: encodeURIComponent(encodePathComponent(intent.name)),
         component: () => import('@/views/intent/index'),
@@ -125,7 +126,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
           intent: `${intent.intent}`,
           description: `${intent.description}`,
           newIntent: intent.newIntent,
-          creationTimestamp: intent.creationTimestamp
+          creationTimestamp: intent.creationTimestamp,
         },
       })
     })
@@ -145,9 +146,9 @@ export function makeURLRouteForPowerBI(powerBI_link) {
     children: [
       {
         path: `${powerBI_link}`,
-        meta: { title: 'KPI Dashboard', icon: 'external_link' }
-      }
-    ]
+        meta: { title: 'KPI Dashboard', icon: 'external_link' },
+      },
+    ],
   }
   return powerBIRoute
 }
@@ -164,7 +165,9 @@ const actions = {
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
     // make dynamic routes for skills and intents
-    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(state.skillsWithIntents)
+    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(
+      state.skillsWithIntents
+    )
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
@@ -184,7 +187,10 @@ const actions = {
   async generateRoutes({ dispatch }, roles) {
     // get this informations in a defined interval. The answerTexts can change over time
     setInterval(() => dispatch(actions.setSkillsAndIntents.name), 1000 * 60)
-    const allAdditionalRoutes = dispatch(actions.pullIntentsAndSetRoutes.name, roles);
+    const allAdditionalRoutes = dispatch(
+      actions.pullIntentsAndSetRoutes.name,
+      roles
+    )
     return allAdditionalRoutes
   },
 
@@ -193,12 +199,12 @@ const actions = {
     const skillsWithIntents = await getSkillsWithIntents()
     // save the data in the state
     commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
-  }
+  },
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }

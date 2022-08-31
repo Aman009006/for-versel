@@ -28,19 +28,19 @@
 
 <script>
 export default {
-  props: ["intent", "description", "utterances", "adminUiTestPageLink"],
+  props: ['intent', 'description', 'utterances', 'adminUiTestPageLink'],
   methods: {
     startDialogForcurrentIntent() {
-      window.hsag_chatbot.api.startDialog(this.intent);
+      window.hsag_chatbot.api.startDialog(this.intent)
     },
     openLink(link) {
-      window.open(link, "_blank");
+      window.open(link, '_blank')
     },
   },
-};
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .dialogInfoBox {
   background-color: white;
   padding: 5px 25px;

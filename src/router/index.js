@@ -1,54 +1,32 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { links } from '@/constants'
-
-Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
 import { paths } from '@/constants'
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
+/* Component */
+import Login from '@/views/login/index'
+import AuthRedirect from '@/views/login/auth-redirect'
+import Page404 from '@/views/error-page/404'
+import Dashboard from '@/views/dashboard/index'
+import PlaceHolders from '@/views/placeholders/index'
 
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    component: Login,
+    hidden: true,
   },
   {
     path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
+    component: AuthRedirect,
+    hidden: true,
   },
   {
     path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
+    component: Page404,
+    hidden: true,
   },
   {
     path: '/',
@@ -57,25 +35,25 @@ export const constantRoutes = [
     children: [
       {
         path: 'home',
-        component: () => import('@/views/dashboard/index'),
+        component: Dashboard,
         name: 'Home',
-        meta: { title: 'Home', icon: 'el-icon-s-home', affix: true }
-      }
-    ]
+        meta: { title: 'Home', icon: 'el-icon-s-home', affix: true },
+      },
+    ],
   },
   {
     path: paths.placeholders,
     component: Layout,
-    name: 'Placeholders',
     children: [
       {
         path: paths.placeholders,
-        component: () => import('@/views/placeholders/index'),
+        component: PlaceHolders,
         meta: {
-          title: 'Platzhalter', icon: 'el-icon-edit-outline'
-        }
-      }
-    ]
+          title: 'Platzhalter',
+          icon: 'el-icon-edit-outline',
+        },
+      },
+    ],
   },
   {
     path: '/notes',
@@ -83,9 +61,9 @@ export const constantRoutes = [
     children: [
       {
         path: links.releaseNotes,
-        meta: { title: 'Release Notes', icon: 'external_link' }
-      }
-    ]
+        meta: { title: 'Release Notes', icon: 'external_link' },
+      },
+    ],
   },
   {
     path: '/jira',
@@ -93,9 +71,9 @@ export const constantRoutes = [
     children: [
       {
         path: links.jiraHelpDesk,
-        meta: { title: 'JIRA Service Desk', icon: 'external_link' }
-      }
-    ]
+        meta: { title: 'JIRA Service Desk', icon: 'external_link' },
+      },
+    ],
   },
   {
     path: '/manual',
@@ -103,9 +81,9 @@ export const constantRoutes = [
     children: [
       {
         path: links.manual,
-        meta: { title: 'Bedienungsanleitung', icon: 'external_link' }
-      }
-    ]
+        meta: { title: 'Bedienungsanleitung', icon: 'external_link' },
+      },
+    ],
   },
   {
     path: '/manualChatbot',
@@ -113,11 +91,10 @@ export const constantRoutes = [
     children: [
       {
         path: links.manualChatbot,
-        meta: { title: 'API-Dokumentation', icon: 'external_link' }
-
-      }
-    ]
-  }
+        meta: { title: 'API-Dokumentation', icon: 'external_link' },
+      },
+    ],
+  },
 ]
 
 /**
@@ -133,33 +110,29 @@ export const asyncRoutes = [
     hidden: true,
     meta: {
       title: 'Error Pages',
-      icon: '404'
+      icon: '404',
     },
     children: [
       {
         path: '404',
         component: () => import('@/views/error-page/404'),
         name: 'Page404',
-        meta: { title: '404', noCache: true }
-      }
-    ]
+        meta: { title: '404', noCache: true },
+      },
+    ],
   },
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
 ]
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
-
-const router = createRouter()
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-
+const router = createRouter({
+  history: createWebHashHistory(),
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes,
+})
 export default router

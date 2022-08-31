@@ -34,7 +34,7 @@ module.exports = {
     }],
     "vue/singleline-html-element-content-newline": 0,
     "vue/multiline-html-element-content-newline": 0,
-    "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
     "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {

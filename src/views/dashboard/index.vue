@@ -70,14 +70,14 @@
 </template>
 
 <script>
-import ImageTextLinkBox from "@/components/ImageTextLinkBox";
-import manualPic from "@/assets/images/Bedienungsanleitung.svg";
-import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
-import feedbackPic from "@/assets/images/Feedback.svg";
-import { links } from "@/constants";
+import ImageTextLinkBox from '@/components/ImageTextLinkBox'
+import manualPic from '@/assets/images/Bedienungsanleitung.svg'
+import editAnswersPic from '@/assets/images/DialogBearbeiten.svg'
+import feedbackPic from '@/assets/images/Feedback.svg'
+import { links } from '@/constants'
 
 export default {
-  name: "Dashboard",
+  name: 'Dashboard',
   components: { ImageTextLinkBox },
   data() {
     return {
@@ -88,17 +88,17 @@ export default {
         feedbackPic,
       },
       jiraHelpDesk: links.jiraHelpDesk,
-    };
+    }
   },
   async created() {
-    const { avatar_link } = this.$store.getters.metainfo;
-    this.avatar_link = avatar_link;
+    const { avatar_link } = this.$store.getters.metainfo
+    this.avatar_link = avatar_link
   },
-};
+}
 </script>
 
 <style lang="scss">
-@import "~@/styles/element-variables.module.scss";
+@import '~@/styles/element-variables.module.scss';
 .dashboard-container {
   * {
     color: $--color-text-regular;

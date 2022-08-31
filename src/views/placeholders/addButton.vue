@@ -2,7 +2,7 @@
   <el-button
     class="add-btn"
     size="small"
-    icon="el-icon-plus"
+    :icon="ElIconPlus"
     @click="addPlaceholder()"
   >
     Neuen Platzhalter hinzufügen
@@ -10,20 +10,26 @@
 </template>
 
 <script>
+import { Plus as ElIconPlus } from '@element-plus/icons'
 export default {
+  data() {
+    return {
+      ElIconPlus,
+    }
+  },
   computed: {
     currentPlaceholders() {
-      return this.$store.getters.placeholders;
+      return this.$store.getters.placeholders
     },
   },
   methods: {
     async addPlaceholder() {
       if (!this.currentPlaceholders[this.currentPlaceholders.length - 1].edit) {
-        this.currentPlaceholders.push({ key: "", value: "", edit: true });
+        this.currentPlaceholders.push({ key: '', value: '', edit: true })
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

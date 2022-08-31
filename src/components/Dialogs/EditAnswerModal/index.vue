@@ -3,7 +3,7 @@
     <el-button
       class="edit-btn"
       size="small"
-      icon="el-icon-edit"
+      :icon="ElIconEdit"
       @click="openEditModal()"
     >
       Bearbeiten
@@ -30,51 +30,53 @@
 </template>
 
 <script>
-import EditAnswer from "@/components/Dialogs/EditAnswer";
-import { dispatchNames } from "@/constants";
+import { Edit as ElIconEdit } from '@element-plus/icons'
+import EditAnswer from '@/components/Dialogs/EditAnswer'
+import { dispatchNames } from '@/constants'
 
 export default {
-  components: {
-    EditAnswer,
-  },
-  props: ["answer"],
   data() {
     return {
       editModalOpened: false,
       confirmButtonDisabled: false,
-    };
+      ElIconEdit,
+    }
   },
+  components: {
+    EditAnswer,
+  },
+  props: ['answer'],
   computed: {
     readableIntentName() {
-      return this.$route.meta.title;
+      return this.$route.meta.title
     },
   },
   methods: {
     openEditModal() {
-      this.confirmButtonDisabled = false;
-      this.editModalOpened = true;
+      this.confirmButtonDisabled = false
+      this.editModalOpened = true
     },
     closeEditModal() {
-      this.editModalOpened = false;
+      this.editModalOpened = false
     },
     async saveAnswer() {
-      this.confirmButtonDisabled = true;
-      await this.$refs.editAnswerRef.saveAnswerAndButtons();
-      this.refreshAnswers();
-      this.closeEditModal();
+      this.confirmButtonDisabled = true
+      await this.$refs.editAnswerRef.saveAnswerAndButtons()
+      this.refreshAnswers()
+      this.closeEditModal()
     },
     async refreshAnswers() {
       this.$store.dispatch(
         dispatchNames.getAndSetIntentAnswers,
         this.readableIntentName
-      );
-      this.setSkillsAndIntents();
+      )
+      this.setSkillsAndIntents()
     },
     setSkillsAndIntents() {
-      this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
+      this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -8,7 +8,7 @@ export async function getSkillsWithIntents() {
   // extract domain in const
   const res = await request({
     url: authorizedBackendUrl + 'skillsWithIntentNames',
-    method: 'get'
+    method: 'get',
   })
   return res
 }
@@ -44,7 +44,7 @@ export function getAnswersforIntent(readableIntentName) {
      * if we use get, data in body will be ignored
      */
     method: 'post',
-    data: { readableIntentName }
+    data: { readableIntentName },
   })
 }
 
@@ -52,7 +52,7 @@ export function setAnswerText(answerId, text) {
   return request({
     url: authorizedBackendUrl + 'setAnswerText',
     method: 'post',
-    data: { answerId, text }
+    data: { answerId, text },
   })
 }
 /**
@@ -68,10 +68,22 @@ export function setAnswerText(answerId, text) {
  * @param newButtonValue is the new value of the current button
  * which has to be saved in the DB table answer_buttons
  */
-export function setButtonProperties(answerId, originalButtonTitle, newButtonTitle, newButtonType, newButtonValue) {
+export function setButtonProperties(
+  answerId,
+  originalButtonTitle,
+  newButtonTitle,
+  newButtonType,
+  newButtonValue
+) {
   return request({
     url: authorizedBackendUrl + 'setButtonProperties',
     method: 'post',
-    data: { answerId, originalButtonTitle, newButtonTitle, newButtonType, newButtonValue }
+    data: {
+      answerId,
+      originalButtonTitle,
+      newButtonTitle,
+      newButtonType,
+      newButtonValue,
+    },
   })
 }

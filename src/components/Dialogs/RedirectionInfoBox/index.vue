@@ -48,16 +48,16 @@
 </template>
 
 <script>
-import { links } from "@/constants";
+import { links } from '@/constants'
 
 export default {
-  props: ["readableRedirectToIntentName"],
+  props: ['readableRedirectToIntentName'],
   data() {
     return {
       jiraHelpDesk: links.jiraHelpDesk,
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

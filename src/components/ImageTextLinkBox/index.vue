@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "ImageTextLinkBox",
+  name: 'ImageTextLinkBox',
   props: {
     link: {
       type: String,
@@ -29,12 +29,12 @@ export default {
     },
   },
   data() {
-    return {};
+    return {}
   },
   created() {},
   mounted() {},
   methods: {},
-};
+}
 </script>
 
 <style lang="scss" scoped>

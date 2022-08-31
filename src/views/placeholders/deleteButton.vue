@@ -1,11 +1,11 @@
 <template>
   <el-table-column align="center" width="70">
-    <template slot-scope="{ row }">
+    <template #row="{ row }">
       <template v-if="!row.edit">
         <el-button
           class="delete-btn"
           size="small"
-          icon="el-icon-delete"
+          :icon="ElIconDelete"
           @click="deletePlaceholder(row)"
         />
       </template>
@@ -15,10 +15,16 @@
 </template>
 
 <script>
+import { Delete as ElIconDelete } from "@element-plus/icons";
 import { deletePlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 
 export default {
+  data() {
+    return {
+      ElIconDelete,
+    };
+  },
   computed: {
     currentPlaceholders() {
       return this.$store.getters.placeholders;
@@ -49,8 +55,7 @@ export default {
 };
 </script>
 
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .delete-btn,
 .delete-btn:hover {
   color: white !important;

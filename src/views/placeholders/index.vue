@@ -11,6 +11,7 @@ import placeholderInfoBox from "./placeholderInfoBox.vue";
 import placeholderTable from "./placeholderTable.vue";
 
 export default {
+  name: 'PlaceHolders',
   components: {
     placeholderInfoBox,
     placeholderTable,
@@ -18,7 +19,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .placeholder-element-container {
   padding: 30px 50px;
 }

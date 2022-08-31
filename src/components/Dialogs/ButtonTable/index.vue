@@ -1,13 +1,13 @@
-<template v-if="copiedButtons">
+<template>
   <el-table :data="copiedButtons" border>
     <el-table-column label="Name" align="center" :min-width="columnMinWidth">
-      <template slot-scope="{ row: button }">
+      <template #button="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
       </template>
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template slot="header">
+      <template #header="header">
         <el-popover
           ref="PopOverValue"
           placement="top-start"
@@ -22,10 +22,10 @@
         </el-popover>
         <span>
           Wert
-          <i v-popover:PopOverValue class="el-icon-info" />
+          <el-icon><el-icon-info /></el-icon>
         </span>
       </template>
-      <template slot-scope="{ row: button }">
+      <template #button="{ row: button }">
         <el-input
           v-if="!isImbackButton(button)"
           v-model="button.value"
@@ -37,7 +37,7 @@
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template slot="header">
+      <template #header="header">
         <el-popover
           ref="PopOverType"
           placement="top-start"
@@ -52,10 +52,10 @@
         </el-popover>
         <span>
           Typ
-          <i v-popover:PopOverType class="el-icon-info" />
+          <el-icon><el-icon-info /></el-icon>
         </span>
       </template>
-      <template slot-scope="{ row: button }">
+      <template #button="{ row: button }">
         <span>{{ button.type }}</span>
       </template>
     </el-table-column>
@@ -63,8 +63,13 @@
 </template>
 
 <script>
+import { InfoFilled as ElIconInfo } from "@element-plus/icons";
 export default {
   name: "ButtonTable",
+  components: {
+    ElIconInfo,
+  },
+  inheritAttrs: true,
   props: ["buttons"],
   data() {
     return {
@@ -88,7 +93,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .popOverContent {
   text-align: center;
 }

@@ -13,8 +13,8 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @click.middle.native="!isAffix(tag) ? closeSelectedTag(tag) : ''"
-        @contextmenu.prevent.native="openMenu(tag, $event)"
+        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
+        @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ tag.title }}
         <span
@@ -45,6 +45,7 @@ import path from "path";
 
 export default {
   components: { ScrollPane },
+  inheritAttrs: true,
   data() {
     return {
       visible: false,

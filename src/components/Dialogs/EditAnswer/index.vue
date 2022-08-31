@@ -15,11 +15,11 @@
           trigger="hover"
         >
           <div>
-            Wenn Sie Microsoft Windows verwenden,
-            können Sie Emojis mit der Tastenkombination “⊞“ (Windowstaste) + “.” (Punkt) einfügen
+            Wenn Sie Microsoft Windows verwenden, können Sie Emojis mit der
+            Tastenkombination “⊞“ (Windowstaste) + “.” (Punkt) einfügen
           </div>
         </el-popover>
-        <i v-popover:emojiInfo class="el-icon-info" />
+        <el-icon><el-icon-info /></el-icon>
       </h2>
       <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { InfoFilled as ElIconInfo } from "@element-plus/icons";
 import { humanReadableLabels } from "@/constants";
 import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
@@ -42,7 +43,9 @@ export default {
   components: {
     ButtonTable,
     MarkDownEditor,
+    ElIconInfo,
   },
+  inheritAttrs: true,
   props: ["answer"],
   data() {
     return {

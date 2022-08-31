@@ -3,14 +3,14 @@
     <el-dropdown @command="goToPath">
       <span class="el-dropdown-link">
         <el-badge
-          :value="newIntentRoutes.length"
+          :model-value="newIntentRoutes.length"
           class="item"
           :hidden="newIntentRoutes.length == 0"
         >
-          <i class="el-icon-message-solid" />
+          <el-icon><el-icon-message-solid /></el-icon>
         </el-badge>
       </span>
-      <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu>
         <el-dropdown-item disabled class="dropdown-headline">
           <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
           <span v-if="newIntentRoutes.length == 0">
@@ -30,9 +30,14 @@
 </template>
 
 <script>
+import { Message as ElIconMessageSolid } from "@element-plus/icons";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 export default {
   name: "Notification",
+  components: {
+    ElIconMessageSolid,
+  },
+  inheritAttrs: true,
   props: {},
   data() {
     return {};

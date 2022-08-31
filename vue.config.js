@@ -93,6 +93,22 @@ module.exports = {
     devtool: 'source-map'
   },
   chainWebpack(config) {
+    config.resolve.alias.set('vue', '@vue/compat')
+
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        return {
+          ...options,
+          compilerOptions: {
+            compatConfig: {
+              MODE: 2
+            }
+          }
+        }
+      })
+
     ckeditorConfig(config)
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
@@ -130,7 +146,7 @@ module.exports = {
                 elementUI: {
                   name: 'chunk-elementUI', // split elementUI into a single package
                   priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                  test: /[\\/]node_modules[\\/]_?element-plus(.*)/ // in order to adapt to cnpm
                 },
                 commons: {
                   name: 'chunk-commons',

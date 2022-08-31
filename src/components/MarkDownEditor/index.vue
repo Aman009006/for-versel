@@ -5,37 +5,37 @@
 </template>
 
 <script>
-import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold.js";
-import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic.js";
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor.js";
-import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials.js";
-import Heading from "@ckeditor/ckeditor5-heading/src/heading.js";
-import Image from "@ckeditor/ckeditor5-image/src/image.js";
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption.js";
-import Link from "@ckeditor/ckeditor5-link/src/link.js";
-import List from "@ckeditor/ckeditor5-list/src/list.js";
-import SourceEditing from "@ckeditor/ckeditor5-source-editing/src/sourceediting.js";
-import MarkDown from "@ckeditor/ckeditor5-markdown-gfm/src/markdown.js";
-import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
-import Table from "@ckeditor/ckeditor5-table/src/table";
-import AutoImage from "@ckeditor/ckeditor5-image/src/autoimage";
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js'
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js'
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js'
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js'
+import Heading from '@ckeditor/ckeditor5-heading/src/heading.js'
+import Image from '@ckeditor/ckeditor5-image/src/image.js'
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption.js'
+import Link from '@ckeditor/ckeditor5-link/src/link.js'
+import List from '@ckeditor/ckeditor5-list/src/list.js'
+import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting.js'
+import MarkDown from '@ckeditor/ckeditor5-markdown-gfm/src/markdown.js'
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink'
+import Table from '@ckeditor/ckeditor5-table/src/table'
+import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage'
 
 export default {
-  name: "MarkDownEditor",
+  name: 'MarkDownEditor',
   props: {
     text: { type: String },
   },
   data() {
     return {
       editor: null,
-    };
+    }
   },
   async mounted() {
-    const ckEditorElement = this.$refs.ckEditor;
+    const ckEditorElement = this.$refs.ckEditor
     const editor = await Editor.create(ckEditorElement, {
       initialData: this.text,
-    });
-    this.editor = editor;
+    })
+    this.editor = editor
   },
   methods: {
     /**
@@ -43,10 +43,10 @@ export default {
      * method to get the current data of the editor.
      */
     getData() {
-      return this.editor?.getData();
+      return this.editor?.getData()
     },
   },
-};
+}
 
 class Editor extends ClassicEditor {}
 
@@ -65,29 +65,29 @@ Editor.builtinPlugins = [
   Table,
   MarkDown,
   AutoImage,
-];
+]
 
 // Editor configuration.
 Editor.defaultConfig = {
   toolbar: {
     items: [
-      "heading",
-      "bold",
-      "italic",
-      "link",
-      "bulletedList",
-      "numberedList",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "sourceEditing",
+      'heading',
+      'bold',
+      'italic',
+      'link',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'undo',
+      'redo',
+      '|',
+      'sourceEditing',
     ],
   },
   image: {
-    toolbar: ["imageTextAlternative"],
+    toolbar: ['imageTextAlternative'],
   },
-};
+}
 </script>
 
 <style lang="scss">

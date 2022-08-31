@@ -1,12 +1,12 @@
 <template>
   <el-table-column align="center" width="130">
-    <template slot-scope="{ row }">
+    <template #row="{ row }">
       <!-- When the editing mode is turned on: -->
       <template v-if="row.edit">
         <el-button
           class="confirm-btn"
           size="small"
-          icon="el-icon-download"
+          :icon="ElIconDownload"
           @click="confirmEdit(row)"
         >
           Speichern
@@ -14,7 +14,7 @@
         <el-button
           class="cancel-btn"
           size="small"
-          icon="el-icon-refresh"
+          :icon="ElIconRefresh"
           @click="cancelEdit()"
         >
           Abbrechen
@@ -25,7 +25,7 @@
         <el-button
           class="edit-btn"
           size="small"
-          icon="el-icon-edit"
+          :icon="ElIconEdit"
           @click="toggleEdit(row)"
         >
           Bearbeiten
@@ -36,6 +36,11 @@
 </template>
 
 <script>
+import {
+  Download as ElIconDownload,
+  Refresh as ElIconRefresh,
+  Edit as ElIconEdit,
+} from "@element-plus/icons";
 import { updatePlaceholder, setPlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 
@@ -44,6 +49,9 @@ export default {
     return {
       isEdit: false,
       currentPlaceholderData: [],
+      ElIconDownload,
+      ElIconRefresh,
+      ElIconEdit,
     };
   },
   computed: {
@@ -119,7 +127,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .cancel-btn,
 .confirm-btn,
 .edit-btn,

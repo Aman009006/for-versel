@@ -1,8 +1,8 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 
-import Element from 'element-ui'
+import Element from 'element-plus'
 import './styles/element-variables.module.scss'
-import enLang from 'element-ui/lib/locale/lang/en'
+import enLang from 'element-plus/es/locale/lang/en'
 
 import '@/styles/index.scss'
 
@@ -13,22 +13,12 @@ import router from './router'
 import './icons'
 import './permission'
 
-import * as filters from './filters'
+const app = createApp(App);
+app.use(Element, {
+  size: 'default',
+  locale: enLang,
+});
+app.use(store);
+app.use(router);
 
-Vue.use(Element, {
-  size: 'medium',
-  locale: enLang
-})
-
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
-
-Vue.config.productionTip = false
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+app.mount('#app')
