@@ -10,13 +10,13 @@
       />
 
       <el-table-column :label="answerText" min-width="500">
-        <template #scope="scope">
+        <template #default="scope">
           <div v-html="renderToMarkdown(scope.row.text)" />
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="Buttons" width="200">
-        <template #answer="{ row: answer }">
+        <template #default="{ row: answer }">
           <template v-if="answer.buttons">
             <ButtonList :buttons="answer.buttons" />
           </template>
@@ -32,7 +32,7 @@
       </el-table-column>
 
       <el-table-column align="center" width="130">
-        <template #answer="{ row: answer }">
+        <template #default="{ row: answer }">
           <EditAnswerModal :answer="answer" />
         </template>
       </el-table-column>
