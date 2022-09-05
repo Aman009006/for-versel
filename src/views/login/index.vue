@@ -255,13 +255,22 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  .el-input {
+  .el-form-item__content {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .el-input__wrapper {
     display: inline-block;
     height: 47px;
     width: 85%;
+    background: transparent;
+    &,
+    &:hover,
+    &.is-focus {
+      box-shadow: none;
+    }
 
     input {
-      background: transparent;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
