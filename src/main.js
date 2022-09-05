@@ -9,9 +9,12 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
+import Vuex from 'vuex'
 
 import './icons'
 import './permission'
+
+import SvgIcon from '@/components/SvgIcon'
 
 const app = createApp(App);
 app.use(Element, {
@@ -20,5 +23,8 @@ app.use(Element, {
 });
 app.use(store);
 app.use(router);
+app.use(Vuex);
 
 app.mount('#app')
+
+app.component('SvgIcon', SvgIcon)
