@@ -41,7 +41,7 @@
       </el-form-item>
 
       <el-tooltip
-        v-model="capsTooltip"
+        :visible="capsTooltip"
         content="Caps lock ist aktiviert"
         placement="right"
         manual
