@@ -19,6 +19,7 @@ import MarkDown from '@ckeditor/ckeditor5-markdown-gfm/src/markdown.js'
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink'
 import Table from '@ckeditor/ckeditor5-table/src/table'
 import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage'
+import { markRaw } from 'vue';
 
 export default {
   name: 'MarkDownEditor',
@@ -35,7 +36,13 @@ export default {
     const editor = await Editor.create(ckEditorElement, {
       initialData: this.text,
     })
-    this.editor = editor
+    /**
+     * markRaw is necessary, otherwise Vue changes the
+     * object to a Proxy. CKEditor is not useable as a
+     * proxy - object.
+     * @see https://github.com/ckeditor/ckeditor5-vue/issues/183#issuecomment-822372033
+     */
+    this.editor = markRaw(editor)
   },
   methods: {
     /**
