@@ -1,5 +1,4 @@
 import { getPlaceholders } from '@/api/placeholders';
-import Vue from 'vue';
 
 const state = {
   placeholders: [],
@@ -7,7 +6,7 @@ const state = {
 
 const mutations = {
   setPlaceholders: (state, placeholders) => {
-    Vue.set(state, 'placeholders', placeholders)
+    state.placeholders = placeholders
   },
 }
 

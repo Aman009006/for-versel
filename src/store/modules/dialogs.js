@@ -1,5 +1,4 @@
 import { getAnswersforIntent } from "@/api/answers";
-import Vue from "vue";
 
 const state = {
   /**
@@ -11,7 +10,7 @@ const state = {
 
 const mutations = {
   setIntentAnswers: (state, { intentName, answerInfo }) => {
-    Vue.set(state.intents, intentName, answerInfo)
+    state.intents[intentName] = answerInfo;
   },
 }
 
