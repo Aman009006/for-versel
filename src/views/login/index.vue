@@ -276,7 +276,7 @@ $cursor: #fff;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 47px;
+      height: 46px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
