@@ -2,7 +2,6 @@
   <div class="editAnswerModal">
     <el-button
       class="edit-btn"
-      size="small"
       :icon="ElIconEdit"
       @click="openEditModal()"
     >
