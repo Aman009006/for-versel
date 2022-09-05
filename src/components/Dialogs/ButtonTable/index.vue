@@ -1,13 +1,13 @@
 <template>
   <el-table :data="copiedButtons" border>
     <el-table-column label="Name" align="center" :min-width="columnMinWidth">
-      <template #button="{ row: button }">
+      <template #default="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
       </template>
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template #header="header">
+      <template #header>
         Wert
         <el-popover
           ref="PopOverValue"
@@ -27,7 +27,7 @@
           </template>
         </el-popover>
       </template>
-      <template #button="{ row: button }">
+      <template #default="{ row: button }">
         <el-input
           v-if="!isImbackButton(button)"
           v-model="button.value"
@@ -39,7 +39,7 @@
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template #header="header">
+      <template #header>
         Typ
         <el-popover
           ref="PopOverType"
@@ -59,7 +59,7 @@
           </template>
         </el-popover>
       </template>
-      <template #button="{ row: button }">
+      <template #default="{ row: button }">
         <span>{{ button.type }}</span>
       </template>
     </el-table-column>
