@@ -93,21 +93,25 @@ module.exports = {
     devtool: 'source-map'
   },
   chainWebpack(config) {
-    config.resolve.alias.set('vue', '@vue/compat')
+    /**
+     * The compatConfig breaks the login.
+     * With vue 3 without compat, it's working
+     */
+    // config.resolve.alias.set('vue', '@vue/compat')
 
-    config.module
-      .rule('vue')
-      .use('vue-loader')
-      .tap(options => {
-        return {
-          ...options,
-          compilerOptions: {
-            compatConfig: {
-              MODE: 2
-            }
-          }
-        }
-      })
+    // config.module
+    //   .rule('vue')
+    //   .use('vue-loader')
+    //   .tap(options => {
+    //     return {
+    //       ...options,
+    //       compilerOptions: {
+    //         compatConfig: {
+    //           MODE: 2
+    //         }
+    //       }
+    //     }
+    //   })
 
     ckeditorConfig(config)
     // when there are many pages, it will cause too many meaningless requests
