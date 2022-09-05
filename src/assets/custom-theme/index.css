@@ -3389,20 +3389,20 @@
     background-color: #fff
 }
 
-.custom-theme .el-menu--horizontal .el-submenu {
+.custom-theme .el-menu--horizontal .el-sub-menu {
     float: left;
     position: relative
 }
 
-.custom-theme .el-menu--horizontal .el-submenu:focus {
+.custom-theme .el-menu--horizontal .el-sub-menu:focus {
     outline: 0
 }
 
-.custom-theme .el-menu--horizontal .el-submenu:focus>.el-submenu__title {
+.custom-theme .el-menu--horizontal .el-sub-menu:focus>.el-sub-menu__title {
     color: #2d2f33
 }
 
-.custom-theme .el-menu--horizontal .el-submenu>.el-menu {
+.custom-theme .el-menu--horizontal .el-sub-menu>.el-menu {
     position: absolute;
     top: 65px;
     left: 0;
@@ -3416,18 +3416,18 @@
     border-radius: 2px
 }
 
-.custom-theme .el-menu--horizontal .el-submenu .el-submenu__title {
+.custom-theme .el-menu--horizontal .el-sub-menu .el-sub-menu__title {
     height: 60px;
     line-height: 60px;
     border-bottom: 2px solid transparent;
     color: #878d99
 }
 
-.custom-theme .el-menu--horizontal .el-submenu .el-submenu__title:hover {
+.custom-theme .el-menu--horizontal .el-sub-menu .el-sub-menu__title:hover {
     background-color: #fff
 }
 
-.custom-theme .el-menu--horizontal .el-submenu .el-menu-item {
+.custom-theme .el-menu--horizontal .el-sub-menu .el-menu-item {
     background-color: #fff;
     float: none;
     height: 36px;
@@ -3435,7 +3435,7 @@
     padding: 0 10px
 }
 
-.custom-theme .el-menu--horizontal .el-submenu .el-submenu__icon-arrow {
+.custom-theme .el-menu--horizontal .el-sub-menu .el-sub-menu__icon-arrow {
     position: static;
     vertical-align: middle;
     margin-left: 8px;
@@ -3444,13 +3444,13 @@
 
 .custom-theme .el-menu--horizontal .el-menu-item:focus,
 .custom-theme .el-menu--horizontal .el-menu-item:hover,
-.custom-theme .el-menu--horizontal .el-submenu__title:hover {
+.custom-theme .el-menu--horizontal .el-sub-menu__title:hover {
     outline: 0;
     color: #2d2f33
 }
 
 .custom-theme .el-menu--horizontal>.el-menu-item.is-active,
-.custom-theme .el-menu--horizontal>.el-submenu.is-active .el-submenu__title {
+.custom-theme .el-menu--horizontal>.el-sub-menu.is-active .el-sub-menu__title {
     border-bottom: 2px solid #262729;
     color: #2d2f33
 }
@@ -3460,20 +3460,20 @@
 }
 
 .custom-theme .el-menu--collapse>.el-menu-item [class^=el-icon-],
-.custom-theme .el-menu--collapse>.el-submenu>.el-submenu__title [class^=el-icon-] {
+.custom-theme .el-menu--collapse>.el-sub-menu>.el-sub-menu__title [class^=el-icon-] {
     margin: 0;
     vertical-align: middle;
     width: 24px;
     text-align: center
 }
 
-.custom-theme .el-menu--collapse>.el-menu-item .el-submenu__icon-arrow,
-.custom-theme .el-menu--collapse>.el-submenu>.el-submenu__title .el-submenu__icon-arrow {
+.custom-theme .el-menu--collapse>.el-menu-item .el-sub-menu__icon-arrow,
+.custom-theme .el-menu--collapse>.el-sub-menu>.el-sub-menu__title .el-sub-menu__icon-arrow {
     display: none
 }
 
 .custom-theme .el-menu--collapse>.el-menu-item span,
-.custom-theme .el-menu--collapse>.el-submenu>.el-submenu__title span {
+.custom-theme .el-menu--collapse>.el-sub-menu>.el-sub-menu__title span {
     height: 0;
     width: 0;
     overflow: hidden;
@@ -3485,15 +3485,15 @@
     color: inherit
 }
 
-.custom-theme .el-menu--collapse .el-menu .el-submenu {
+.custom-theme .el-menu--collapse .el-menu .el-sub-menu {
     min-width: 200px
 }
 
-.custom-theme .el-menu--collapse .el-submenu {
+.custom-theme .el-menu--collapse .el-sub-menu {
     position: relative
 }
 
-.custom-theme .el-menu--collapse .el-submenu .el-menu {
+.custom-theme .el-menu--collapse .el-sub-menu .el-menu {
     position: absolute;
     margin-left: 5px;
     top: 0;
@@ -3505,7 +3505,7 @@
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1)
 }
 
-.custom-theme .el-menu--collapse .el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow {
+.custom-theme .el-menu--collapse .el-sub-menu.is-opened>.el-sub-menu__title .el-sub-menu__icon-arrow {
     -webkit-transform: none;
     transform: none
 }
@@ -3513,7 +3513,7 @@
 .custom-theme .el-menu-item {
     height: 56px;
     line-height: 56px;
-    font-size: 14px;
+    font-size: 16px;
     color: #2d2f33;
     padding: 0 20px;
     cursor: pointer;
@@ -3562,7 +3562,7 @@
     color: inherit
 }
 
-.custom-theme .el-submenu__title {
+.custom-theme .el-sub-menu__title {
     position: relative;
     height: 56px;
     line-height: 56px;
@@ -3575,33 +3575,33 @@
     transition: border-color .3s, background-color .3s, color .3s;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
-.custom-theme .el-submenu__title * {
+.custom-theme .el-sub-menu__title * {
     vertical-align: middle
 }
 
-.custom-theme .el-submenu__title i {
+.custom-theme .el-sub-menu__title i {
     color: #878d99
 }
 
-.custom-theme .el-submenu__title:hover {
+.custom-theme .el-sub-menu__title:hover {
     background-color: #e9e9ea
 }
 
-.custom-theme .el-submenu .el-menu {
+.custom-theme .el-sub-menu .el-menu {
     border: none
 }
 
-.custom-theme .el-submenu .el-menu-item {
+.custom-theme .el-sub-menu .el-menu-item {
     height: 50px;
     line-height: 50px;
     padding: 0 45px;
     min-width: 200px
 }
 
-.custom-theme .el-submenu__icon-arrow {
+.custom-theme .el-sub-menu__icon-arrow {
     position: absolute;
     top: 50%;
     right: 20px;
@@ -3613,16 +3613,16 @@
     font-size: 12px
 }
 
-.custom-theme .el-submenu.is-active .el-submenu__title {
+.custom-theme .el-sub-menu.is-active .el-sub-menu__title {
     border-bottom-color: #262729
 }
 
-.custom-theme .el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow {
+.custom-theme .el-sub-menu.is-opened>.el-sub-menu__title .el-sub-menu__icon-arrow {
     -webkit-transform: rotateZ(180deg);
     transform: rotateZ(180deg)
 }
 
-.custom-theme .el-submenu [class^=el-icon-] {
+.custom-theme .el-sub-menu [class^=el-icon-] {
     vertical-align: middle;
     margin-right: 5px;
     width: 24px;
@@ -3641,7 +3641,7 @@
     color: #878d99
 }
 
-.custom-theme .horizontal-collapse-transition .el-submenu__title .el-submenu__icon-arrow {
+.custom-theme .horizontal-collapse-transition .el-sub-menu__title .el-sub-menu__icon-arrow {
     -webkit-transition: .2s;
     transition: .2s;
     opacity: 0
