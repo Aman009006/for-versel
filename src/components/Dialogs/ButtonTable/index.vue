@@ -8,22 +8,24 @@
 
     <el-table-column align="center" :min-width="columnMinWidth">
       <template #header="header">
+        Wert
         <el-popover
           ref="PopOverValue"
           placement="top-start"
-          autosize
+          :width="400"
           trigger="hover"
         >
-          <div class="popOverContent">
-            Werte können nur bei Buttons mit dem Typ
-            <strong>openUrl</strong>
-            bearbeitet werden.
-          </div>
+          <template #reference>
+            <el-icon><el-icon-info /></el-icon>
+          </template>
+          <template #default>
+            <div class="popOverContent">
+              Werte können nur bei Buttons mit dem Typ
+              <strong>openUrl</strong>
+              bearbeitet werden.
+            </div>
+          </template>
         </el-popover>
-        <span>
-          Wert
-          <el-icon><el-icon-info /></el-icon>
-        </span>
       </template>
       <template #button="{ row: button }">
         <el-input
@@ -38,22 +40,24 @@
 
     <el-table-column align="center" :min-width="columnMinWidth">
       <template #header="header">
+        Typ
         <el-popover
           ref="PopOverType"
           placement="top-start"
-          autosize
+          :width="400"
           trigger="hover"
         >
-          <div class="popOverContent">
-            Der Typ eines Buttons kann
-            <strong>nicht</strong>
-            geändert werden.
-          </div>
+          <template #reference>
+            <el-icon><el-icon-info /></el-icon>
+          </template>
+          <template #default>
+            <div class="popOverContent">
+              Der Typ eines Buttons kann
+              <strong>nicht</strong>
+              geändert werden.
+            </div>
+          </template>
         </el-popover>
-        <span>
-          Typ
-          <el-icon><el-icon-info /></el-icon>
-        </span>
       </template>
       <template #button="{ row: button }">
         <span>{{ button.type }}</span>
