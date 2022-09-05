@@ -9,7 +9,6 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
-import Vuex from 'vuex'
 
 import './icons'
 import './permission'
@@ -23,7 +22,6 @@ app.use(Element, {
 });
 app.use(store);
 app.use(router);
-app.use(Vuex);
 
 app.mount('#app')
 
