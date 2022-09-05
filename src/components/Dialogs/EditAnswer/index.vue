@@ -133,6 +133,7 @@ export default {
 
 .editHeadline {
   color: $primary;
+  font-size: 1.5em;
 }
 
 h2 {

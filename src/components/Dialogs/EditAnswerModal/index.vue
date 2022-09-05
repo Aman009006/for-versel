@@ -1,37 +1,34 @@
 <template>
   <div class="editAnswerModal">
-    <el-button
-      class="edit-btn"
-      :icon="ElIconEdit"
-      @click="openEditModal()"
-    >
+    <el-button class="edit-btn" :icon="ElIconEdit" @click="openEditModal()">
       Bearbeiten
     </el-button>
-
-    <div v-if="editModalOpened" class="modalBox">
-      <div class="modalContent">
-        <EditAnswer ref="editAnswerRef" :answer="answer" />
-        <div class="buttonsContainer">
-          <el-button
-            class="confirm-btn"
-            :disabled="confirmButtonDisabled"
-            @click="saveAnswer()"
-          >
-            Speichern
-          </el-button>
-          <el-button class="cancel-btn" @click="closeEditModal()">
-            Abbrechen
-          </el-button>
+    <Teleport to="body">
+      <div v-if="editModalOpened" class="modalBox">
+        <div class="modalContent">
+          <EditAnswer ref="editAnswerRef" :answer="answer" />
+          <div class="buttonsContainer">
+            <el-button
+              class="confirm-btn"
+              :disabled="confirmButtonDisabled"
+              @click="saveAnswer()"
+            >
+              Speichern
+            </el-button>
+            <el-button class="cancel-btn" @click="closeEditModal()">
+              Abbrechen
+            </el-button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
 <script>
-import { Edit as ElIconEdit } from '@element-plus/icons'
-import EditAnswer from '@/components/Dialogs/EditAnswer'
-import { dispatchNames } from '@/constants'
+import { Edit as ElIconEdit } from "@element-plus/icons";
+import EditAnswer from "@/components/Dialogs/EditAnswer";
+import { dispatchNames } from "@/constants";
 
 export default {
   data() {
@@ -39,46 +36,48 @@ export default {
       editModalOpened: false,
       confirmButtonDisabled: false,
       ElIconEdit,
-    }
+    };
   },
   components: {
     EditAnswer,
   },
-  props: ['answer'],
+  props: ["answer"],
   computed: {
     readableIntentName() {
-      return this.$route.meta.title
+      return this.$route.meta.title;
     },
   },
   methods: {
     openEditModal() {
-      this.confirmButtonDisabled = false
-      this.editModalOpened = true
+      this.confirmButtonDisabled = false;
+      this.editModalOpened = true;
     },
     closeEditModal() {
-      this.editModalOpened = false
+      this.editModalOpened = false;
     },
     async saveAnswer() {
-      this.confirmButtonDisabled = true
-      await this.$refs.editAnswerRef.saveAnswerAndButtons()
-      this.refreshAnswers()
-      this.closeEditModal()
+      this.confirmButtonDisabled = true;
+      await this.$refs.editAnswerRef.saveAnswerAndButtons();
+      this.refreshAnswers();
+      this.closeEditModal();
     },
     async refreshAnswers() {
       this.$store.dispatch(
         dispatchNames.getAndSetIntentAnswers,
         this.readableIntentName
-      )
-      this.setSkillsAndIntents()
+      );
+      this.setSkillsAndIntents();
     },
     setSkillsAndIntents() {
-      this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified)
+      this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .modalBox {
   position: fixed;
   left: 0;
@@ -90,6 +89,7 @@ export default {
   z-index: 1001;
   background-color: rgb(0 0 0 / 38%);
   overflow-y: scroll;
+  color: $darkGrey;
 
   .modalContent {
     width: 95%;
