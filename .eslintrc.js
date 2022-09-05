@@ -20,7 +20,7 @@ module.exports = {
     "require-atomic-updates": 1,
     "vue/html-indent": 1,
     "vue/html-closing-bracket-newline": 1,
-    "vue/max-attributes-per-line": 1,
+    "vue/max-attributes-per-line": 0,
     "vue/valid-attribute-name": 1,
     "vue/valid-model-definition": 1,
     "vue/html-self-closing": [2, {

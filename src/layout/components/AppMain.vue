@@ -1,8 +1,10 @@
 <template>
   <section class="app-main">
-    <router-view :key="key">
+    <router-view :key="key" v-slot="{ Component }">
       <transition name="fade-transform" mode="out-in">
-        <keep-alive :include="cachedViews" />
+        <keep-alive :include="cachedViews">
+          <component :is="Component" />
+        </keep-alive>
       </transition>
     </router-view>
   </section>
