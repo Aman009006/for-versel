@@ -24,25 +24,27 @@
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
           <el-icon><icon-CaretBottom /></el-icon>
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>Home</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click="logout">
-            <span style="display: block">Log Out</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <router-link to="/">
+              <el-dropdown-item>Home</el-dropdown-item>
+            </router-link>
+            <el-dropdown-item divided @click="logout">
+              <span style="display: block">Log Out</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
-import Search from '@/components/HeaderSearch'
-import Notification from '@/components/Notification'
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import Hamburger from "@/components/Hamburger";
+import Search from "@/components/HeaderSearch";
+import Notification from "@/components/Notification";
 
 export default {
   components: {
@@ -54,14 +56,14 @@ export default {
   inheritAttrs: true,
   computed: {
     // maps store getters to local computed properties:
-    ...mapGetters(['sidebar', 'avatar', 'device']),
+    ...mapGetters(["sidebar", "avatar", "device"]),
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.dispatch("app/toggleSideBar");
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      await this.$store.dispatch("user/logout");
       /**
        * We need to reload the page when logging out.
        * The reason lies in the chatbot - widget, which is shown in the
@@ -73,11 +75,11 @@ export default {
        * @see https://hsagchatbot.atlassian.net/browse/CHAT-1156
        * @see https://stackoverflow.com/a/47005895/6458608
        */
-      sessionStorage.clear()
-      this.$router.go()
+      sessionStorage.clear();
+      this.$router.go();
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
