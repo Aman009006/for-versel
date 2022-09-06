@@ -2,29 +2,25 @@
   <div class="right-menu-item">
     <el-dropdown @command="goToPath">
       <span class="el-dropdown-link">
-        <el-badge
-          :model-value="newIntentRoutes.length"
-          class="item"
-          :hidden="newIntentRoutes.length == 0"
-        >
-          <el-icon><icon-Message /></el-icon>
+        <el-badge :model-value="newIntentRoutes.length" class="item" :hidden="newIntentRoutes.length == 0">
+          <el-icon>
+            <icon-BellFilled />
+          </el-icon>
         </el-badge>
       </span>
-      <el-dropdown-menu>
-        <el-dropdown-item disabled class="dropdown-headline">
-          <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
-          <span v-if="newIntentRoutes.length == 0">
-            Es gibt aktuell keine Neuigkeiten
-          </span>
-        </el-dropdown-item>
-        <el-dropdown-item
-          v-for="newIntent in newIntentRoutes"
-          :key="newIntent.name"
-          :command="newIntent.name"
-        >
-          {{ getPathTitle(newIntent) }}
-        </el-dropdown-item>
-      </el-dropdown-menu>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item disabled class="dropdown-headline">
+            <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
+            <span v-if="newIntentRoutes.length == 0">
+              Es gibt aktuell keine Neuigkeiten
+            </span>
+          </el-dropdown-item>
+          <el-dropdown-item v-for="newIntent in newIntentRoutes" :key="newIntent.name" :command="newIntent.name">
+            {{ getPathTitle(newIntent) }}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
     </el-dropdown>
   </div>
 </template>

@@ -1,11 +1,7 @@
 <template>
   <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
+      @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
@@ -16,13 +12,12 @@
         <notification />
       </template>
 
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
-        trigger="click"
-      >
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <el-icon><icon-CaretBottom /></el-icon>
+          <el-icon>
+            <icon-CaretBottom />
+          </el-icon>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
