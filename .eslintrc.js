@@ -15,7 +15,7 @@ module.exports = {
   // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
     "vue/multi-word-component-names": 1,
-    "vue/attribute-hyphenation": 1,
+    "vue/attribute-hyphenation": 0,
     "vue/no-unused-vars": 2,
     "require-atomic-updates": 1,
     "vue/html-indent": 1,
