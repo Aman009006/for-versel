@@ -22,12 +22,9 @@
       >
         <div class="avatar-wrapper">
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <el-icon><el-icon-caret-bottom /></el-icon>
+          <el-icon><icon-CaretBottom /></el-icon>
         </div>
         <el-dropdown-menu slot="dropdown">
-          <!-- <router-link to="/profile/index">
-              <el-dropdown-item>Profile</el-dropdown-item>
-            </router-link> -->
           <router-link to="/">
             <el-dropdown-item>Home</el-dropdown-item>
           </router-link>
@@ -41,7 +38,6 @@
 </template>
 
 <script>
-import { CaretBottom as ElIconCaretBottom } from '@element-plus/icons-vue'
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -54,7 +50,6 @@ export default {
     Hamburger,
     Search,
     Notification,
-    ElIconCaretBottom,
   },
   inheritAttrs: true,
   computed: {

@@ -2,7 +2,7 @@
   <el-table-column align="center" width="70">
     <template #default="{ row }">
       <template v-if="!row.edit">
-        <el-button class="delete-btn" :icon="ElIconDelete" @click="deletePlaceholder(row)" />
+        <el-button class="delete-btn" icon="icon-Delete" @click="deletePlaceholder(row)" />
       </template>
       <template v-else />
     </template>
@@ -10,16 +10,10 @@
 </template>
 
 <script>
-import { Delete as ElIconDelete } from "@element-plus/icons-vue";
 import { deletePlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 
 export default {
-  data() {
-    return {
-      ElIconDelete,
-    };
-  },
   computed: {
     currentPlaceholders() {
       return this.$store.getters.placeholders;

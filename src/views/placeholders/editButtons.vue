@@ -3,16 +3,16 @@
     <template #default="{ row }">
       <!-- When the editing mode is turned on: -->
       <template v-if="row.edit">
-        <el-button class="confirm-btn" :icon="ElIconDownload" @click="confirmEdit(row)">
+        <el-button class="confirm-btn" icon="icon-Download" @click="confirmEdit(row)">
           Speichern
         </el-button>
-        <el-button class="cancel-btn" :icon="ElIconRefresh" @click="cancelEdit()">
+        <el-button class="cancel-btn" icon="icon-Refresh" @click="cancelEdit()">
           Abbrechen
         </el-button>
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button class="edit-btn" :icon="ElIconEdit" @click="toggleEdit(row)">
+        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(row)">
           Bearbeiten
         </el-button>
       </template>
@@ -21,11 +21,6 @@
 </template>
 
 <script>
-import {
-  Download as ElIconDownload,
-  Refresh as ElIconRefresh,
-  Edit as ElIconEdit,
-} from "@element-plus/icons-vue";
 import { updatePlaceholder, setPlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 
@@ -34,9 +29,6 @@ export default {
     return {
       isEdit: false,
       currentPlaceholderData: [],
-      ElIconDownload,
-      ElIconRefresh,
-      ElIconEdit,
     };
   },
   computed: {

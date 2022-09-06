@@ -1,17 +1,11 @@
 <template>
-  <el-button class="add-btn" :icon="ElIconPlus" @click="addPlaceholder()">
+  <el-button class="add-btn" icon="icon-Plus" @click="addPlaceholder()">
     Neuen Platzhalter hinzufügen
   </el-button>
 </template>
 
 <script>
-import { Plus as ElIconPlus } from '@element-plus/icons-vue'
 export default {
-  data() {
-    return {
-      ElIconPlus,
-    }
-  },
   computed: {
     currentPlaceholders() {
       return this.$store.getters.placeholders

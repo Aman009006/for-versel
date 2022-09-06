@@ -10,7 +10,7 @@
         {{ humanReadableLabels.answerText }}
         <el-popover placement="top-start" :width="500" trigger="hover">
           <template #reference>
-            <el-icon><el-icon-info /></el-icon>
+            <el-icon><icon-InfoFilled /></el-icon>
           </template>
           <template #default>
             <div>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { InfoFilled as ElIconInfo } from "@element-plus/icons-vue";
 import { humanReadableLabels } from "@/constants";
 import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
@@ -42,7 +41,6 @@ export default {
   components: {
     ButtonTable,
     MarkDownEditor,
-    ElIconInfo,
   },
   inheritAttrs: true,
   props: ["answer"],

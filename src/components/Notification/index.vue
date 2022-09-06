@@ -7,7 +7,7 @@
           class="item"
           :hidden="newIntentRoutes.length == 0"
         >
-          <el-icon><el-icon-message-solid /></el-icon>
+          <el-icon><icon-Message /></el-icon>
         </el-badge>
       </span>
       <el-dropdown-menu>
@@ -30,13 +30,9 @@
 </template>
 
 <script>
-import { Message as ElIconMessageSolid } from "@element-plus/icons-vue";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 export default {
   name: "Notification",
-  components: {
-    ElIconMessageSolid,
-  },
   inheritAttrs: true,
   props: {},
   data() {

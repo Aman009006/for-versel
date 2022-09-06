@@ -16,7 +16,7 @@
           trigger="hover"
         >
           <template #reference>
-            <el-icon><el-icon-info /></el-icon>
+            <el-icon><icon-InfoFilled /></el-icon>
           </template>
           <template #default>
             <div class="popOverContent">
@@ -48,7 +48,7 @@
           trigger="hover"
         >
           <template #reference>
-            <el-icon><el-icon-info /></el-icon>
+            <el-icon><icon-InfoFilled /></el-icon>
           </template>
           <template #default>
             <div class="popOverContent">
@@ -67,12 +67,8 @@
 </template>
 
 <script>
-import { InfoFilled as ElIconInfo } from "@element-plus/icons-vue";
 export default {
   name: "ButtonTable",
-  components: {
-    ElIconInfo,
-  },
   inheritAttrs: true,
   props: ["buttons"],
   data() {

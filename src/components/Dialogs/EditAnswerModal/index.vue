@@ -1,6 +1,6 @@
 <template>
   <div class="editAnswerModal">
-    <el-button class="edit-btn" :icon="ElIconEdit" @click="openEditModal()">
+    <el-button class="edit-btn" icon="icon-Edit" @click="openEditModal()">
       Bearbeiten
     </el-button>
     <Teleport to="body">
@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { Edit as ElIconEdit } from "@element-plus/icons-vue";
 import EditAnswer from "@/components/Dialogs/EditAnswer";
 import { dispatchNames } from "@/constants";
 
@@ -39,7 +38,6 @@ export default {
     return {
       editModalOpened: false,
       confirmButtonDisabled: false,
-      ElIconEdit,
     };
   },
   computed: {
