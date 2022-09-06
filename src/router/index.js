@@ -94,7 +94,7 @@ export const constantRoutes = [
         meta: { title: 'API-Dokumentation', icon: 'external_link' },
       },
     ],
-  },
+  }
 ]
 
 /**
@@ -127,12 +127,15 @@ export const asyncRoutes = [
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
+  const newRouter = createRouter({
+    history: createWebHashHistory(),
+    routes: []
+  })
   router.matcher = newRouter.matcher // reset router
 }
 const router = createRouter({
   history: createWebHashHistory(),
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes,
+  routes: constantRoutes
 })
 export default router
