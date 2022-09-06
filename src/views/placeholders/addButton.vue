@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { Plus as ElIconPlus } from '@element-plus/icons'
+import { Plus as ElIconPlus } from '@element-plus/icons-vue'
 export default {
   data() {
     return {

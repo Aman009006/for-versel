@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Delete as ElIconDelete } from "@element-plus/icons";
+import { Delete as ElIconDelete } from "@element-plus/icons-vue";
 import { deletePlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 

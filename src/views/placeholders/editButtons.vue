@@ -25,7 +25,7 @@ import {
   Download as ElIconDownload,
   Refresh as ElIconRefresh,
   Edit as ElIconEdit,
-} from "@element-plus/icons";
+} from "@element-plus/icons-vue";
 import { updatePlaceholder, setPlaceholder } from "@/api/placeholders";
 import { dispatchNames } from "@/constants";
 

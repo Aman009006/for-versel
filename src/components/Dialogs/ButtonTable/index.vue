@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { InfoFilled as ElIconInfo } from "@element-plus/icons";
+import { InfoFilled as ElIconInfo } from "@element-plus/icons-vue";
 export default {
   name: "ButtonTable",
   components: {

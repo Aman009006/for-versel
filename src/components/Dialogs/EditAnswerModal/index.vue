@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { Edit as ElIconEdit } from "@element-plus/icons";
+import { Edit as ElIconEdit } from "@element-plus/icons-vue";
 import EditAnswer from "@/components/Dialogs/EditAnswer";
 import { dispatchNames } from "@/constants";
 

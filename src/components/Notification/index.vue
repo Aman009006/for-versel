@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { Message as ElIconMessageSolid } from "@element-plus/icons";
+import { Message as ElIconMessageSolid } from "@element-plus/icons-vue";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 export default {
   name: "Notification",

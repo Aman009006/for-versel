@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { InfoFilled as ElIconInfo } from "@element-plus/icons";
+import { InfoFilled as ElIconInfo } from "@element-plus/icons-vue";
 import { humanReadableLabels } from "@/constants";
 import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
