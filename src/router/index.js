@@ -37,7 +37,7 @@ export const constantRoutes = [
         path: 'home',
         component: Dashboard,
         name: 'Home',
-        meta: { title: 'Home', icon: 'el-icon-s-home', affix: true },
+        meta: { title: 'Home', icon: 'home_filled', affix: true },
       },
     ],
   },
@@ -50,7 +50,7 @@ export const constantRoutes = [
         component: PlaceHolders,
         meta: {
           title: 'Platzhalter',
-          icon: 'el-icon-edit-outline',
+          icon: 'edit',
         },
       },
     ],

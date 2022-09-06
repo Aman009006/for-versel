@@ -143,4 +143,29 @@ export default {
   right: 50px;
   top: 50%;
 }
+
+.el-menu--vertical:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+.el-menu-item {
+  font-size: 16px !important;
+}
+
+.el-menu > div > .el-sub-menu >.el-sub-menu__title {
+  padding-left: 20px !important;
+  font-size: 16px !important
+}
+
+ div >.el-sub-menu>.el-menu>.nest-menu>.el-sub-menu>.el-sub-menu__title {
+  padding-left: 40px !important;
+  font-size: 16px !important
+}
+
+.el-menu > div > .el-sub-menu  > .el-menu > .nest-menu > a >.el-badge > .el-menu-item {
+  padding-left: 40px !important;
+}
+.el-menu >.nest-menu >.el-sub-menu > .el-menu > .nest-menu >a >.el-badge >.el-menu-item {
+  padding-left: 60px !important;
+}
 </style>

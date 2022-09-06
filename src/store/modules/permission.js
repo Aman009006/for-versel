@@ -101,7 +101,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     name: 'Skills and intents',
     meta: {
       title: 'Dialoge',
-      icon: 'el-icon-s-comment',
+      icon: 'comment',
     },
     children: [],
   }
