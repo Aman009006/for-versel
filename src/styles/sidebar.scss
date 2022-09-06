@@ -21,10 +21,6 @@
     z-index: 1001;
     overflow: hidden;
 
-    // // reset element-ui css
-    // .horizontal-collapse-transition {
-    //   transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
-    // }
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
@@ -96,6 +92,9 @@
         background-color: $subMenuHover  !important;
       }
     }
+    .el-sub-menu__icon-arrow {
+      padding-left: 5px;
+    }
   }
 
   .hideSidebar {
@@ -110,19 +109,10 @@
     .submenu-title-noDropdown {
       padding: 0 !important;
       position: relative;
-
-      .el-tooltip {
-        padding: 0 !important;
-
         .svg-icon {
           margin-left: 20px;
         }
-
-        .sub-el-icon {
-          margin-left: 19px;
-        }
-      }
-    }
+         }
 
     .el-sub-menu {
       overflow: hidden;
@@ -140,6 +130,18 @@
 
         .el-sub-menu__icon-arrow {
           display: none;
+        }
+      }
+    }
+
+    .el-menu--collapse {
+      .submenu-title-noDropdown {
+        &>span{
+          height: 0;
+          width: 0;
+          overflow: hidden;
+          visibility: hidden;
+          display: inline-block;
         }
       }
     }
