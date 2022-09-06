@@ -48,17 +48,23 @@
 </template>
 
 <script>
-import { links } from '@/constants'
+import { links } from "@/constants";
 
 export default {
-  props: ['readableRedirectToIntentName'],
+  props: ["readableRedirectToIntentName"],
   data() {
     return {
       jiraHelpDesk: links.jiraHelpDesk,
-    }
+    };
   },
-}
+};
 </script>
+
+<style lang="scss">
+.redirectionMessage i.el-icon svg {
+  font-size: 35px;
+}
+</style>
 
 <style lang="scss" scoped>
 .redirectionMessage {
@@ -76,16 +82,17 @@ export default {
   .buttonContainer {
     display: flex;
     flex-direction: column;
-    max-width: 350px;
     margin-top: 15px;
 
-    button {
+    > a {
       margin-left: 0px;
       white-space: normal;
-      &:first-child {
-        margin-bottom: 20px;
-        height: 65px;
-      }
+      margin-bottom: 20px;
+      height: 65px;
+    }
+
+    .link-button {
+      margin-left: 0px;
     }
   }
 }
