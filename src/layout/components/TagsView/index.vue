@@ -287,6 +287,9 @@ export default {
 <style lang="scss">
 //reset element css of el-icon-close
 .tags-view-wrapper {
+  div div {
+    display: flex;
+  }
   .tags-view-item {
     .el-icon-close {
       width: 16px;
