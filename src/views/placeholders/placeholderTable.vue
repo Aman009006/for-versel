@@ -2,20 +2,10 @@
   <div class="table-container">
     <template v-if="dataReady">
       <el-table :data="currentPlaceholders" class="placeholder_table" border>
-        <el-table-column
-          align="center"
-          label="Platzhalterbezeichnung"
-          prop="key"
-          autosize
-        >
-          <template #row="{ row }">
+        <el-table-column align="center" label="Platzhalterbezeichnung" prop="key" autosize>
+          <template #default="{ row }">
             <template v-if="row.edit">
-              <el-input
-                v-model="row.key"
-                type="textarea"
-                autosize
-                class="edit-input"
-              />
+              <el-input v-model="row.key" type="textarea" autosize class="edit-input" />
             </template>
             <template v-else>
               <span class="text-input">{{ row.key }}</span>
@@ -23,14 +13,9 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="Wert" prop="value" autosize>
-          <template #row="{ row }">
+          <template #default="{ row }">
             <template v-if="row.edit">
-              <el-input
-                v-model="row.value"
-                type="textarea"
-                autosize
-                class="edit-input"
-              />
+              <el-input v-model="row.value" type="textarea" autosize class="edit-input" />
             </template>
             <template v-else>
               <span class="text-input">{{ row.value }}</span>

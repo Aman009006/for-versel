@@ -1,33 +1,18 @@
 <template>
   <el-table-column align="center" width="130">
-    <template #row="{ row }">
+    <template #default="{ row }">
       <!-- When the editing mode is turned on: -->
       <template v-if="row.edit">
-        <el-button
-          class="confirm-btn"
-          size="small"
-          :icon="ElIconDownload"
-          @click="confirmEdit(row)"
-        >
+        <el-button class="confirm-btn" :icon="ElIconDownload" @click="confirmEdit(row)">
           Speichern
         </el-button>
-        <el-button
-          class="cancel-btn"
-          size="small"
-          :icon="ElIconRefresh"
-          @click="cancelEdit()"
-        >
+        <el-button class="cancel-btn" :icon="ElIconRefresh" @click="cancelEdit()">
           Abbrechen
         </el-button>
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button
-          class="edit-btn"
-          size="small"
-          :icon="ElIconEdit"
-          @click="toggleEdit(row)"
-        >
+        <el-button class="edit-btn" :icon="ElIconEdit" @click="toggleEdit(row)">
           Bearbeiten
         </el-button>
       </template>
@@ -61,9 +46,9 @@ export default {
   },
   methods: {
     async toggleEdit(row) {
-      this.$set(row, "originalKey", row.key);
-      this.$set(row, "originalValue", row.value);
-      this.$set(row, "edit", true);
+      row.originalKey = row.key;
+      row.originalValue = row.value;
+      row.edit = true;
       this.isEdit = true;
       this.currentPlaceholderData = this.currentPlaceholders;
     },

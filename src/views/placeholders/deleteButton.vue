@@ -1,13 +1,8 @@
 <template>
   <el-table-column align="center" width="70">
-    <template #row="{ row }">
+    <template #default="{ row }">
       <template v-if="!row.edit">
-        <el-button
-          class="delete-btn"
-          size="small"
-          :icon="ElIconDelete"
-          @click="deletePlaceholder(row)"
-        />
+        <el-button class="delete-btn" :icon="ElIconDelete" @click="deletePlaceholder(row)" />
       </template>
       <template v-else />
     </template>
@@ -49,7 +44,7 @@ export default {
           });
         }
         await this.$store.dispatch(dispatchNames.fetchPlaceholders);
-      });
+      }).catch(() => { })
     },
   },
 };
