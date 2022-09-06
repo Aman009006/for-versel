@@ -31,6 +31,10 @@ import EditAnswer from "@/components/Dialogs/EditAnswer";
 import { dispatchNames } from "@/constants";
 
 export default {
+  components: {
+    EditAnswer,
+  },
+  props: ["answer"],
   data() {
     return {
       editModalOpened: false,
@@ -38,10 +42,6 @@ export default {
       ElIconEdit,
     };
   },
-  components: {
-    EditAnswer,
-  },
-  props: ["answer"],
   computed: {
     readableIntentName() {
       return this.$route.meta.title;
