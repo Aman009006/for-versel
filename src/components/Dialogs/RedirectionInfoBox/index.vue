@@ -8,21 +8,19 @@
       <el-alert type="warning" center show-icon :closable="false">
         <p>
           Dieser Intent wird weitergeleitet auf
-          <span style="font-weight: bold"
-            >"{{ readableRedirectToIntentName }}"</span
-          >.
+          <b>"{{ readableRedirectToIntentName }}"</b>.
         </p>
         <p>
           Bitte beachten Sie: Bei Weiterleitungen wird der Antworttext des
           Intents angezeigt, auf den weitergeleitet wurde. Daher können Sie die
           untenstehende Tabelle nicht bearbeiten. Zur Bearbeitung des
           Antworttextes klicken Sie bitte auf den Button
-          <span style="font-weight: bold">"Weiterleitung folgen"</span>.
+          <b>"Weiterleitung folgen"</b>.
         </p>
         <p>
           Aktuell können Sie diesen Intent über unseren Support aktivieren
           lassen. Erstellen Sie hierfür bitte ein Ticket in unserem Ticket
-          System. <br /><span style="font-weight: bold">Feature Info:</span>
+          System. <br /><b>Feature Info:</b>
           In Kürze wird die Intent Aktivierung per Klick über die Admin UI
           möglich sein.
         </p>
@@ -61,8 +59,14 @@ export default {
 </script>
 
 <style lang="scss">
-.redirectionMessage i.el-icon svg {
-  font-size: 35px;
+.redirectionMessage {
+  i.el-icon svg {
+    font-size: 35px;
+  }
+
+  .el-button {
+    text-decoration: none !important;
+  }
 }
 </style>
 
