@@ -149,17 +149,17 @@ export default {
   min-height: 400px;
 }
 .el-menu-item {
-  font-size: 16px !important;
+  font-size: 14px !important;
 }
 
 .el-menu > div > .el-sub-menu >.el-sub-menu__title {
   padding-left: 20px !important;
-  font-size: 16px !important
+  font-size: 14px !important
 }
 
  div >.el-sub-menu>.el-menu>.nest-menu>.el-sub-menu>.el-sub-menu__title {
   padding-left: 40px !important;
-  font-size: 16px !important
+  font-size: 14px !important
 }
 
 .el-menu > div > .el-sub-menu  > .el-menu > .nest-menu > a >.el-badge > .el-menu-item {
