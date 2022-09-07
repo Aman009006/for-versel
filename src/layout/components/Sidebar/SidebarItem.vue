@@ -145,7 +145,6 @@ export default {
 }
 
 .el-menu--vertical:not(.el-menu--collapse) {
-  width: 200px;
   min-height: 400px;
 }
 .el-menu-item {

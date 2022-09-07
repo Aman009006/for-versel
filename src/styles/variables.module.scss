@@ -10,10 +10,11 @@ $yellow: #FEC171;
 $panGreen: #30B08F;
 $grey: rgb(128 128 128 / 16%);
 $darkGrey: #606266;
+$lightGrey: #bfcbd9;
 $orange: #c06336;
 
 // sidebar
-$menuText: #bfcbd9;
+$menuText: $lightGrey;
 $menuActiveText: $primary;
 $subMenuActiveText: #f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
