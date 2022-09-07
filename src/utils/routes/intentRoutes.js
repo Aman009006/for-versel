@@ -16,7 +16,7 @@ export function getNewIntentRoutes(permissionRoutes) {
   const skillRouteChildren = skillRoutes.children
   const newIntentRoutes = []
   for (const skillRoute of skillRouteChildren) {
-    if (skillRoute.children != null) {
+    if (skillRoute.children?.length > 0) {
       skillRoute.children.forEach((intentRoute) => {
         if (intentRoute.meta.newIntent) {
           // the intent is marked as new intent.

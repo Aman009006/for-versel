@@ -17,3 +17,21 @@
         }
     }
 }
+
+
+
+.header-search .el-input__wrapper  {
+    box-shadow: 0 0 0 0px transparent inset !important;
+    -webkit-box-shadow: 0 0 0 0px transparent inset !important;
+}
+
+.header-search .el-input__wrapper:focus, .header-search .el-input__wrapper:hover {
+    box-shadow: 0 0 0 0px transparent inset !important;
+    -webkit-box-shadow: 0 0 0 0px transparent inset !important;
+}
+
+.el-select:hover:not(.el-select--disabled) .el-input__wrapper {
+    box-shadow: 0 0 0 0px transparent inset !important;
+    -webkit-box-shadow: 0 0 0 0px transparent inset !important;
+}
+
