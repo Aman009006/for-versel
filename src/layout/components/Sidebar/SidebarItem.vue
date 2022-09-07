@@ -9,7 +9,7 @@
     >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-badge
-          model-value="Neu"
+          value="Neu"
           class="item"
           :hidden="!(item.meta && item.meta.newIntent)"
         >
