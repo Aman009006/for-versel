@@ -42,7 +42,6 @@
     "@types/markdown-it": "^12.2.3",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
-    "@vue/compiler-sfc": "^3.2.37",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
