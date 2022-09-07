@@ -8,17 +8,17 @@
 export default {
   computed: {
     currentPlaceholders() {
-      return this.$store.getters.placeholders
+      return this.$store.getters.placeholders;
     },
   },
   methods: {
     async addPlaceholder() {
       if (!this.currentPlaceholders[this.currentPlaceholders.length - 1].edit) {
-        this.currentPlaceholders.push({ key: '', value: '', edit: true })
+        this.currentPlaceholders.push({ key: "", value: "", edit: true });
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss">

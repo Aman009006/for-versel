@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  props: ['buttons'],
-}
+  props: ["buttons"],
+};
 </script>
 
 <style lang="scss" scoped>

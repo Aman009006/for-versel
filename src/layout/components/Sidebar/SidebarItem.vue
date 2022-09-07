@@ -149,23 +149,50 @@ export default {
   min-height: 400px;
 }
 .el-menu-item {
-  font-size: 16px !important;
+  font-size: 14px !important;
 }
 
-.el-menu > div > .el-sub-menu >.el-sub-menu__title {
+.el-menu > div > .el-sub-menu > .el-sub-menu__title {
   padding-left: 20px !important;
-  font-size: 16px !important
+<<<<<<< HEAD
+  font-size: 16px !important;
+=======
+  font-size: 14px !important
+>>>>>>> fc670568405380badea8edce9fab60b567b1d9b0
 }
 
- div >.el-sub-menu>.el-menu>.nest-menu>.el-sub-menu>.el-sub-menu__title {
+div
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > .el-sub-menu
+  > .el-sub-menu__title {
   padding-left: 40px !important;
-  font-size: 16px !important
+<<<<<<< HEAD
+  font-size: 16px !important;
+=======
+  font-size: 14px !important
+>>>>>>> fc670568405380badea8edce9fab60b567b1d9b0
 }
 
-.el-menu > div > .el-sub-menu  > .el-menu > .nest-menu > a >.el-badge > .el-menu-item {
+.el-menu
+  > div
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > a
+  > .el-badge
+  > .el-menu-item {
   padding-left: 40px !important;
 }
-.el-menu >.nest-menu >.el-sub-menu > .el-menu > .nest-menu >a >.el-badge >.el-menu-item {
+.el-menu
+  > .nest-menu
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > a
+  > .el-badge
+  > .el-menu-item {
   padding-left: 60px !important;
 }
 </style>

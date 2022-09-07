@@ -52,7 +52,7 @@
 
     .svg-icon {
       margin-right: 16px;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .sub-el-icon {
@@ -92,6 +92,7 @@
         background-color: $subMenuHover  !important;
       }
     }
+
     .el-sub-menu__icon-arrow {
       padding-left: 5px;
     }
@@ -109,10 +110,11 @@
     .submenu-title-noDropdown {
       padding: 0 !important;
       position: relative;
-        .svg-icon {
-          margin-left: 20px;
-        }
-         }
+
+      .svg-icon {
+        margin-left: 20px;
+      }
+    }
 
     .el-sub-menu {
       overflow: hidden;
@@ -136,7 +138,7 @@
 
     .el-menu--collapse {
       .submenu-title-noDropdown {
-        &>span{
+        &>span {
           height: 0;
           width: 0;
           overflow: hidden;

@@ -47,42 +47,42 @@
 
 <script>
 // Fuzzy searching finds strings that are approximately equal to a given pattern
-import Fuse from 'fuse.js'
-import { encodePathComponent } from '@/store/modules/permission'
-import path from 'path'
-import HtmlEncode from '@/utils/HtmlEncode'
-import { humanReadableLabels } from '@/constants'
+import Fuse from "fuse.js";
+import { encodePathComponent } from "@/store/modules/permission";
+import path from "path";
+import HtmlEncode from "@/utils/HtmlEncode";
+import { humanReadableLabels } from "@/constants";
 
 const filterElementObject = {
   intent: {
-    label: 'Intent',
-    searchKey: 'intent',
+    label: "Intent",
+    searchKey: "intent",
   },
   answerText: {
     label: humanReadableLabels.answerText,
-    searchKey: 'texts.text',
+    searchKey: "texts.text",
   },
   buttonTitle: {
-    label: 'Button Name',
-    searchKey: 'texts.buttons.title',
+    label: "Button Name",
+    searchKey: "texts.buttons.title",
   },
-}
+};
 
 const filterElementValues = [
   filterElementObject.intent,
   filterElementObject.answerText,
   filterElementObject.buttonTitle,
-]
+];
 
 const filterElementOptions = filterElementValues.map(
   (filterElement) => filterElement.label
-)
+);
 
 export default {
-  name: 'HeaderSearch',
+  name: "HeaderSearch",
   data() {
     return {
-      search: '',
+      search: "",
       options: [],
       searchPool: [],
       show: false,
@@ -91,67 +91,67 @@ export default {
       /**
        * the text that the user searches for
        */
-      userQuery: '',
-    }
+      userQuery: "",
+    };
   },
   computed: {
     routes() {
-      return this.$store.getters.permission_routes
+      return this.$store.getters.permission_routes;
     },
     intentTexts() {
-      return this.$store.getters.skillsWithIntents
+      return this.$store.getters.skillsWithIntents;
     },
     filterElementOptions() {
-      return filterElementOptions
+      return filterElementOptions;
     },
     intentArrayIndexInTitle() {
-      return 2
+      return 2;
     },
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
   watch: {
     routes() {
-      this.searchPool = this.generateAndFilterRoutes(this.routes)
+      this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     intentTexts() {
       // the intentTexts can change over time (when texts are changed for example)
-      this.searchPool = this.generateAndFilterRoutes(this.routes)
+      this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     searchPool() {
-      this.initFuse()
+      this.initFuse();
     },
     show(value) {
       if (value) {
-        document.body.addEventListener('click', this.close)
+        document.body.addEventListener("click", this.close);
       } else {
-        document.body.removeEventListener('click', this.close)
+        document.body.removeEventListener("click", this.close);
       }
     },
   },
   mounted() {
-    this.searchPool = this.generateAndFilterRoutes(this.routes)
+    this.searchPool = this.generateAndFilterRoutes(this.routes);
   },
   methods: {
     click() {
-      this.show = !this.show
+      this.show = !this.show;
       if (this.show) {
-        this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus()
+        this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus();
       }
     },
     close() {
-      this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur()
-      this.options = []
-      this.show = false
+      this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur();
+      this.options = [];
+      this.show = false;
     },
     change(val) {
-      this.$router.push(val.path)
-      this.search = ''
-      this.options = []
+      this.$router.push(val.path);
+      this.search = "";
+      this.options = [];
       // nextTick is a comfortable way to execute a function after the data has been set and the DOM has updated.
       this.$nextTick(() => {
         // Inside the callback, the DOM has been updated so we can interact with the “most updated” version of it.
-        this.show = false
-      })
+        this.show = false;
+      });
     },
     getSearchKeys() {
       /**
@@ -160,13 +160,13 @@ export default {
        */
       const relevantFilterElements = this.filteredElements.length
         ? this.filteredElements
-        : this.filterElementOptions
+        : this.filterElementOptions;
       return filterElementValues
         .filter((el) => relevantFilterElements.includes(el.label))
-        .map((el) => el.searchKey)
+        .map((el) => el.searchKey);
     },
     initFuse() {
-      this.fuse = this.getFuseInstance(this.searchPool, this.getSearchKeys())
+      this.fuse = this.getFuseInstance(this.searchPool, this.getSearchKeys());
     },
     getFuseInstance(searchPool, searchKeys) {
       /**
@@ -198,11 +198,11 @@ export default {
         // List of keys that will be searched.
         keys: searchKeys,
         includeMatches: true,
-      })
+      });
     },
     checkIfRouteIsIntent(route) {
       // intent - routes doesn't have children (right now)
-      return route.children == null
+      return route.children == null;
     },
     findTextForRoute(router) {
       // add the texts for the intent
@@ -213,33 +213,33 @@ export default {
           (intentElement) =>
             encodePathComponent(intentElement.name) === router.path &&
             this.checkIfRouteIsIntent(router)
-        )
-      return intentText?.texts
+        );
+      return intentText?.texts;
     },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
-    generateRoutes(routes, basePath = '/', prefixTitle = []) {
-      let res = []
+    generateRoutes(routes, basePath = "/", prefixTitle = []) {
+      let res = [];
 
       for (const router of routes) {
         // skip hidden router
         if (router.hidden) {
-          continue
+          continue;
         }
 
         const data = {
           path: path.resolve(basePath, router.path),
           title: [...prefixTitle],
           texts: this.findTextForRoute(router),
-        }
+        };
 
         if (router.meta && router.meta.title) {
-          data.title = [...data.title, router.meta.title]
+          data.title = [...data.title, router.meta.title];
 
-          if (router.redirect !== 'noRedirect') {
+          if (router.redirect !== "noRedirect") {
             // only push the routes with title
             // special case: need to exclude parent router without redirect
-            res.push(data)
+            res.push(data);
           }
         }
 
@@ -249,101 +249,101 @@ export default {
             router.children,
             data.path,
             data.title
-          )
+          );
           if (tempRoutes.length >= 1) {
-            res = [...res, ...tempRoutes]
+            res = [...res, ...tempRoutes];
           }
         }
       }
-      return res
+      return res;
     },
     /**
      * filters out the non intent - routes. We only want to find intents
      */
     generateAndFilterRoutes(routes) {
-      const generatedRoutes = this.generateRoutes(routes)
+      const generatedRoutes = this.generateRoutes(routes);
       const res = generatedRoutes
         .filter((route) => this.checkIfRouteIsIntent(route))
         .map((route) => {
-          route.intent = route.title[this.intentArrayIndexInTitle]
-          return route
-        })
-      return res
+          route.intent = route.title[this.intentArrayIndexInTitle];
+          return route;
+        });
+      return res;
     },
     querySearch(query) {
-      this.userQuery = query
-      if (query !== '') {
+      this.userQuery = query;
+      if (query !== "") {
         // get the result of the search
-        this.options = this.fuse.search(query)
+        this.options = this.fuse.search(query);
       } else {
-        this.options = []
+        this.options = [];
       }
     },
     markText(text, textIndex1, textIndex2) {
-      let pathText = ''
+      let pathText = "";
       if (textIndex1 > textIndex2) {
         /**
          * dont understand why this happens, but sometimes
          * the first index is greater than the second.
          */
-        ;[textIndex1, textIndex2] = [textIndex2, textIndex1]
+        [textIndex1, textIndex2] = [textIndex2, textIndex1];
       }
       // first part of the text
-      pathText += HtmlEncode(text.substring(0, textIndex1))
+      pathText += HtmlEncode(text.substring(0, textIndex1));
       // text that was found
       pathText += `<span class="text-marker">${HtmlEncode(
         text.substring(textIndex1, textIndex2)
-      )}</span>`
+      )}</span>`;
       // last part of the text
-      pathText += HtmlEncode(text.substring(textIndex2, text.length))
-      return pathText
+      pathText += HtmlEncode(text.substring(textIndex2, text.length));
+      return pathText;
     },
     getFoundElementHtml(element) {
       // search the matches to get the scores
-      const fuseRes = this.getFuseInstance(element.matches, ['value']).search(
+      const fuseRes = this.getFuseInstance(element.matches, ["value"]).search(
         this.userQuery
-      )
+      );
       // the items are sorted by scores. Get the element with the highest score
-      const match = fuseRes[0].item
-      const { title } = element.item
+      const match = fuseRes[0].item;
+      const { title } = element.item;
       // eslint-disable-next-line prefer-const
       // get the index with the longest distance from eachother
-      const distances = match.indices.map((index) => index[1] - index[0])
+      const distances = match.indices.map((index) => index[1] - index[0]);
       const arrayIndexOfHighestDistanceIndex = distances.indexOf(
         Math.max(...distances)
-      )
+      );
       // eslint-disable-next-line prefer-const
       let [textIndex1, textIndex2] =
-        match.indices[arrayIndexOfHighestDistanceIndex]
-      textIndex2++
+        match.indices[arrayIndexOfHighestDistanceIndex];
+      textIndex2++;
       /**
        * the index in the array of the element that was found.
        */
       const foundTextArrayIndex = title.findIndex(
         (_title, i) =>
           _title === match.value && i === this.intentArrayIndexInTitle
-      )
-      let pathText = ''
+      );
+      let pathText = "";
       title.forEach((_title, i) => {
         if (
           foundTextArrayIndex === i &&
           match.key === filterElementObject.intent.searchKey
         ) {
-          pathText += this.markText(_title, textIndex1, textIndex2)
+          pathText += this.markText(_title, textIndex1, textIndex2);
         } else {
-          pathText += HtmlEncode(_title)
+          pathText += HtmlEncode(_title);
         }
         if (i < title.length - 1) {
-          pathText += HtmlEncode(' > ')
+          pathText += HtmlEncode(" > ");
         }
-      })
+      });
       if (
         match.key === filterElementObject.answerText.searchKey ||
         match.key === filterElementObject.buttonTitle.searchKey
       ) {
-        let label = filterElementObject.answerText.label
+        let label = filterElementObject.answerText.label;
         if (match.key === filterElementObject.buttonTitle.searchKey) {
-          label = filterElementObject.buttonTitle.label
+          label = filterElementObject.buttonTitle.label;
         }
         // add the text to the result - text
         pathText += `
@@ -351,12 +351,12 @@ export default {
           <strong>
             ${HtmlEncode(label)}
           </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
-        </p>`
+        </p>`;
       }
-      return pathText
+      return pathText;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -378,7 +378,6 @@ export default {
     border-radius: 0;
     display: inline-block;
     vertical-align: middle;
-
   }
 
   &.show {
@@ -388,10 +387,9 @@ export default {
     }
   }
 }
-  .header-search-popper .el-select-dropdown__item {
-    font-weight: normal;
-    font-size:16px;
-    color: #606266;
-  }
-
+.header-search-popper .el-select-dropdown__item {
+  font-weight: normal;
+  font-size: 16px;
+  color: #606266;
+}
 </style>

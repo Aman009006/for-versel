@@ -11,7 +11,7 @@ import placeholderInfoBox from "./placeholderInfoBox.vue";
 import placeholderTable from "./placeholderTable.vue";
 
 export default {
-  name: 'PlaceHolders',
+  name: "PlaceHolders",
   components: {
     placeholderInfoBox,
     placeholderTable,
