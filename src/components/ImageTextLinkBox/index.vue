@@ -5,7 +5,7 @@
         <el-col :span="6">
           <img :src="image" />
         </el-col>
-        <el-col :span="18" class="text" v-html="text" />
+        <el-col :span="18" class="linkText" v-html="text" />
       </el-row>
     </a>
   </div>
@@ -57,7 +57,7 @@ export default {
     justify-content: center;
     align-items: center;
 
-    .text {
+    .linkText {
       font-weight: bold;
       padding-left: 15px;
     }
