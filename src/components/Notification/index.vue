@@ -9,7 +9,7 @@
         </el-badge>
       </span>
       <template #dropdown>
-        <el-dropdown-menu>
+        <el-dropdown-menu class="notificationDropdown">
           <el-dropdown-item disabled class="dropdown-headline">
             <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
             <span v-if="newIntentRoutes.length == 0">
@@ -68,5 +68,12 @@ export default {
 }
 .el-badge {
   display: inline;
+}
+</style>
+
+<style lang="scss">
+.notificationDropdown {
+    max-height: 500px;
+    overflow-y: scroll;
 }
 </style>
