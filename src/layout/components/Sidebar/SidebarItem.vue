@@ -154,11 +154,7 @@ export default {
 
 .el-menu > div > .el-sub-menu > .el-sub-menu__title {
   padding-left: 20px !important;
-<<<<<<< HEAD
   font-size: 14px !important;
-=======
-  font-size: 14px !important
->>>>>>> fc670568405380badea8edce9fab60b567b1d9b0
 }
 
 div
@@ -168,11 +164,7 @@ div
   > .el-sub-menu
   > .el-sub-menu__title {
   padding-left: 40px !important;
-<<<<<<< HEAD
   font-size: 14px !important;
-=======
-  font-size: 14px !important
->>>>>>> fc670568405380badea8edce9fab60b567b1d9b0
 }
 
 .el-menu
