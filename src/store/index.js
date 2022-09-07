@@ -1,4 +1,4 @@
-import Vuex from 'vuex'
+import { createStore as _createStore } from 'vuex'
 import getters from './getters'
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -14,7 +14,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   return modules
 }, {})
 
-const store = new Vuex.Store({
+const store = _createStore({
   modules,
   getters,
 })
