@@ -2,7 +2,11 @@
   <div class="right-menu-item">
     <el-dropdown @command="goToPath">
       <span class="el-dropdown-link">
-        <el-badge :value="newIntentRoutes.length" class="item" :hidden="newIntentRoutes.length == 0">
+        <el-badge
+          :value="newIntentRoutes.length"
+          class="item"
+          :hidden="newIntentRoutes.length == 0"
+        >
           <el-icon>
             <icon-BellFilled />
           </el-icon>
@@ -16,7 +20,11 @@
               Es gibt aktuell keine Neuigkeiten
             </span>
           </el-dropdown-item>
-          <el-dropdown-item v-for="newIntent in newIntentRoutes" :key="newIntent.name" :command="newIntent.name">
+          <el-dropdown-item
+            v-for="newIntent in newIntentRoutes"
+            :key="newIntent.name"
+            :command="newIntent.name"
+          >
             {{ getPathTitle(newIntent) }}
           </el-dropdown-item>
         </el-dropdown-menu>

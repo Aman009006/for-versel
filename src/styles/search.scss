@@ -20,12 +20,13 @@
 
 
 
-.header-search .el-input__wrapper  {
+.header-search .el-input__wrapper {
     box-shadow: 0 0 0 0px transparent inset !important;
     -webkit-box-shadow: 0 0 0 0px transparent inset !important;
 }
 
-.header-search .el-input__wrapper:focus, .header-search .el-input__wrapper:hover {
+.header-search .el-input__wrapper:focus,
+.header-search .el-input__wrapper:hover {
     box-shadow: 0 0 0 0px transparent inset !important;
     -webkit-box-shadow: 0 0 0 0px transparent inset !important;
 }
@@ -34,4 +35,3 @@
     box-shadow: 0 0 0 0px transparent inset !important;
     -webkit-box-shadow: 0 0 0 0px transparent inset !important;
 }
-

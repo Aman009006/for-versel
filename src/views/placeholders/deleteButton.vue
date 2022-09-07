@@ -2,7 +2,11 @@
   <el-table-column align="center" width="70">
     <template #default="{ row }">
       <template v-if="!row.edit">
-        <el-button class="delete-btn" icon="icon-Delete" @click="deletePlaceholder(row)" />
+        <el-button
+          class="delete-btn"
+          icon="icon-Delete"
+          @click="deletePlaceholder(row)"
+        />
       </template>
       <template v-else />
     </template>
@@ -29,16 +33,18 @@ export default {
           cancelButtonText: "Abbrechen",
           type: "warning",
         }
-      ).then(async () => {
-        const deletionSuccessful = await deletePlaceholder(row.key);
-        if (deletionSuccessful) {
-          this.$message({
-            message: "Löschen erfolgreich",
-            type: "success",
-          });
-        }
-        await this.$store.dispatch(dispatchNames.fetchPlaceholders);
-      }).catch(() => { })
+      )
+        .then(async () => {
+          const deletionSuccessful = await deletePlaceholder(row.key);
+          if (deletionSuccessful) {
+            this.$message({
+              message: "Löschen erfolgreich",
+              type: "success",
+            });
+          }
+          await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+        })
+        .catch(() => {});
     },
   },
 };

@@ -3,7 +3,11 @@
     <template #default="{ row }">
       <!-- When the editing mode is turned on: -->
       <template v-if="row.edit">
-        <el-button class="confirm-btn" icon="icon-Download" @click="confirmEdit(row)">
+        <el-button
+          class="confirm-btn"
+          icon="icon-Download"
+          @click="confirmEdit(row)"
+        >
           Speichern
         </el-button>
         <el-button class="cancel-btn" icon="icon-Refresh" @click="cancelEdit()">
