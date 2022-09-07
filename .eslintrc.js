@@ -18,7 +18,7 @@ module.exports = {
     "vue/attribute-hyphenation": 0,
     "vue/no-unused-vars": 2,
     "require-atomic-updates": 1,
-    "vue/html-indent": 1,
+    "vue/html-indent": 0,
     "vue/html-closing-bracket-newline": 1,
     "vue/max-attributes-per-line": 0,
     "vue/valid-attribute-name": 1,
