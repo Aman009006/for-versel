@@ -48,6 +48,7 @@ export const constantRoutes = [
       {
         path: paths.placeholders,
         component: PlaceHolders,
+        name: 'Platzhalter',
         meta: {
           title: 'Platzhalter',
           icon: 'edit',
