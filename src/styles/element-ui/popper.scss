@@ -1,3 +1,5 @@
 .el-popper {
     word-break: normal !important;
+    max-height: 500px;
+    overflow-y: scroll;
 }
