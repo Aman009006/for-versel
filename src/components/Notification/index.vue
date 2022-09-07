@@ -59,6 +59,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.right-menu-item .el-dropdown {
+  vertical-align: middle;
+}
+
 .el-dropdown-link {
   font-size: 18px;
 }
