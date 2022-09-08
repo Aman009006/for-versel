@@ -24,7 +24,7 @@
           nicht abgeschlossen. Wir freuen uns auf Ihr Feedback!<br />
           Ihr Chatbot Team
         </div>
-        <a href="" class="bullshit__return-home">Zurück zur Startseite</a>
+        <a href="/" class="bullshit__return-home">Zurück zur Startseite</a>
       </div>
     </div>
   </div>

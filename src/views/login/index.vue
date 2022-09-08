@@ -85,6 +85,7 @@
 <script>
 import { validEmail, isString } from "@/utils/validate";
 import KeycloakUtils from "@/utils/KeycloakUtils";
+import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 
 export default {
   name: "LogIn",
@@ -185,27 +186,27 @@ export default {
         this.$refs.password.focus();
       });
     },
+    async handleLogin() {
+      this.$refs.loginForm.validate(async (valid) => {
+        if (valid) {
+          await this.callLoginWebservice(this.loginForm);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     /**
      * @param loginData either the { customer, username, password } or { accessToken } from keycloak.
      */
-    callLoginWebservice(loginData) {
+    async callLoginWebservice(loginData) {
       this.loading = true;
       this.$store
         .dispatch("user/login", loginData)
         .then(async () => {
           await this.$store.dispatch("user/getCustomerMetainfo");
           // the session - cookie is set now
-          this.$router
-            .push({
-              path: this.redirect || "/",
-              query: this.otherQuery,
-              /**
-               * the catch is a quick fix, otherwise we get a constant error. Needed till we can update to new version of vue-router.
-               * see: https://stackoverflow.com/a/65326844
-               */
-            })
-            .catch(() => {});
-
+          this.redirectTo();
           this.loading = false;
         })
         .catch(() => {
@@ -214,14 +215,10 @@ export default {
           this.visible = true;
         });
     },
-    handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.callLoginWebservice(this.loginForm);
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+    async redirectTo() {
+      await loadDynamicRoutes();
+      this.$router.push({
+        path: encodeURI(this.redirect) || "/",
       });
     },
     getOtherQuery(query) {
