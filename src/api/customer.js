@@ -8,7 +8,7 @@ export async function getCustomerMetaData() {
   // extract domain in const
   const res = await request({
     url: authorizedBackendUrl + 'customerMetaData',
-    method: 'get'
+    method: 'get',
   })
   return res
 }

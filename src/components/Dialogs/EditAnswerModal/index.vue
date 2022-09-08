@@ -1,31 +1,27 @@
 <template>
   <div class="editAnswerModal">
-    <el-button
-      class="edit-btn"
-      size="small"
-      icon="el-icon-edit"
-      @click="openEditModal()"
-    >
+    <el-button class="edit-btn" icon="icon-Edit" @click="openEditModal()">
       Bearbeiten
     </el-button>
-
-    <div v-if="editModalOpened" class="modalBox">
-      <div class="modalContent">
-        <EditAnswer ref="editAnswerRef" :answer="answer" />
-        <div class="buttonsContainer">
-          <el-button
-            class="confirm-btn"
-            :disabled="confirmButtonDisabled"
-            @click="saveAnswer()"
-          >
-            Speichern
-          </el-button>
-          <el-button class="cancel-btn" @click="closeEditModal()">
-            Abbrechen
-          </el-button>
+    <Teleport to="body">
+      <div v-if="editModalOpened" class="modalBox">
+        <div class="modalContent">
+          <EditAnswer ref="editAnswerRef" :answer="answer" />
+          <div class="buttonsContainer">
+            <el-button
+              class="confirm-btn"
+              :disabled="confirmButtonDisabled"
+              @click="saveAnswer()"
+            >
+              Speichern
+            </el-button>
+            <el-button class="cancel-btn" @click="closeEditModal()">
+              Abbrechen
+            </el-button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
@@ -78,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .modalBox {
   position: fixed;
   left: 0;
@@ -89,6 +87,7 @@ export default {
   z-index: 1001;
   background-color: rgb(0 0 0 / 38%);
   overflow-y: scroll;
+  color: $darkGrey;
 
   .modalContent {
     width: 95%;

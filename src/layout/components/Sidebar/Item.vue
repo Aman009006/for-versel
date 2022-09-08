@@ -2,6 +2,7 @@
 export default {
   name: "MenuItem",
   functional: true,
+  inheritAttrs: true,
   props: {
     icon: {
       type: String,
@@ -12,8 +13,8 @@ export default {
       default: "",
     },
   },
-  render(h, context) {
-    const { icon, title } = context.props;
+  render() {
+    const { icon, title } = this;
     const vnodes = [];
 
     if (icon) {
@@ -25,7 +26,7 @@ export default {
     }
 
     if (title) {
-      vnodes.push(<span slot="title">{title}</span>);
+      vnodes.push(<span>{title}</span>);
     }
     return vnodes;
   },

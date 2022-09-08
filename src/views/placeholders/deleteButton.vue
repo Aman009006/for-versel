@@ -1,11 +1,10 @@
 <template>
   <el-table-column align="center" width="70">
-    <template slot-scope="{ row }">
+    <template #default="{ row }">
       <template v-if="!row.edit">
         <el-button
           class="delete-btn"
-          size="small"
-          icon="el-icon-delete"
+          icon="icon-Delete"
           @click="deletePlaceholder(row)"
         />
       </template>
@@ -34,23 +33,24 @@ export default {
           cancelButtonText: "Abbrechen",
           type: "warning",
         }
-      ).then(async () => {
-        const deletionSuccessful = await deletePlaceholder(row.key);
-        if (deletionSuccessful) {
-          this.$message({
-            message: "Löschen erfolgreich",
-            type: "success",
-          });
-        }
-        await this.$store.dispatch(dispatchNames.fetchPlaceholders);
-      });
+      )
+        .then(async () => {
+          const deletionSuccessful = await deletePlaceholder(row.key);
+          if (deletionSuccessful) {
+            this.$message({
+              message: "Löschen erfolgreich",
+              type: "success",
+            });
+          }
+          await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+        })
+        .catch(() => {});
     },
   },
 };
 </script>
 
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .delete-btn,
 .delete-btn:hover {
   color: white !important;

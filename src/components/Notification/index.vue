@@ -7,24 +7,28 @@
           class="item"
           :hidden="newIntentRoutes.length == 0"
         >
-          <i class="el-icon-message-solid" />
+          <el-icon>
+            <icon-BellFilled />
+          </el-icon>
         </el-badge>
       </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item disabled class="dropdown-headline">
-          <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
-          <span v-if="newIntentRoutes.length == 0">
-            Es gibt aktuell keine Neuigkeiten
-          </span>
-        </el-dropdown-item>
-        <el-dropdown-item
-          v-for="newIntent in newIntentRoutes"
-          :key="newIntent.name"
-          :command="newIntent.name"
-        >
-          {{ getPathTitle(newIntent) }}
-        </el-dropdown-item>
-      </el-dropdown-menu>
+      <template #dropdown>
+        <el-dropdown-menu class="notificationDropdown">
+          <el-dropdown-item disabled class="dropdown-headline">
+            <span v-if="newIntentRoutes.length > 0"> Neue Dialoge </span>
+            <span v-if="newIntentRoutes.length == 0">
+              Es gibt aktuell keine Neuigkeiten
+            </span>
+          </el-dropdown-item>
+          <el-dropdown-item
+            v-for="newIntent in newIntentRoutes"
+            :key="newIntent.name"
+            :command="newIntent.name"
+          >
+            {{ getPathTitle(newIntent) }}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
     </el-dropdown>
   </div>
 </template>
@@ -33,6 +37,7 @@
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
 export default {
   name: "Notification",
+  inheritAttrs: true,
   props: {},
   data() {
     return {};
@@ -62,10 +67,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.right-menu-item .el-dropdown {
+  vertical-align: middle;
+}
+
 .el-dropdown-link {
   font-size: 18px;
 }
 .el-badge {
   display: inline;
+}
+</style>
+
+<style lang="scss">
+.notificationDropdown {
+    max-height: 500px;
+    overflow-y: scroll;
 }
 </style>

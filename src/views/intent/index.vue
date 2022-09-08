@@ -11,6 +11,7 @@
       />
 
       <RedirectionInfoBox
+        v-if="answerConfig != null"
         :readableRedirectToIntentName="
           answerConfig.readable_redirect_to_intent_name
         "
@@ -77,7 +78,7 @@ export default {
   },
   methods: {
     isRedirectedToOtherIntent() {
-      return this.answerConfig.readable_redirect_to_intent_name != null;
+      return this.answerConfig?.readable_redirect_to_intent_name != null;
     },
 
     async refreshRoutesIfNewIntentWasClicked() {
@@ -99,7 +100,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .intent-element-container {
   padding: 0px 15px;
 }

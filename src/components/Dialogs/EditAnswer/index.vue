@@ -8,18 +8,17 @@
     <div>
       <h2>
         {{ humanReadableLabels.answerText }}
-        <el-popover
-          ref="emojiInfo"
-          placement="top-start"
-          autosize
-          trigger="hover"
-        >
-          <div>
-            Wenn Sie Microsoft Windows verwenden,
-            können Sie Emojis mit der Tastenkombination “⊞“ (Windowstaste) + “.” (Punkt) einfügen
-          </div>
+        <el-popover placement="top-start" :width="500" trigger="hover">
+          <template #reference>
+            <el-icon><icon-InfoFilled /></el-icon>
+          </template>
+          <template #default>
+            <div>
+              Wenn Sie Microsoft Windows verwenden, können Sie Emojis mit der
+              Tastenkombination “⊞“ (Windowstaste) + “.” (Punkt) einfügen
+            </div>
+          </template>
         </el-popover>
-        <i v-popover:emojiInfo class="el-icon-info" />
       </h2>
       <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
@@ -43,6 +42,7 @@ export default {
     ButtonTable,
     MarkDownEditor,
   },
+  inheritAttrs: true,
   props: ["answer"],
   data() {
     return {
@@ -130,6 +130,7 @@ export default {
 
 .editHeadline {
   color: $primary;
+  font-size: 1.5em;
 }
 
 h2 {

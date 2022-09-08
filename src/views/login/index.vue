@@ -41,7 +41,7 @@
       </el-form-item>
 
       <el-tooltip
-        v-model="capsTooltip"
+        :visible="capsTooltip"
         content="Caps lock ist aktiviert"
         placement="right"
         manual
@@ -59,9 +59,9 @@
             name="password"
             tabindex="3"
             autocomplete="on"
-            @keyup.native="checkCapslock"
+            @keyup="checkCapslock"
             @blur="capsTooltip = false"
-            @keyup.enter.native="handleLogin"
+            @keyup.enter="handleLogin"
           />
           <span class="show-pwd" @click="showPwd">
             <svg-icon
@@ -71,14 +71,11 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        @click.native.prevent="handleLogin"
+      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
         >Login</el-button
       >
 
-      <el-button type="secondary" @click="startMicrosoftLogin">
+      <el-button type="primary" @click="startMicrosoftLogin">
         Login mit Microsoft Konto
       </el-button>
     </el-form>
@@ -90,7 +87,8 @@ import { validEmail, isString } from "@/utils/validate";
 import KeycloakUtils from "@/utils/KeycloakUtils";
 
 export default {
-  name: "Login",
+  name: "LogIn",
+  inheritAttrs: true,
   data() {
     const validateCustomer = (rule, value, callback) => {
       if (!isString(value) || value === "") {
@@ -257,19 +255,28 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
-  .el-input {
+  .el-form-item__content {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .el-input__wrapper {
     display: inline-block;
     height: 47px;
     width: 85%;
+    background: transparent;
+    &,
+    &:hover,
+    &.is-focus {
+      box-shadow: none;
+    }
 
     input {
-      background: transparent;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 47px;
+      height: 46px;
       caret-color: $cursor;
 
       &:-webkit-autofill {

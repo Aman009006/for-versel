@@ -1,5 +1,6 @@
 // cover some element-ui styles
 @import "./tables.scss";
+@import "./popper.scss";
 
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
@@ -84,6 +85,6 @@
   box-sizing: content-box;
 }
 
-.el-icon-info {
-  color: #66b1ff;
+i.el-tooltip__trigger {
+  --color: #66b1ff;
 }

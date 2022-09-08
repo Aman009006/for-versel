@@ -14,16 +14,16 @@ module.exports = {
   // add your custom rules here
   // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
-    "vue/multi-word-component-names": 0,
+    "vue/multi-word-component-names": 1,
     "vue/attribute-hyphenation": 0,
     "vue/no-unused-vars": 2,
-    "require-atomic-updates": 0,
+    "require-atomic-updates": 1,
     "vue/html-indent": 0,
-    "vue/html-closing-bracket-newline": 0,
+    "vue/html-closing-bracket-newline": 1,
     "vue/max-attributes-per-line": 0,
-    "vue/valid-attribute-name": "always",
-    "vue/valid-model-definition": "always",
-    "vue/html-self-closing": ["error", {
+    "vue/valid-attribute-name": 1,
+    "vue/valid-model-definition": 1,
+    "vue/html-self-closing": [2, {
       "html": {
         "void": "always",
         "normal": "always",
@@ -32,21 +32,21 @@ module.exports = {
       "svg": "always",
       "math": "always"
     }],
-    "vue/singleline-html-element-content-newline": "off",
-    "vue/multiline-html-element-content-newline": "off",
-    "vue/name-property-casing": ["error", "PascalCase"],
+    "vue/singleline-html-element-content-newline": 0,
+    "vue/multiline-html-element-content-newline": 0,
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
     "vue/no-v-html": "off",
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
       'after': true
     }],
-    'block-spacing': [2, 'always'],
+    'block-spacing': [2, "always"],
     'brace-style': [2, '1tbs', {
       'allowSingleLine': true
     }],
     'camelcase': [0, {
-      'properties': 'always'
+      'properties': 1
     }],
     'comma-spacing': [2, {
       'before': false,
@@ -173,14 +173,14 @@ module.exports = {
       'before': false,
       'after': true
     }],
-    'space-before-blocks': [2, 'always'],
+    'space-before-blocks': [2, "always"],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [2, {
       'words': true,
       'nonwords': false
     }],
-    'spaced-comment': [2, 'always', {
+    'spaced-comment': [2, "always", {
       'markers': ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
     }],
     'template-curly-spacing': [2, 'never'],
@@ -191,7 +191,7 @@ module.exports = {
     'yoda': [2, 'never'],
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    'object-curly-spacing': [2, 'always', {
+    'object-curly-spacing': [2, "always", {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never']

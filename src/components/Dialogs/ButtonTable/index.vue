@@ -1,31 +1,33 @@
-<template v-if="copiedButtons">
+<template>
   <el-table :data="copiedButtons" border>
     <el-table-column label="Name" align="center" :min-width="columnMinWidth">
-      <template slot-scope="{ row: button }">
+      <template #default="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
       </template>
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template slot="header">
+      <template #header>
+        Wert
         <el-popover
           ref="PopOverValue"
           placement="top-start"
-          autosize
+          :width="400"
           trigger="hover"
         >
-          <div class="popOverContent">
-            Werte können nur bei Buttons mit dem Typ
-            <strong>openUrl</strong>
-            bearbeitet werden.
-          </div>
+          <template #reference>
+            <el-icon><icon-InfoFilled /></el-icon>
+          </template>
+          <template #default>
+            <div class="popOverContent">
+              Werte können nur bei Buttons mit dem Typ
+              <strong>openUrl</strong>
+              bearbeitet werden.
+            </div>
+          </template>
         </el-popover>
-        <span>
-          Wert
-          <i v-popover:PopOverValue class="el-icon-info" />
-        </span>
       </template>
-      <template slot-scope="{ row: button }">
+      <template #default="{ row: button }">
         <el-input
           v-if="!isImbackButton(button)"
           v-model="button.value"
@@ -37,25 +39,27 @@
     </el-table-column>
 
     <el-table-column align="center" :min-width="columnMinWidth">
-      <template slot="header">
+      <template #header>
+        Typ
         <el-popover
           ref="PopOverType"
           placement="top-start"
-          autosize
+          :width="400"
           trigger="hover"
         >
-          <div class="popOverContent">
-            Der Typ eines Buttons kann
-            <strong>nicht</strong>
-            geändert werden.
-          </div>
+          <template #reference>
+            <el-icon><icon-InfoFilled /></el-icon>
+          </template>
+          <template #default>
+            <div class="popOverContent">
+              Der Typ eines Buttons kann
+              <strong>nicht</strong>
+              geändert werden.
+            </div>
+          </template>
         </el-popover>
-        <span>
-          Typ
-          <i v-popover:PopOverType class="el-icon-info" />
-        </span>
       </template>
-      <template slot-scope="{ row: button }">
+      <template #default="{ row: button }">
         <span>{{ button.type }}</span>
       </template>
     </el-table-column>
@@ -65,6 +69,7 @@
 <script>
 export default {
   name: "ButtonTable",
+  inheritAttrs: true,
   props: ["buttons"],
   data() {
     return {
@@ -88,7 +93,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .popOverContent {
   text-align: center;
 }
