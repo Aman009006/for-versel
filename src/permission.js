@@ -7,6 +7,7 @@ import getPageTitle from '@/utils/get-page-title'
 import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'
 import ChatbotWidgetUtils from './utils/ChatbotWidgetUtils'
+import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -49,20 +50,8 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get new token directly after the user opened the application
           await getNewTokenInCookies()
-          // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
 
-          // load skills with intents and generate accessible routes map based on roles for them
-          const accessRoutes = await store.dispatch(
-            'permission/generateRoutes',
-            roles
-          )
-
-          // dynamically add accessible routes
-          accessRoutes.forEach((route) => {
-            router.addRoute(route)
-          })
+          await loadDynamicRoutes()
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record

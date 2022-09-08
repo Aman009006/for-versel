@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { links } from '@/constants'
 
 /* Layout */
@@ -129,13 +129,13 @@ export const asyncRoutes = [
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: []
   })
   router.matcher = newRouter.matcher // reset router
 }
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
