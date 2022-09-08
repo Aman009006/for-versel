@@ -29,7 +29,6 @@
       :style="{ left: left + 'px', top: top + 'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
         Close
       </li>
@@ -137,16 +136,6 @@ export default {
             break;
           }
         }
-      });
-    },
-    refreshSelectedTag(view) {
-      this.$store.dispatch("tagsView/delCachedView", view).then(() => {
-        const { fullPath } = view;
-        this.$nextTick(() => {
-          this.$router.replace({
-            path: "/redirect" + fullPath,
-          });
-        });
       });
     },
     closeSelectedTag(view) {
