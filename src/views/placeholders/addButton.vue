@@ -1,10 +1,5 @@
 <template>
-  <el-button
-    class="add-btn"
-    size="small"
-    icon="el-icon-plus"
-    @click="addPlaceholder()"
-  >
+  <el-button class="add-btn" icon="icon-Plus" @click="addPlaceholder()">
     Neuen Platzhalter hinzufügen
   </el-button>
 </template>

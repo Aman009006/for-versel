@@ -3,7 +3,7 @@
     ref="scrollContainer"
     :vertical="false"
     class="scroll-container"
-    @wheel.native.prevent="handleScroll"
+    @wheel.prevent="handleScroll"
   >
     <slot />
   </el-scrollbar>
@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     scrollWrapper() {
-      return this.$refs.scrollContainer.$refs.wrap;
+      return this.$refs.scrollContainer.$refs.wrap$;
     },
   },
   mounted() {

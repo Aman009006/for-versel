@@ -26,17 +26,17 @@
       </app-link>
     </template>
     <!--
-      meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
-      https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
-      This is used here for FixiOSBug.js to reference this element.
-     -->
-    <el-submenu
+        meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
+        https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
+        This is used here for FixiOSBug.js to reference this element.
+       -->
+    <el-sub-menu
       v-else
       ref="subMenu"
       :index="resolvePath(item.path)"
       popper-append-to-body
     >
-      <template slot="title">
+      <template #title="title">
         <item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
@@ -51,7 +51,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-    </el-submenu>
+    </el-sub-menu>
   </div>
 </template>
 
@@ -142,5 +142,48 @@ export default {
 .el-menu--vertical .el-badge sup.el-badge__content {
   right: 50px;
   top: 50%;
+}
+
+.el-menu--vertical:not(.el-menu--collapse) {
+  min-height: 400px;
+}
+.el-menu-item {
+  font-size: 14px !important;
+}
+
+.el-menu > div > .el-sub-menu > .el-sub-menu__title {
+  padding-left: 20px !important;
+  font-size: 14px !important;
+}
+
+div
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > .el-sub-menu
+  > .el-sub-menu__title {
+  padding-left: 40px !important;
+  font-size: 14px !important;
+}
+
+.el-menu
+  > div
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > a
+  > .el-badge
+  > .el-menu-item {
+  padding-left: 40px !important;
+}
+.el-menu
+  > .nest-menu
+  > .el-sub-menu
+  > .el-menu
+  > .nest-menu
+  > a
+  > .el-badge
+  > .el-menu-item {
+  padding-left: 60px !important;
 }
 </style>

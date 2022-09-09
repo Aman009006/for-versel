@@ -1,12 +1,13 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
+import { ElMessage as Message } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import getPageTitle from '@/utils/get-page-title'
 import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'
 import ChatbotWidgetUtils from './utils/ChatbotWidgetUtils'
+import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -18,7 +19,7 @@ router.beforeEach(async (to, from, next) => {
 
   // set page title
   document.title = getPageTitle(to.meta.title)
-  let loggedIn;
+  let loggedIn
   try {
     // determine whether the user has logged in
     loggedIn = await isLoggedIn()
@@ -27,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
      * If the user was not authorized then 404 error comes from BE from tokenMiddleware.
      * Therefore it is catched here and it is known that the user was not logged in
      */
-    loggedIn = false;
+    loggedIn = false
   }
   if (loggedIn) {
     // get Meta Info for the logged in customer
@@ -35,7 +36,7 @@ router.beforeEach(async (to, from, next) => {
       await store.dispatch('user/getCustomerMetainfo')
     }
     // insert the chatbotWidget
-    ChatbotWidgetUtils.insertChatbotWidget();
+    ChatbotWidgetUtils.insertChatbotWidget()
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -49,17 +50,8 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get new token directly after the user opened the application
           await getNewTokenInCookies()
-          // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
 
-          // load skills with intents and generate accessible routes map based on roles for them
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-          // dynamically add accessible routes
-          accessRoutes.forEach(route => {
-            router.addRoute(route);
-          });
+          await loadDynamicRoutes()
 
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
@@ -68,6 +60,7 @@ router.beforeEach(async (to, from, next) => {
           // remove roles and go to login page to re-login
           await store.dispatch('user/resetRoles')
           Message.error(error || 'Has Error')
+          console.log(error)
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

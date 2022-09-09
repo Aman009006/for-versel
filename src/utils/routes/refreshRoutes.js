@@ -6,6 +6,6 @@ import store from '@/store/index'
  * has changed.
  */
 export default async function refreshRoutes() {
-    const { roles } = await store.dispatch('user/getInfo');
-    await store.dispatch('permission/pullIntentsAndSetRoutes', roles);
+  const { roles } = await store.dispatch('user/getInfo')
+  await store.dispatch('permission/pullIntentsAndSetRoutes', roles)
 }

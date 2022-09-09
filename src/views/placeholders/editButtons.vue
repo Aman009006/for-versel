@@ -1,33 +1,22 @@
 <template>
   <el-table-column align="center" width="130">
-    <template slot-scope="{ row }">
+    <template #default="{ row }">
       <!-- When the editing mode is turned on: -->
       <template v-if="row.edit">
         <el-button
           class="confirm-btn"
-          size="small"
-          icon="el-icon-download"
+          icon="icon-Download"
           @click="confirmEdit(row)"
         >
           Speichern
         </el-button>
-        <el-button
-          class="cancel-btn"
-          size="small"
-          icon="el-icon-refresh"
-          @click="cancelEdit()"
-        >
+        <el-button class="cancel-btn" icon="icon-Refresh" @click="cancelEdit()">
           Abbrechen
         </el-button>
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button
-          class="edit-btn"
-          size="small"
-          icon="el-icon-edit"
-          @click="toggleEdit(row)"
-        >
+        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(row)">
           Bearbeiten
         </el-button>
       </template>
@@ -53,9 +42,9 @@ export default {
   },
   methods: {
     async toggleEdit(row) {
-      this.$set(row, "originalKey", row.key);
-      this.$set(row, "originalValue", row.value);
-      this.$set(row, "edit", true);
+      row.originalKey = row.key;
+      row.originalValue = row.value;
+      row.edit = true;
       this.isEdit = true;
       this.currentPlaceholderData = this.currentPlaceholders;
     },
@@ -119,7 +108,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .cancel-btn,
 .confirm-btn,
 .edit-btn,

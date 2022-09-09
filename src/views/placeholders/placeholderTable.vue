@@ -8,7 +8,7 @@
           prop="key"
           autosize
         >
-          <template slot-scope="{ row }">
+          <template #default="{ row }">
             <template v-if="row.edit">
               <el-input
                 v-model="row.key"
@@ -23,7 +23,7 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="Wert" prop="value" autosize>
-          <template slot-scope="{ row }">
+          <template #default="{ row }">
             <template v-if="row.edit">
               <el-input
                 v-model="row.value"
@@ -88,8 +88,7 @@ export default {
 };
 </script>
 
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .el-table {
   font-size: 13px !important;
 }

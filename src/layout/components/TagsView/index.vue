@@ -13,8 +13,8 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @click.middle.native="!isAffix(tag) ? closeSelectedTag(tag) : ''"
-        @contextmenu.prevent.native="openMenu(tag, $event)"
+        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
+        @contextmenu.prevent="openMenu(tag, $event)"
       >
         {{ tag.title }}
         <span
@@ -29,7 +29,6 @@
       :style="{ left: left + 'px', top: top + 'px' }"
       class="contextmenu"
     >
-      <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
         Close
       </li>
@@ -45,6 +44,7 @@ import path from "path";
 
 export default {
   components: { ScrollPane },
+  inheritAttrs: true,
   data() {
     return {
       visible: false,
@@ -138,16 +138,6 @@ export default {
         }
       });
     },
-    refreshSelectedTag(view) {
-      this.$store.dispatch("tagsView/delCachedView", view).then(() => {
-        const { fullPath } = view;
-        this.$nextTick(() => {
-          this.$router.replace({
-            path: "/redirect" + fullPath,
-          });
-        });
-      });
-    },
     closeSelectedTag(view) {
       this.$store
         .dispatch("tagsView/delView", view)
@@ -228,7 +218,7 @@ export default {
       position: relative;
       cursor: pointer;
       height: 26px;
-      line-height: 26px;
+      line-height: 24px;
       border: 1px solid #d8dce5;
       color: #495060;
       background: #fff;
@@ -286,6 +276,9 @@ export default {
 <style lang="scss">
 //reset element css of el-icon-close
 .tags-view-wrapper {
+  div div {
+    display: flex;
+  }
   .tags-view-item {
     .el-icon-close {
       width: 16px;

@@ -4,7 +4,7 @@ import { paths } from '@/constants';
  * @returns all the routes, which represent intents.
  */
 export function getSkillRoute(permissionRoutes) {
-    return permissionRoutes.find(route => route.path === paths.skills);
+  return permissionRoutes.find((route) => route.path === paths.skills)
 }
 
 /**
@@ -12,29 +12,32 @@ export function getSkillRoute(permissionRoutes) {
  * @returns {{pathTitles: string[]; name: string}[]} the intents, which are new for the current user.
  */
 export function getNewIntentRoutes(permissionRoutes) {
-    const skillRoutes = getSkillRoute(permissionRoutes);
-    const skillRouteChildren = skillRoutes.children;
-    const newIntentRoutes = [];
-    for (const skillRoute of skillRouteChildren) {
-        if (skillRoute.children != null) {
-            skillRoute.children.forEach(intentRoute => {
-                if (intentRoute.meta.newIntent) {
-                    // the intent is marked as new intent.
-                    newIntentRoutes.push({
-                        name: intentRoute.name,
-                        creationTimestamp: intentRoute.meta.creationTimestamp,
-                        pathTitles: [
-                            skillRoutes.meta.title,
-                            skillRoute.meta.title,
-                            intentRoute.meta.title
-                        ]
-                    });
-                }
-            });
+  const skillRoutes = getSkillRoute(permissionRoutes)
+  const skillRouteChildren = skillRoutes.children
+  const newIntentRoutes = []
+  for (const skillRoute of skillRouteChildren) {
+    if (skillRoute.children?.length > 0) {
+      skillRoute.children.forEach((intentRoute) => {
+        if (intentRoute.meta.newIntent) {
+          // the intent is marked as new intent.
+          newIntentRoutes.push({
+            name: intentRoute.name,
+            creationTimestamp: intentRoute.meta.creationTimestamp,
+            pathTitles: [
+              skillRoutes.meta.title,
+              skillRoute.meta.title,
+              intentRoute.meta.title,
+            ],
+          })
         }
+      })
     }
-    newIntentRoutes.sort((routeA, routeB) => {
-        return new Date(routeA.creationTimestamp) > new Date(routeB.creationTimestamp) ? -1 : 1;
-    });
-    return newIntentRoutes
+  }
+  newIntentRoutes.sort((routeA, routeB) => {
+    return new Date(routeA.creationTimestamp) >
+      new Date(routeB.creationTimestamp)
+      ? -1
+      : 1
+  })
+  return newIntentRoutes
 }

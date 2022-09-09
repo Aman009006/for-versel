@@ -40,7 +40,9 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .dialogInfoBox {
   background-color: white;
   padding: 5px 25px;
@@ -48,7 +50,7 @@ export default {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   font-size: 14px;
-  color: #606266;
+  color: $darkGrey;
 }
 .utterancesTitle {
   font-size: 13px;

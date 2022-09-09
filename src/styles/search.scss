@@ -17,3 +17,17 @@
         }
     }
 }
+
+#header-search .el-input__wrapper {
+    box-shadow: 0 0 0 0px transparent inset !important;
+    padding-left: 0;
+    padding-right: 0;
+
+    input {
+        border-bottom: 1px solid $lightGrey;
+
+        &:focus {
+            border-color: #15adff;
+        }
+    }
+}
