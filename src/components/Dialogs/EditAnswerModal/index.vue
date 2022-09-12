@@ -6,7 +6,7 @@
     <Teleport to="body">
       <div v-if="editModalOpened" class="modalBox">
         <div class="modalContent">
-          <EditAnswer ref="editAnswerRef" :answer="answer" />
+          <EditAnswer ref="editAnswerRef" :answer="answer" :answerConfig="answerConfig" />
           <div class="buttonsContainer">
             <el-button
               class="confirm-btn"
@@ -33,7 +33,7 @@ export default {
   components: {
     EditAnswer,
   },
-  props: ["answer"],
+  props: ["answer", "answerConfig"],
   data() {
     return {
       editModalOpened: false,

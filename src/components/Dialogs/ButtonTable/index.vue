@@ -28,13 +28,7 @@
         </el-popover>
       </template>
       <template #default="{ row: button }">
-        <el-input
-          v-if="!isImbackButton(button)"
-          v-model="button.value"
-          type="textarea"
-          autosize
-        />
-        <span v-else>{{ button.value }}</span>
+        <el-input v-model="button.value" type="textarea" autosize />
       </template>
     </el-table-column>
 
@@ -60,7 +54,14 @@
         </el-popover>
       </template>
       <template #default="{ row: button }">
-        <span>{{ button.type }}</span>
+        <el-select v-model="button.type">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </template>
     </el-table-column>
   </el-table>
@@ -74,6 +75,16 @@ export default {
   data() {
     return {
       columnMinWidth: 200,
+      options: [
+        {
+          value: "imBack",
+          label: "imBack",
+        },
+        {
+          value: "openUrl",
+          label: "openUrl ",
+        },
+      ],
     };
   },
   computed: {
@@ -90,6 +101,10 @@ export default {
       return button.type == "imBack";
     },
   },
+    getButtonType(button) {
+      this.value = button.type
+      return button.type
+    }
 };
 </script>
 
