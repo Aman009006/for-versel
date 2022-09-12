@@ -10,7 +10,11 @@
         >
           Speichern
         </el-button>
-        <el-button class="cancel-btn" icon="icon-Refresh" @click="cancelEdit()">
+        <el-button
+          class="cancel-btn"
+          icon="icon-Refresh"
+          @click="cancelEdit(row)"
+        >
           Abbrechen
         </el-button>
       </template>
@@ -46,8 +50,18 @@ export default {
       row.edit = true;
       this.currentPlaceholderData = this.currentPlaceholders;
     },
-    async cancelEdit() {
-      await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+    async cancelEdit(row) {
+      this.resetToOriginalPlaceholder(row);
+      this.removeInputFields(row);
+    },
+    resetToOriginalPlaceholder(row) {
+      row.key = row.originalKey;
+      row.value = row.originalValue;
+      delete row.originalKey;
+      delete row.originalValue;
+    },
+    removeInputFields(row) {
+      row.edit = false;
     },
     async confirmEdit(row) {
       let fetchPlaceholders = true;
