@@ -1,6 +1,6 @@
 <template>
   <el-table-column align="center" width="130">
-    <template #default="{ placeholder }">
+    <template #default="{ row: placeholder }">
       <!-- When the editing mode is turned on: -->
       <template v-if="placeholder.edit">
         <el-button
