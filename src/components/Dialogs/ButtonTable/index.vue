@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="copiedButtons" border>
+  <el-table id="answerButtonsTable" :data="copiedButtons" border>
     <el-table-column label="Name" align="center" :min-width="columnMinWidth">
       <template #default="{ row: button }">
         <el-input v-model="button.title" type="textarea" autosize />
@@ -64,6 +64,16 @@
         </el-select>
       </template>
     </el-table-column>
+    <el-table-column>
+      <template #default="scope">
+        <el-button
+          size="small"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)"
+          >Delete
+        </el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -75,6 +85,7 @@ export default {
   data() {
     return {
       columnMinWidth: 200,
+      tableButtons: [],
       options: [
         {
           value: "imBack",
@@ -91,6 +102,8 @@ export default {
     copiedButtons() {
       if (this.buttons != null) {
         const copiedButtons = JSON.parse(JSON.stringify(this.buttons));
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+        this.tableButtons = copiedButtons;
         return copiedButtons;
       }
       return null;
@@ -100,11 +113,14 @@ export default {
     isImbackButton(button) {
       return button.type == "imBack";
     },
+    handleDelete(index, row) {
+      this.tableButtons.filter((button, index) => {
+        if (row.title == button.title) {
+          delete this.tableButtons[index];
+        }
+      });
+    },
   },
-    getButtonType(button) {
-      this.value = button.type
-      return button.type
-    }
 };
 </script>
 

@@ -1,15 +1,18 @@
 <template>
-  <el-button id="addAnswerButton" class="add-btn" icon="icon-Plus">
-    Neuen Antwort Button hinzufügen
-  </el-button>
+  <el-button
+    id="addAnswerButton"
+    icon="icon-Plus"
+    class="add-btn"
+    @click="currentAnswerButtons"
+  />
 </template>
 
 <script>
 export default {
   computed: {
-    // currentPlaceholders() {
-    //   return this.$store.getters.placeholders;
-    // },
+    currentAnswerButtons() {
+      return this.$store.getters;
+    },
   },
   methods: {
     // async addPlaceholder() {
@@ -25,9 +28,14 @@ export default {
 #addAnswerButton,
 #addAnswerButton:hover {
   color: white !important;
-  border-radius: 9px !important;
+  border-radius: 10px !important;
   margin-left: 10px !important;
   margin-top: 25px !important;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  font-size: 15px;
 }
 
 #addAnswerButton {
@@ -35,7 +43,7 @@ export default {
   border-color: #63c731 !important;
 }
 
- #addAnswerButton:hover {
+#addAnswerButton:hover {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
 }
