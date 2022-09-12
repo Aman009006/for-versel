@@ -1,26 +1,26 @@
 <template>
   <el-table-column align="center" width="130">
-    <template #default="{ row }">
+    <template #default="{ placeholder }">
       <!-- When the editing mode is turned on: -->
-      <template v-if="row.edit">
+      <template v-if="placeholder.edit">
         <el-button
           class="confirm-btn"
           icon="icon-Download"
-          @click="confirmEdit(row)"
+          @click="confirmEdit(placeholder)"
         >
           Speichern
         </el-button>
         <el-button
           class="cancel-btn"
           icon="icon-Refresh"
-          @click="cancelEdit(row)"
+          @click="cancelEdit(placeholder)"
         >
           Abbrechen
         </el-button>
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(row)">
+        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(placeholder)">
           Bearbeiten
         </el-button>
       </template>
@@ -44,32 +44,32 @@ export default {
     },
   },
   methods: {
-    async toggleEdit(row) {
-      row.originalKey = row.key;
-      row.originalValue = row.value;
-      row.edit = true;
+    async toggleEdit(placeholder) {
+      placeholder.originalKey = placeholder.key;
+      placeholder.originalValue = placeholder.value;
+      placeholder.edit = true;
       this.currentPlaceholderData = this.currentPlaceholders;
     },
-    async cancelEdit(row) {
-      this.resetToOriginalPlaceholder(row);
-      this.removeInputFields(row);
+    async cancelEdit(placeholder) {
+      this.resetToOriginalPlaceholder(placeholder);
+      this.removeInputFields(placeholder);
     },
-    resetToOriginalPlaceholder(row) {
-      row.key = row.originalKey;
-      row.value = row.originalValue;
-      delete row.originalKey;
-      delete row.originalValue;
+    resetToOriginalPlaceholder(placeholder) {
+      placeholder.key = placeholder.originalKey;
+      placeholder.value = placeholder.originalValue;
+      delete placeholder.originalKey;
+      delete placeholder.originalValue;
     },
-    removeInputFields(row) {
-      row.edit = false;
+    removeInputFields(placeholder) {
+      placeholder.edit = false;
     },
-    async confirmEdit(row) {
+    async confirmEdit(placeholder) {
       let fetchPlaceholders = true;
-      if (row.key !== "" && row.value !== "") {
-        if (row.insertPlaceholder) {
-          fetchPlaceholders = await this.setPlaceholder(row);
+      if (placeholder.key !== "" && placeholder.value !== "") {
+        if (placeholder.insertPlaceholder) {
+          fetchPlaceholders = await this.setPlaceholder(placeholder);
         } else {
-          fetchPlaceholders = await this.updatePlaceholder(row);
+          fetchPlaceholders = await this.updatePlaceholder(placeholder);
         }
       } else {
         this.$message({
@@ -83,8 +83,8 @@ export default {
         await this.$store.dispatch(dispatchNames.fetchPlaceholders);
       }
     },
-    async updatePlaceholder(row) {
-      if (row.key == row.originalKey && row.value == row.originalValue) {
+    async updatePlaceholder(placeholder) {
+      if (placeholder.key == placeholder.originalKey && placeholder.value == placeholder.originalValue) {
         this.$message({
           message: "Es wurden keine Änderungen erkannt",
           type: "warning",
@@ -92,9 +92,9 @@ export default {
         return false;
       } else {
         const updateSuccessful = await updatePlaceholder(
-          row.key,
-          row.value,
-          row.originalKey
+          placeholder.key,
+          placeholder.value,
+          placeholder.originalKey
         );
         if (updateSuccessful) {
           this.$message({
@@ -105,8 +105,8 @@ export default {
         return updateSuccessful;
       }
     },
-    async setPlaceholder(row) {
-      const setSuccessful = await setPlaceholder(row.key, row.value);
+    async setPlaceholder(placeholder) {
+      const setSuccessful = await setPlaceholder(placeholder.key, placeholder.value);
       if (setSuccessful) {
         this.$message({
           message: "Der neue Platzhalter wurde erfolgreich gespeichert",
