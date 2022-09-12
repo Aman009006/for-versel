@@ -31,7 +31,6 @@ import { dispatchNames } from "@/constants";
 export default {
   data() {
     return {
-      isEdit: false,
       currentPlaceholderData: [],
     };
   },
@@ -45,20 +44,18 @@ export default {
       row.originalKey = row.key;
       row.originalValue = row.value;
       row.edit = true;
-      this.isEdit = true;
       this.currentPlaceholderData = this.currentPlaceholders;
     },
     async cancelEdit() {
-      this.isEdit = false;
       await this.$store.dispatch(dispatchNames.fetchPlaceholders);
     },
     async confirmEdit(row) {
       let fetchPlaceholders = true;
       if (row.key !== "" && row.value !== "") {
-        if (this.isEdit) {
-          fetchPlaceholders = await this.updatePlaceholder(row);
-        } else {
+        if (row.insertPlaceholder) {
           fetchPlaceholders = await this.setPlaceholder(row);
+        } else {
+          fetchPlaceholders = await this.updatePlaceholder(row);
         }
       } else {
         this.$message({

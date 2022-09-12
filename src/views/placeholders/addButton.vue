@@ -1,5 +1,5 @@
 <template>
-  <el-button class="add-btn" icon="icon-Plus" @click="addPlaceholder()">
+  <el-button class="add-btn" icon="icon-Plus" @click="createAddNewPlaceholderForm()">
     Neuen Platzhalter hinzufügen
   </el-button>
 </template>
@@ -12,10 +12,13 @@ export default {
     },
   },
   methods: {
-    async addPlaceholder() {
-      if (!this.currentPlaceholders[this.currentPlaceholders.length - 1].edit) {
-        this.currentPlaceholders.push({ key: "", value: "", edit: true });
+    async createAddNewPlaceholderForm() {
+      if (!this.isInsertingPlaceholderCurrently()) {
+        this.currentPlaceholders.push({ key: "", value: "", edit: true, insertPlaceholder: true });
       }
+    },
+    isInsertingPlaceholderCurrently() {
+      return this.currentPlaceholders[this.currentPlaceholders.length - 1].insertPlaceholder;
     },
   },
 };
