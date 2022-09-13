@@ -2,7 +2,7 @@
   <el-table-column align="center" width="130">
     <template #default="{ row: placeholder }">
       <!-- When the editing mode is turned on: -->
-      <template v-if="placeholder.edit">
+      <template v-if="isPlaceholderEditing(placeholder.key)">
         <el-button
           class="confirm-btn"
           icon="icon-Download"
@@ -20,7 +20,11 @@
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(placeholder)">
+        <el-button
+          class="edit-btn"
+          icon="icon-Edit"
+          @click="startEdit(placeholder)"
+        >
           Bearbeiten
         </el-button>
       </template>
@@ -30,25 +34,29 @@
 
 <script>
 import { updatePlaceholder, setPlaceholder } from "@/api/placeholders";
-import { dispatchNames } from "@/constants";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
-  data() {
-    return {
-      currentPlaceholderData: [],
-    };
-  },
   computed: {
     currentPlaceholders() {
       return this.$store.getters.placeholders;
     },
   },
   methods: {
-    async toggleEdit(placeholder) {
+    isPlaceholderEditing(placeholderKey) {
+      const isEditing = PlaceholderUtilities.isPlaceholderEditing(
+        this.$store,
+        placeholderKey
+      );
+      return isEditing;
+    },
+    async startEdit(placeholder) {
       placeholder.originalKey = placeholder.key;
       placeholder.originalValue = placeholder.value;
-      placeholder.edit = true;
-      this.currentPlaceholderData = this.currentPlaceholders;
+      PlaceholderUtilities.startEditingPlaceholder(
+        this.$store,
+        placeholder.key
+      );
     },
     async cancelEdit(placeholder) {
       this.resetToOriginalPlaceholder(placeholder);
@@ -61,30 +69,34 @@ export default {
       delete placeholder.originalValue;
     },
     removeInputFields(placeholder) {
-      placeholder.edit = false;
+      PlaceholderUtilities.stopEditingPlaceholder(this.$store, placeholder.key);
     },
     async confirmEdit(placeholder) {
-      let fetchPlaceholders = true;
+      let savedSuccessfully = true;
       if (placeholder.key !== "" && placeholder.value !== "") {
         if (placeholder.insertPlaceholder) {
-          fetchPlaceholders = await this.setPlaceholder(placeholder);
+          savedSuccessfully = await this.setPlaceholder(placeholder);
         } else {
-          fetchPlaceholders = await this.updatePlaceholder(placeholder);
+          savedSuccessfully = await this.updatePlaceholder(placeholder);
         }
       } else {
         this.$message({
           message: "Bitte Platzhalterbezeichnung und Wert eingeben",
           type: "warning",
         });
-        fetchPlaceholders = false;
+        savedSuccessfully = false;
       }
 
-      if (fetchPlaceholders) {
-        await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+      if (savedSuccessfully) {
+        await PlaceholderUtilities.fetchPlaceholders(this.$store);
+        this.removeInputFields(placeholder);
       }
     },
     async updatePlaceholder(placeholder) {
-      if (placeholder.key == placeholder.originalKey && placeholder.value == placeholder.originalValue) {
+      if (
+        placeholder.key == placeholder.originalKey &&
+        placeholder.value == placeholder.originalValue
+      ) {
         this.$message({
           message: "Es wurden keine Änderungen erkannt",
           type: "warning",
@@ -106,7 +118,10 @@ export default {
       }
     },
     async setPlaceholder(placeholder) {
-      const setSuccessful = await setPlaceholder(placeholder.key, placeholder.value);
+      const setSuccessful = await setPlaceholder(
+        placeholder.key,
+        placeholder.value
+      );
       if (setSuccessful) {
         this.$message({
           message: "Der neue Platzhalter wurde erfolgreich gespeichert",

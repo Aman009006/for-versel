@@ -9,7 +9,7 @@
           autosize
         >
           <template #default="{ row }">
-            <template v-if="row.edit">
+            <template v-if="isPlaceholderEditing(row.key)">
               <el-input
                 v-model="row.key"
                 type="textarea"
@@ -24,7 +24,7 @@
         </el-table-column>
         <el-table-column align="center" label="Wert" prop="value" autosize>
           <template #default="{ row }">
-            <template v-if="row.edit">
+            <template v-if="isPlaceholderEditing(row.key)">
               <el-input
                 v-model="row.value"
                 type="textarea"
@@ -52,7 +52,7 @@
 import editButtons from "./editButtons.vue";
 import addButton from "./addButton.vue";
 import deleteButton from "./deleteButton.vue";
-import { dispatchNames } from "@/constants";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
   components: {
@@ -78,8 +78,15 @@ export default {
     await this.loadData();
   },
   methods: {
+    isPlaceholderEditing(placeholderKey) {
+      const isEditing = PlaceholderUtilities.isPlaceholderEditing(
+        this.$store,
+        placeholderKey
+      );
+      return isEditing;
+    },
     async loadData() {
-      await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+      await PlaceholderUtilities.fetchPlaceholders(this.$store);
       this.dataReady = true;
     },
   },

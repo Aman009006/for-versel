@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+
 export default {
   computed: {
     currentPlaceholders() {
@@ -14,7 +16,9 @@ export default {
   methods: {
     async createAddNewPlaceholderForm() {
       if (!this.isInsertingPlaceholderCurrently()) {
-        this.currentPlaceholders.push({ key: "", value: "", edit: true, insertPlaceholder: true });
+        const newPlaceholderKey = "";
+        this.currentPlaceholders.push({ key: newPlaceholderKey, value: "", insertPlaceholder: true });
+        PlaceholderUtilities.startEditingPlaceholder(this.$store, newPlaceholderKey);
       }
     },
     isInsertingPlaceholderCurrently() {
