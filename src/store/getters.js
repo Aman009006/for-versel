@@ -13,5 +13,7 @@ const getters = {
   metainfo: (state) => state.user.metainfo,
   placeholders: (state) => state.placeholders.placeholders,
   intents: (state) => state.dialogs.intents,
+  deletedAnswerButtons: (state) => state.answerButtons.deletedAnswerButtons,
+  currentAnswerButtons: (state) => state.answerButtons.currentAnswerButtons
 }
 export default getters
