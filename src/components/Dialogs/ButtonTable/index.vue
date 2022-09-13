@@ -3,6 +3,7 @@
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
       <el-button
+        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi' "
         id="addAnswerButton"
         icon="icon-Plus"
         class="add-btn"
@@ -16,7 +17,7 @@
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @change="saveButtonsContent(scope.$index, scope.row)"
+            @change="onChangeMethods(scope.$index, scope.row)"
           />
         </template>
       </el-table-column>
@@ -47,7 +48,7 @@
             v-model="scope.row.value"
             type="textarea"
             autosize
-            @change="saveButtonsContent(scope.$index, scope.row)"
+            @change="onChangeMethods(scope.$index, scope.row)"
           />
         </template>
       </el-table-column>
@@ -76,7 +77,7 @@
         <template #default="scope">
           <el-select
             v-model="scope.row.type"
-            @change="saveButtonsContent(scope.$index, scope.row)"
+            @change="onChangeMethods(scope.$index, scope.row)"
           >
             <el-option
               v-for="item in options"
@@ -100,7 +101,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <span></span>
+    <span id="warningText" ref="warningText" />
   </div>
 </template>
 
@@ -108,7 +109,7 @@
 export default {
   name: "ButtonTable",
   inheritAttrs: true,
-  props: ["buttons"],
+  props: ["buttons", "answerConfig"],
   data() {
     return {
       columnMinWidth: 200,
@@ -142,19 +143,30 @@ export default {
     async handleDelete(tableIndex, row) {
       this.tableButtons.splice(tableIndex, 1);
     },
-    async saveButtonsContent(index, row) {
-      this.tableButtons[index] = row;
+    async saveButtonsContentLocal(index, rowButton) {
+      this.tableButtons[index] = rowButton;
+    },
+    async checkDublicateTitles(rowIndex, rowButton) {
+      this.$refs.warningText.innerHTML = ""
+      this.tableButtons.forEach((button, index) => {
+        if (button.title == rowButton.title && index != rowIndex) {
+          this.$refs.warningText.innerHTML =
+            "TitelDuplikat: Buttons dürfen nicht den gleichen Titel haben. Werden nicht gespeichert";
+        }
+      });
+    },
+    async onChangeMethods(index, rowButton) {
+      await this.saveButtonsContentLocal(index, rowButton)
+      await this.checkDublicateTitles(index, rowButton)
     },
     async addAnswerButton() {
-      this.tableButtons.push(
-        {
-          title: "",
-          value: "",
-          type: "imBack",
-          identificator: null
-        }
-      )
-    }
+      this.tableButtons.push({
+        title: "",
+        value: "",
+        type: "imBack",
+        identificator: null,
+      });
+    },
   },
 };
 </script>
@@ -192,5 +204,9 @@ export default {
 #addAnswerButton:hover {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
+}
+
+#warningText {
+  color: red;
 }
 </style>

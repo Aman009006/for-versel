@@ -23,8 +23,8 @@
       <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
 
-    <div v-if="answer.buttons || answerConfig.type == 'button'">
-      <ButtonTable ref="buttonTable" :buttons="answer.buttons" />
+    <div v-if="answer.buttons">
+      <ButtonTable ref="buttonTable" :buttons="answer.buttons" :answerConfig="answerConfig" />
     </div>
   </div>
 </template>
