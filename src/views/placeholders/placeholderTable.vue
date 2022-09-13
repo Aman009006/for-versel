@@ -63,7 +63,6 @@ export default {
   data() {
     return {
       dataReady: false,
-      placeholders: [],
     };
   },
   computed: {
@@ -81,7 +80,6 @@ export default {
   methods: {
     async loadData() {
       await this.$store.dispatch(dispatchNames.fetchPlaceholders);
-      this.placeholders = this.currentPlaceholders;
       this.dataReady = true;
     },
   },
