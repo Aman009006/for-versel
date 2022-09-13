@@ -7,17 +7,24 @@ const mutations = {
     pushDeletedAnswerButton: (state, deletedAnswerButton) => {
         state.deletedAnswerButtons.push(deletedAnswerButton)
     },
-    setCurrentAnswerButtons: (state, AnswerButtons) => {
-        state.currentAnswerButtons = AnswerButtons
+    setCurrentAnswerButtons: (state, answerButtons) => {
+        state.currentAnswerButtons = answerButtons
+    },
+    resetAnswerButtonsProperties: (states, answerButtons) => {
+        state.deletedAnswerButtons = []
+        state.currentAnswerButtons = answerButtons
     }
 }
 
 const actions = {
-    updateCurrentAnswerButtons({ commit }, AnswerButtons) {
-        commit(mutations.setCurrentAnswerButtons.name, AnswerButtons)
+    updateCurrentAnswerButtons({ commit }, answerButtons) {
+        commit(mutations.setCurrentAnswerButtons.name, answerButtons)
     },
     pushDeletedAnswerButton: ({ commit }, deletedAnswerButton) => {
         commit(mutations.pushDeletedAnswerButton.name, deletedAnswerButton)
+    },
+    resetAnswerButtonsProperties: ({ commit }, answerButtons) => {
+        commit(mutations.resetAnswerButtonsProperties.name, answerButtons)
     }
 }
 

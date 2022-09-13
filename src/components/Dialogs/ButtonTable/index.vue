@@ -3,21 +3,27 @@
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
       <el-button
-        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi' "
+        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
         id="addAnswerButton"
         icon="icon-Plus"
         class="add-btn"
         @click="addAnswerButton"
       />
     </div>
-    <el-table id="answerButtonsTable" :data="copiedButtons" border>
+    <el-table
+      id="answerButtonsTable"
+      :data="copiedButtons"
+      border
+      @load="resetStoreProperties"
+      @current-change="saveButtonsIntoStore"
+    >
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @change="onChangeMethods(scope.$index, scope.row)"
+            @change="checkDublicateTitles(scope.$index, scope.row)"
           />
         </template>
       </el-table-column>
@@ -44,12 +50,7 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-input
-            v-model="scope.row.value"
-            type="textarea"
-            autosize
-            @change="onChangeMethods(scope.$index, scope.row)"
-          />
+          <el-input v-model="scope.row.value" type="textarea" autosize />
         </template>
       </el-table-column>
 
@@ -75,10 +76,7 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-select
-            v-model="scope.row.type"
-            @change="onChangeMethods(scope.$index, scope.row)"
-          >
+          <el-select v-model="scope.row.type" @change="saveButtonsIntoStore">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -106,6 +104,8 @@
 </template>
 
 <script>
+import { dispatchNames } from "@/constants";
+
 export default {
   name: "ButtonTable",
   inheritAttrs: true,
@@ -135,6 +135,12 @@ export default {
       }
       return null;
     },
+    resetStoreProperties() {
+      this.$store.dispatch(dispatchNames.resetAnswerButtonsProperties,
+        this.tableButtons
+      );
+      return null;
+    },
   },
   methods: {
     isImbackButton(button) {
@@ -142,12 +148,20 @@ export default {
     },
     async handleDelete(tableIndex, row) {
       this.tableButtons.splice(tableIndex, 1);
+      if (row?.new != true) {
+        this.$store.dispatch(dispatchNames.pushDeletedAnswerButton, row);
+      }
+      console.log(this.$store.getters.deletedAnswerButtons);
     },
-    async saveButtonsContentLocal(index, rowButton) {
-      this.tableButtons[index] = rowButton;
+    async saveButtonsIntoStore() {
+      this.$store.dispatch(
+        dispatchNames.updateCurrentAnswerButtons,
+        this.tableButtons
+      );
+      console.log(this.$store.getters.currentAnswerButtons);
     },
     async checkDublicateTitles(rowIndex, rowButton) {
-      this.$refs.warningText.innerHTML = ""
+      this.$refs.warningText.innerHTML = "";
       this.tableButtons.forEach((button, index) => {
         if (button.title == rowButton.title && index != rowIndex) {
           this.$refs.warningText.innerHTML =
@@ -155,17 +169,15 @@ export default {
         }
       });
     },
-    async onChangeMethods(index, rowButton) {
-      await this.saveButtonsContentLocal(index, rowButton)
-      await this.checkDublicateTitles(index, rowButton)
-    },
     async addAnswerButton() {
       this.tableButtons.push({
         title: "",
         value: "",
         type: "imBack",
         identificator: null,
+        new: true,
       });
+      await this.saveButtonsIntoStore();
     },
   },
 };

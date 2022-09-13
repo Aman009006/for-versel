@@ -20,6 +20,9 @@ export const dispatchNames = {
   setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
   fetchPlaceholders: 'placeholders/fetchPlaceholders',
   getAndSetIntentAnswers: 'dialogs/getAndSetIntentAnswers',
+  updateCurrentAnswerButtons: "answerButtons/updateCurrentAnswerButtons",
+  pushDeletedAnswerButton: "answerButtons/pushDeletedAnswerButton",
+  resetAnswerButtonsProperties: "answerButtons/resetAnswerButtonsProperties"
 }
 
 export const humanReadableLabels = {
