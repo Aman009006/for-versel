@@ -24,10 +24,6 @@
     </div>
 
     <div v-if="answer.buttons || answerConfig.type == 'button'">
-      <div style="display: flex">
-        <h2>Buttons</h2>
-        <add-answer-button />
-      </div>
       <ButtonTable ref="buttonTable" :buttons="answer.buttons" />
     </div>
   </div>
@@ -39,13 +35,11 @@ import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
 import { setAnswerText } from "@/api/answers";
 import { setButtonProperties } from "@/api/answers";
-import AddAnswerButton from "../ButtonTable/addAnswerButton.vue";
 
 export default {
   components: {
     ButtonTable,
     MarkDownEditor,
-    AddAnswerButton,
   },
   inheritAttrs: true,
   props: ["answer", "answerConfig"],
