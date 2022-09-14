@@ -20,6 +20,7 @@ const mutations = {
         state.deletedAnswerButtons = []
         state.unchangedAnswerButtons = answerButtons
         state.newAnswerButtons = []
+        state.currentAnswerButtons = []
     },
     markDeleted: (state, rowIndex) => {
         let index = 0;
