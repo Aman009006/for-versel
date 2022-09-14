@@ -1,30 +1,49 @@
 const state = {
     deletedAnswerButtons: [],
+    newAnswerButtons: [],
+    unchangedAnswerButtons: [],
     currentAnswerButtons: []
 }
 
 const mutations = {
-    pushDeletedAnswerButton: (state, deletedAnswerButton) => {
-        state.deletedAnswerButtons.push(deletedAnswerButton)
-    },
-    setCurrentAnswerButtons: (state, answerButtons) => {
+    updateStateProperties: (state, answerButtons) => {
+        state.newAnswerButtons = []
+        state.deletedAnswerButtons = state.unchangedAnswerButtons.filter((button) => button?.deleted)
         state.currentAnswerButtons = answerButtons
+        answerButtons.forEach((button) => {
+            if (button?.new == true) {
+                state.newAnswerButtons.push(button)
+            }
+        })
     },
-    resetAnswerButtonsProperties: (states, answerButtons) => {
+    resetStateProperties: (state, answerButtons) => {
         state.deletedAnswerButtons = []
-        state.currentAnswerButtons = answerButtons
+        state.unchangedAnswerButtons = answerButtons
+        state.newAnswerButtons = []
+    },
+    markDeleted: (state, rowIndex) => {
+        let index = 0;
+        state.unchangedAnswerButtons.forEach((button) => {
+            if (button?.deleted) {
+                index--;
+            }
+            if (index == rowIndex) {
+                button.deleted = true
+            }
+            index++
+        });
     }
 }
 
 const actions = {
-    updateCurrentAnswerButtons({ commit }, answerButtons) {
-        commit(mutations.setCurrentAnswerButtons.name, answerButtons)
+    updateStateProperties({ commit }, answerButtons) {
+        commit(mutations.updateStateProperties.name, answerButtons)
     },
-    pushDeletedAnswerButton: ({ commit }, deletedAnswerButton) => {
-        commit(mutations.pushDeletedAnswerButton.name, deletedAnswerButton)
+    resetStateProperties: ({ commit }, answerButtons) => {
+        commit(mutations.resetStateProperties.name, answerButtons)
     },
-    resetAnswerButtonsProperties: ({ commit }, answerButtons) => {
-        commit(mutations.resetAnswerButtonsProperties.name, answerButtons)
+    markDeleted: ({ commit }, index) => {
+        commit(mutations.markDeleted.name, index)
     }
 }
 

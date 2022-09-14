@@ -14,8 +14,6 @@
       id="answerButtonsTable"
       :data="copiedButtons"
       border
-      @load="resetStoreProperties"
-      @current-change="saveButtonsIntoStore"
     >
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
@@ -23,7 +21,7 @@
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @change="checkDublicateTitles(scope.$index, scope.row)"
+            @change="checkDublicateTitles(scope.$index, scope.row); saveButtonsIntoStore();"
           />
         </template>
       </el-table-column>
@@ -131,13 +129,15 @@ export default {
       if (this.buttons != null) {
         const copiedButtons = JSON.parse(JSON.stringify(this.buttons));
         this.tableButtons = copiedButtons;
+        this.resetStoreProperties;
         return copiedButtons;
       }
       return null;
     },
     resetStoreProperties() {
-      this.$store.dispatch(dispatchNames.resetAnswerButtonsProperties,
-        this.tableButtons
+      this.$store.dispatch(
+        dispatchNames.resetStateProperties,
+        JSON.parse(JSON.stringify(this.buttons))
       );
       return null;
     },
@@ -149,16 +149,15 @@ export default {
     async handleDelete(tableIndex, row) {
       this.tableButtons.splice(tableIndex, 1);
       if (row?.new != true) {
-        this.$store.dispatch(dispatchNames.pushDeletedAnswerButton, row);
+        this.$store.dispatch(dispatchNames.markDeleted, tableIndex);
       }
-      console.log(this.$store.getters.deletedAnswerButtons);
+      this.saveButtonsIntoStore()
     },
     async saveButtonsIntoStore() {
       this.$store.dispatch(
-        dispatchNames.updateCurrentAnswerButtons,
-        this.tableButtons
+        dispatchNames.updateStateProperties,
+         JSON.parse(JSON.stringify(this.tableButtons))
       );
-      console.log(this.$store.getters.currentAnswerButtons);
     },
     async checkDublicateTitles(rowIndex, rowButton) {
       this.$refs.warningText.innerHTML = "";

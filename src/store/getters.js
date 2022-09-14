@@ -14,6 +14,8 @@ const getters = {
   placeholders: (state) => state.placeholders.placeholders,
   intents: (state) => state.dialogs.intents,
   deletedAnswerButtons: (state) => state.answerButtons.deletedAnswerButtons,
+  unchangedAnswerButtons: (state) => state.answerButtons.unchangedAnswerButtons,
+  newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
   currentAnswerButtons: (state) => state.answerButtons.currentAnswerButtons
 }
 export default getters
