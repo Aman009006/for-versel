@@ -3,7 +3,7 @@ import ObjectUtils from '@/utils/ObjectUtils';
 
 const state = {
   /**
-   * This is a "mirrow" of the database placeholders.
+   * This is a "mirror" of the database placeholders.
    * Please don't use this placeholders to save data, which
    * is not in the database.
    */
