@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <template v-if="dataReady">
-      <el-table :data="currentPlaceholders" class="placeholder_table" border>
+      <el-table :data="allPlaceholders" class="placeholder_table" border>
         <el-table-column
           align="center"
           label="Platzhalterbezeichnung"
@@ -9,12 +9,15 @@
           autosize
         >
           <template #default="{ row }">
-            <template v-if="row.edit">
+            <template v-if="isPlaceholderEditing(row)">
               <el-input
-                v-model="row.key"
                 type="textarea"
                 autosize
                 class="edit-input"
+                :modelValue="getEditablePlaceholder(row.key).key"
+                @update:modelValue="
+                  (newKey) => setEditablePlaceholderKey(row.key, newKey)
+                "
               />
             </template>
             <template v-else>
@@ -24,12 +27,15 @@
         </el-table-column>
         <el-table-column align="center" label="Wert" prop="value" autosize>
           <template #default="{ row }">
-            <template v-if="row.edit">
+            <template v-if="isPlaceholderEditing(row)">
               <el-input
-                v-model="row.value"
                 type="textarea"
                 autosize
                 class="edit-input"
+                :modelValue="getEditablePlaceholder(row.key).value"
+                @update:modelValue="
+                  (newValue) => setEditablePlaceholderValue(row.key, newValue)
+                "
               />
             </template>
             <template v-else>
@@ -52,7 +58,7 @@
 import editButtons from "./editButtons.vue";
 import addButton from "./addButton.vue";
 import deleteButton from "./deleteButton.vue";
-import { dispatchNames } from "@/constants";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
   components: {
@@ -63,12 +69,11 @@ export default {
   data() {
     return {
       dataReady: false,
-      placeholders: [],
     };
   },
   computed: {
-    currentPlaceholders() {
-      return this.$store.getters.placeholders;
+    allPlaceholders() {
+      return PlaceholderUtilities.getAllPlaceholders(this.$store);
     },
   },
   async created() {
@@ -79,10 +84,30 @@ export default {
     await this.loadData();
   },
   methods: {
+    isPlaceholderEditing(placeholder) {
+      const isEditing = PlaceholderUtilities.isPlaceholderEditing(
+        this.$store,
+        placeholder
+      );
+      return isEditing;
+    },
     async loadData() {
-      await this.$store.dispatch(dispatchNames.fetchPlaceholders);
-      this.placeholders = this.currentPlaceholders;
+      await PlaceholderUtilities.fetchPlaceholders(this.$store);
       this.dataReady = true;
+    },
+    getEditablePlaceholder(placeholderKey) {
+      return PlaceholderUtilities.getEditablePlaceholder(
+        this.$store,
+        placeholderKey
+      );
+    },
+    setEditablePlaceholderKey(placeholderKey, newKey) {
+      const editablePlaceholder = this.getEditablePlaceholder(placeholderKey);
+      editablePlaceholder.key = newKey;
+    },
+    setEditablePlaceholderValue(placeholderKey, newValue) {
+      const editablePlaceholder = this.getEditablePlaceholder(placeholderKey);
+      editablePlaceholder.value = newValue;
     },
   },
 };

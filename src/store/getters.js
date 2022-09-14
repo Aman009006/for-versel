@@ -12,6 +12,8 @@ const getters = {
   skillsWithIntents: (state) => state.permission.skillsWithIntents,
   metainfo: (state) => state.user.metainfo,
   placeholders: (state) => state.placeholders.placeholders,
+  editablePlaceholders: (state) => state.placeholders.editablePlaceholders,
+  newPlaceholder: (state) => state.placeholders.newPlaceholder,
   intents: (state) => state.dialogs.intents,
 }
 export default getters

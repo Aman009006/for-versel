@@ -1,22 +1,30 @@
 <template>
   <el-table-column align="center" width="130">
-    <template #default="{ row }">
+    <template #default="{ row: placeholder }">
       <!-- When the editing mode is turned on: -->
-      <template v-if="row.edit">
+      <template v-if="isPlaceholderEditing(placeholder)">
         <el-button
           class="confirm-btn"
           icon="icon-Download"
-          @click="confirmEdit(row)"
+          @click="confirmEdit(placeholder)"
         >
           Speichern
         </el-button>
-        <el-button class="cancel-btn" icon="icon-Refresh" @click="cancelEdit()">
+        <el-button
+          class="cancel-btn"
+          icon="icon-Refresh"
+          @click="removeInputFields(placeholder)"
+        >
           Abbrechen
         </el-button>
       </template>
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <el-button class="edit-btn" icon="icon-Edit" @click="toggleEdit(row)">
+        <el-button
+          class="edit-btn"
+          icon="icon-Edit"
+          @click="startEdit(placeholder)"
+        >
           Bearbeiten
         </el-button>
       </template>
@@ -26,54 +34,66 @@
 
 <script>
 import { updatePlaceholder, setPlaceholder } from "@/api/placeholders";
-import { dispatchNames } from "@/constants";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
-  data() {
-    return {
-      isEdit: false,
-      currentPlaceholderData: [],
-    };
-  },
   computed: {
     currentPlaceholders() {
       return this.$store.getters.placeholders;
     },
   },
   methods: {
-    async toggleEdit(row) {
-      row.originalKey = row.key;
-      row.originalValue = row.value;
-      row.edit = true;
-      this.isEdit = true;
-      this.currentPlaceholderData = this.currentPlaceholders;
+    isPlaceholderEditing(placeholder) {
+      const isEditing = PlaceholderUtilities.isPlaceholderEditing(
+        this.$store,
+        placeholder
+      );
+      return isEditing;
     },
-    async cancelEdit() {
-      this.isEdit = false;
-      await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+    async startEdit(placeholder) {
+      PlaceholderUtilities.startEditingPlaceholder(
+        this.$store,
+        placeholder.key
+      );
     },
-    async confirmEdit(row) {
-      let fetchPlaceholders = true;
-      if (row.key !== "" && row.value !== "") {
-        if (this.isEdit) {
-          fetchPlaceholders = await this.updatePlaceholder(row);
+    removeInputFields(placeholder) {
+      PlaceholderUtilities.stopCreatingOrAddingPlaceholder(this.$store, placeholder);
+    },
+    async confirmEdit(placeholder) {
+      let savedSuccessfully = true;
+      if (placeholder.key !== "" && placeholder.value !== "") {
+        if (PlaceholderUtilities.isNewPlaceholder(this.$store, placeholder)) {
+          savedSuccessfully = await this.setPlaceholder(placeholder);
         } else {
-          fetchPlaceholders = await this.setPlaceholder(row);
+          savedSuccessfully = await this.updatePlaceholder(placeholder);
         }
       } else {
         this.$message({
           message: "Bitte Platzhalterbezeichnung und Wert eingeben",
           type: "warning",
         });
-        fetchPlaceholders = false;
+        savedSuccessfully = false;
       }
 
-      if (fetchPlaceholders) {
-        await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+      if (savedSuccessfully) {
+        await PlaceholderUtilities.fetchPlaceholders(this.$store);
+        this.removeInputFields(placeholder);
       }
     },
-    async updatePlaceholder(row) {
-      if (row.key == row.originalKey && row.value == row.originalValue) {
+    getEditablePlaceholder(placeholderKey) {
+      return PlaceholderUtilities.getEditablePlaceholder(
+        this.$store,
+        placeholderKey
+      );
+    },
+    async updatePlaceholder(currentPlaceholder) {
+      const newPlaceholder = this.getEditablePlaceholder(
+        currentPlaceholder.key
+      );
+      if (
+        newPlaceholder.key == currentPlaceholder.key &&
+        newPlaceholder.value == currentPlaceholder.value
+      ) {
         this.$message({
           message: "Es wurden keine Änderungen erkannt",
           type: "warning",
@@ -81,9 +101,9 @@ export default {
         return false;
       } else {
         const updateSuccessful = await updatePlaceholder(
-          row.key,
-          row.value,
-          row.originalKey
+          newPlaceholder.key,
+          newPlaceholder.value,
+          currentPlaceholder.key
         );
         if (updateSuccessful) {
           this.$message({
@@ -94,8 +114,11 @@ export default {
         return updateSuccessful;
       }
     },
-    async setPlaceholder(row) {
-      const setSuccessful = await setPlaceholder(row.key, row.value);
+    async setPlaceholder(placeholder) {
+      const setSuccessful = await setPlaceholder(
+        placeholder.key,
+        placeholder.value
+      );
       if (setSuccessful) {
         this.$message({
           message: "Der neue Platzhalter wurde erfolgreich gespeichert",

@@ -1,7 +1,7 @@
 <template>
   <el-table-column align="center" width="70">
     <template #default="{ row }">
-      <template v-if="!row.edit">
+      <template v-if="!isPlaceholderEditing(row)">
         <el-button
           class="delete-btn"
           icon="icon-Delete"
@@ -15,7 +15,7 @@
 
 <script>
 import { deletePlaceholder } from "@/api/placeholders";
-import { dispatchNames } from "@/constants";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
   computed: {
@@ -24,6 +24,13 @@ export default {
     },
   },
   methods: {
+    isPlaceholderEditing(placeholder) {
+      const isEditing = PlaceholderUtilities.isPlaceholderEditing(
+        this.$store,
+        placeholder
+      );
+      return isEditing;
+    },
     async deletePlaceholder(row) {
       this.$confirm(
         "Soll der Platzhalter wirklich gelöscht werden?",
@@ -42,7 +49,7 @@ export default {
               type: "success",
             });
           }
-          await this.$store.dispatch(dispatchNames.fetchPlaceholders);
+          await PlaceholderUtilities.fetchPlaceholders(this.$store);
         })
         .catch(() => {});
     },
