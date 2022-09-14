@@ -24,7 +24,11 @@
     </div>
 
     <div v-if="answer.buttons">
-      <ButtonTable ref="buttonTable" :buttons="answer.buttons" :answerConfig="answerConfig" />
+      <ButtonTable
+        ref="buttonTable"
+        :buttons="answer.buttons"
+        :answerConfig="answerConfig"
+      />
     </div>
   </div>
 </template>
@@ -35,6 +39,7 @@ import ButtonTable from "@/components/Dialogs/ButtonTable";
 import MarkDownEditor from "@/components/MarkDownEditor";
 import { setAnswerText } from "@/api/answers";
 import { setButtonProperties } from "@/api/answers";
+import { insertAnswerButton, deleteAnswerButton } from "@/api/answerButtons";
 
 export default {
   components: {
@@ -73,25 +78,61 @@ export default {
     },
     async saveButtons() {
       let res = true;
-      const currentButtons = this.answer.buttons;
-      if (currentButtons != null) {
-        const newButtons = this.$refs.buttonTable.copiedButtons;
-        for (let i = 0; i < currentButtons.length; i++) {
-          const currentButton = currentButtons[i];
-          const newButton = newButtons[i];
-          if (this.buttonDiffers(currentButton, newButton)) {
-            try {
-              await setButtonProperties(
-                this.answer.id,
-                currentButton.title,
-                newButton.title,
-                newButton.type,
-                newButton.value
-              );
-            } catch {
-              res = false;
+      const oldButtons = this.$store.getters.unchangedAnswerButtons;
+      const updatedButtons = this.$store.getters.currentAnswerButtons.filter(
+        (button) => button?.new != true
+      );
+      if (oldButtons.length != 0 && updatedButtons.length != 0) {
+        let index = -1;
+        for (let i = 0; i < oldButtons.length; i++) {
+          index++;
+          if (oldButtons[i]?.deleted == true) {
+            index--;
+          } else {
+            const currentButton = oldButtons[i];
+            const newButton = updatedButtons[index];
+            if (this.buttonDiffers(currentButton, newButton)) {
+              try {
+                await setButtonProperties(
+                  this.answer.id,
+                  currentButton.title,
+                  newButton.title,
+                  newButton.type,
+                  newButton.value
+                );
+              } catch {
+                res = false;
+              }
             }
           }
+        }
+      }
+      return res;
+    },
+    async deleteButtons() {
+      const buttons = this.$store.getters.deletedAnswerButtons;
+      let res = true;
+      if (buttons.length != 0) {
+        try {
+          buttons.array.forEach((button) => {
+            deleteAnswerButton(button);
+          });
+        } catch {
+          res = false;
+        }
+      }
+      return res;
+    },
+    async insertButtons() {
+      const buttons = this.$store.getters.newAnswerButtons;
+      let res = true;
+      if (buttons.length != 0) {
+        try {
+          buttons.array.forEach((button) => {
+            insertAnswerButton(button);
+          });
+        } catch {
+          res = false;
         }
       }
       return res;
@@ -99,7 +140,8 @@ export default {
     buttonDiffers(button1, button2) {
       const titleDiffers = button1.title != button2.title;
       const valueDiffers = button1.value != button2.value;
-      return titleDiffers || valueDiffers;
+      const typeDiffers = button1.type != button2.type;
+      return titleDiffers || valueDiffers || typeDiffers;
     },
     printSavedAnswerMessage(answersSaved, buttonsSaved) {
       if (answersSaved && buttonsSaved) {
