@@ -16,8 +16,14 @@ export default class PlaceholderUtilities {
     }
 
     static isPlaceholderEditing(store, placeholderKey) {
-        const { editingPlaceholderNames } = store.getters;
-        return editingPlaceholderNames.has(placeholderKey);
+        const { editablePlaceholders } = store.getters;
+        const editingPlaceholderKeys = Object.keys(editablePlaceholders)
+        return editingPlaceholderKeys.includes(placeholderKey);
+    }
+
+    static getEditablePlaceholder(store, placeholderKey) {
+        const { editablePlaceholders } = store.getters;
+        return editablePlaceholders[placeholderKey];
     }
 
     static #getDispatchName(action) {

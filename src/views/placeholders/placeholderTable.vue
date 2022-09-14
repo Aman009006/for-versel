@@ -11,10 +11,13 @@
           <template #default="{ row }">
             <template v-if="isPlaceholderEditing(row.key)">
               <el-input
-                v-model="row.key"
                 type="textarea"
                 autosize
                 class="edit-input"
+                :modelValue="getEditablePlaceholder(row.key).key"
+                @update:modelValue="
+                  (newKey) => setEditablePlaceholderKey(row.key, newKey)
+                "
               />
             </template>
             <template v-else>
@@ -26,10 +29,13 @@
           <template #default="{ row }">
             <template v-if="isPlaceholderEditing(row.key)">
               <el-input
-                v-model="row.value"
                 type="textarea"
                 autosize
                 class="edit-input"
+                :modelValue="getEditablePlaceholder(row.key).value"
+                @update:modelValue="
+                  (newValue) => setEditablePlaceholderValue(row.key, newValue)
+                "
               />
             </template>
             <template v-else>
@@ -88,6 +94,20 @@ export default {
     async loadData() {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
       this.dataReady = true;
+    },
+    getEditablePlaceholder(placeholderKey) {
+      return PlaceholderUtilities.getEditablePlaceholder(
+        this.$store,
+        placeholderKey
+      );
+    },
+    setEditablePlaceholderKey(placeholderKey, newKey) {
+      const editablePlaceholder = this.getEditablePlaceholder(placeholderKey);
+      editablePlaceholder.key = newKey;
+    },
+    setEditablePlaceholderValue(placeholderKey, newValue) {
+      const editablePlaceholder = this.getEditablePlaceholder(placeholderKey);
+      editablePlaceholder.value = newValue;
     },
   },
 };

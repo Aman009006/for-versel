@@ -13,7 +13,7 @@
         <el-button
           class="cancel-btn"
           icon="icon-Refresh"
-          @click="cancelEdit(placeholder)"
+          @click="removeInputFields(placeholder)"
         >
           Abbrechen
         </el-button>
@@ -51,22 +51,10 @@ export default {
       return isEditing;
     },
     async startEdit(placeholder) {
-      placeholder.originalKey = placeholder.key;
-      placeholder.originalValue = placeholder.value;
       PlaceholderUtilities.startEditingPlaceholder(
         this.$store,
         placeholder.key
       );
-    },
-    async cancelEdit(placeholder) {
-      this.resetToOriginalPlaceholder(placeholder);
-      this.removeInputFields(placeholder);
-    },
-    resetToOriginalPlaceholder(placeholder) {
-      placeholder.key = placeholder.originalKey;
-      placeholder.value = placeholder.originalValue;
-      delete placeholder.originalKey;
-      delete placeholder.originalValue;
     },
     removeInputFields(placeholder) {
       PlaceholderUtilities.stopEditingPlaceholder(this.$store, placeholder.key);
@@ -92,10 +80,17 @@ export default {
         this.removeInputFields(placeholder);
       }
     },
-    async updatePlaceholder(placeholder) {
+    getEditablePlaceholder(placeholderKey) {
+      return PlaceholderUtilities.getEditablePlaceholder(
+        this.$store,
+        placeholderKey
+      );
+    },
+    async updatePlaceholder(currentPlaceholder) {
+      const newPlaceholder = this.getEditablePlaceholder(currentPlaceholder.key);
       if (
-        placeholder.key == placeholder.originalKey &&
-        placeholder.value == placeholder.originalValue
+        newPlaceholder.key == currentPlaceholder.key &&
+        newPlaceholder.value == currentPlaceholder.value
       ) {
         this.$message({
           message: "Es wurden keine Änderungen erkannt",
@@ -104,9 +99,9 @@ export default {
         return false;
       } else {
         const updateSuccessful = await updatePlaceholder(
-          placeholder.key,
-          placeholder.value,
-          placeholder.originalKey
+          newPlaceholder.key,
+          newPlaceholder.value,
+          currentPlaceholder.key
         );
         if (updateSuccessful) {
           this.$message({

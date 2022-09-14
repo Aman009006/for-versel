@@ -1,8 +1,14 @@
 import { getPlaceholders } from '@/api/placeholders';
+import ObjectUtils from '@/utils/ObjectUtils';
 
 const state = {
+  /**
+   * This is a "mirrow" of the database placeholders.
+   * Please don't use this placeholders to save data, which
+   * is not in the database.
+   */
   placeholders: [],
-  editingPlaceholderNames: new Set(),
+  editablePlaceholders: {},
 }
 
 const mutations = {
@@ -10,10 +16,11 @@ const mutations = {
     state.placeholders = placeholders
   },
   addEditingPlaceholder: (state, placeholderKey) => {
-    state.editingPlaceholderNames.add(placeholderKey);
+    const originalPlaceholder = getPlaceholder(state, placeholderKey);
+    state.editablePlaceholders[placeholderKey] = ObjectUtils.createCopyOfSerializableObject(originalPlaceholder);
   },
   deleteEditingPlaceholder: (state, placeholderKey) => {
-    state.editingPlaceholderNames.delete(placeholderKey);
+    delete state.editablePlaceholders[placeholderKey];
   }
 }
 
@@ -35,4 +42,12 @@ export default {
   state,
   mutations,
   actions,
+}
+
+function getPlaceholder(state, placeholderKey) {
+  return state.placeholders.find(isPlaceholderWithKey(placeholderKey));
+}
+
+function isPlaceholderWithKey(placeholderKey) {
+  return (placeholder) => placeholder.key == placeholderKey;
 }
