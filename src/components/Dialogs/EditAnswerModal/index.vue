@@ -11,6 +11,7 @@
             <el-button
               class="confirm-btn"
               :disabled="confirmButtonDisabled"
+              :loading="confirmButtonDisabled"
               @click="saveAnswer()"
             >
               Speichern
