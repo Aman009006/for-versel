@@ -9,11 +9,23 @@ const state = {
    */
   placeholders: [],
   editablePlaceholders: {},
+  newPlaceholder: null
 }
 
 const mutations = {
   setPlaceholders: (state, placeholders) => {
     state.placeholders = placeholders
+  },
+  addNewPlaceholder: (state) => {
+    if (state.newPlaceholder == null) {
+      state.newPlaceholder = {
+        key: '',
+        value: ''
+      }
+    }
+  },
+  removeNewPlaceholder: (state) => {
+    state.newPlaceholder = null;
   },
   addEditingPlaceholder: (state, placeholderKey) => {
     const originalPlaceholder = getPlaceholder(state, placeholderKey);
@@ -28,6 +40,12 @@ const actions = {
   async fetchPlaceholders({ commit }) {
     const placeholders = await getPlaceholders()
     commit(mutations.setPlaceholders.name, placeholders)
+  },
+  startCreatingNewPlaceholder({ commit }) {
+    commit(mutations.addNewPlaceholder.name)
+  },
+  stopCreatingNewPlaceholder({ commit }) {
+    commit(mutations.removeNewPlaceholder.name)
   },
   startEditingPlaceholder({ commit }, placeholderKey) {
     commit(mutations.addEditingPlaceholder.name, placeholderKey)

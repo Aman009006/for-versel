@@ -1,5 +1,9 @@
 <template>
-  <el-button class="add-btn" icon="icon-Plus" @click="createAddNewPlaceholderForm()">
+  <el-button
+    class="add-btn"
+    icon="icon-Plus"
+    @click="startCreatingNewPlaceholder()"
+  >
     Neuen Platzhalter hinzufügen
   </el-button>
 </template>
@@ -8,21 +12,9 @@
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 
 export default {
-  computed: {
-    currentPlaceholders() {
-      return this.$store.getters.placeholders;
-    },
-  },
   methods: {
-    async createAddNewPlaceholderForm() {
-      if (!this.isInsertingPlaceholderCurrently()) {
-        const newPlaceholderKey = "";
-        this.currentPlaceholders.push({ key: newPlaceholderKey, value: "", insertPlaceholder: true });
-        PlaceholderUtilities.startEditingPlaceholder(this.$store, newPlaceholderKey);
-      }
-    },
-    isInsertingPlaceholderCurrently() {
-      return this.currentPlaceholders[this.currentPlaceholders.length - 1].insertPlaceholder;
+    async startCreatingNewPlaceholder() {
+      PlaceholderUtilities.startCreatingNewPlaceholder(this.$store);
     },
   },
 };

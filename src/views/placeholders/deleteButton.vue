@@ -1,7 +1,7 @@
 <template>
   <el-table-column align="center" width="70">
     <template #default="{ row }">
-      <template v-if="!isPlaceholderEditing(row.key)">
+      <template v-if="!isPlaceholderEditing(row)">
         <el-button
           class="delete-btn"
           icon="icon-Delete"
@@ -24,10 +24,10 @@ export default {
     },
   },
   methods: {
-    isPlaceholderEditing(placeholderKey) {
+    isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
         this.$store,
-        placeholderKey
+        placeholder
       );
       return isEditing;
     },

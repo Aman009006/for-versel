@@ -2,7 +2,7 @@
   <el-table-column align="center" width="130">
     <template #default="{ row: placeholder }">
       <!-- When the editing mode is turned on: -->
-      <template v-if="isPlaceholderEditing(placeholder.key)">
+      <template v-if="isPlaceholderEditing(placeholder)">
         <el-button
           class="confirm-btn"
           icon="icon-Download"
@@ -43,10 +43,10 @@ export default {
     },
   },
   methods: {
-    isPlaceholderEditing(placeholderKey) {
+    isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
         this.$store,
-        placeholderKey
+        placeholder
       );
       return isEditing;
     },
@@ -57,12 +57,12 @@ export default {
       );
     },
     removeInputFields(placeholder) {
-      PlaceholderUtilities.stopEditingPlaceholder(this.$store, placeholder.key);
+      PlaceholderUtilities.stopCreatingOrAddingPlaceholder(this.$store, placeholder);
     },
     async confirmEdit(placeholder) {
       let savedSuccessfully = true;
       if (placeholder.key !== "" && placeholder.value !== "") {
-        if (placeholder.insertPlaceholder) {
+        if (PlaceholderUtilities.isNewPlaceholder(this.$store, placeholder)) {
           savedSuccessfully = await this.setPlaceholder(placeholder);
         } else {
           savedSuccessfully = await this.updatePlaceholder(placeholder);
@@ -87,7 +87,9 @@ export default {
       );
     },
     async updatePlaceholder(currentPlaceholder) {
-      const newPlaceholder = this.getEditablePlaceholder(currentPlaceholder.key);
+      const newPlaceholder = this.getEditablePlaceholder(
+        currentPlaceholder.key
+      );
       if (
         newPlaceholder.key == currentPlaceholder.key &&
         newPlaceholder.value == currentPlaceholder.value

@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <template v-if="dataReady">
-      <el-table :data="currentPlaceholders" class="placeholder_table" border>
+      <el-table :data="allPlaceholders" class="placeholder_table" border>
         <el-table-column
           align="center"
           label="Platzhalterbezeichnung"
@@ -9,7 +9,7 @@
           autosize
         >
           <template #default="{ row }">
-            <template v-if="isPlaceholderEditing(row.key)">
+            <template v-if="isPlaceholderEditing(row)">
               <el-input
                 type="textarea"
                 autosize
@@ -27,7 +27,7 @@
         </el-table-column>
         <el-table-column align="center" label="Wert" prop="value" autosize>
           <template #default="{ row }">
-            <template v-if="isPlaceholderEditing(row.key)">
+            <template v-if="isPlaceholderEditing(row)">
               <el-input
                 type="textarea"
                 autosize
@@ -72,8 +72,8 @@ export default {
     };
   },
   computed: {
-    currentPlaceholders() {
-      return this.$store.getters.placeholders;
+    allPlaceholders() {
+      return PlaceholderUtilities.getAllPlaceholders(this.$store);
     },
   },
   async created() {
@@ -84,10 +84,10 @@ export default {
     await this.loadData();
   },
   methods: {
-    isPlaceholderEditing(placeholderKey) {
+    isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
         this.$store,
-        placeholderKey
+        placeholder
       );
       return isEditing;
     },
