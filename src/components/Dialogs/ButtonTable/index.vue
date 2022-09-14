@@ -48,7 +48,7 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-input v-model="scope.row.value" type="textarea" autosize />
+          <el-input v-model="scope.row.value" type="textarea" autosize @change="saveButtonsIntoStore" />
         </template>
       </el-table-column>
 
