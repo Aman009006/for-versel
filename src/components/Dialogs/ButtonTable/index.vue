@@ -128,6 +128,7 @@ export default {
     copiedButtons() {
       if (this.buttons != null) {
         const copiedButtons = JSON.parse(JSON.stringify(this.buttons));
+        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.tableButtons = copiedButtons;
         this.resetStoreProperties;
         return copiedButtons;
@@ -143,9 +144,6 @@ export default {
     },
   },
   methods: {
-    isImbackButton(button) {
-      return button.type == "imBack";
-    },
     async handleDelete(tableIndex, row) {
       this.tableButtons.splice(tableIndex, 1);
       if (row?.new != true) {
