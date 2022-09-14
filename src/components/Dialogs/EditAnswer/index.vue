@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @disableSaveButton="disableSaveButton">
     <h1 class="editHeadline">{{ humanReadableLabels.edit }}</h1>
     <p v-if="answer.description" class="description">
       {{ answer.description }}
@@ -28,6 +28,8 @@
         ref="buttonTable"
         :buttons="answer.buttons"
         :answerConfig="answerConfig"
+        @disableSaveButtonEmpty="disableSaveButtonEmpty"
+        @disableSaveButtonDuplicate="disableSaveButtonDuplicate"
       />
     </div>
   </div>
@@ -121,7 +123,7 @@ export default {
       if (buttons.length != 0) {
         for (let i = 0; i < buttons.length; i++) {
           try {
-            buttons[i].answerId = this.answer.id
+            buttons[i].answerId = this.answer.id;
             await deleteAnswerButton(buttons[i]);
           } catch {
             res = false;
@@ -136,7 +138,7 @@ export default {
       if (buttons.length != 0) {
         for (let i = 0; i < buttons.length; i++) {
           try {
-            buttons[i].answerId = this.answer.id
+            buttons[i].answerId = this.answer.id;
             await insertAnswerButton(buttons[i]);
           } catch {
             res = false;
@@ -169,6 +171,12 @@ export default {
         message: text,
         type: "warning",
       });
+    },
+    disableSaveButtonEmpty(flag) {
+      this.$emit("disableSaveButtonEmpty", flag);
+    },
+    disableSaveButtonDuplicate(flag) {
+      this.$emit("disableSaveButtonDuplicate", flag);
     },
   },
 };

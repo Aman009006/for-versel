@@ -10,19 +10,25 @@
         @click="addAnswerButton"
       />
     </div>
-    <el-table
-      id="answerButtonsTable"
-      :data="copiedButtons"
-      border
-    >
+    <el-table id="answerButtonsTable" :data="copiedButtons" border>
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
+            ref="titleColumn"
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @change="checkDublicateTitles(scope.$index, scope.row); saveButtonsIntoStore();"
+            @input="saveButtonsIntoStore();"
           />
+          <!-- <div
+            v-if="checkDuplicateTitles(scope.$index, scope.row)"
+            class="warning"
+          >
+            TitelDuplikat: Buttons dürfen nicht den gleichen Titel haben
+          </div>
+          <div v-if="checkEmptyInputs(scope.row.title)" class="warning">
+            Leeres Feld: Es darf kein Eingabefeld leer gelassen werden
+          </div> -->
         </template>
       </el-table-column>
 
@@ -48,7 +54,14 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-input v-model="scope.row.value" type="textarea" autosize @change="saveButtonsIntoStore" />
+          <el-input
+            v-model="scope.row.value"
+            type="textarea"
+            autosize
+            @input="
+              saveButtonsIntoStore();
+            "
+          />
         </template>
       </el-table-column>
 
@@ -97,7 +110,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <span id="warningText" ref="warningText" />
+    <div id="warnings">
+      <span id="warningText" ref="warningText" />
+      <span id="warningTextEmpty" ref="warningTextEmpty" />
+    </div>
   </div>
 </template>
 
@@ -144,29 +160,44 @@ export default {
     },
   },
   methods: {
-    async handleDelete(tableIndex, row) {
+    handleDelete(tableIndex, row) {
       this.tableButtons.splice(tableIndex, 1);
       if (row?.new != true) {
         this.$store.dispatch(dispatchNames.markDeleted, tableIndex);
       }
-      this.saveButtonsIntoStore()
+      this.saveButtonsIntoStore();
     },
-    async saveButtonsIntoStore() {
+    saveButtonsIntoStore() {
       this.$store.dispatch(
         dispatchNames.updateStateProperties,
-         JSON.parse(JSON.stringify(this.tableButtons))
+        JSON.parse(JSON.stringify(this.tableButtons))
       );
     },
-    async checkDublicateTitles(rowIndex, rowButton) {
-      this.$refs.warningText.innerHTML = "";
+    checkDuplicateTitles(rowIndex, rowButton) {
+      let noDublicate = true;
       this.tableButtons.forEach((button, index) => {
         if (button.title == rowButton.title && index != rowIndex) {
-          this.$refs.warningText.innerHTML =
-            "TitelDuplikat: Buttons dürfen nicht den gleichen Titel haben. Werden nicht gespeichert";
+          noDublicate = false;
+          this.$emit("disableSaveButtonDuplicate", !noDublicate);
         }
       });
+      if (noDublicate) {
+        this.$emit("disableSaveButtonDuplicate", !noDublicate);
+      }
+      return !noDublicate;
     },
-    async addAnswerButton() {
+    checkEmptyInputs(value) {
+      let noEmpty = true;
+        if (value === "") {
+          noEmpty = false;
+          this.$emit("disableSaveButtonEmpty", !noEmpty);
+        }
+      if (noEmpty) {
+        this.$emit("disableSaveButtonEmpty", !noEmpty);
+      }
+      return !noEmpty;
+    },
+    addAnswerButton() {
       this.tableButtons.push({
         title: "",
         value: "",
@@ -174,7 +205,7 @@ export default {
         identificator: null,
         new: true,
       });
-      await this.saveButtonsIntoStore();
+      this.saveButtonsIntoStore();
     },
   },
 };
@@ -215,7 +246,8 @@ export default {
   border-color: #85ce61 !important;
 }
 
-#warningText {
+.warning {
   color: red;
+  font-size: 10px;
 }
 </style>

@@ -6,12 +6,19 @@
     <Teleport to="body">
       <div v-if="editModalOpened" class="modalBox">
         <div class="modalContent">
-          <EditAnswer ref="editAnswerRef" :answer="answer" :answerConfig="answerConfig" />
+          <EditAnswer
+            ref="editAnswerRef"
+            :answer="answer"
+            :answerConfig="answerConfig"
+            @disableSaveButtonEmpty="toggleSaveButtonEmpty"
+            @disableSaveButtonDuplicate="toggleSaveButtonDuplicate"
+          />
           <div class="buttonsContainer">
             <el-button
+              id="saveAnswerButton"
               class="confirm-btn"
               :disabled="confirmButtonDisabled"
-              :loading="confirmButtonDisabled"
+              :loading="saveAnswerClicked"
               @click="saveAnswer()"
             >
               Speichern
@@ -39,6 +46,9 @@ export default {
     return {
       editModalOpened: false,
       confirmButtonDisabled: false,
+      saveAnswerClicked: false,
+      empty: false,
+      duplicate: false,
     };
   },
   computed: {
@@ -49,6 +59,7 @@ export default {
   methods: {
     openEditModal() {
       this.confirmButtonDisabled = false;
+      this.saveAnswerClicked = false;
       this.editModalOpened = true;
     },
     closeEditModal() {
@@ -56,6 +67,7 @@ export default {
     },
     async saveAnswer() {
       this.confirmButtonDisabled = true;
+      this.saveAnswerClicked = true;
       await this.$refs.editAnswerRef.saveAnswerAndButtons();
       this.refreshAnswers();
       this.closeEditModal();
@@ -69,6 +81,14 @@ export default {
     },
     setSkillsAndIntents() {
       this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
+    },
+    toggleSaveButtonDuplicate(flag) {
+      this.duplicate = flag;
+      this.confirmButtonDisabled = this.duplicate || this.empty;
+    },
+    toggleSaveButtonEmpty(flag) {
+      this.empty = flag;
+      this.confirmButtonDisabled = this.duplicate || this.empty;
     },
   },
 };
@@ -100,6 +120,9 @@ export default {
 
     .buttonsContainer {
       margin-top: 15px;
+    }
+    #saveAnswerButton:disabled {
+      background-color: #85ce61 !important;
     }
   }
 }
