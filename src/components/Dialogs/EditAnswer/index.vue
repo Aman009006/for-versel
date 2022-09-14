@@ -77,6 +77,12 @@ export default {
       return true;
     },
     async saveButtons() {
+      const buttonsDeleted = await this.deleteButtons();
+      const buttonsUpdated = await this.updateButtons();
+      const buttonsInserted = await this.insertButtons();
+      return buttonsUpdated || buttonsDeleted || buttonsInserted;
+    },
+    async updateButtons() {
       let res = true;
       const oldButtons = this.$store.getters.unchangedAnswerButtons;
       const updatedButtons = this.$store.getters.currentAnswerButtons.filter(
@@ -113,12 +119,13 @@ export default {
       const buttons = this.$store.getters.deletedAnswerButtons;
       let res = true;
       if (buttons.length != 0) {
-        try {
-          buttons.array.forEach((button) => {
-            deleteAnswerButton(button);
-          });
-        } catch {
-          res = false;
+        for (let i = 0; i < buttons.length; i++) {
+          try {
+            buttons[i].answerId = this.answer.id
+            await deleteAnswerButton(buttons[i]);
+          } catch {
+            res = false;
+          }
         }
       }
       return res;
@@ -127,12 +134,13 @@ export default {
       const buttons = this.$store.getters.newAnswerButtons;
       let res = true;
       if (buttons.length != 0) {
-        try {
-          buttons.array.forEach((button) => {
-            insertAnswerButton(button);
-          });
-        } catch {
-          res = false;
+        for (let i = 0; i < buttons.length; i++) {
+          try {
+            buttons[i].answerId = this.answer.id
+            await insertAnswerButton(buttons[i]);
+          } catch {
+            res = false;
+          }
         }
       }
       return res;
