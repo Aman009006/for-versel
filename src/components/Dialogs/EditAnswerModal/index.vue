@@ -122,7 +122,8 @@ export default {
       margin-top: 15px;
     }
     #saveAnswerButton:disabled {
-      background-color: #85ce61 !important;
+      background-color: lightgray !important;
+      border: 0 !important;
     }
   }
 }
