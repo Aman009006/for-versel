@@ -32,8 +32,8 @@
 
 <script>
 import { humanReadableLabels } from "@/constants";
-import ButtonTable from "@/components/Dialogs/ButtonTable";
-import MarkDownEditor from "@/components/MarkDownEditor";
+import ButtonTable from "@/components/Dialogs/ButtonTable/index.vue";
+import MarkDownEditor from "@/components/MarkDownEditor/index.vue";
 import { setAnswerText } from "@/api/answers";
 import { setButtonProperties } from "@/api/answers";
 

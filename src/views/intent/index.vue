@@ -25,9 +25,9 @@
 <script>
 import refreshRoutes from "@/utils/routes/refreshRoutes";
 import { getNewIntentRoutes } from "@/utils/routes/intentRoutes";
-import DialogInfoBox from "@/components/Dialogs/DialogInfoBox";
-import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox";
-import AnswerTable from "@/components/Dialogs/AnswerTable";
+import DialogInfoBox from "@/components/Dialogs/DialogInfoBox/index.vue";
+import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox/index.vue";
+import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
 
 export default {

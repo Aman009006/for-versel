@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import ButtonList from "@/components/Dialogs/ButtonList";
-import EditAnswerModal from "@/components/Dialogs/EditAnswerModal";
+import ButtonList from "@/components/Dialogs/ButtonList/index.vue";
+import EditAnswerModal from "@/components/Dialogs/EditAnswerModal/index.vue";
 import { humanReadableLabels } from "@/constants";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: false });
