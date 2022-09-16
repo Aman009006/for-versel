@@ -111,7 +111,7 @@
             type="danger"
             icon="icon-Delete"
             @click="handleDelete(scope.$index, scope.row)"
-            />
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -185,14 +185,13 @@ export default {
       );
     },
     checkDuplicateTitles() {
-      this.titleDuplicate = false;
-      for (let i = 0; i < this.tableButtons.length; i++) {
-        this.tableButtons.forEach((button, index) => {
-          if (i !== index && this.tableButtons[i].title == button.title) {
-            this.titleDuplicate = true;
-            return;
-          }
-        });
+      const toFindDuplicates = (arr) =>
+        arr.filter((item, index) => arr.indexOf(item) !== index);
+      const duplicateElements = toFindDuplicates(
+        this.tableButtons.map((button) => button.title)
+      );
+      if (duplicateElements.length != 0) {
+        this.titleDuplicate = true;
       }
       this.$emit("disableSaveButtonDuplicate", this.titleDuplicate);
     },
