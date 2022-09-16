@@ -116,12 +116,8 @@
       </el-table-column>
     </el-table>
     <div id="warnings">
-      <span v-if="titleDuplicate" id="warningText" ref="warningText">
-        Keine Titelduplikate!
-      </span>
-      <span v-if="inputEmpty" id="warningTextEmpty" ref="warningTextEmpty">
-        Keine leeren Felder!
-      </span>
+      <el-alert v-if="titleDuplicate" id="warningText" ref="warningText" type="warning" title="Keine Titelduplikate!" :closable="false" />
+      <el-alert v-if="inputEmpty" id="warningTextEmpty" ref="warningTextEmpty" type="warning" title="Keine leeren Felder erlaubt!" :closable="false" />
     </div>
   </div>
 </template>
@@ -258,7 +254,6 @@ export default {
 #warnings {
   color: red;
   font-size: 15px;
-  margin-bottom: 40px;
   span {
     float: left;
     clear: left;
