@@ -4,7 +4,7 @@ import enLang from 'element-plus/es/locale/lang/en'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import SvgIcon from '@/components/SvgIcon'
 
-import App from '../App'
+import App from '../App.vue'
 import store from '../store'
 import router from '../router'
 
