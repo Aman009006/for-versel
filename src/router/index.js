@@ -2,15 +2,15 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { links } from '@/constants'
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from '@/layout/index.vue'
 import { paths } from '@/constants'
 
 /* Component */
-import Login from '@/views/login/index'
-import AuthRedirect from '@/views/login/auth-redirect'
-import Page404 from '@/views/error-page/404'
-import Dashboard from '@/views/dashboard/index'
-import PlaceHolders from '@/views/placeholders/index'
+import Login from '@/views/login/index.vue'
+import AuthRedirect from '@/views/login/auth-redirect.vue'
+import Page404 from '@/views/error-page/404.vue'
+import Dashboard from '@/views/dashboard/index.vue'
+import PlaceHolders from '@/views/placeholders/index.vue'
 
 export const constantRoutes = [
   {

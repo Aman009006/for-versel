@@ -1,7 +1,7 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
-import Layout from '@/layout'
-import routerView from '@/views/routerView'
+import Layout from '@/layout/index.vue'
+import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import store from '../index';
 
