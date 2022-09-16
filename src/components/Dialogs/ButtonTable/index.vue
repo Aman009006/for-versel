@@ -10,12 +10,8 @@
         @click="addAnswerButton"
       />
     </div>
-    <el-table
-      id="answerButtonsTable"
-      :data="copiedButtons"
-      border
-    >
-      <el-table-column label="Name" align="center" :min-width="columnMinWidth" fixed="true">
+    <el-table id="answerButtonsTable" :data="copiedButtons" border fixed="true">
+      <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
             ref="titleColumn"
@@ -99,20 +95,23 @@
               :value="item.value"
             />
           </el-select>
-          <div v-else style="border: 2px solid black">{{ scope.row.type }}</div>
+          <div v-else style="border: 1px solid lightgrey; border-radius: 5px">
+            {{ scope.row.type }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column>
+      <el-table-column
+        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
+        align="center"
+      >
         <template #default="scope">
           <el-button
-            v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
             id="deleteAnswerButton"
-            size="small"
+            size="default"
             type="danger"
             icon="icon-Delete"
             @click="handleDelete(scope.$index, scope.row)"
-            >Löschen
-          </el-button>
+            />
         </template>
       </el-table-column>
     </el-table>
@@ -155,11 +154,10 @@ export default {
   computed: {
     copiedButtons() {
       if (this.buttons != null) {
-        const copiedButtons = JSON.parse(JSON.stringify(this.buttons));
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.tableButtons = copiedButtons;
+        this.tableButtons = JSON.parse(JSON.stringify(this.buttons));
         this.resetStoreProperties;
-        return copiedButtons;
+        return this.tableButtons;
       }
       return null;
     },
@@ -232,7 +230,7 @@ export default {
   display: flex;
 }
 #deleteAnswerButton {
-  max-width: 90px;
+  border: 0px !important;
 }
 
 #addAnswerButton,
@@ -264,8 +262,7 @@ export default {
   margin-bottom: 40px;
   span {
     float: left;
-    clear: left
+    clear: left;
   }
-
 }
 </style>
