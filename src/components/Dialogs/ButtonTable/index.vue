@@ -10,25 +10,24 @@
         @click="addAnswerButton"
       />
     </div>
-    <el-table id="answerButtonsTable" :data="copiedButtons" border>
-      <el-table-column label="Name" align="center" :min-width="columnMinWidth">
+    <el-table
+      id="answerButtonsTable"
+      :data="copiedButtons"
+      border
+    >
+      <el-table-column label="Name" align="center" :min-width="columnMinWidth" fixed="true">
         <template #default="scope">
           <el-input
             ref="titleColumn"
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @input="saveButtonsIntoStore();"
+            @input="
+              saveButtonsIntoStore();
+              checkDuplicateTitles();
+              checkEmptyInputs();
+            "
           />
-          <!-- <div
-            v-if="checkDuplicateTitles(scope.$index, scope.row)"
-            class="warning"
-          >
-            TitelDuplikat: Buttons dürfen nicht den gleichen Titel haben
-          </div>
-          <div v-if="checkEmptyInputs(scope.row.title)" class="warning">
-            Leeres Feld: Es darf kein Eingabefeld leer gelassen werden
-          </div> -->
         </template>
       </el-table-column>
 
@@ -60,6 +59,7 @@
             autosize
             @input="
               saveButtonsIntoStore();
+              checkEmptyInputs();
             "
           />
         </template>
@@ -87,7 +87,11 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-select v-model="scope.row.type" @change="saveButtonsIntoStore">
+          <el-select
+            v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
+            v-model="scope.row.type"
+            @change="saveButtonsIntoStore"
+          >
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -95,11 +99,13 @@
               :value="item.value"
             />
           </el-select>
+          <div v-else style="border: 2px solid black">{{ scope.row.type }}</div>
         </template>
       </el-table-column>
       <el-table-column>
         <template #default="scope">
           <el-button
+            v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
             id="deleteAnswerButton"
             size="small"
             type="danger"
@@ -111,8 +117,12 @@
       </el-table-column>
     </el-table>
     <div id="warnings">
-      <span id="warningText" ref="warningText" />
-      <span id="warningTextEmpty" ref="warningTextEmpty" />
+      <span v-if="titleDuplicate" id="warningText" ref="warningText">
+        Keine Titelduplikate!
+      </span>
+      <span v-if="inputEmpty" id="warningTextEmpty" ref="warningTextEmpty">
+        Keine leeren Felder!
+      </span>
     </div>
   </div>
 </template>
@@ -128,6 +138,8 @@ export default {
     return {
       columnMinWidth: 200,
       tableButtons: [],
+      inputEmpty: false,
+      titleDuplicate: false,
       options: [
         {
           value: "imBack",
@@ -166,6 +178,7 @@ export default {
         this.$store.dispatch(dispatchNames.markDeleted, tableIndex);
       }
       this.saveButtonsIntoStore();
+      this.checkDuplicateTitles();
     },
     saveButtonsIntoStore() {
       this.$store.dispatch(
@@ -173,29 +186,27 @@ export default {
         JSON.parse(JSON.stringify(this.tableButtons))
       );
     },
-    checkDuplicateTitles(rowIndex, rowButton) {
-      let noDublicate = true;
-      this.tableButtons.forEach((button, index) => {
-        if (button.title == rowButton.title && index != rowIndex) {
-          noDublicate = false;
-          this.$emit("disableSaveButtonDuplicate", !noDublicate);
+    checkDuplicateTitles() {
+      this.titleDuplicate = false;
+      for (let i = 0; i < this.tableButtons.length; i++) {
+        this.tableButtons.forEach((button, index) => {
+          if (i !== index && this.tableButtons[i].title == button.title) {
+            this.titleDuplicate = true;
+            return;
+          }
+        });
+      }
+      this.$emit("disableSaveButtonDuplicate", this.titleDuplicate);
+    },
+    checkEmptyInputs() {
+      this.inputEmpty = false;
+      this.tableButtons.forEach((button) => {
+        if (button.title === "" || button.value === "") {
+          this.inputEmpty = true;
+          return;
         }
       });
-      if (noDublicate) {
-        this.$emit("disableSaveButtonDuplicate", !noDublicate);
-      }
-      return !noDublicate;
-    },
-    checkEmptyInputs(value) {
-      let noEmpty = true;
-        if (value === "") {
-          noEmpty = false;
-          this.$emit("disableSaveButtonEmpty", !noEmpty);
-        }
-      if (noEmpty) {
-        this.$emit("disableSaveButtonEmpty", !noEmpty);
-      }
-      return !noEmpty;
+      this.$emit("disableSaveButtonEmpty", this.inputEmpty);
     },
     addAnswerButton() {
       this.tableButtons.push({
@@ -206,6 +217,7 @@ export default {
         new: true,
       });
       this.saveButtonsIntoStore();
+      this.checkEmptyInputs();
     },
   },
 };
@@ -246,8 +258,14 @@ export default {
   border-color: #85ce61 !important;
 }
 
-.warning {
+#warnings {
   color: red;
-  font-size: 10px;
+  font-size: 15px;
+  margin-bottom: 40px;
+  span {
+    float: left;
+    clear: left
+  }
+
 }
 </style>
