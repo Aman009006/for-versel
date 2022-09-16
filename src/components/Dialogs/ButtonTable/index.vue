@@ -185,13 +185,13 @@ export default {
       );
     },
     checkDuplicateTitles() {
-      const toFindDuplicates = (arr) =>
-        arr.filter((item, index) => arr.indexOf(item) !== index);
-      const duplicateElements = toFindDuplicates(
-        this.tableButtons.map((button) => button.title)
-      );
-      if (duplicateElements.length != 0) {
-        this.titleDuplicate = true;
+      this.titleDuplicate = false;
+      const titles = this.tableButtons.map((button) => button.title);
+      titles.sort();
+      var last = titles[0];
+      for (var i = 1; i < titles.length; i++) {
+        if (titles[i] == last) this.titleDuplicate = true;
+        last = titles[i];
       }
       this.$emit("disableSaveButtonDuplicate", this.titleDuplicate);
     },
