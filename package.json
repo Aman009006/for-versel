@@ -4,9 +4,9 @@
   "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "dev": "vue-cli-service serve --hot --host localhost",
-    "build:prod": "vue-cli-service build",
-    "build:stage": "vue-cli-service build --mode staging"
+    "dev": "vite",
+    "build:prod": "vite build",
+    "build:stage": "vite build --mode staging"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-basic-styles": "^35.0.1",
