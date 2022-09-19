@@ -107,7 +107,7 @@
             size="default"
             type="danger"
             icon="icon-Delete"
-            @click="handleDelete(scope.$index, scope.row)"
+            @click="deleteAnswerButton(scope.row, scope.$index)"
           />
         </template>
       </el-table-column>
@@ -177,12 +177,11 @@ export default {
     },
   },
   methods: {
-    handleDelete(tableIndex, row) {
-      this.tableButtons.splice(tableIndex, 1);
-      if (row?.new != true) {
-        this.$store.dispatch(dispatchNames.markDeleted, tableIndex);
-      }
-      this.saveButtonsIntoStore();
+    deleteAnswerButton(answerButton, index) {
+      this.$store.dispatch(dispatchNames.deleteAnswerButton, {
+        button: answerButton,
+        rowIndex: index,
+      });
       this.checkDuplicateTitles();
     },
     saveButtonsIntoStore() {
@@ -213,14 +212,7 @@ export default {
       this.$emit("disableSaveButtonEmpty", this.inputEmpty);
     },
     addAnswerButton() {
-      this.tableButtons.push({
-        title: "",
-        value: "",
-        type: "imBack",
-        identificator: null,
-        new: true,
-      });
-      this.saveButtonsIntoStore();
+      this.$store.dispatch(dispatchNames.addNewAnswerButton)
       this.checkEmptyInputs();
     },
     isButtonOrMulti(answerConfig) {

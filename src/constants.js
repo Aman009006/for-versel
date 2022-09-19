@@ -22,7 +22,8 @@ export const dispatchNames = {
   getAndSetIntentAnswers: 'dialogs/getAndSetIntentAnswers',
   updateStateProperties: "answerButtons/updateStateProperties",
   resetStateProperties: "answerButtons/resetStateProperties",
-  markDeleted: "answerButtons/markDeleted"
+  deleteAnswerButton: "answerButtons/deleteAnswerButton",
+  addNewAnswerButton: "answerButtons/addNewAnswerButton"
 }
 
 export const humanReadableLabels = {
