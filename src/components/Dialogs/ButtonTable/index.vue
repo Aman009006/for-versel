@@ -3,18 +3,14 @@
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
       <el-button
-        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
+        v-if="isButtonOrMulti(answerConfig)"
         id="addAnswerButton"
         icon="icon-Plus"
         class="add-btn"
         @click="addAnswerButton"
       />
     </div>
-    <el-table
-      :data="copiedButtons"
-      border
-      fixed="true"
-    >
+    <el-table :data="copiedButtons" border fixed="true">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
@@ -88,7 +84,7 @@
         </template>
         <template #default="scope">
           <el-select
-            v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
+            v-if="isButtonOrMulti(answerConfig)"
             v-model="scope.row.type"
             @change="saveButtonsIntoStore"
           >
@@ -104,10 +100,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        v-if="answerConfig.type == 'button' || answerConfig.type == 'multi'"
-        align="center"
-      >
+      <el-table-column v-if="isButtonOrMulti(answerConfig)" align="center">
         <template #default="scope">
           <el-button
             id="deleteAnswerButton"
@@ -229,6 +222,9 @@ export default {
       });
       this.saveButtonsIntoStore();
       this.checkEmptyInputs();
+    },
+    isButtonOrMulti(answerConfig) {
+      return answerConfig.type == "button" || answerConfig.type == "multi";
     },
   },
 };
