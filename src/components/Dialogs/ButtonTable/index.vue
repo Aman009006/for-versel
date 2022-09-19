@@ -95,7 +95,7 @@
               :value="item.value"
             />
           </el-select>
-          <div v-else style="border: 1px solid lightgrey; border-radius: 5px">
+          <div v-else class="notButtonOrMulti">
             {{ scope.row.type }}
           </div>
         </template>
@@ -263,6 +263,11 @@ export default {
 .addAnswerButton:hover {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
+}
+
+.notButtonOrMulti {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 
 #warnings {
