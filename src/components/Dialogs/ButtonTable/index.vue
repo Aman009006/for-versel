@@ -10,7 +10,11 @@
         @click="addAnswerButton"
       />
     </div>
-    <el-table id="answerButtonsTable" :data="copiedButtons" border fixed="true">
+    <el-table
+      :data="copiedButtons"
+      border
+      fixed="true"
+    >
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
@@ -116,8 +120,22 @@
       </el-table-column>
     </el-table>
     <div id="warnings">
-      <el-alert v-if="titleDuplicate" id="warningText" ref="warningText" type="warning" title="Keine Titelduplikate!" :closable="false" />
-      <el-alert v-if="inputEmpty" id="warningTextEmpty" ref="warningTextEmpty" type="warning" title="Keine leeren Felder erlaubt!" :closable="false" />
+      <el-alert
+        v-if="titleDuplicate"
+        id="warningText"
+        ref="warningText"
+        type="warning"
+        title="Keine Titelduplikate!"
+        :closable="false"
+      />
+      <el-alert
+        v-if="inputEmpty"
+        id="warningTextEmpty"
+        ref="warningTextEmpty"
+        type="warning"
+        title="Keine leeren Felder erlaubt!"
+        :closable="false"
+      />
     </div>
   </div>
 </template>
@@ -228,8 +246,8 @@ export default {
   border: 0px !important;
 }
 
-#addAnswerButton,
-#addAnswerButton:hover {
+.addAnswerButton,
+.addAnswerButton:hover {
   color: white !important;
   border-radius: 10px !important;
   margin-left: 10px !important;
@@ -241,12 +259,12 @@ export default {
   font-size: 15px;
 }
 
-#addAnswerButton {
+.addAnswerButton {
   background-color: #63c731 !important;
   border-color: #63c731 !important;
 }
 
-#addAnswerButton:hover {
+.addAnswerButton:hover {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
 }

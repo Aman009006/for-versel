@@ -4,7 +4,7 @@
  */
 const backendUrl =
   process.env.VUE_APP_DEV_BACKEND === '1'
-    ? 'https://chatbot-adminui-dev.azurewebsites.net/'
+    ? 'http://localhost:3000/'
     : 'https://adminbackend.stadtwerk.bot/'
 export default backendUrl
 
