@@ -91,31 +91,41 @@ export default {
         (button) => button?.new != true
       );
       if (oldButtons.length != 0 && updatedButtons.length != 0) {
-        let index = -1;
-        for (let i = 0; i < oldButtons.length; i++) {
-          index++;
-          if (oldButtons[i]?.deleted == true) {
-            index--;
-          } else {
-            const currentButton = oldButtons[i];
-            const newButton = updatedButtons[index];
-            if (this.buttonDiffers(currentButton, newButton)) {
-              try {
-                await setButtonProperties(
-                  this.answer.id,
-                  currentButton.title,
-                  newButton.title,
-                  newButton.type,
-                  newButton.value
-                );
-              } catch {
-                res = false;
-              }
-            }
+        res = await this.detectMarkedButtonsAndSetProperties(
+          oldButtons,
+          updatedButtons
+        );
+      }
+      return res;
+    },
+    async detectMarkedButtonsAndSetProperties(oldButtons, updatedButtons) {
+      let index = -1;
+      for (let i = 0; i < oldButtons.length; i++) {
+        index++;
+        if (oldButtons[i]?.deleted == true) {
+          index--;
+        } else {
+          const currentButton = oldButtons[i];
+          const newButton = updatedButtons[index];
+          if (this.buttonDiffers(currentButton, newButton)) {
+            return await this.isButtonPropertiesSet(currentButton, newButton);
           }
         }
       }
-      return res;
+    },
+    async isButtonPropertiesSet(currentButton, newButton) {
+      try {
+        await setButtonProperties(
+          this.answer.id,
+          currentButton.title,
+          newButton.title,
+          newButton.type,
+          newButton.value
+        );
+        return true;
+      } catch {
+        return false;
+      }
     },
     async deleteButtons() {
       const buttons = this.$store.getters.deletedAnswerButtons;
