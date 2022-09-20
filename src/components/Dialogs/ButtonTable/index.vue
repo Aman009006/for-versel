@@ -109,15 +109,15 @@
     </el-table>
     <div id="warnings">
       <el-alert
-        v-if="titleDuplicate"
+        v-if="getTitleDuplicate"
         id="warningText"
         ref="warningText"
         type="warning"
-        title="Keine Titelduplikate!"
+        title="Keine Titelduplikate erlaubt!"
         :closable="false"
       />
       <el-alert
-        v-if="inputEmpty"
+        v-if="getInputEmpty"
         id="warningTextEmpty"
         ref="warningTextEmpty"
         type="warning"
@@ -139,8 +139,6 @@ export default {
     return {
       columnMinWidth: 200,
       tableButtons: [],
-      inputEmpty: false,
-      titleDuplicate: false,
       options: [
         {
           value: "imBack",
@@ -155,8 +153,11 @@ export default {
   },
   computed: {
     currentEditedButtons() {
-      const { currentEditedAnswerButtons, newAnswerButtons, deletedAnswerButtonIndexes } =
-        this.$store.getters;
+      const {
+        currentEditedAnswerButtons,
+        newAnswerButtons,
+        deletedAnswerButtonIndexes,
+      } = this.$store.getters;
       const currentAnswerButtons = [
         ...currentEditedAnswerButtons,
         ...newAnswerButtons,
@@ -165,9 +166,14 @@ export default {
         return !deletedAnswerButtonIndexes.includes(index);
       });
     },
-  },
-  mounted() {
-    this.$store.dispatch(dispatchNames.saveCopyOfButtons, this.buttons);
+    getInputEmpty() {
+      console.log(this.$store.getters.inputEmpty);
+      return this.$store.getters.inputEmpty;
+    },
+    getTitleDuplicate() {
+      console.log(this.$store.getters.titleDuplicate);
+      return this.$store.getters.titleDuplicate;
+    },
   },
   methods: {
     deleteAnswerButton(answerButton) {
@@ -175,25 +181,22 @@ export default {
       this.checkDuplicateTitles();
     },
     checkDuplicateTitles() {
-      this.titleDuplicate = false;
-      const titles = this.tableButtons.map((button) => button.title);
+      this.$store.dispatch(dispatchNames.setTitleDuplicate, false);
+      const titles = this.currentEditedButtons.map((button) => button.title);
       titles.sort();
       var last = titles[0];
       for (var i = 1; i < titles.length; i++) {
-        if (titles[i] == last) this.titleDuplicate = true;
+        if (titles[i] == last) {
+          this.$store.dispatch(dispatchNames.setTitleDuplicate, true);
+        }
         last = titles[i];
       }
-      this.$emit("disableSaveButtonDuplicate", this.titleDuplicate);
     },
     checkEmptyInputs() {
-      this.inputEmpty = false;
-      this.tableButtons.forEach((button) => {
-        if (button.title === "" || button.value === "") {
-          this.inputEmpty = true;
-          return;
-        }
+      const isEmpty = this.currentEditedButtons.some((button) => {
+        return button.title === "" || button.value === "";
       });
-      this.$emit("disableSaveButtonEmpty", this.inputEmpty);
+      this.$store.dispatch(dispatchNames.setInputEmpty, isEmpty);
     },
     addAnswerButton() {
       this.$store.dispatch(dispatchNames.addNewAnswerButton);

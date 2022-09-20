@@ -10,8 +10,6 @@
             ref="editAnswerRef"
             :answer="answer"
             :answerConfig="answerConfig"
-            @disableSaveButtonEmpty="toggleSaveButtonEmpty"
-            @disableSaveButtonDuplicate="toggleSaveButtonDuplicate"
           />
           <div class="buttonsContainer">
             <el-button
@@ -45,7 +43,7 @@ export default {
   data() {
     return {
       editModalOpened: false,
-      confirmButtonDisabled: false,
+      savingCurrently: false,
       saveAnswerClicked: false,
       empty: false,
       duplicate: false,
@@ -55,10 +53,19 @@ export default {
     readableIntentName() {
       return this.$route.meta.title;
     },
+    buttonsInValid() {
+      return (
+        this.$store.getters.titleDuplicate || this.$store.getters.inputEmpty
+      );
+    },
+    confirmButtonDisabled() {
+      return this.savingCurrently || this.buttonsInValid
+    }
   },
   methods: {
     openEditModal() {
-      this.confirmButtonDisabled = false;
+      this.$store.dispatch(dispatchNames.resetStateAndSaveCopyOfButtons, this.answer.buttons);
+      this.savingCurrently = false;
       this.saveAnswerClicked = false;
       this.editModalOpened = true;
     },
@@ -66,7 +73,7 @@ export default {
       this.editModalOpened = false;
     },
     async saveAnswer() {
-      this.confirmButtonDisabled = true;
+      this.savingCurrently = true;
       this.saveAnswerClicked = true;
       await this.$refs.editAnswerRef.saveAnswerAndButtons();
       this.refreshAnswers();
@@ -81,14 +88,6 @@ export default {
     },
     setSkillsAndIntents() {
       this.$store.dispatch(dispatchNames.setSkillsAndIntentsFullQualified);
-    },
-    toggleSaveButtonDuplicate(flag) {
-      this.duplicate = flag;
-      this.confirmButtonDisabled = this.duplicate || this.empty;
-    },
-    toggleSaveButtonEmpty(flag) {
-      this.empty = flag;
-      this.confirmButtonDisabled = this.duplicate || this.empty;
     },
   },
 };

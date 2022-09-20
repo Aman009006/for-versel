@@ -28,8 +28,6 @@
         ref="buttonTable"
         :buttons="answer.buttons"
         :answerConfig="answerConfig"
-        @disableSaveButtonEmpty="disableSaveButtonEmpty"
-        @disableSaveButtonDuplicate="disableSaveButtonDuplicate"
       />
     </div>
   </div>
@@ -181,12 +179,6 @@ export default {
         message: text,
         type: "warning",
       });
-    },
-    disableSaveButtonEmpty(flag) {
-      this.$emit("disableSaveButtonEmpty", flag);
-    },
-    disableSaveButtonDuplicate(flag) {
-      this.$emit("disableSaveButtonDuplicate", flag);
     },
   },
 };

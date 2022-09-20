@@ -15,6 +15,8 @@ const getters = {
   intents: (state) => state.dialogs.intents,
   deletedAnswerButtonIndexes: (state) => state.answerButtons.deletedAnswerButtonIndexes,
   newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
-  currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons
+  currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons,
+  titleDuplicate: (state) => state.answerButtons.titleDuplicate,
+  inputEmpty: (state) => state.answerButtons.inputEmpty
 }
 export default getters

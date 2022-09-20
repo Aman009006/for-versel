@@ -1,12 +1,9 @@
 /* eslint-disable no-async-promise-executor */
-const state = {
-    deletedAnswerButtonIndexes: [],
-    newAnswerButtons: [],
-    currentEditedAnswerButtons: []
-}
+const state = getInitialState()
 
 const mutations = {
-    saveCurrentEditedAnswerButtons: (state, answerButtons) => {
+    resetStateAndSaveCopyOfButtons: (state, answerButtons) => {
+        resetState(state)
         state.currentEditedAnswerButtons = answerButtons
     },
     addNewAnswerButton: (state) => {
@@ -25,19 +22,45 @@ const mutations = {
             const index = state.currentEditedAnswerButtons.indexOf(answerButton)
             state.deletedAnswerButtonIndexes.push(index)
         }
+    },
+    setTitleDuplicate: (state, titleDuplicate) => {
+        state.titleDuplicate = titleDuplicate
+    },
+    setInputEmpty: (state, inputEmpty) => {
+        state.inputEmpty = inputEmpty
     }
 }
 
 const actions = {
-    saveCopyOfButtons: ({ commit }, answerButtons) => {
+    resetStateAndSaveCopyOfButtons: ({ commit }, answerButtons) => {
         const copyAnswerButtons = JSON.parse(JSON.stringify(answerButtons))
-        commit(mutations.saveCurrentEditedAnswerButtons.name, copyAnswerButtons)
+        commit(mutations.resetStateAndSaveCopyOfButtons.name, copyAnswerButtons)
     },
     addNewAnswerButton: ({ commit }) => {
         commit(mutations.addNewAnswerButton.name)
     },
     deleteAnswerButton: ({ commit }, answerButton) => {
         commit(mutations.deleteAnswerButton.name, answerButton)
+    },
+    setTitleDuplicate: ({ commit }, titleDuplicate) => {
+        commit(mutations.setTitleDuplicate.name, titleDuplicate)
+    },
+    setInputEmpty: ({ commit }, inputEmpty) => {
+        commit(mutations.setInputEmpty.name, inputEmpty)
+    }
+}
+
+function resetState(state) {
+    Object.assign(state, getInitialState())
+}
+
+function getInitialState() {
+    return {
+        deletedAnswerButtonIndexes: [],
+        newAnswerButtons: [],
+        currentEditedAnswerButtons: [],
+        titleDuplicate: false,
+        inputEmpty: false,
     }
 }
 
