@@ -18,10 +18,7 @@
             v-model="scope.row.title"
             type="textarea"
             autosize
-            @input="
-              checkDuplicateTitles();
-              checkEmptyInputs();
-            "
+            @input="buttonValidation"
           />
         </template>
       </el-table-column>
@@ -178,7 +175,11 @@ export default {
   methods: {
     deleteAnswerButton(answerButton) {
       this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
-      this.checkDuplicateTitles();
+      this.buttonValidation()
+    },
+     addAnswerButton() {
+      this.$store.dispatch(dispatchNames.addNewAnswerButton);
+      this.buttonValidation()
     },
     checkDuplicateTitles() {
       this.$store.dispatch(dispatchNames.setTitleDuplicate, false);
@@ -198,9 +199,9 @@ export default {
       });
       this.$store.dispatch(dispatchNames.setInputEmpty, isEmpty);
     },
-    addAnswerButton() {
-      this.$store.dispatch(dispatchNames.addNewAnswerButton);
-      this.checkEmptyInputs();
+    buttonValidation() {
+      this.checkDuplicateTitles()
+      this.checkEmptyInputs()
     },
     isButtonOrMulti(answerConfig) {
       return answerConfig.type == "button" || answerConfig.type == "multi";
