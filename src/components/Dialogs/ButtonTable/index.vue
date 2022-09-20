@@ -164,11 +164,9 @@ export default {
       });
     },
     getInputEmpty() {
-      console.log(this.$store.getters.inputEmpty);
       return this.$store.getters.inputEmpty;
     },
     getTitleDuplicate() {
-      console.log(this.$store.getters.titleDuplicate);
       return this.$store.getters.titleDuplicate;
     },
   },
