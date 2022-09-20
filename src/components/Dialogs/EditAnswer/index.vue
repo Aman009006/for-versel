@@ -84,41 +84,27 @@ export default {
     },
     async updateButtons() {
       let res = true;
-      const oldButtons = this.$store.getters.unchangedAnswerButtons;
-      const updatedButtons = this.$store.getters.currentAnswerButtons.filter(
-        (button) => button?.new != true
-      );
-      if (oldButtons.length != 0 && updatedButtons.length != 0) {
-        res = await this.detectMarkedButtonsAndSetProperties(
-          oldButtons,
-          updatedButtons
-        );
-      }
-      return res;
-    },
-    async detectMarkedButtonsAndSetProperties(oldButtons, updatedButtons) {
-      let index = -1;
-      for (let i = 0; i < oldButtons.length; i++) {
-        index++;
-        if (oldButtons[i]?.deleted == true) {
-          index--;
-        } else {
-          const currentButton = oldButtons[i];
-          const newButton = updatedButtons[index];
-          if (this.buttonDiffers(currentButton, newButton)) {
-            return await this.isButtonPropertiesSet(currentButton, newButton);
+      if (this.answer.buttons.legnth != 0) {
+        const oldButtons = this.answer.buttons;
+        const updatedButtons = this.$store.getters.currentEditedAnswerButtons;
+        for (let i = 0; i < oldButtons.length; i++) {
+          const oldButton = oldButtons[i];
+          const updatedButton = updatedButtons[i];
+          if (this.buttonDiffers(oldButton, updatedButton)) {
+            res = await this.isButtonPropertiesSet(oldButton, updatedButton);
           }
         }
       }
+      return res;
     },
-    async isButtonPropertiesSet(currentButton, newButton) {
+    async isButtonPropertiesSet(oldButton, updatedButton) {
       try {
         await setButtonProperties(
           this.answer.id,
-          currentButton.title,
-          newButton.title,
-          newButton.type,
-          newButton.value
+          oldButton.title,
+          updatedButton.title,
+          updatedButton.type,
+          updatedButton.value
         );
         return true;
       } catch {
@@ -126,13 +112,15 @@ export default {
       }
     },
     async deleteButtons() {
-      const buttons = this.$store.getters.deletedAnswerButtons;
+      const buttonsIndexes = this.$store.getters.deletedAnswerButtonIndexes;
+      const buttons = this.answer.buttons;
       let res = true;
-      if (buttons.length != 0) {
-        for (let i = 0; i < buttons.length; i++) {
+      if (buttonsIndexes.length != 0) {
+        for (let i = 0; i < buttonsIndexes.length; i++) {
           try {
-            buttons[i].answerId = this.answer.id;
-            await deleteAnswerButton(buttons[i]);
+            const button = buttons[buttonsIndexes[i]];
+            button.answerId = this.answer.id;
+            await deleteAnswerButton(button);
           } catch {
             res = false;
           }
@@ -146,8 +134,9 @@ export default {
       if (buttons.length != 0) {
         for (let i = 0; i < buttons.length; i++) {
           try {
-            buttons[i].answerId = this.answer.id;
-            await insertAnswerButton(buttons[i]);
+            const button = buttons[i]
+            button.answerId = this.answer.id;
+            await insertAnswerButton(button);
           } catch {
             res = false;
           }
