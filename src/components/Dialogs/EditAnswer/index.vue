@@ -23,7 +23,7 @@
       <MarkDownEditor ref="markDownEditor" :text="answer.text" />
     </div>
 
-    <div v-if="answer.buttons">
+    <div v-if="showButtonTable()">
       <ButtonTable
         ref="buttonTable"
         :buttons="answer.buttons"
@@ -84,7 +84,7 @@ export default {
     },
     async updateButtons() {
       let res = true;
-      if (this.answer.buttons.legnth != 0) {
+      if (this.$store.getters.currentEditedAnswerButtons.length != 0) {
         const oldButtons = this.answer.buttons;
         const updatedButtons = this.$store.getters.currentEditedAnswerButtons;
         for (let i = 0; i < oldButtons.length; i++) {
@@ -134,7 +134,7 @@ export default {
       if (buttons.length != 0) {
         for (let i = 0; i < buttons.length; i++) {
           try {
-            const button = buttons[i]
+            const button = buttons[i];
             button.answerId = this.answer.id;
             await insertAnswerButton(button);
           } catch {
@@ -149,6 +149,16 @@ export default {
       const valueDiffers = button1.value != button2.value;
       const typeDiffers = button1.type != button2.type;
       return titleDiffers || valueDiffers || typeDiffers;
+    },
+    showButtonTable() {
+      if (this.answer.buttons != null) {
+        return true;
+      } else if (this.answer.buttons == null && (this.answerConfig.type == "button" ||
+          this.answerConfig.type == "multi")) {
+          return true;
+        } else {
+          return false;
+        }
     },
     printSavedAnswerMessage(answersSaved, buttonsSaved) {
       if (answersSaved && buttonsSaved) {

@@ -4,7 +4,11 @@ const state = getInitialState()
 const mutations = {
     resetStateAndSaveCopyOfButtons: (state, answerButtons) => {
         resetState(state)
-        state.currentEditedAnswerButtons = answerButtons
+        if (answerButtons != null) {
+            state.currentEditedAnswerButtons = answerButtons
+        } else {
+            state.currentEditedAnswerButtons = []
+        }
     },
     addNewAnswerButton: (state) => {
         const newAnswerButton = {
