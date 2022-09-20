@@ -4,9 +4,8 @@
       <h2>Buttons</h2>
       <el-button
         v-if="isButtonOrMulti(answerConfig)"
-        id="addAnswerButton"
         icon="icon-Plus"
-        class="add-btn"
+        class="add-btn addAnswerButton"
         @click="addAnswerButton"
       />
     </div>
