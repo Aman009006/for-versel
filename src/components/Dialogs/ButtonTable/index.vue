@@ -86,9 +86,9 @@
               :value="item.value"
             />
           </el-select>
-          <div v-else class="notButtonOrMulti">
+          <span v-else class="notButtonOrMulti">
             {{ scope.row.type }}
-          </div>
+          </span>
         </template>
       </el-table-column>
       <el-table-column v-if="isButtonOrMulti(answerConfig)" align="center">
@@ -243,8 +243,7 @@ export default {
 }
 
 .notButtonOrMulti {
-  border: 1px solid lightgrey;
-  border-radius: 5px;
+  border-bottom: 1px solid lightgrey;
 }
 
 #warnings {
