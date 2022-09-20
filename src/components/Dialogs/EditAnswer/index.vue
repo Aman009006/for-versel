@@ -153,12 +153,13 @@ export default {
     showButtonTable() {
       if (this.answer.buttons != null) {
         return true;
-      } else if (this.answer.buttons == null && (this.answerConfig.type == "button" ||
-          this.answerConfig.type == "multi")) {
-          return true;
-        } else {
-          return false;
-        }
+      } else {
+        return (
+          this.answer.buttons == null &&
+          (this.answerConfig.type == "button" ||
+            this.answerConfig.type == "multi")
+        );
+      }
     },
     printSavedAnswerMessage(answersSaved, buttonsSaved) {
       if (answersSaved && buttonsSaved) {
