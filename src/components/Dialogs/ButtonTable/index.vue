@@ -10,7 +10,7 @@
         @click="addAnswerButton"
       />
     </div>
-    <el-table :data="copiedButtons" border fixed="true">
+    <el-table :data="currentEditedButtons" border fixed="true">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input
@@ -19,7 +19,6 @@
             type="textarea"
             autosize
             @input="
-              saveButtonsIntoStore();
               checkDuplicateTitles();
               checkEmptyInputs();
             "
@@ -53,10 +52,7 @@
             v-model="scope.row.value"
             type="textarea"
             autosize
-            @input="
-              saveButtonsIntoStore();
-              checkEmptyInputs();
-            "
+            @input="checkEmptyInputs()"
           />
         </template>
       </el-table-column>
@@ -86,7 +82,6 @@
           <el-select
             v-if="isButtonOrMulti(answerConfig)"
             v-model="scope.row.type"
-            @change="saveButtonsIntoStore"
           >
             <el-option
               v-for="item in options"
@@ -107,7 +102,7 @@
             size="default"
             type="danger"
             icon="icon-Delete"
-            @click="deleteAnswerButton(scope.row, scope.$index)"
+            @click="deleteAnswerButton(scope.row)"
           />
         </template>
       </el-table-column>
@@ -159,36 +154,25 @@ export default {
     };
   },
   computed: {
-    copiedButtons() {
-      if (this.buttons != null) {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.tableButtons = JSON.parse(JSON.stringify(this.buttons));
-        this.resetStoreProperties;
-        return this.tableButtons;
-      }
-      return null;
-    },
-    resetStoreProperties() {
-      this.$store.dispatch(
-        dispatchNames.resetStateProperties,
-        JSON.parse(JSON.stringify(this.buttons))
-      );
-      return null;
+    currentEditedButtons() {
+      const { currentEditedAnswerButtons, newAnswerButtons, deletedAnswerButtonIndexes } =
+        this.$store.getters;
+      const currentAnswerButtons = [
+        ...currentEditedAnswerButtons,
+        ...newAnswerButtons,
+      ];
+      return currentAnswerButtons.filter((button, index) => {
+        return !deletedAnswerButtonIndexes.includes(index);
+      });
     },
   },
+  mounted() {
+    this.$store.dispatch(dispatchNames.saveCopyOfButtons, this.buttons);
+  },
   methods: {
-    deleteAnswerButton(answerButton, index) {
-      this.$store.dispatch(dispatchNames.deleteAnswerButton, {
-        button: answerButton,
-        rowIndex: index,
-      });
+    deleteAnswerButton(answerButton) {
+      this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
       this.checkDuplicateTitles();
-    },
-    saveButtonsIntoStore() {
-      this.$store.dispatch(
-        dispatchNames.updateStateProperties,
-        JSON.parse(JSON.stringify(this.tableButtons))
-      );
     },
     checkDuplicateTitles() {
       this.titleDuplicate = false;
@@ -212,7 +196,7 @@ export default {
       this.$emit("disableSaveButtonEmpty", this.inputEmpty);
     },
     addAnswerButton() {
-      this.$store.dispatch(dispatchNames.addNewAnswerButton)
+      this.$store.dispatch(dispatchNames.addNewAnswerButton);
       this.checkEmptyInputs();
     },
     isButtonOrMulti(answerConfig) {

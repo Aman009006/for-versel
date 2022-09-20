@@ -23,7 +23,9 @@ export const dispatchNames = {
   updateStateProperties: "answerButtons/updateStateProperties",
   resetStateProperties: "answerButtons/resetStateProperties",
   deleteAnswerButton: "answerButtons/deleteAnswerButton",
-  addNewAnswerButton: "answerButtons/addNewAnswerButton"
+  addNewAnswerButton: "answerButtons/addNewAnswerButton",
+  saveCopyOfButtons: "answerButtons/saveCopyOfButtons",
+  getCurrentEditedButtons: "answerButtons/getCurrentEditedButtons"
 }
 
 export const humanReadableLabels = {
