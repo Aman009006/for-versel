@@ -119,7 +119,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     skillWithIntent.Intents.forEach((intent) => {
       route.children[route.children.length - 1].children.push({
         path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intent/index'),
+        component: () => import('@/views/intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,

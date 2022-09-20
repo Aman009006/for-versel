@@ -116,7 +116,7 @@ export const asyncRoutes = [
     children: [
       {
         path: '404',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/error-page/404.vue'),
         name: 'Page404',
         meta: { title: '404', noCache: true },
       },
