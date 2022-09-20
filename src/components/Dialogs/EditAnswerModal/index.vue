@@ -21,7 +21,11 @@
             >
               Speichern
             </el-button>
-            <el-button class="cancel-btn" @click="closeEditModal()">
+            <el-button
+              class="cancel-btn"
+              :disabled="savingCurrently"
+              @click="closeEditModal()"
+            >
               Abbrechen
             </el-button>
           </div>
@@ -59,12 +63,15 @@ export default {
       );
     },
     confirmButtonDisabled() {
-      return this.savingCurrently || this.buttonsInValid
-    }
+      return this.savingCurrently || this.buttonsInValid;
+    },
   },
   methods: {
     openEditModal() {
-      this.$store.dispatch(dispatchNames.resetStateAndSaveCopyOfButtons, this.answer.buttons);
+      this.$store.dispatch(
+        dispatchNames.resetStateAndSaveCopyOfButtons,
+        this.answer.buttons
+      );
       this.savingCurrently = false;
       this.saveAnswerClicked = false;
       this.editModalOpened = true;
@@ -119,6 +126,10 @@ export default {
 
     .buttonsContainer {
       margin-top: 15px;
+      .cancel-btn:disabled {
+        background-color: #f78989 !important;
+        border: 0 !important;
+      }
     }
     #saveAnswerButton:disabled {
       background-color: lightgray !important;
