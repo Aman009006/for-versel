@@ -1,8 +1,8 @@
 <template>
   <div :class="{ show: show }" class="header-search">
     <svg-icon
-      class-name="search-icon"
-      icon-class="search"
+      :svg-icon-html="icons.search"
+      class="search-icon"
       @click.stop="click"
     />
 
@@ -49,9 +49,10 @@
 // Fuzzy searching finds strings that are approximately equal to a given pattern
 import Fuse from "fuse.js";
 import { encodePathComponent } from "@/store/modules/permission";
-import path from "path";
+import path from "path-browserify";
 import HtmlEncode from "@/utils/HtmlEncode";
 import { humanReadableLabels } from "@/constants";
+import icons from "@/icons/index";
 
 const filterElementObject = {
   intent: {
@@ -106,6 +107,9 @@ export default {
     },
     intentArrayIndexInTitle() {
       return 2;
+    },
+    icons() {
+      return icons;
     },
   },
   // watch is lazy by default, i.e. the callback is only called when the watched source has changed.
@@ -367,6 +371,8 @@ export default {
     cursor: pointer;
     font-size: 18px;
     vertical-align: middle;
+    width: 17px;
+    display: inline-block;
   }
 
   .header-search-select {
