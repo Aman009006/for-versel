@@ -226,7 +226,7 @@ export default {
     async redirectTo() {
       await loadDynamicRoutes();
       this.$router.push({
-        path: encodeURI(this.redirect) || "/",
+        path: encodeURI(this.redirect || "/"),
       });
     },
     getOtherQuery(query) {
