@@ -67,12 +67,9 @@ function getInitialState() {
 }
 
 function isNewAnswerButton(state, answerButton) {
-    if (state.newAnswerButtons.length == 0) {
-        return false
-    } else {
-        return state.newAnswerButtons.includes(answerButton)
-    }
+    return state.newAnswerButtons.includes(answerButton)
 }
+
 export default {
     namespaced: true,
     state,
