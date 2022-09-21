@@ -15,7 +15,6 @@
           <el-input
             ref="titleColumn"
             v-model="scope.row.title"
-            :disabled="!isButtonOrMulti(answerConfig)"
             type="textarea"
             autosize
             @input="buttonValidation"
@@ -47,7 +46,6 @@
         <template #default="scope">
           <el-input
             v-model="scope.row.value"
-            :disabled="!isButtonOrMulti(answerConfig)"
             type="textarea"
             autosize
             @input="checkEmptyInputs()"
@@ -108,7 +106,7 @@
         id="warningText"
         ref="warningText"
         type="warning"
-        title="Keine Titelduplikate erlaubt!"
+        title="Keine Namenduplikate erlaubt!"
         :closable="false"
       />
       <el-alert
@@ -171,11 +169,11 @@ export default {
   methods: {
     deleteAnswerButton(answerButton) {
       this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
-      this.buttonValidation();
+      this.buttonValidation()
     },
-    addAnswerButton() {
+     addAnswerButton() {
       this.$store.dispatch(dispatchNames.addNewAnswerButton);
-      this.buttonValidation();
+      this.buttonValidation()
     },
     checkDuplicateTitles() {
       this.$store.dispatch(dispatchNames.setTitleDuplicate, false);
@@ -196,8 +194,8 @@ export default {
       this.$store.dispatch(dispatchNames.setInputEmpty, isEmpty);
     },
     buttonValidation() {
-      this.checkDuplicateTitles();
-      this.checkEmptyInputs();
+      this.checkDuplicateTitles()
+      this.checkEmptyInputs()
     },
     isButtonOrMulti(answerConfig) {
       return answerConfig.type == "button" || answerConfig.type == "multi";
