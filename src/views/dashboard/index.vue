@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/styles/element-variables.module.scss";
+@import "@/styles/element-variables.module.scss";
 .dashboard-container {
   * {
     color: $--color-text-regular;
