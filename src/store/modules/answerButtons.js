@@ -6,8 +6,6 @@ const mutations = {
         resetState(state)
         if (answerButtons != null) {
             state.currentEditedAnswerButtons = answerButtons
-        } else {
-            state.currentEditedAnswerButtons = []
         }
     },
     addNewAnswerButton: (state) => {

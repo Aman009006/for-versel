@@ -49,8 +49,6 @@ export default {
       editModalOpened: false,
       savingCurrently: false,
       saveAnswerClicked: false,
-      empty: false,
-      duplicate: false,
     };
   },
   computed: {
