@@ -33,7 +33,7 @@
 
       <el-table-column align="center" width="130">
         <template #default="{ row: answer }">
-          <EditAnswerModal :answer="answer" />
+          <EditAnswerModal :answer="answer" :answerConfig="answerConfig" />
         </template>
       </el-table-column>
     </el-table>
@@ -52,7 +52,7 @@ export default {
     ButtonList,
     EditAnswerModal,
   },
-  props: ["disabled", "answers"],
+  props: ["disabled", "answers", "answerConfig"],
   data() {
     return {
       answerText: humanReadableLabels.answerText,
