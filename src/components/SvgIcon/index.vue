@@ -8,7 +8,7 @@ export default {
   props: {
     svgIconHtml: {
       type: String,
-      required: true,
+      default: ''
     },
   },
 };
