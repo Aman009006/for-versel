@@ -1,5 +1,10 @@
 <template>
-  <div class="svg-icon" aria-hidden="true" v-html="svgIconHtml" />
+  <div
+    v-if="svgIconHtml != null"
+    class="svg-icon"
+    aria-hidden="true"
+    v-html="svgIconHtml"
+  />
 </template>
 
 <script>
@@ -8,7 +13,7 @@ export default {
   props: {
     svgIconHtml: {
       type: String,
-      default: ''
+      default: null,
     },
   },
 };
