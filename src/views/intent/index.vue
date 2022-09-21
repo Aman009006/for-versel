@@ -17,7 +17,11 @@
         "
       />
 
-      <AnswerTable :disabled="isRedirectedToOtherIntent()" :answers="answers" :answerConfig="answerConfig" />
+      <AnswerTable
+        :disabled="isRedirectedToOtherIntent()"
+        :answers="answers"
+        :answerConfig="answerConfig"
+      />
     </template>
   </div>
 </template>
