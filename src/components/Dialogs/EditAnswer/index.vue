@@ -87,11 +87,15 @@ export default {
       if (this.$store.getters.currentEditedAnswerButtons.length != 0) {
         const oldButtons = this.answer.buttons;
         const updatedButtons = this.$store.getters.currentEditedAnswerButtons;
+        const deletedIndexes = this.$store.getters.deletedAnswerButtonIndexes;
         for (let i = 0; i < oldButtons.length; i++) {
-          const oldButton = oldButtons[i];
-          const updatedButton = updatedButtons[i];
-          if (this.buttonDiffers(oldButton, updatedButton)) {
-            res = await this.isButtonPropertiesSet(oldButton, updatedButton);
+          const isButtonDeleted = deletedIndexes.includes(i);
+          if (!isButtonDeleted) {
+            const oldButton = oldButtons[i];
+            const updatedButton = updatedButtons[i];
+            if (this.buttonDiffers(oldButton, updatedButton)) {
+              res = await this.isButtonPropertiesSet(oldButton, updatedButton);
+            }
           }
         }
       }
