@@ -48,7 +48,7 @@ import user from './svg/user.svg?raw';
 import wechat from './svg/wechat.svg?raw';
 import zip from './svg/zip.svg?raw';
 
-export default {
+const icons = {
     icon404,
     bug,
     chart,
@@ -98,4 +98,10 @@ export default {
     user,
     wechat,
     zip
+}
+
+export default icons;
+
+export function getIconByName(iconName) {
+    return icons[iconName];
 }

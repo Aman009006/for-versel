@@ -1,12 +1,14 @@
 <template>
   <span>
     <i v-if="isElementIcon()" :class="['sub-el-icon', icon]" />
-    <svg-icon v-if="isSvgIcon()" :icon-class="icon" />
-    <span v-if="hasTitle()" v-bind="title" />
+    <svg-icon v-if="isSvgIcon()" :svg-icon-html="svgIconHtml" />
+    <span v-if="hasTitle()">{{ title }}</span>
   </span>
 </template>
 
 <script>
+import { getIconByName } from "@/icons";
+
 export default {
   name: "MenuItem",
   functional: true,
@@ -19,6 +21,11 @@ export default {
     title: {
       type: String,
       default: "",
+    },
+  },
+  computed: {
+    svgIconHtml() {
+      return getIconByName(this.icon);
     },
   },
   methods: {
