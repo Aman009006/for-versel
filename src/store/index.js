@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import getters from './getters'
+import answerButtons from './modules/answerButtons';
 import app from './modules/app';
 import dialogs from './modules/dialogs';
 import permission from './modules/permission';
@@ -15,6 +16,7 @@ const store = createStore({
 
 function createModules() {
   const modules = {
+    answerButtons,
     app,
     dialogs,
     permission,
