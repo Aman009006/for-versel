@@ -18,6 +18,9 @@ export default defineConfig({
     server: {
         port: 9527,
         strictPort: true
+    },
+    build: {
+        chunkSizeWarningLimit: 2000
     }
 })
 
