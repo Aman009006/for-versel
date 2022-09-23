@@ -21,6 +21,13 @@ import Table from "@ckeditor/ckeditor5-table/src/table";
 import AutoImage from "@ckeditor/ckeditor5-image/src/autoimage";
 import { markRaw } from "vue";
 import activateCkEditorTranslations from "./ckEditorTranslations";
+/**
+ * The ckEditor - Styles were copied from the style - tag in the demo.
+ * Currently there is no way to integrate the ckEditor with vite easily.
+ * @see https://github.com/ckeditor/ckeditor5/issues/9807
+ * @see https://ckeditor.com/ckeditor-5/demo/
+ */
+import "./ckEditor.css";
 
 export default {
   name: "MarkDownEditor",
