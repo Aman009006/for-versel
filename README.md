@@ -3,7 +3,7 @@
     
       npm install
 
-- [vue - Extension für vscode installieren](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+- [vue - Extension für vscode installieren](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
 - [Vue - Debug extension für Chrome installieren](https://github.com/vuejs/vue-devtools)
 
 # Starten der App
@@ -28,7 +28,7 @@ https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/410550273/Lokales+Debu
 [Link zu unserer AdminUI-Seite](https://admin.stadtwerk.bot/)
 [Link zu unserer Dev AdminUI-Seite](https://adminuidev.stadtwerk.bot/)
 
-[Element-UI](https://element.eleme.io/)
+[Element-Plus](https://element-plus.org/en-US/)
 
 # Deployment für Dev und Prod Admin UI
 https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/436928516/Admin-UI-Karten
