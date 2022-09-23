@@ -20,6 +20,7 @@ import AutoLink from "@ckeditor/ckeditor5-link/src/autolink";
 import Table from "@ckeditor/ckeditor5-table/src/table";
 import AutoImage from "@ckeditor/ckeditor5-image/src/autoimage";
 import { markRaw } from "vue";
+import activateCkEditorTranslations from "./ckEditorTranslations";
 
 export default {
   name: "MarkDownEditor",
@@ -32,9 +33,11 @@ export default {
     };
   },
   async mounted() {
+    activateCkEditorTranslations();
     const ckEditorElement = this.$refs.ckEditor;
     const editor = await Editor.create(ckEditorElement, {
       initialData: this.text,
+      language: "de",
     });
     /**
      * markRaw is necessary, otherwise Vue changes the
