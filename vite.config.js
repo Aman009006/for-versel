@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import ckEditorSvg from './vite/plugins/ckEditorSvg';
+import ckEditorIgnoreCss from './vite/plugins/ckEditorIgnoreCss';
 import vue from '@vitejs/plugin-vue'
 import dns from 'dns'
 import { resolve } from 'path';
@@ -8,7 +9,7 @@ useLocalHost();
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), ckEditorSvg()],
+    plugins: [vue(), ckEditorSvg(), ckEditorIgnoreCss()],
     resolve: {
         alias: {
             "@": resolve(__dirname, "./src"),
