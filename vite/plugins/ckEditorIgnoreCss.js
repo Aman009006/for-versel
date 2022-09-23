@@ -20,6 +20,6 @@ export default function ckEditorIgnoreCss() {
 }
 
 function isCkEditorCss(filePath) {
-    const ckEditorSvgRegex = /ckeditor5-(.+)(.css)$/
-    return ckEditorSvgRegex.test(filePath)
+    const ckEditorCssRegex = /ckeditor5-(.+)(.css)$/
+    return ckEditorCssRegex.test(filePath)
 }
