@@ -1,4 +1,14 @@
+<template>
+  <span>
+    <i v-if="isElementIcon()" :class="['sub-el-icon', icon]" />
+    <svg-icon v-if="isSvgIcon()" :svg-icon-html="svgIconHtml" />
+    <span v-if="hasTitle()">{{ title }}</span>
+  </span>
+</template>
+
 <script>
+import { getIconByName } from "@/icons";
+
 export default {
   name: "MenuItem",
   functional: true,
@@ -13,22 +23,24 @@ export default {
       default: "",
     },
   },
-  render() {
-    const { icon, title } = this;
-    const vnodes = [];
-
-    if (icon) {
-      if (icon.includes("el-icon")) {
-        vnodes.push(<i class={[icon, "sub-el-icon"]} />);
-      } else {
-        vnodes.push(<svg-icon icon-class={icon} />);
-      }
-    }
-
-    if (title) {
-      vnodes.push(<span>{title}</span>);
-    }
-    return vnodes;
+  computed: {
+    svgIconHtml() {
+      return getIconByName(this.icon);
+    },
+  },
+  methods: {
+    hasIcon() {
+      return this.icon != null;
+    },
+    isElementIcon() {
+      return this.hasIcon() && this.icon.includes("el-icon");
+    },
+    isSvgIcon() {
+      return this.hasIcon() && !this.isElementIcon();
+    },
+    hasTitle() {
+      return this.title != null;
+    },
   },
 };
 </script>

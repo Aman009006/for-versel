@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import ImageTextLinkBox from "@/components/ImageTextLinkBox";
+import ImageTextLinkBox from "@/components/ImageTextLinkBox/index.vue";
 import manualPic from "@/assets/images/Bedienungsanleitung.svg";
 import editAnswersPic from "@/assets/images/DialogBearbeiten.svg";
 import feedbackPic from "@/assets/images/Feedback.svg";
@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/styles/element-variables.module.scss";
+@import "@/styles/element-variables.module.scss";
 .dashboard-container {
   * {
     color: $--color-text-regular;

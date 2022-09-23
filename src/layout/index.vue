@@ -17,7 +17,10 @@
 </template>
 
 <script>
-import { AppMain, Navbar, Sidebar, TagsView } from "./components";
+import AppMain from "./components/AppMain.vue";
+import Navbar from "./components/Navbar.vue";
+import Sidebar from "./components/Sidebar/index.vue";
+import TagsView from "./components/TagsView/index.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -51,8 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.module.scss";
+@import "@/styles/mixin.scss";
 
 .app-wrapper {
   @include clearfix;

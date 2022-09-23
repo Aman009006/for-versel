@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import EditAnswer from "@/components/Dialogs/EditAnswer";
+import EditAnswer from "@/components/Dialogs/EditAnswer/index.vue";
 import { dispatchNames } from "@/constants";
 
 export default {

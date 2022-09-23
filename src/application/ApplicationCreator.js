@@ -2,9 +2,9 @@ import { createApp } from 'vue'
 import Element from 'element-plus'
 import enLang from 'element-plus/es/locale/lang/en'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import SvgIcon from '@/components/SvgIcon'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
-import App from '../App'
+import App from '../App.vue'
 import store from '../store'
 import router from '../router'
 

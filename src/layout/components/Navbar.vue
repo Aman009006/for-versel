@@ -43,10 +43,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import Search from "@/components/HeaderSearch";
-import Notification from "@/components/Notification";
+import Breadcrumb from "@/components/Breadcrumb/index.vue";
+import Hamburger from "@/components/Hamburger/index.vue";
+import Search from "@/components/HeaderSearch/index.vue";
+import Notification from "@/components/Notification/index.vue";
 
 export default {
   components: {

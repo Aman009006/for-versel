@@ -14,7 +14,7 @@
 
       <el-form-item prop="customer">
         <span class="svg-container">
-          <svg-icon icon-class="user" />
+          <svg-icon :svg-icon-html="icons.user" />
         </span>
         <el-input
           ref="customer"
@@ -48,7 +48,7 @@
       >
         <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon :svg-icon-html="icons.password" />
           </span>
           <el-input
             :key="passwordType"
@@ -65,7 +65,9 @@
           />
           <span class="show-pwd" @click="showPwd">
             <svg-icon
-              :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+              :svg-icon-html="
+                passwordType === 'password' ? icons.eye : icons.eyeOpen
+              "
             />
           </span>
         </el-form-item>
@@ -86,6 +88,7 @@
 import { validEmail, isString } from "@/utils/validate";
 import KeycloakUtils from "@/utils/KeycloakUtils";
 import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
+import icons from "@/icons/index";
 
 export default {
   name: "LogIn",
@@ -138,6 +141,11 @@ export default {
       otherQuery: {},
       visible: false,
     };
+  },
+  computed: {
+    icons() {
+      return icons;
+    },
   },
   watch: {
     $route: {
@@ -218,7 +226,7 @@ export default {
     async redirectTo() {
       await loadDynamicRoutes();
       this.$router.push({
-        path: encodeURI(this.redirect) || "/",
+        path: encodeURI(this.redirect || "/"),
       });
     },
     getOtherQuery(query) {
@@ -335,7 +343,7 @@ $light_gray: #eee;
   }
 
   .svg-container {
-    padding: 6px 5px 6px 15px;
+    padding: 6px 2px 6px 15px;
     color: $dark_gray;
     vertical-align: middle;
     width: 30px;
@@ -362,6 +370,7 @@ $light_gray: #eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+    width: 17px;
   }
 
   .thirdparty-button {
