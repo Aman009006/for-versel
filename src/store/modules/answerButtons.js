@@ -12,7 +12,7 @@ const mutations = {
         const newAnswerButton = {
             title: "",
             value: "",
-            type: "imBack",
+            type: "openUrl",
             identificator: null,
         }
         state.newAnswerButtons.push(newAnswerButton)

@@ -48,6 +48,7 @@
             v-model="scope.row.value"
             type="textarea"
             autosize
+            :disabled="isImBackButton(scope.row)"
             @input="checkEmptyInputs()"
           />
         </template>
@@ -77,7 +78,7 @@
         <template #default="scope">
           <el-select
             v-model="scope.row.type"
-            :disabled="!isButtonOrMulti(answerConfig)"
+            :disabled="true"
           >
             <el-option
               v-for="item in options"
@@ -91,6 +92,7 @@
       <el-table-column v-if="isButtonOrMulti(answerConfig)" align="center">
         <template #default="scope">
           <el-button
+            v-if="!isImBackButton(scope.row)"
             id="deleteAnswerButton"
             size="default"
             type="danger"
@@ -199,6 +201,9 @@ export default {
     isButtonOrMulti(answerConfig) {
       return answerConfig.type == "button" || answerConfig.type == "multi";
     },
+    isImBackButton(button) {
+        return button.type == 'imBack'
+    }
   },
 };
 </script>
