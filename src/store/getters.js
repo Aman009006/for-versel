@@ -19,6 +19,7 @@ const getters = {
   newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
   currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons,
   titleDuplicate: (state) => state.answerButtons.titleDuplicate,
-  inputEmpty: (state) => state.answerButtons.inputEmpty
+  inputEmpty: (state) => state.answerButtons.inputEmpty,
+  invalidUrl: (state) => state.answerButtons.invalidUrl
 }
 export default getters

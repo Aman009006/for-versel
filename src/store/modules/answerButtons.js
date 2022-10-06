@@ -32,6 +32,9 @@ const mutations = {
     },
     setInputEmpty: (state, inputEmpty) => {
         state.inputEmpty = inputEmpty
+    },
+    setInvalidUrl: (state, urlInvalid) => {
+        state.invalidUrl = urlInvalid
     }
 }
 
@@ -51,6 +54,9 @@ const actions = {
     },
     setInputEmpty: ({ commit }, inputEmpty) => {
         commit(mutations.setInputEmpty.name, inputEmpty)
+    },
+    setInvalidUrl: ({ commit }, urlInvalid) => {
+        commit(mutations.setInvalidUrl.name, urlInvalid)
     }
 }
 
@@ -63,8 +69,10 @@ function getInitialState() {
         deletedAnswerButtonIndexes: [],
         newAnswerButtons: [],
         currentEditedAnswerButtons: [],
+        // validations
         titleDuplicate: false,
         inputEmpty: false,
+        invalidUrl: false
     }
 }
 

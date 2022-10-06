@@ -32,7 +32,7 @@
         </template>
         <template #default="scope">
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
-            @input="checkEmptyInputs()" />
+            @input="buttonValidation()" />
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="warning"
             title="Der Link muss mit http:// oder https:// beginnen" />
         </template>
@@ -149,9 +149,16 @@ export default {
       });
       this.$store.dispatch(dispatchNames.setInputEmpty, isEmpty);
     },
+    checkUrlButtons() {
+      const urlInvalid = this.currentEditedButtons.some(
+        (button) => this.isInvalidUrlButton(button)
+      );
+      this.$store.dispatch(dispatchNames.setInvalidUrl, urlInvalid);
+    },
     buttonValidation() {
       this.checkDuplicateTitles();
       this.checkEmptyInputs();
+      this.checkUrlButtons();
     },
     isButtonOrMulti(answerConfig) {
       return answerConfig.type == "button" || answerConfig.type == "multi";

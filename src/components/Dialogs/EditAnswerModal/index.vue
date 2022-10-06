@@ -56,8 +56,9 @@ export default {
       return this.$route.meta.title;
     },
     buttonsInValid() {
+      const { getters } = this.$store;
       return (
-        this.$store.getters.titleDuplicate || this.$store.getters.inputEmpty
+        getters.titleDuplicate || getters.inputEmpty || getters.invalidUrl
       );
     },
     confirmButtonDisabled() {
