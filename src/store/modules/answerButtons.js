@@ -1,3 +1,5 @@
+import { buttonTypes } from "@/constants"
+
 /* eslint-disable no-async-promise-executor */
 const state = getInitialState()
 
@@ -12,7 +14,7 @@ const mutations = {
         const newAnswerButton = {
             title: "",
             value: "",
-            type: "openUrl",
+            type: buttonTypes.openUrl,
             identificator: null,
         }
         state.newAnswerButtons.push(newAnswerButton)

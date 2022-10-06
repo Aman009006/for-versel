@@ -34,3 +34,8 @@ export const humanReadableLabels = {
   edit: 'Bearbeiten',
   description: 'Beschreibung',
 }
+
+export const buttonTypes = {
+  openUrl: 'openUrl',
+  imBack: 'imBack'
+}
