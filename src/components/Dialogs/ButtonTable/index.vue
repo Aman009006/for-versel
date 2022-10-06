@@ -33,6 +33,8 @@
         <template #default="scope">
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
             @input="checkEmptyInputs()" />
+          <el-alert v-if="isInvalidUrlButton(scope.row)" type="warning"
+            title="Der Link muss mit http:// oder https:// beginnen" />
         </template>
       </el-table-column>
 
@@ -77,7 +79,7 @@
 </template>
 
 <script>
-import { dispatchNames } from "@/constants";
+import { dispatchNames, buttonTypes } from "@/constants";
 
 export default {
   name: "ButtonTable",
@@ -88,12 +90,12 @@ export default {
       columnMinWidth: 200,
       options: [
         {
-          value: "imBack",
-          label: "imBack",
+          value: buttonTypes.imBack,
+          label: buttonTypes.imBack,
         },
         {
-          value: "openUrl",
-          label: "openUrl ",
+          value: buttonTypes.openUrl,
+          label: buttonTypes.openUrl,
         },
       ],
     };
@@ -155,7 +157,19 @@ export default {
       return answerConfig.type == "button" || answerConfig.type == "multi";
     },
     isImBackButton(button) {
-      return button.type == 'imBack'
+      return button.type == buttonTypes.imBack
+    },
+    isInvalidUrlButton(button) {
+      if (this.isOpenUrlButton(button)) {
+        return !this.isValidUrl(button.value);
+      }
+      return false;
+    },
+    isOpenUrlButton(button) {
+      return button.type == buttonTypes.openUrl
+    },
+    isValidUrl(url) {
+      return /^https?:\/\/.+/.test(url)
     }
   },
 };
