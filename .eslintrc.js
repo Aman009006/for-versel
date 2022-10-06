@@ -24,6 +24,7 @@ module.exports = {
     "vue/max-attributes-per-line": 0,
     "vue/valid-attribute-name": 1,
     "vue/valid-model-definition": 1,
+    "vue/first-attribute-linebreak": 0,
     "vue/html-self-closing": [2, {
       "html": {
         "void": "always",
