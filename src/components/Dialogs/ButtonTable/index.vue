@@ -33,8 +33,9 @@
         <template #default="scope">
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
             @input="buttonValidation()" />
-          <el-alert v-if="isInvalidUrlButton(scope.row)" type="warning"
-            title="Der Link muss mit http:// oder https:// beginnen" />
+          <el-alert v-if="isInvalidUrlButton(scope.row)" type="error">
+            Der Link muss mit <b>http://</b> oder <b>https://</b> beginnen
+          </el-alert>
         </template>
       </el-table-column>
 
@@ -69,10 +70,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <div id="warnings">
-      <el-alert v-if="getTitleDuplicate" id="warningText" ref="warningText" type="warning"
+    <div>
+      <el-alert v-if="getTitleDuplicate" type="error"
         title="Keine Namenduplikate erlaubt!" :closable="false" />
-      <el-alert v-if="getInputEmpty" id="warningTextEmpty" ref="warningTextEmpty" type="warning"
+      <el-alert v-if="getInputEmpty" type="error"
         title="Keine leeren Felder erlaubt!" :closable="false" />
     </div>
   </div>
@@ -216,15 +217,5 @@ export default {
 .addAnswerButton:hover {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
-}
-
-#warnings {
-  color: red;
-  font-size: 15px;
-
-  span {
-    float: left;
-    clear: left;
-  }
 }
 </style>
