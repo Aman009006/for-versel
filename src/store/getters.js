@@ -18,7 +18,6 @@ const getters = {
   deletedAnswerButtonIndexes: (state) => state.answerButtons.deletedAnswerButtonIndexes,
   newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
   currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons,
-  titleDuplicate: (state) => state.answerButtons.titleDuplicate,
-  inputEmpty: (state) => state.answerButtons.inputEmpty
+  buttonValidations: (state) => state.answerButtons.buttonValidations,
 }
 export default getters

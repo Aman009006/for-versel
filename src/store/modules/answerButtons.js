@@ -1,3 +1,5 @@
+import { buttonTypes } from "@/constants"
+
 /* eslint-disable no-async-promise-executor */
 const state = getInitialState()
 
@@ -12,7 +14,7 @@ const mutations = {
         const newAnswerButton = {
             title: "",
             value: "",
-            type: "openUrl",
+            type: buttonTypes.openUrl,
             identificator: null,
         }
         state.newAnswerButtons.push(newAnswerButton)
@@ -26,10 +28,13 @@ const mutations = {
         }
     },
     setTitleDuplicate: (state, titleDuplicate) => {
-        state.titleDuplicate = titleDuplicate
+        state.buttonValidations.titleDuplicate = titleDuplicate
     },
     setInputEmpty: (state, inputEmpty) => {
-        state.inputEmpty = inputEmpty
+        state.buttonValidations.inputEmpty = inputEmpty
+    },
+    setInvalidUrl: (state, urlInvalid) => {
+        state.buttonValidations.invalidUrl = urlInvalid
     }
 }
 
@@ -49,6 +54,9 @@ const actions = {
     },
     setInputEmpty: ({ commit }, inputEmpty) => {
         commit(mutations.setInputEmpty.name, inputEmpty)
+    },
+    setInvalidUrl: ({ commit }, urlInvalid) => {
+        commit(mutations.setInvalidUrl.name, urlInvalid)
     }
 }
 
@@ -61,8 +69,11 @@ function getInitialState() {
         deletedAnswerButtonIndexes: [],
         newAnswerButtons: [],
         currentEditedAnswerButtons: [],
-        titleDuplicate: false,
-        inputEmpty: false,
+        buttonValidations: {
+            titleDuplicate: false,
+            inputEmpty: false,
+            invalidUrl: false
+        }
     }
 }
 

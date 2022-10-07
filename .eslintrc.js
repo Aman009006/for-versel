@@ -10,7 +10,7 @@ module.exports = {
     es6: true,
     es2021: true
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
+  extends: ['plugin:vue/recommended', 'eslint:recommended', 'plugin:@typescript-eslint/recommended'],
 
   // add your custom rules here
   // it is base on https://github.com/vuejs/eslint-config-vue
@@ -20,10 +20,11 @@ module.exports = {
     "vue/no-unused-vars": 2,
     "require-atomic-updates": 1,
     "vue/html-indent": 0,
-    "vue/html-closing-bracket-newline": 1,
+    "vue/html-closing-bracket-newline": 0,
     "vue/max-attributes-per-line": 0,
     "vue/valid-attribute-name": 1,
     "vue/valid-model-definition": 1,
+    "vue/first-attribute-linebreak": 0,
     "vue/html-self-closing": [2, {
       "html": {
         "void": "always",

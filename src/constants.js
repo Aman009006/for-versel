@@ -25,12 +25,15 @@ export const dispatchNames = {
   addNewAnswerButton: "answerButtons/addNewAnswerButton",
   resetStateAndSaveCopyOfButtons: "answerButtons/resetStateAndSaveCopyOfButtons",
   getCurrentEditedButtons: "answerButtons/getCurrentEditedButtons",
-  setTitleDuplicate: "answerButtons/setTitleDuplicate",
-  setInputEmpty: "answerButtons/setInputEmpty"
 }
 
 export const humanReadableLabels = {
   answerText: 'Antworttext',
   edit: 'Bearbeiten',
   description: 'Beschreibung',
+}
+
+export const buttonTypes = {
+  openUrl: 'openUrl',
+  imBack: 'imBack'
 }
