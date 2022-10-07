@@ -117,10 +117,10 @@ export default {
       });
     },
     getInputEmpty() {
-      return this.$store.getters.inputEmpty;
+      return this.$store.getters.buttonValidations.inputEmpty;
     },
     getTitleDuplicate() {
-      return this.$store.getters.titleDuplicate;
+      return this.$store.getters.buttonValidations.titleDuplicate;
     },
   },
   methods: {

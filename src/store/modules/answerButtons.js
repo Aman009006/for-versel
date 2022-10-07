@@ -28,13 +28,13 @@ const mutations = {
         }
     },
     setTitleDuplicate: (state, titleDuplicate) => {
-        state.titleDuplicate = titleDuplicate
+        state.buttonValidations.titleDuplicate = titleDuplicate
     },
     setInputEmpty: (state, inputEmpty) => {
-        state.inputEmpty = inputEmpty
+        state.buttonValidations.inputEmpty = inputEmpty
     },
     setInvalidUrl: (state, urlInvalid) => {
-        state.invalidUrl = urlInvalid
+        state.buttonValidations.invalidUrl = urlInvalid
     }
 }
 
@@ -69,10 +69,11 @@ function getInitialState() {
         deletedAnswerButtonIndexes: [],
         newAnswerButtons: [],
         currentEditedAnswerButtons: [],
-        // validations
-        titleDuplicate: false,
-        inputEmpty: false,
-        invalidUrl: false
+        buttonValidations: {
+            titleDuplicate: false,
+            inputEmpty: false,
+            invalidUrl: false
+        }
     }
 }
 
