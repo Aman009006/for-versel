@@ -133,7 +133,7 @@ export default {
       this.validateButtonsAndSaveStateInStore();
     },
     validateButtonsAndSaveStateInStore() {
-      const buttonValidator = new ButtonValidatorImpl(this.currentEditedButton);
+      const buttonValidator = new ButtonValidatorImpl(this.currentEditedButtons);
       const buttonUtilities = new ButtonUtilities(this.$store, buttonValidator);
       buttonUtilities.validateButtonsAndSaveStateInStore();
     },
