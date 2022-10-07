@@ -1,6 +1,6 @@
-import DialogInfoBox from '../../../../src/components/Dialogs/DialogInfoBox/index.vue'
+import DialogInfoBox from '../../../../../src/components/Dialogs/DialogInfoBox/index.vue';
 import { expect, it, describe } from 'vitest';
-import VueTestUtils from '../../../utils/VueTestUtils';
+import VueTestUtils from '../../../../utils/VueTestUtils';
 
 describe('DialogInfoBox', async () => {
     it('should show provided description', function () {
