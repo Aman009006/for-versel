@@ -33,7 +33,7 @@
         <template #default="scope">
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
             @input="buttonValidation()" />
-          <el-alert v-if="isInvalidUrlButton(scope.row)" type="error">
+          <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
             Der Link muss mit <b>http://</b> oder <b>https://</b> beginnen
           </el-alert>
         </template>
