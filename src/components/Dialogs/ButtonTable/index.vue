@@ -8,7 +8,7 @@
     <el-table :data="currentEditedButtons" border fixed="true">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
-          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize @input="buttonValidation" />
+          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize @input="validateButtonsAndSaveStateInStore" />
         </template>
       </el-table-column>
 
@@ -32,7 +32,7 @@
         </template>
         <template #default="scope">
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
-            @input="buttonValidation()" />
+            @input="validateButtonsAndSaveStateInStore()" />
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
             Der Link muss mit <b>http://</b> oder <b>https://</b> beginnen
           </el-alert>
@@ -71,16 +71,16 @@
       </el-table-column>
     </el-table>
     <div>
-      <el-alert v-if="getTitleDuplicate" type="error"
-        title="Keine Namenduplikate erlaubt!" :closable="false" />
-      <el-alert v-if="getInputEmpty" type="error"
-        title="Keine leeren Felder erlaubt!" :closable="false" />
+      <el-alert v-if="getTitleDuplicate" type="error" title="Keine Namenduplikate erlaubt!" :closable="false" />
+      <el-alert v-if="getInputEmpty" type="error" title="Keine leeren Felder erlaubt!" :closable="false" />
     </div>
   </div>
 </template>
 
 <script>
 import { dispatchNames, buttonTypes } from "@/constants";
+import ButtonUtilities from "@/store/utilities/ButtonUtilities";
+import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 
 export default {
   name: "ButtonTable",
@@ -126,40 +126,19 @@ export default {
   methods: {
     deleteAnswerButton(answerButton) {
       this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
-      this.buttonValidation();
+      this.validateButtonsAndSaveStateInStore();
     },
     addAnswerButton() {
       this.$store.dispatch(dispatchNames.addNewAnswerButton);
-      this.buttonValidation();
+      this.validateButtonsAndSaveStateInStore();
     },
-    checkDuplicateTitles() {
-      this.$store.dispatch(dispatchNames.setTitleDuplicate, false);
-      const titles = this.currentEditedButtons.map((button) => button.title);
-      titles.sort();
-      var last = titles[0];
-      for (var i = 1; i < titles.length; i++) {
-        if (titles[i] == last) {
-          this.$store.dispatch(dispatchNames.setTitleDuplicate, true);
-        }
-        last = titles[i];
-      }
+    validateButtonsAndSaveStateInStore() {
+      const buttonValidator = new ButtonValidatorImpl(this.currentEditedButton);
+      const buttonUtilities = new ButtonUtilities(this.$store, buttonValidator);
+      buttonUtilities.validateButtonsAndSaveStateInStore();
     },
-    checkEmptyInputs() {
-      const isEmpty = this.currentEditedButtons.some((button) => {
-        return button.title === "" || button.value === "";
-      });
-      this.$store.dispatch(dispatchNames.setInputEmpty, isEmpty);
-    },
-    checkUrlButtons() {
-      const urlInvalid = this.currentEditedButtons.some(
-        (button) => this.isInvalidUrlButton(button)
-      );
-      this.$store.dispatch(dispatchNames.setInvalidUrl, urlInvalid);
-    },
-    buttonValidation() {
-      this.checkDuplicateTitles();
-      this.checkEmptyInputs();
-      this.checkUrlButtons();
+    isInvalidUrlButton(button) {
+      return ButtonValidatorImpl.isInvalidUrlButton(button);
     },
     isButtonOrMulti(answerConfig) {
       return answerConfig.type == "button" || answerConfig.type == "multi";
@@ -167,18 +146,6 @@ export default {
     isImBackButton(button) {
       return button.type == buttonTypes.imBack
     },
-    isInvalidUrlButton(button) {
-      if (this.isOpenUrlButton(button)) {
-        return !this.isValidUrl(button.value);
-      }
-      return false;
-    },
-    isOpenUrlButton(button) {
-      return button.type == buttonTypes.openUrl
-    },
-    isValidUrl(url) {
-      return /^https?:\/\/.+/.test(url)
-    }
   },
 };
 </script>

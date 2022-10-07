@@ -38,6 +38,7 @@
 <script>
 import EditAnswer from "@/components/Dialogs/EditAnswer/index.vue";
 import { dispatchNames } from "@/constants";
+import ButtonUtilities from "@/store/utilities/ButtonUtilities";
 
 export default {
   components: {
@@ -56,10 +57,7 @@ export default {
       return this.$route.meta.title;
     },
     buttonsInValid() {
-      const { buttonValidations } = this.$store.getters;
-      return (
-        buttonValidations.titleDuplicate || buttonValidations.inputEmpty || buttonValidations.invalidUrl
-      );
+      return !ButtonUtilities.areButtonsValid(this.$store);
     },
     confirmButtonDisabled() {
       return this.savingCurrently || this.buttonsInValid;

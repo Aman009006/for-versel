@@ -25,9 +25,6 @@ export const dispatchNames = {
   addNewAnswerButton: "answerButtons/addNewAnswerButton",
   resetStateAndSaveCopyOfButtons: "answerButtons/resetStateAndSaveCopyOfButtons",
   getCurrentEditedButtons: "answerButtons/getCurrentEditedButtons",
-  setTitleDuplicate: "answerButtons/setTitleDuplicate",
-  setInputEmpty: "answerButtons/setInputEmpty",
-  setInvalidUrl: "answerButtons/setInvalidUrl"
 }
 
 export const humanReadableLabels = {
