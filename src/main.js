@@ -1,6 +1,5 @@
 import './styles/element-variables.module.scss'
 import '@/styles/index.scss'
-import './icons'
 import ApplicationCreator from '@/application/ApplicationCreator'
 import './permission'
 

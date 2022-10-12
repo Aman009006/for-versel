@@ -15,5 +15,9 @@ const getters = {
   editablePlaceholders: (state) => state.placeholders.editablePlaceholders,
   newPlaceholder: (state) => state.placeholders.newPlaceholder,
   intents: (state) => state.dialogs.intents,
+  deletedAnswerButtonIndexes: (state) => state.answerButtons.deletedAnswerButtonIndexes,
+  newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
+  currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons,
+  buttonValidations: (state) => state.answerButtons.buttonValidations,
 }
 export default getters

@@ -19,10 +19,21 @@ export const dispatchNames = {
   setSkillsAndIntents,
   setSkillsAndIntentsFullQualified: 'permission/' + setSkillsAndIntents,
   getAndSetIntentAnswers: 'dialogs/getAndSetIntentAnswers',
+  updateStateProperties: "answerButtons/updateStateProperties",
+  resetStateProperties: "answerButtons/resetStateProperties",
+  deleteAnswerButton: "answerButtons/deleteAnswerButton",
+  addNewAnswerButton: "answerButtons/addNewAnswerButton",
+  resetStateAndSaveCopyOfButtons: "answerButtons/resetStateAndSaveCopyOfButtons",
+  getCurrentEditedButtons: "answerButtons/getCurrentEditedButtons",
 }
 
 export const humanReadableLabels = {
   answerText: 'Antworttext',
   edit: 'Bearbeiten',
   description: 'Beschreibung',
+}
+
+export const buttonTypes = {
+  openUrl: 'openUrl',
+  imBack: 'imBack'
 }

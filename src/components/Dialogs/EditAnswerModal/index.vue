@@ -6,16 +6,26 @@
     <Teleport to="body">
       <div v-if="editModalOpened" class="modalBox">
         <div class="modalContent">
-          <EditAnswer ref="editAnswerRef" :answer="answer" />
+          <EditAnswer
+            ref="editAnswerRef"
+            :answer="answer"
+            :answerConfig="answerConfig"
+          />
           <div class="buttonsContainer">
             <el-button
+              id="saveAnswerButton"
               class="confirm-btn"
               :disabled="confirmButtonDisabled"
+              :loading="saveAnswerClicked"
               @click="saveAnswer()"
             >
               Speichern
             </el-button>
-            <el-button class="cancel-btn" @click="closeEditModal()">
+            <el-button
+              class="cancel-btn"
+              :disabled="savingCurrently"
+              @click="closeEditModal()"
+            >
               Abbrechen
             </el-button>
           </div>
@@ -26,35 +36,49 @@
 </template>
 
 <script>
-import EditAnswer from "@/components/Dialogs/EditAnswer";
+import EditAnswer from "@/components/Dialogs/EditAnswer/index.vue";
 import { dispatchNames } from "@/constants";
+import ButtonUtilities from "@/store/utilities/ButtonUtilities";
 
 export default {
   components: {
     EditAnswer,
   },
-  props: ["answer"],
+  props: ["answer", "answerConfig"],
   data() {
     return {
       editModalOpened: false,
-      confirmButtonDisabled: false,
+      savingCurrently: false,
+      saveAnswerClicked: false,
     };
   },
   computed: {
     readableIntentName() {
       return this.$route.meta.title;
     },
+    buttonsInValid() {
+      return !ButtonUtilities.areButtonsValid(this.$store);
+    },
+    confirmButtonDisabled() {
+      return this.savingCurrently || this.buttonsInValid;
+    },
   },
   methods: {
     openEditModal() {
-      this.confirmButtonDisabled = false;
+      this.$store.dispatch(
+        dispatchNames.resetStateAndSaveCopyOfButtons,
+        this.answer.buttons
+      );
+      this.savingCurrently = false;
+      this.saveAnswerClicked = false;
       this.editModalOpened = true;
     },
     closeEditModal() {
       this.editModalOpened = false;
     },
     async saveAnswer() {
-      this.confirmButtonDisabled = true;
+      this.savingCurrently = true;
+      this.saveAnswerClicked = true;
       await this.$refs.editAnswerRef.saveAnswerAndButtons();
       this.refreshAnswers();
       this.closeEditModal();
@@ -99,6 +123,14 @@ export default {
 
     .buttonsContainer {
       margin-top: 15px;
+      .cancel-btn:disabled {
+        background-color: #f78989 !important;
+        border: 0 !important;
+      }
+    }
+    #saveAnswerButton:disabled {
+      background-color: lightgray !important;
+      border: 0 !important;
     }
   }
 }

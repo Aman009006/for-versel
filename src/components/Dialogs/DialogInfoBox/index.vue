@@ -3,7 +3,7 @@
     <h5 class="utterancesTitle">Intentname:</h5>
     <div>{{ intent }}</div>
     <h5 class="utterancesTitle">Beschreibung:</h5>
-    <div>{{ description }}</div>
+    <div class="description">{{ description }}</div>
     <template v-if="utterances && utterances[0]">
       <h5 class="utterancesTitle">Beispieleingaben:</h5>
       <ul class="utterances">
