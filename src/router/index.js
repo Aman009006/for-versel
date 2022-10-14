@@ -11,6 +11,7 @@ import AuthRedirect from '@/views/login/auth-redirect.vue'
 import Page404 from '@/views/error-page/404.vue'
 import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
+import PasswordReset from '@/views/passwordReset/index.vue'
 
 export const constantRoutes = [
   {
@@ -95,6 +96,10 @@ export const constantRoutes = [
         meta: { title: 'API-Dokumentation', icon: 'external_link' },
       },
     ],
+  },
+  {
+    path: '/passwordReset',
+    component: PasswordReset
   }
 ]
 

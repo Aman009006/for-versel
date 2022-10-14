@@ -80,6 +80,10 @@
       <el-button type="primary" @click="startMicrosoftLogin">
         Login mit Microsoft Konto
       </el-button>
+
+      <el-button link type="primary" @click="passwordReset" class="password-reset">
+        Passwort vergessen
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -240,6 +244,11 @@ export default {
     startMicrosoftLogin() {
       KeycloakUtils.startKeycloakAuthentication();
     },
+    passwordReset() {
+      this.$router.push({
+        path: encodeURI('/passwordReset')
+      })
+    }
   },
 };
 </script>
@@ -304,6 +313,10 @@ $cursor: #fff;
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
+
+.password-reset {
+  border: transparent !important
+}
 
 .login-container {
   min-height: 100%;
