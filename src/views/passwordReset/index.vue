@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         sendPasswordResetMail() {
-            const success = sendPasswordResetMail('m.schuelein@hsag.info');
+            const success = sendPasswordResetMail(this.input.mail);
             console.log(success);
         }
     }
