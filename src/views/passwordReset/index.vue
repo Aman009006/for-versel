@@ -8,13 +8,15 @@
                 <el-input ref="mail" v-model="input.mail" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="">Absenden</el-button>
+                <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
 <script>
+import { sendPasswordResetMail } from '@/api/passwordReset';
+
 export default {
     name: "PasswordReset",
     data() {
@@ -22,6 +24,12 @@ export default {
             input: {
                 mail: ''
             }
+        }
+    },
+    methods: {
+        sendPasswordResetMail() {
+            const success = sendPasswordResetMail('m.schuelein@hsag.info');
+            console.log(success);
         }
     }
 };
@@ -35,6 +43,7 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
+    padding: 160px 35px 0;
 
     .title-container {
         .title {
@@ -50,7 +59,6 @@ export default {
         position: relative;
         width: 520px;
         max-width: 100%;
-        padding: 160px 35px 0;
         margin: 0 auto;
         overflow: hidden;
     }
