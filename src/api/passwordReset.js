@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export async function sendPasswordResetMail(recepient) {
     return request({
-        url: backendUrl + 'passwordReset',
+        url: backendUrl + 'sendResetMail',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

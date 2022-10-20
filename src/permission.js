@@ -11,7 +11,7 @@ import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login', '/auth-redirect', '/passwordReset'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect', '/passwordReset', '/sendResetMail'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
