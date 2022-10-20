@@ -3,10 +3,10 @@
         <div class="title-container">
             <h3 class="title">Passwort vergessen</h3>
         </div>
-        <el-form ref="input" :model="input" class="send-reset-form">
-            <el-form-item>
+        <el-form ref="input" :model="input" :rules="inputRules" class="send-reset-form">
+            <el-form-item prop="mail">
                 <span class="svg-container email-icon"> @ </span>
-                <el-input ref="mail" v-model="input.mail" @keyup.enter="sendPasswordResetMail()" placeholder="E-Mail" />
+                <el-input v-model="input.mail" @keyup.enter="sendPasswordResetMail()" placeholder="E-Mail" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
@@ -17,20 +17,36 @@
 
 <script>
 import { sendPasswordResetMail } from '@/api/passwordReset';
+import { validEmail } from "@/utils/validate";
 
 export default {
     name: "SendResetMail",
     data() {
+        const validateEmail = (rule, value, callback) => {
+            if (!validEmail(value)) {
+                callback(new Error("Bitte geben Sie eine gültige E-Mail-Adresse ein"));
+            } else {
+                callback();
+            }
+        };
         return {
             input: {
                 mail: ''
+            },
+            inputRules: {
+                mail: { validator: validateEmail, trigger: 'blur' }
             }
         }
     },
     methods: {
         async sendPasswordResetMail() {
-            const success = await sendPasswordResetMail(this.input.mail);
-            console.log(success);
+            this.$refs.input.validate(async (valid) => {
+                if (valid) {
+                    await sendPasswordResetMail(this.input.mail);
+                } else {
+                    return false;
+                }
+            });
         }
     }
 };

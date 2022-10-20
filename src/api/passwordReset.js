@@ -14,3 +14,14 @@ export async function sendPasswordResetMail(recepient) {
         data: JSON.stringify({ 'recepient': recepient })
     })
 }
+
+export async function resetPassword(password, token) {
+    return request({
+        url: backendUrl + 'passwordReset',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({ 'password': password, 'token': token })
+    })
+}

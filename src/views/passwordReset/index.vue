@@ -3,23 +3,22 @@
         <div class="title-container">
             <h3 class="title">Neues Passwort vergeben</h3>
         </div>
-        <el-form ref="input" :model="input" class="reset-form">
-            <el-form-item>
+        <el-form ref="input" :model="input" :rules="inputRules" class="reset-form">
+            <el-form-item prop="password">
                 <span class="svg-container">
                     <svg-icon :svg-icon-html="icons.edit" />
                 </span>
-                <el-input ref="password" v-model="input.password" placeholder="Neues Passwort"
-                    @keyup.enter="sendPasswordResetMail()" />
+                <el-input v-model="input.password" placeholder="Neues Passwort" @keyup.enter="sendPasswordResetMail" />
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="repeatPassword">
                 <span class="svg-container">
                     <svg-icon :svg-icon-html="icons.password" />
                 </span>
-                <el-input ref="repeatPassword" v-model="input.repeatPassword" placeholder="Neues Passwort bestätigen"
-                    @keyup.enter="sendPasswordResetMail()" />
+                <el-input v-model="input.repeatPassword" placeholder="Neues Passwort bestätigen"
+                    @keyup.enter="sendPasswordResetMail" />
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="resetPassword()">Absenden</el-button>
+                <el-button type="primary" @click="resetPassword">Absenden</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -27,15 +26,34 @@
 
 <script>
 import icons from "@/icons/index";
+import { resetPassword } from '@/api/passwordReset';
 
 export default {
 
     name: "PasswordReset",
     data() {
+        const validatePassword = (rule, value, callback) => {
+            if (value == '') {
+                callback(new Error('Bitte geben Sie ein Passwort ein'));
+                debugger;
+            } else if (value !== this.input.password) {
+                callback(new Error('Die angegebenen Passwörter müssen identisch sein'))
+            } else {
+                callback()
+            }
+        }
         return {
             input: {
                 password: '',
                 repeatPassword: ''
+            },
+            inputRules: {
+                password: {
+                    required: true, message: 'Bitte geben Sie ein Passwort ein', trigger: 'blur'
+                },
+                repeatPassword: [
+                    { validator: validatePassword, trigger: 'blur' },
+                ]
             }
         }
     },
@@ -45,8 +63,15 @@ export default {
         },
     },
     methods: {
-        resetPassword() {
-            console.log(this.input.password + ' ' + this.input.repeatPassword);
+        async resetPassword() {
+            this.$refs.input.validate(async (valid) => {
+                if (valid) {
+                    let urlParams = new URLSearchParams(window.location.search)
+                    await resetPassword(this.input.password, urlParams.get('token'));
+                } else {
+                    return false;
+                }
+            });
         }
     }
 };
