@@ -1,11 +1,12 @@
 <template>
-    <div class="password-reset-container">
+    <div class="send-reset-container">
         <div class="title-container">
             <h3 class="title">Passwort vergessen</h3>
         </div>
         <el-form ref="input" :model="input" class="reset-form">
             <el-form-item>
-                <el-input ref="mail" v-model="input.mail" @keyup.enter="sendPasswordResetMail()"/>
+                <span class="svg-container email-icon"> @ </span>
+                <el-input ref="mail" v-model="input.mail" @keyup.enter="sendPasswordResetMail()" placeholder="E-Mail" />
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
@@ -36,7 +37,21 @@ export default {
 </script>
 
 <style lang="scss">
-.password-reset-container {
+.send-reset-container {}
+
+$bg: #283443;
+$light_gray: #fff;
+$cursor: #fff;
+$dark_gray: #889aa4;
+
+@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+    .send-reset-container .el-input input {
+        color: $cursor;
+    }
+}
+
+/* reset element-ui css */
+.send-reset-container {
     background-color: #2d3a4b;
     position: fixed;
     top: 0;
@@ -44,6 +59,10 @@ export default {
     bottom: 0;
     left: 0;
     padding: 160px 35px 0;
+    min-height: 100%;
+    width: 100%;
+    background-color: $bg;
+    overflow: hidden;
 
     .title-container {
         .title {
@@ -55,12 +74,69 @@ export default {
         }
     }
 
+    button {
+        width: 100%;
+        margin-left: 0px;
+    }
+
     .reset-form {
         position: relative;
         width: 520px;
         max-width: 100%;
         margin: 0 auto;
         overflow: hidden;
+    }
+
+    .el-form-item__content {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .el-input__wrapper {
+        display: inline-block;
+        height: 47px;
+        width: 85%;
+        background: transparent;
+
+        &,
+        &:hover,
+        &.is-focus {
+            box-shadow: none;
+        }
+
+        input {
+            border: 0px;
+            -webkit-appearance: none;
+            border-radius: 0px;
+            padding: 12px 5px 12px 15px;
+            color: $light_gray;
+            height: 46px;
+            caret-color: $cursor;
+
+            &:-webkit-autofill {
+                box-shadow: 0 0 0px 1000px $bg inset !important;
+                -webkit-text-fill-color: $cursor !important;
+            }
+        }
+    }
+
+    .el-form-item {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        color: #454545;
+    }
+
+    .svg-container {
+        padding: 6px 2px 6px 15px;
+        color: $dark_gray;
+        vertical-align: middle;
+        width: 30px;
+        display: inline-block;
+    }
+
+    .email-icon {
+        font-weight: bold;
     }
 }
 </style>

@@ -32,7 +32,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="E-mail"
+          placeholder="E-Mail"
           name="username"
           type="email"
           tabindex="2"
