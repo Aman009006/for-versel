@@ -131,7 +131,6 @@ $dark_gray: #889aa4;
     }
 }
 
-/* reset element-ui css */
 .password-reset-container {
     background-color: #2d3a4b;
     position: fixed;

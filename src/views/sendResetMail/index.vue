@@ -3,7 +3,7 @@
         <div class="title-container">
             <h3 class="title">Passwort vergessen</h3>
         </div>
-        <el-form ref="input" :model="input" :rules="inputRules" class="send-reset-form">
+        <el-form ref="input" :model="input" :rules="inputRules" class="send-reset-form" @submit.prevent>
             <el-form-item prop="mail">
                 <span class="svg-container email-icon"> @ </span>
                 <el-input v-model="input.mail" @keyup.enter="sendPasswordResetMail()" placeholder="E-Mail" />
@@ -70,7 +70,6 @@ $dark_gray: #889aa4;
     }
 }
 
-/* reset element-ui css */
 .send-reset-container {
     background-color: #2d3a4b;
     position: fixed;
