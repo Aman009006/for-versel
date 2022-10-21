@@ -8,19 +8,34 @@
                 <span class="svg-container">
                     <svg-icon :svg-icon-html="icons.edit" />
                 </span>
-                <el-input v-model="input.password" placeholder="Neues Passwort" @keyup.enter="sendPasswordResetMail" />
+                <el-input v-model="input.password" :type="passwordType" placeholder="Neues Passwort"
+                    @keyup.enter="resetPassword" />
+                <span class="show-pwd" @click="showPwd">
+                    <svg-icon :svg-icon-html="
+                      passwordType === 'password' ? icons.eye : icons.eyeOpen
+                    " />
+                </span>
             </el-form-item>
             <el-form-item prop="repeatPassword">
                 <span class="svg-container">
                     <svg-icon :svg-icon-html="icons.password" />
                 </span>
-                <el-input v-model="input.repeatPassword" placeholder="Neues Passwort bestätigen"
-                    @keyup.enter="sendPasswordResetMail" />
+                <el-input v-model="input.repeatPassword" :type="passwordType" placeholder="Neues Passwort bestätigen"
+                    @keyup.enter="resetPassword" />
+                <span class="show-pwd" @click="showPwd">
+                    <svg-icon :svg-icon-html="
+                      passwordType === 'password' ? icons.eye : icons.eyeOpen
+                    " />
+                </span>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="resetPassword">Absenden</el-button>
             </el-form-item>
         </el-form>
+        <template v-if="successMessage">
+            <el-result icon="success" title="Passwort geändert"
+                sub-title="Ihr Passwort wurde erfolgreich geändert. Sie können sich nun anmelden." />
+        </template>
     </div>
 </template>
 
@@ -37,7 +52,7 @@ export default {
             if (value == '') {
                 callback(new Error('Bitte geben Sie ein Passwort ein'));
             } else if (!isValidPassword(value)) {
-                callback(new Error('Das Passwort muss mindestens 6 Zeichen lang sein, Groß- und Kleinbuchstaben und Sonderzeichen enthalten'));
+                callback(new Error('Das Passwort muss mindestens 6 Zeichen lang sein, Groß- und Kleinbuchstaben, Sonderzeichen und Zahlen enthalten'));
             } else {
                 callback()
             }
@@ -63,7 +78,9 @@ export default {
                 repeatPassword: [
                     { validator: validateRepeatPassword, trigger: 'blur' }
                 ]
-            }
+            },
+            passwordType: 'password',
+            successMessage: false
         }
     },
     computed: {
@@ -77,10 +94,18 @@ export default {
                 if (valid) {
                     let urlParams = new URLSearchParams(window.location.search)
                     await resetPassword(this.input.password, urlParams.get('token'));
+                    this.successMessage = true;
                 } else {
                     return false;
                 }
             });
+        },
+        showPwd() {
+            if (this.passwordType == 'password') {
+                this.passwordType = 'text'
+            } else {
+                this.passwordType = 'password'
+            }
         }
     },
     beforeCreate() {
@@ -181,6 +206,7 @@ $dark_gray: #889aa4;
         background: rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         color: #454545;
+        margin-bottom: 30px;
     }
 
     .svg-container {
@@ -193,6 +219,17 @@ $dark_gray: #889aa4;
 
     .email-icon {
         font-weight: bold;
+    }
+
+    .show-pwd {
+        position: absolute;
+        right: 10px;
+        top: 7px;
+        font-size: 16px;
+        color: $dark_gray;
+        cursor: pointer;
+        user-select: none;
+        width: 17px;
     }
 }
 </style>

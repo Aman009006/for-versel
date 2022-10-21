@@ -12,6 +12,10 @@
                 <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
             </el-form-item>
         </el-form>
+        <template v-if="successMessage">
+            <el-result icon="success" title="Mail versendet"
+                sub-title="Wir haben Ihnen einen Link geschickt, über den Sie Ihr Passwort zurücksetzen können. Dieser Link ist 1 Stunde gültig. Danach können Sie sich jederzeit hier einen neuen Link zusenden lassen" />
+        </template>
     </div>
 </template>
 
@@ -35,7 +39,8 @@ export default {
             },
             inputRules: {
                 mail: { validator: validateEmail, trigger: 'blur' }
-            }
+            },
+            successMessage: false
         }
     },
     methods: {
@@ -43,6 +48,7 @@ export default {
             this.$refs.input.validate(async (valid) => {
                 if (valid) {
                     await sendPasswordResetMail(this.input.mail);
+                    this.successMessage = true;
                 } else {
                     return false;
                 }
