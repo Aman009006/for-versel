@@ -27,6 +27,7 @@
 <script>
 import icons from "@/icons/index";
 import { resetPassword } from '@/api/passwordReset';
+import { isValidPassword } from "@/utils/validate";
 
 export default {
 
@@ -35,7 +36,15 @@ export default {
         const validatePassword = (rule, value, callback) => {
             if (value == '') {
                 callback(new Error('Bitte geben Sie ein Passwort ein'));
-                debugger;
+            } else if (!isValidPassword(value)) {
+                callback(new Error('Das Passwort muss mindestens 6 Zeichen lang sein, Groß- und Kleinbuchstaben und Sonderzeichen enthalten'));
+            } else {
+                callback()
+            }
+        }
+        const validateRepeatPassword = (rule, value, callback) => {
+            if (value == '') {
+                callback(new Error('Bitte geben Sie ein Passwort ein'));
             } else if (value !== this.input.password) {
                 callback(new Error('Die angegebenen Passwörter müssen identisch sein'))
             } else {
@@ -48,11 +57,11 @@ export default {
                 repeatPassword: ''
             },
             inputRules: {
-                password: {
-                    required: true, message: 'Bitte geben Sie ein Passwort ein', trigger: 'blur'
-                },
+                password: [
+                    { validator: validatePassword, trigger: 'blur' }
+                ],
                 repeatPassword: [
-                    { validator: validatePassword, trigger: 'blur' },
+                    { validator: validateRepeatPassword, trigger: 'blur' }
                 ]
             }
         }
@@ -72,6 +81,14 @@ export default {
                     return false;
                 }
             });
+        }
+    },
+    beforeCreate() {
+        let token = new URLSearchParams(window.location.search).get('token')
+        if (!token) {
+            this.$router.push({
+                path: encodeURI('/login')
+            })
         }
     }
 };
