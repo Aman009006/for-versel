@@ -2,7 +2,7 @@ import DialogInfoBox from '../../../../../src/components/Dialogs/DialogInfoBox/i
 import { expect, it, describe } from 'vitest';
 import VueTestUtils from '../../../../utils/VueTestUtils';
 
-describe('DialogInfoBox', async () => {
+describe('DialogInfoBox', async () => { 
     it('should show provided description', function () {
         const description = "this is my test - description";
         const testObject = createTestObjectWithDescription(description);
