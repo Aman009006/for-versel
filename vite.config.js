@@ -4,6 +4,7 @@ import ckEditorIgnoreCss from './vite/plugins/ckEditorIgnoreCss';
 import vue from '@vitejs/plugin-vue'
 import dns from 'dns'
 import { resolve } from 'path';
+import defaultVitestConfig from './test/config/defaultVitestconfig'
 
 useLocalHost();
 
@@ -23,7 +24,8 @@ export default defineConfig({
         chunkSizeWarningLimit: 2000
     },
     test: {
-        environment: 'jsdom',
+        ...defaultVitestConfig,
+        reporters: 'dot',
         watch: false
     }
 })
