@@ -92,8 +92,7 @@ export default {
         async resetPassword() {
             this.$refs.input.validate(async (valid) => {
                 if (valid) {
-                    let urlParams = new URLSearchParams(window.location.search)
-                    await resetPassword(this.input.password, urlParams.get('token'));
+                    await resetPassword(this.input.password, window.location.href);
                     this.successMessage = true;
                 } else {
                     return false;

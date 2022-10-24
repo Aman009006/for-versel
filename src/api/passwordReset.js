@@ -15,13 +15,13 @@ export async function sendPasswordResetMail(recepient) {
     })
 }
 
-export async function resetPassword(password, token) {
+export async function resetPassword(password, pageUrl) {
     return request({
         url: backendUrl + 'passwordReset',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        data: JSON.stringify({ 'password': password, 'token': token })
+        data: JSON.stringify({ 'password': password, 'pageUrl': pageUrl })
     })
 }
