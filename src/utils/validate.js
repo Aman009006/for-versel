@@ -78,3 +78,12 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+/**
+ * @param {string} password
+ * @returns {Boolean}
+ */
+export function isValidPassword(password) {
+  const regEx = /^(.{0,5}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$/
+  return !regEx.test(password)
+}

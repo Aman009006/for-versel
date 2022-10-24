@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { links } from '@/constants'
 
 /* Layout */
@@ -11,6 +11,8 @@ import AuthRedirect from '@/views/login/auth-redirect.vue'
 import Page404 from '@/views/error-page/404.vue'
 import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
+import PasswordReset from '@/views/passwordReset/index.vue'
+import SendResetMail from '@/views/sendResetMail/index.vue'
 
 export const constantRoutes = [
   {
@@ -95,6 +97,14 @@ export const constantRoutes = [
         meta: { title: 'API-Dokumentation', icon: 'external_link' },
       },
     ],
+  },
+  {
+    path: '/sendResetMail',
+    component: SendResetMail
+  },
+  {
+    path: '/passwordReset',
+    component: PasswordReset
   }
 ]
 
@@ -129,13 +139,13 @@ export const asyncRoutes = [
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: []
   })
   router.matcher = newRouter.matcher // reset router
 }
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

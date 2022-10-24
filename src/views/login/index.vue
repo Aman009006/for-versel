@@ -32,7 +32,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="E-mail"
+          placeholder="E-Mail"
           name="username"
           type="email"
           tabindex="2"
@@ -79,6 +79,10 @@
 
       <el-button type="primary" @click="startMicrosoftLogin">
         Login mit Microsoft Konto
+      </el-button>
+
+      <el-button link type="primary" @click="sendResetMail" class="send-reset">
+        Passwort vergessen
       </el-button>
     </el-form>
   </div>
@@ -240,6 +244,11 @@ export default {
     startMicrosoftLogin() {
       KeycloakUtils.startKeycloakAuthentication();
     },
+    sendResetMail() {
+      this.$router.push({
+        path: encodeURI('/sendResetMail')
+      })
+    }
   },
 };
 </script>
@@ -304,6 +313,10 @@ $cursor: #fff;
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
+
+.send-reset {
+  border: transparent !important
+}
 
 .login-container {
   min-height: 100%;
