@@ -25,7 +25,7 @@ export default defineConfig({
     },
     test: {
         ...defaultVitestConfig,
-        reporters: 'json',
+        reporters: 'tap-flat',
         watch: false
     }
 })
