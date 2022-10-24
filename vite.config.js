@@ -25,7 +25,7 @@ export default defineConfig({
     },
     test: {
         ...defaultVitestConfig,
-        reporters: 'dot',
+        reporters: 'json',
         watch: false
     }
 })
