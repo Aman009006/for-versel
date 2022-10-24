@@ -23,7 +23,8 @@ export default defineConfig({
         chunkSizeWarningLimit: 2000
     },
     test: {
-        environment: 'jsdom'
+        environment: 'jsdom',
+        watch: false
     }
 })
 
