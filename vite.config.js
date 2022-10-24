@@ -23,11 +23,7 @@ export default defineConfig({
     build: {
         chunkSizeWarningLimit: 2000
     },
-    test: {
-        ...defaultVitestConfig,
-        reporters: 'tap-flat',
-        watch: false
-    }
+    test: defaultVitestConfig
 })
 
 function useLocalHost() {
