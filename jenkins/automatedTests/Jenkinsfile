@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment { 
+        // https://stackoverflow.com/questions/72549751/plain-text-reporter-for-vitest/74189519#74189519
         NO_COLOR = 'true'
     }
     stages {
