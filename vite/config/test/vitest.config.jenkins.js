@@ -12,7 +12,7 @@ export default defineConfig(
             /**
              * @see https://github.com/vitest-dev/vitest/issues/2204
              */
-            reporters: 'tap'
+            // reporters: 'tap'
         }
     }
 )
