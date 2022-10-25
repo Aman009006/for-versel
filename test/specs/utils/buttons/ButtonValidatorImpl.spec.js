@@ -20,7 +20,7 @@ describe(ButtonValidatorImpl.name, function () {
     it('doesn\'t find dupplicate titles when there are no dupplicates', function () {
         const nonDupplicateButtons = [buttons.buttonA, buttons.buttonB];
         const hasDupplicates = findsDupplicateTitles(nonDupplicateButtons);
-        expect(hasDupplicates).to.be.false;
+        expect(hasDupplicates).to.be.true;
     });
 })
 
