@@ -9,10 +9,6 @@ export default defineConfig(
             ...defaultVitestConfig,
             watch: false,
             allowOnly: false,
-            /**
-             * @see https://github.com/vitest-dev/vitest/issues/2204
-             */
-            // reporters: 'tap'
         }
     }
 )
