@@ -12,7 +12,7 @@
                     @keyup.enter="resetPassword" />
                 <span class="show-pwd" @click="showPwd">
                     <svg-icon :svg-icon-html="
-                      passwordType === 'password' ? icons.eye : icons.eyeOpen
+                        passwordType === 'password' ? icons.eye : icons.eyeOpen
                     " />
                 </span>
             </el-form-item>
@@ -24,7 +24,7 @@
                     @keyup.enter="resetPassword" />
                 <span class="show-pwd" @click="showPwd">
                     <svg-icon :svg-icon-html="
-                      passwordType === 'password' ? icons.eye : icons.eyeOpen
+                        passwordType === 'password' ? icons.eye : icons.eyeOpen
                     " />
                 </span>
             </el-form-item>
@@ -33,8 +33,13 @@
             </el-form-item>
         </el-form>
         <template v-if="successMessage">
-            <el-result icon="success" title="Passwort geändert"
-                sub-title="Ihr Passwort wurde erfolgreich geändert. Sie können sich nun anmelden." />
+            <div class="success-message-container">
+                <el-result icon="success" title="Passwort erfolgreich geändert"
+                    sub-title="Sie können sich jetzt mit Ihrem neuen Passwort anmelden." />
+                <el-button type="primary" @click="redirectToLogin">
+                    Home
+                </el-button>
+            </div>
         </template>
     </div>
 </template>
@@ -105,6 +110,9 @@ export default {
             } else {
                 this.passwordType = 'password'
             }
+        },
+        redirectToLogin() {
+            this.$router.push("/");
         }
     },
     beforeCreate() {
@@ -158,7 +166,7 @@ $dark_gray: #889aa4;
         margin-left: 0px;
     }
 
-    .reset-form {
+    .reset-form, .success-message-container {
         position: relative;
         width: 520px;
         max-width: 100%;
