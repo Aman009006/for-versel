@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    environment { 
+        // https://stackoverflow.com/questions/72549751/plain-text-reporter-for-vitest/74189519#74189519
+        NO_COLOR = 'true'
+    }
+    stages {
+        stage('test') {
+            agent {
+                docker {
+                    image 'node:16.17.0'
+                    reuseNode true
+                }
+            }
+            environment {
+                 HOME = '.'
+            }
+            steps {
+                sh 'npm install'
+                sh 'npm run jenkinsTest'
+            }
+        }
+    }
+}
