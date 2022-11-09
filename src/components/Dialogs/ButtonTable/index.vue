@@ -2,7 +2,7 @@
   <div id="tableButtonContainer" style>
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
-      <el-button v-if="isButtonOrMulti(answerConfig)" icon="icon-Plus" class="add-btn addAnswerButton"
+      <el-button v-if="isMulti(answerConfig)" icon="icon-Plus" class="add-btn addAnswerButton"
         @click="addAnswerButton" />
     </div>
     <el-table :data="currentEditedButtons" border fixed="true">
@@ -63,7 +63,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column v-if="isButtonOrMulti(answerConfig)" align="center">
+      <el-table-column v-if="isMulti(answerConfig)" align="center">
         <template #default="scope">
           <el-button v-if="!isImBackButton(scope.row)" id="deleteAnswerButton" size="default" type="danger"
             icon="icon-Delete" @click="deleteAnswerButton(scope.row)" />
@@ -140,8 +140,8 @@ export default {
     isInvalidUrlButton(button) {
       return ButtonValidatorImpl.isInvalidUrlButton(button);
     },
-    isButtonOrMulti(answerConfig) {
-      return answerConfig.type == "button" || answerConfig.type == "multi";
+    isMulti(answerConfig) {
+      return answerConfig.type == "multi";
     },
     isImBackButton(button) {
       return button.type == buttonTypes.imBack

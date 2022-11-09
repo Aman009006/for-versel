@@ -10,7 +10,9 @@
         {{ humanReadableLabels.answerText }}
         <el-popover placement="top-start" :width="500" trigger="hover">
           <template #reference>
-            <el-icon><icon-InfoFilled /></el-icon>
+            <el-icon>
+              <icon-InfoFilled />
+            </el-icon>
           </template>
           <template #default>
             <div>
@@ -24,11 +26,7 @@
     </div>
 
     <div v-if="showButtonTable()">
-      <ButtonTable
-        ref="buttonTable"
-        :buttons="answer.buttons"
-        :answerConfig="answerConfig"
-      />
+      <ButtonTable ref="buttonTable" :buttons="answer.buttons" :answerConfig="answerConfig" />
     </div>
   </div>
 </template>
@@ -155,15 +153,7 @@ export default {
       return titleDiffers || valueDiffers || typeDiffers;
     },
     showButtonTable() {
-      if (this.answer.buttons != null) {
-        return true;
-      } else {
-        return (
-          this.answer.buttons == null &&
-          (this.answerConfig.type == "button" ||
-            this.answerConfig.type == "multi")
-        );
-      }
+      return this.answerConfig.type == "multi"
     },
     printSavedAnswerMessage(answersSaved, buttonsSaved) {
       if (answersSaved && buttonsSaved) {
