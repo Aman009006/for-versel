@@ -5,7 +5,7 @@
       <el-button icon="icon-Plus" class="add-btn addAnswerButton"
         @click="addAnswerButton" />
     </div>
-    <el-table :data="currentEditedButtons" border fixed="true">
+    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize @input="validateButtonsAndSaveStateInStore" />
