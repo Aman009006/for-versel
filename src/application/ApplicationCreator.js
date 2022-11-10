@@ -1,12 +1,11 @@
 import { createApp } from 'vue'
 import Element from 'element-plus'
 import enLang from 'element-plus/es/locale/lang/en'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
 
 import App from '../App.vue'
 import store from '../store'
 import router from '../router'
+import IconComponentCreator from './IconComponentCreator'
 
 export default class ApplicationCreator {
     static createApp() {
@@ -26,22 +25,10 @@ export default class ApplicationCreator {
     }
 
     static #addIconComponents(app) {
-        app.component('SvgIcon', SvgIcon)
-        this.#addElementPlusIcons(app)
-    }
-
-    static #addElementPlusIcons(app) {
-        for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-            const iconName = this.#createIconComponentName(key)
-            app.component(iconName, component)
+        const iconComponents = IconComponentCreator.getIconComponents();
+        for (const componentName in iconComponents) {
+            const component = iconComponents[componentName];
+            app.component(componentName, component);
         }
-    }
-
-    /**
-     * We want the icons to be scoped, so that the usage of icons is
-     * more semantic.
-     */
-    static #createIconComponentName(key) {
-        return 'icon-' + key
     }
 }
