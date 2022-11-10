@@ -2,13 +2,13 @@
   <div id="tableButtonContainer" style>
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
-      <el-button icon="icon-Plus" class="add-btn addAnswerButton"
-        @click="addAnswerButton" />
+      <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
     <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
-          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize @input="validateButtonsAndSaveStateInStore" />
+          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize
+            @input="validateButtonsAndSaveStateInStore" />
         </template>
       </el-table-column>
 
@@ -85,7 +85,7 @@ import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 export default {
   name: "ButtonTable",
   inheritAttrs: true,
-  props: ["buttons", "answerConfig"],
+  props: ["answerConfig"],
   data() {
     return {
       columnMinWidth: 200,
