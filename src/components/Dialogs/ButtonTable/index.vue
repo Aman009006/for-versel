@@ -85,7 +85,6 @@ import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 export default {
   name: "ButtonTable",
   inheritAttrs: true,
-  props: ["answerConfig"],
   data() {
     return {
       columnMinWidth: 200,

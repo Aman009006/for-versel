@@ -26,7 +26,7 @@
     </div>
 
     <div v-if="showButtonTable()">
-      <ButtonTable ref="buttonTable" :answerConfig="answerConfig" />
+      <ButtonTable ref="buttonTable" />
     </div>
   </div>
 </template>
