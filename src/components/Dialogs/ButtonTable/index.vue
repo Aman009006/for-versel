@@ -2,13 +2,13 @@
   <div id="tableButtonContainer" style>
     <div id="tableTitleContainer">
       <h2>Buttons</h2>
-      <el-button v-if="isButtonOrMulti(answerConfig)" icon="icon-Plus" class="add-btn addAnswerButton"
-        @click="addAnswerButton" />
+      <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
-    <el-table :data="currentEditedButtons" border fixed="true">
+    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
-          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize @input="validateButtonsAndSaveStateInStore" />
+          <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize
+            @input="validateButtonsAndSaveStateInStore" />
         </template>
       </el-table-column>
 
@@ -63,7 +63,7 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column v-if="isButtonOrMulti(answerConfig)" align="center">
+      <el-table-column align="center">
         <template #default="scope">
           <el-button v-if="!isImBackButton(scope.row)" id="deleteAnswerButton" size="default" type="danger"
             icon="icon-Delete" @click="deleteAnswerButton(scope.row)" />
@@ -85,7 +85,6 @@ import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 export default {
   name: "ButtonTable",
   inheritAttrs: true,
-  props: ["buttons", "answerConfig"],
   data() {
     return {
       columnMinWidth: 200,
@@ -139,9 +138,6 @@ export default {
     },
     isInvalidUrlButton(button) {
       return ButtonValidatorImpl.isInvalidUrlButton(button);
-    },
-    isButtonOrMulti(answerConfig) {
-      return answerConfig.type == "button" || answerConfig.type == "multi";
     },
     isImBackButton(button) {
       return button.type == buttonTypes.imBack

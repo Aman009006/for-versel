@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 
 import store from '../../src/store/index'
 import element from 'element-plus'
+import IconComponentCreator from '@/application/IconComponentCreator';
 
 /**
  * @typedef {import('@vue/test-utils')['mount']} mount
@@ -26,7 +27,8 @@ export default class VueTestUtils {
     createTestObject(options) {
         return mount(this.component, {
             global: {
-                plugins: [store, element]
+                plugins: [store, element],
+                components: IconComponentCreator.getIconComponents()
             },
             ...options
         })

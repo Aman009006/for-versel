@@ -17,7 +17,7 @@
 
       <el-table-column align="center" label="Buttons" width="200">
         <template #default="{ row: answer }">
-          <template v-if="answer.buttons">
+          <template v-if="answer.buttons && answerConfig.type == 'multi'">
             <ButtonList :buttons="answer.buttons" />
           </template>
           <template v-else>

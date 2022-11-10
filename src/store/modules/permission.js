@@ -3,7 +3,6 @@ import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
-import store from '../index';
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -154,7 +153,7 @@ export function makeURLRouteForPowerBI(powerBI_link) {
 }
 
 const actions = {
-  async pullIntentsAndSetRoutes({ commit, state, dispatch }, roles) {
+  async pullIntentsAndSetRoutes({ commit, state, dispatch, rootGetters }, roles) {
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -172,7 +171,7 @@ const actions = {
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
     // get the powerBI link from the DB for the current customer
-    const { powerBI_link } = store.getters.metainfo
+    const { powerBI_link } = rootGetters.metainfo
     let powerBIRoute
     if (powerBI_link) {
       // make dynamic route for the powerBI Daashboard
