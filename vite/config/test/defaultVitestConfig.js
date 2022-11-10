@@ -5,6 +5,11 @@
  */
 const defaultConfig = {
     environment: 'jsdom',
+    deps: {
+        inline: [
+            /@ckeditor\/.+/
+        ]
+    }
 }
 
 export default defaultConfig;
