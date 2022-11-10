@@ -9,7 +9,10 @@ const defaultConfig = {
         inline: [
             /@ckeditor\/.+/
         ]
-    }
+    },
+    setupFiles: [
+        "./vite/config/test/setupFile.js"
+    ]
 }
 
 export default defaultConfig;
