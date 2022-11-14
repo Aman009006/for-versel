@@ -34,7 +34,7 @@
           <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
             @input="validateButtonsAndSaveStateInStore()" />
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
-            Der Link muss mit <b>http://</b> oder <b>https://</b> beginnen
+            Der Wert muss mit <b>http://</b> oder <b>https://</b> beginnen, oder einen <b>Platzhalter</b> enthalten.
           </el-alert>
         </template>
       </el-table-column>

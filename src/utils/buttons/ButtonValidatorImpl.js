@@ -36,7 +36,7 @@ export default class ButtonValidatorImpl {
 
     static isInvalidUrlButton(button) {
         if (this.isOpenUrlButton(button)) {
-            return !this.isValidUrl(button.value);
+            return !this.isValidUrlOrPlaceholder(button.value)
         }
         return false;
     }
@@ -45,7 +45,20 @@ export default class ButtonValidatorImpl {
         return button.type == buttonTypes.openUrl
     }
 
+    static isValidUrlOrPlaceholder(buttonValue) {
+        if (buttonValue.slice(0, 2) == '##') {
+            return this.isValidPlaceholder(buttonValue)
+        } else {
+            return this.isValidUrl(buttonValue)
+        }
+    }
+
     static isValidUrl(url) {
-        return /^https?:\/\/.+/.test(url)
+        return /^https?:\/\/.+/.test(url);
+    }
+
+    static isValidPlaceholder(placeholder) {
+        return /^##\S+##$/.test(placeholder);
     }
 }
+
