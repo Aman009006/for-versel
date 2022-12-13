@@ -35,5 +35,5 @@ export const humanReadableLabels = {
 
 export const buttonTypes = {
   openUrl: 'openUrl',
-  imBack: 'imBack'
+  messageBack: 'messageBack'
 }
