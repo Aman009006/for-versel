@@ -31,8 +31,11 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isMessageBackButton(scope.row)"
+          <el-input v-if="!isMessageBackButton(scope.row)" v-model="scope.row.value" type="textarea" autosize
             @input="validateButtonsAndSaveStateInStore()" />
+          <el-select v-else v-model="scope.row.value" filterable>
+            <el-option v-for="item in virtualIntents" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
             Der Wert muss mit <b>http://</b> oder <b>https://</b> beginnen, oder einen <b>Platzhalter</b> enthalten.
           </el-alert>
