@@ -19,11 +19,11 @@
     "@ckeditor/ckeditor5-link": "^35.2.1",
     "@ckeditor/ckeditor5-list": "^35.2.1",
     "@ckeditor/ckeditor5-markdown-gfm": "^35.2.1",
-    "@ckeditor/ckeditor5-source-editing": "^35.2.1", 
+    "@ckeditor/ckeditor5-source-editing": "^35.2.1",
     "@ckeditor/ckeditor5-table": "^35.2.1",
     "@ckeditor/ckeditor5-utils": "^35.2.1",
     "@element-plus/icons-vue": "^2.0.9",
-    "axios": "^0.27.2",
+    "axios": "^1.2.1",
     "element-plus": "^2.2.18",
     "fuse.js": "^6.6.2",
     "keycloak-js": "^20.0.0",
@@ -37,14 +37,14 @@
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
-    "@vitejs/plugin-vue": "^3.1.0",
+    "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.1.0",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "jsdom": "^20.0.1",
     "sass": "^1.55.0",
-    "vite": "^3.1.8",
-    "vitest": "^0.24.3"
+    "vite": "^4.0.1",
+    "vitest": "^0.25.8"
   },
   "browserslist": [
     "> 1%",
