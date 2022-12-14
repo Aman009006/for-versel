@@ -19,5 +19,6 @@ const getters = {
   newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,
   currentEditedAnswerButtons: (state) => state.answerButtons.currentEditedAnswerButtons,
   buttonValidations: (state) => state.answerButtons.buttonValidations,
+  virtualIntents: (state) => state.virtualIntents.virtualIntents
 }
 export default getters
