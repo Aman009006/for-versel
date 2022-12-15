@@ -34,7 +34,7 @@
           <el-input v-if="!isMessageBackButton(scope.row)" v-model="scope.row.value" type="textarea" autosize
             @input="validateButtonsAndSaveStateInStore()" />
           <el-select v-else v-model="scope.row.value" filterable>
-            <el-option v-for="item in virtualIntents" :key="item.value" :label="item.label" :value="item.value" />
+            <el-option v-for="item in getVirtualIntents" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
             Der Wert muss mit <b>http://</b> oder <b>https://</b> beginnen, oder einen <b>Platzhalter</b> enthalten.
@@ -101,11 +101,6 @@ export default {
           label: buttonTypes.openUrl,
         },
       ],
-      virtualIntents: [
-        { value: 'Test1' },
-        { value: 'Test2' },
-        { value: 'Test3' }
-      ]
     };
   },
   computed: {
@@ -129,6 +124,10 @@ export default {
     getTitleDuplicate() {
       return this.$store.getters.buttonValidations.titleDuplicate;
     },
+    getVirtualIntents() {
+      this.$store.dispatch(dispatchNames.getVirtualIntents)
+      return this.$store.getters.virtualIntents;
+    }
   },
   methods: {
     deleteAnswerButton(answerButton) {
