@@ -25,7 +25,7 @@ export const dispatchNames = {
   addNewAnswerButton: "answerButtons/addNewAnswerButton",
   resetStateAndSaveCopyOfButtons: "answerButtons/resetStateAndSaveCopyOfButtons",
   getCurrentEditedButtons: "answerButtons/getCurrentEditedButtons",
-  getVirtualIntents: "virtualIntents/getVirtualIntents"
+  getVirtualIntents: "virtualIntents/getVirtualIntents",
 }
 
 export const humanReadableLabels = {

@@ -1,19 +1,30 @@
-import { getVirtualIntents } from "@/api/virtualIntents"
+import { getVirtualIntents } from "@/api/virtualIntent"
 
 const state = {
     virtualIntents: [],
 }
 
 const mutations = {
-    setVirtualIntents: (state, virtualIntents) => {
-        //copy of the array
-        state.virtualIntents = virtualIntents.slice()
+    SET_VIRTUALINTENT: (state, virtualIntents) => {
+        state.virtualIntents = virtualIntents.map((item) => {
+            return {
+                value: item.virtualIntent,
+                answerConfigId: item.answerConfigId
+            }
+        })
     }
 }
 
 const actions = {
-    async getVirtualIntents({ commit }) {
-        const virtualIntents = await getVirtualIntents();
-        commit(mutations.setVirtualIntents.name, virtualIntents)
+    getVirtualIntents: async ({ commit }) => {
+        const virtualIntents = await getVirtualIntents()
+        commit(mutations.SET_VIRTUALINTENT.name, virtualIntents)
     }
+}
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions,
 }
