@@ -73,7 +73,8 @@ export function setButtonProperties(
   originalButtonTitle,
   newButtonTitle,
   newButtonType,
-  newButtonValue
+  newButtonValue,
+  newButtonVirtualIntent
 ) {
   return request({
     url: authorizedBackendUrl + 'setButtonProperties',
@@ -84,6 +85,7 @@ export function setButtonProperties(
       newButtonTitle,
       newButtonType,
       newButtonValue,
+      newButtonVirtualIntent
     },
   })
 }

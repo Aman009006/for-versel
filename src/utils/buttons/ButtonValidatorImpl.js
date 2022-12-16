@@ -24,7 +24,11 @@ export default class ButtonValidatorImpl {
 
     hasEmptyInputs() {
         return this.buttons.some((button) => {
-            return button.title === "" || button.value === "";
+            if (button.type == 'openUrl') {
+                return button.title === "" || button.value === "";
+            } else {
+                return button.title === "" || button.virtualIntent === "";
+            }
         });
     }
 
