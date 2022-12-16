@@ -33,7 +33,7 @@
         <template #default="scope">
           <el-input v-if="!isMessageBackButton(scope.row)" v-model="scope.row.value" type="textarea" autosize
             @input="validateButtonsAndSaveStateInStore()" />
-          <el-select v-else v-model="scope.row.value" filterable>
+          <el-select v-else v-model="scope.row.virtualIntent" filterable>
             <el-option v-for="item in getVirtualIntents" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
