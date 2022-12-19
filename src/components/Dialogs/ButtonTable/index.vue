@@ -125,7 +125,6 @@ export default {
       return this.$store.getters.buttonValidations.titleDuplicate;
     },
     getVirtualIntents() {
-      this.$store.dispatch(dispatchNames.getVirtualIntents)
       return this.$store.getters.virtualIntents;
     }
   },
