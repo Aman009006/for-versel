@@ -24,10 +24,10 @@ export default class ButtonValidatorImpl {
 
     hasEmptyInputs() {
         return this.buttons.some((button) => {
-            if (button.type == 'openUrl') {
-                return button.title === "" || button.value === "";
+            if (ButtonValidatorImpl.isMessageBackButton(button)) {
+                return button.title === "" || button?.virtualIntent == null;
             } else {
-                return button.title === "" || button.virtualIntent === "";
+                return button.title === "" || button.value === "";
             }
         });
     }
@@ -63,6 +63,10 @@ export default class ButtonValidatorImpl {
 
     static isValidPlaceholder(placeholder) {
         return /^##\S+##$/.test(placeholder);
+    }
+
+    static isMessageBackButton(button) {
+        return button.type == buttonTypes.messageBack;
     }
 }
 
