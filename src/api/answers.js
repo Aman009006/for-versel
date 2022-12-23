@@ -4,9 +4,9 @@ import { authorizedBackendUrl } from '@/utils/backendUrl'
 /**
  * @returns {{ SkillName: string; Intents: Intent[]; }[]}
  */
-export async function getSkillsWithIntents() {
+export function getSkillsWithIntents() {
   // extract domain in const
-  const res = await request({
+  const res = request({
     url: authorizedBackendUrl + 'skillsWithIntentNames',
     method: 'get',
   })
