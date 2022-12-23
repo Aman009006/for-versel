@@ -16,6 +16,7 @@ const mutations = {
             value: "",
             type: buttonTypes.openUrl,
             identificator: null,
+            virtualIntent: null
         }
         state.newAnswerButtons.push(newAnswerButton)
     },

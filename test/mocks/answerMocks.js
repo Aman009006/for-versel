@@ -10,9 +10,9 @@ export const answerConfigMulti = {
 
 export const buttons = [
     {
-        type: 'imBack',
+        type: 'messageBack',
         title: 'button1',
-        value: 'test_value1',
+        value: 'button1',
         answer_config: 82030,
         identificator: null
     },
@@ -20,7 +20,7 @@ export const buttons = [
         type: 'openUrl',
         title: 'button2',
         value: 'https://www.google.de/',
-        answer_config: 82030,
+        answer_config: null,
         identificator: null
     }
 ];

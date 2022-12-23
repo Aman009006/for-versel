@@ -106,7 +106,8 @@ export default {
           oldButton.title,
           updatedButton.title,
           updatedButton.type,
-          updatedButton.value
+          updatedButton.value,
+          updatedButton.virtualIntent
         );
         return true;
       } catch {
@@ -150,7 +151,8 @@ export default {
       const titleDiffers = button1.title != button2.title;
       const valueDiffers = button1.value != button2.value;
       const typeDiffers = button1.type != button2.type;
-      return titleDiffers || valueDiffers || typeDiffers;
+      const virtualIntentDiffers = button1.virtualIntent != button2.virtualIntent
+      return titleDiffers || valueDiffers || typeDiffers || virtualIntentDiffers;
     },
     showButtonTable() {
       return this.answerConfig.type == "multi"

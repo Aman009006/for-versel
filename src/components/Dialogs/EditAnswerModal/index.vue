@@ -69,6 +69,7 @@ export default {
         dispatchNames.resetStateAndSaveCopyOfButtons,
         this.answer.buttons
       );
+      this.$store.dispatch(dispatchNames.getVirtualIntents);
       this.savingCurrently = false;
       this.saveAnswerClicked = false;
       this.editModalOpened = true;

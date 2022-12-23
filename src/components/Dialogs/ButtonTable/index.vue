@@ -31,10 +31,16 @@
           </el-popover>
         </template>
         <template #default="scope">
-          <el-input v-model="scope.row.value" type="textarea" autosize :disabled="isImBackButton(scope.row)"
+          <el-input v-if="!isMessageBackButton(scope.row)" v-model="scope.row.value" type="textarea" autosize
             @input="validateButtonsAndSaveStateInStore()" />
+          <el-select v-else v-model="scope.row.virtualIntent" filterable @change="validateButtonsAndSaveStateInStore()">
+            <el-option v-for="item in getVirtualIntents" :key="item.value" :label="item.label" :value="item.value" />
+          </el-select>
           <el-alert v-if="isInvalidUrlButton(scope.row)" type="error" :closable="false">
             Der Wert muss mit <b>http://</b> oder <b>https://</b> beginnen, oder einen <b>Platzhalter</b> enthalten.
+          </el-alert>
+          <el-alert v-if="isSelectedOption(scope.row)" type="error" :closable="false">
+            Im Dropdown sollte ein Intent ausgwählt sein.
           </el-alert>
         </template>
       </el-table-column>
@@ -50,23 +56,22 @@
             </template>
             <template #default>
               <div class="popOverContent">
-                Der Typ eines Buttons kann
-                <strong>nicht</strong>
-                geändert werden.
+                OpenUrl - Buttons verweisen auf Links  <br>
+                MessageBack - Buttons verweisen auf interne Aktionen
               </div>
             </template>
           </el-popover>
         </template>
         <template #default="scope">
-          <el-select v-model="scope.row.type" :disabled="true">
+          <el-select v-model="scope.row.type" @change="validateButtonsAndSaveStateInStore()">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </template>
       </el-table-column>
       <el-table-column align="center">
         <template #default="scope">
-          <el-button v-if="!isImBackButton(scope.row)" id="deleteAnswerButton" size="default" type="danger"
-            icon="icon-Delete" @click="deleteAnswerButton(scope.row)" />
+          <el-button id="deleteAnswerButton" size="default" type="danger" icon="icon-Delete"
+            @click="deleteAnswerButton(scope.row)" />
         </template>
       </el-table-column>
     </el-table>
@@ -90,8 +95,8 @@ export default {
       columnMinWidth: 200,
       options: [
         {
-          value: buttonTypes.imBack,
-          label: buttonTypes.imBack,
+          value: buttonTypes.messageBack,
+          label: buttonTypes.messageBack,
         },
         {
           value: buttonTypes.openUrl,
@@ -121,6 +126,9 @@ export default {
     getTitleDuplicate() {
       return this.$store.getters.buttonValidations.titleDuplicate;
     },
+    getVirtualIntents() {
+      return this.$store.getters.virtualIntents;
+    }
   },
   methods: {
     deleteAnswerButton(answerButton) {
@@ -139,9 +147,16 @@ export default {
     isInvalidUrlButton(button) {
       return ButtonValidatorImpl.isInvalidUrlButton(button);
     },
-    isImBackButton(button) {
-      return button.type == buttonTypes.imBack
+    isMessageBackButton(button) {
+      return button.type == buttonTypes.messageBack
     },
+    isSelectedOption(button){
+      if(this.isMessageBackButton(button)){
+          return button?.virtualIntent == null
+      }else{
+        return false
+      }
+    }
   },
 };
 </script>

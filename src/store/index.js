@@ -7,6 +7,7 @@ import permission from './modules/permission';
 import placeholders from './modules/placeholders';
 import tagsView from './modules/tagsView';
 import user from './modules/user';
+import virtualIntents from './modules/virtualIntents';
 
 const modules = createModules();
 const store = createStore({
@@ -22,7 +23,8 @@ function createModules() {
     permission,
     placeholders,
     tagsView,
-    user
+    user,
+    virtualIntents
   };
   return modules;
 }
