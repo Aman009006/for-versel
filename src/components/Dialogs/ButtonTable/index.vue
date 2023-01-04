@@ -56,8 +56,8 @@
             </template>
             <template #default>
               <div class="popOverContent">
-                OpenUrl - Buttons verweisen auf Links  <br>
-                MessageBack - Buttons verweisen auf interne Aktionen
+                <strong>openURL:</strong> Verlinkung auf Webseite per Button <br>
+                <strong>messageBack: </strong> Verlinkung auf anderen Intent per Button
               </div>
             </template>
           </el-popover>
@@ -150,10 +150,10 @@ export default {
     isMessageBackButton(button) {
       return button.type == buttonTypes.messageBack
     },
-    isSelectedOption(button){
-      if(this.isMessageBackButton(button)){
-          return button?.virtualIntent == null
-      }else{
+    isSelectedOption(button) {
+      if (this.isMessageBackButton(button)) {
+        return button?.virtualIntent == null
+      } else {
         return false
       }
     }
