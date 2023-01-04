@@ -163,7 +163,7 @@ export default {
 
 <style lang="scss" scoped>
 .popOverContent {
-  text-align: center;
+  text-align: left;
 }
 
 #tableTitleContainer {
