@@ -54,7 +54,7 @@
     "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
   },
   "engines": {
-    "node": "^16.0.0",
+    "node": "~18",
     "npm": "^8.15.0"
   },
   "keywords": [
