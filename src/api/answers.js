@@ -33,18 +33,18 @@ export function getSkillsWithIntents() {
  * @typedef {{ answers: Answer[], answerConfig: AnswerConfig}} AnswerInfo
  */
 /**
- * @param {string} readableIntentName human readable name for a particular intent
+ * @param {string} virtualIntentName human readable name for a particular intent
  * @returns {AnswerInfo} an information object containing all the information for an intent
  */
-export function getAnswersforIntent(readableIntentName) {
+export function getAnswersforIntent(virtualIntentName) {
   return request({
-    url: authorizedBackendUrl + 'answersForReadableIntentName',
+    url: authorizedBackendUrl + 'answers',
     /**
      * we have to use post request here:
      * if we use get, data in body will be ignored
      */
     method: 'post',
-    data: { readableIntentName },
+    data: { virtualIntentName },
   })
 }
 
