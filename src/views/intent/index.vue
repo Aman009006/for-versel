@@ -13,7 +13,7 @@
       <RedirectionInfoBox
         v-if="answerConfig != null"
         :readableRedirectToIntentName="
-          answerConfig.readable_redirect_to_intent_name
+          answerConfig.redirectToVirtualIntentName
         "
       />
 
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     isRedirectedToOtherIntent() {
-      return this.answerConfig?.readable_redirect_to_intent_name != null;
+      return this.answerConfig?.redirectToVirtualIntentName != null;
     },
 
     async refreshRoutesIfNewIntentWasClicked() {

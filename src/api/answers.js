@@ -18,7 +18,7 @@ export function getSkillsWithIntents() {
  */
 /**
  * The configuration informations of an answer as described in the database
- * @typedef {{ type: string, readable_redirect_to_intent_name: string}} AnswerConfig
+ * @typedef {{ type: string, redirectToVirtualIntentName: string}} AnswerConfig
  */
 /**
  * All informations concerning an answer.
