@@ -13,10 +13,10 @@
       </ul>
     </template>
     <div class="testButtonContainer">
-      <el-button v-if="adminUiTestPageLink == null" @click="startDialogForcurrentIntent()">
+      <el-button v-if="adminUiTestPageLink == null && isDefaultEntity()" @click="startDialogForcurrentIntent()">
         Antwort im Bot prüfen
       </el-button>
-      <el-button v-else @click="openLink(adminUiTestPageLink)">
+      <el-button v-else-if="adminUiTestPageLink != null" @click="openLink(adminUiTestPageLink)">
         Testseite öffnen
       </el-button>
     </div>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { defaultEntity } from "@/constants";
+
 export default {
   props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
   methods: {
@@ -33,6 +35,9 @@ export default {
     openLink(link) {
       window.open(link, "_blank");
     },
+    isDefaultEntity() {
+      return this.entity.entityName == defaultEntity.entityName
+    }
   },
 };
 </script>
