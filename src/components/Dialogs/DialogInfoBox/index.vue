@@ -13,10 +13,7 @@
       </ul>
     </template>
     <div class="testButtonContainer">
-      <el-button
-        v-if="adminUiTestPageLink == null"
-        @click="startDialogForcurrentIntent()"
-      >
+      <el-button v-if="adminUiTestPageLink == null" @click="startDialogForcurrentIntent()">
         Antwort im Bot prüfen
       </el-button>
       <el-button v-else @click="openLink(adminUiTestPageLink)">
@@ -28,7 +25,7 @@
 
 <script>
 export default {
-  props: ["intent", "description", "utterances", "adminUiTestPageLink"],
+  props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
   methods: {
     startDialogForcurrentIntent() {
       window.hsag_chatbot.api.startDialog(this.intent);
@@ -52,6 +49,7 @@ export default {
   font-size: 14px;
   color: $darkGrey;
 }
+
 .utterancesTitle {
   font-size: 13px;
   color: #409eff;

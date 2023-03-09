@@ -8,6 +8,7 @@
         :description="$route.meta.description"
         :utterances="utterances"
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
+        :entity="$route.meta.entity"
       />
 
       <RedirectionInfoBox
