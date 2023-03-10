@@ -6,37 +6,38 @@ import { encodePathComponent } from '@/store/modules/permission'
  */
 export default class SkillsWithIntentsDataGetterImpl {
     /**
-     * @param {import('vue-router').Router} router
+     * @param {import('vue-router').RouteRecord} route
      * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
      * @returns {import('./SkillsWithIntents').AnswerData}
      */
-    getTexts(router, skillsWithIntents) {
-        const intentData = this.getIntentData(router, skillsWithIntents);
+    getTexts(route, skillsWithIntents) {
+        const intentData = this.getIntentData(route, skillsWithIntents);
         return intentData?.texts;
     }
 
     /**
-     * @param {import('vue-router').Router} router
+     * @param {import('vue-router').RouteRecord} route
      * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
      * @returns {string}
      */
-    getIntent(router, skillsWithIntents) {
-        const intentData = this.getIntentData(router, skillsWithIntents);
+    getIntent(route, skillsWithIntents) {
+        const intentData = this.getIntentData(route, skillsWithIntents);
         return intentData?.intent;
     }
 
     /**
      * @private
-     * @param {import('vue-router').Router} router
+     * @param {import('vue-router').RouteRecord} route
      * @returns {import('./Intent').Intent}
      */
-    getIntentData(router, skillsWithIntents) {
+    getIntentData(route, skillsWithIntents) {
         const intentsFromSkills = skillsWithIntents.map((data) => data.Intents);
         const allIntents = intentsFromSkills.flat();
         const intent = allIntents.find(
             intentElement =>
-                encodeURIComponent(encodePathComponent(intentElement.name)) === router.path &&
-                router.children == null
+                encodeURIComponent(encodePathComponent(intentElement.name)) === route.path &&
+                // intent - routes don't have children
+                route.children == null
         )
         return intent;
     }

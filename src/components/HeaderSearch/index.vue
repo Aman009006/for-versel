@@ -156,24 +156,24 @@ export default {
     // And generate the internationalized title
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
       let res = [];
-      for (const router of routes) {
+      for (const route of routes) {
         // skip hidden router
-        if (router.hidden) {
+        if (route.hidden) {
           continue;
         }
 
         const dataGetter = new SkillsWithIntentsDataGetterImpl();;
         const data = {
-          path: path.resolve(basePath, router.path),
+          path: path.resolve(basePath, route.path),
           title: [...prefixTitle],
-          texts: dataGetter.getTexts(router, this.skillsWithIntents),
-          intent: dataGetter.getIntent(router, this.skillsWithIntents)
+          texts: dataGetter.getTexts(route, this.skillsWithIntents),
+          intent: dataGetter.getIntent(route, this.skillsWithIntents)
         };
 
-        if (router.meta && router.meta.title) {
-          data.title = [...data.title, router.meta.title];
+        if (route.meta && route.meta.title) {
+          data.title = [...data.title, route.meta.title];
 
-          if (router.redirect !== "noRedirect") {
+          if (route.redirect !== "noRedirect") {
             // only push the routes with title
             // special case: need to exclude parent router without redirect
             res.push(data);
@@ -181,9 +181,9 @@ export default {
         }
 
         // recursive child routes
-        if (router.children) {
+        if (route.children) {
           const tempRoutes = this.generateRoutes(
-            router.children,
+            route.children,
             data.path,
             data.title
           );
