@@ -1,46 +1,16 @@
 <template>
   <div :class="{ show: show }" class="header-search">
-    <svg-icon
-      :svg-icon-html="icons.search"
-      class="search-icon"
-      @click.stop="click"
-    />
+    <svg-icon :svg-icon-html="icons.search" class="search-icon" @click.stop="click" />
 
-    <el-select
-      v-model="filteredElements"
-      collapse-tags
-      multiple
-      placeholder="Filter"
-      class="header-search-select"
-      @change="initFuse"
-    >
-      <el-option
-        v-for="item in filterElementOptions"
-        :key="item"
-        :label="item"
-        :value="item"
-      />
+    <el-select v-model="filteredElements" collapse-tags multiple placeholder="Filter" class="header-search-select"
+      @change="initFuse">
+      <el-option v-for="item in filterElementOptions" :key="item" :label="item" :value="item" />
     </el-select>
 
-    <el-select
-      ref="headerSearchSelect"
-      v-model="search"
-      :remote-method="querySearch"
-      filterable
-      default-first-option
-      remote
-      placeholder="Suche"
-      class="header-search-select"
-      popper-class="header-search-popper"
-      @change="change"
-    >
-      <el-option
-        v-for="element in options"
-        :key="element.item.path"
-        :value="element.item"
-        class="header-search-option"
-        v-html="getFoundElementHtml(element)"
-      />
+    <el-select ref="headerSearchSelect" v-model="search" :remote-method="querySearch" filterable default-first-option
+      remote placeholder="Suche" class="header-search-select" popper-class="header-search-popper" @change="change">
+      <el-option v-for="element in options" :key="element.item.path" :value="element.item" class="header-search-option"
+        v-html="getFoundElementHtml(element)" />
     </el-select>
   </div>
 </template>
@@ -55,9 +25,9 @@ import { humanReadableLabels } from "@/constants";
 import icons from "@/icons/index";
 
 const filterElementObject = {
-  intent: {
+  intentName: {
     label: "Intentname",
-    searchKey: "intent",
+    searchKey: "intentName",
   },
   answerText: {
     label: humanReadableLabels.answerText,
@@ -67,12 +37,17 @@ const filterElementObject = {
     label: "Button Name",
     searchKey: "texts.buttons.title",
   },
+  intent: {
+    label: "technischer Intentname",
+    searchKey: "intent"
+  }
 };
 
 const filterElementValues = [
-  filterElementObject.intent,
+  filterElementObject.intentName,
   filterElementObject.answerText,
   filterElementObject.buttonTitle,
+  filterElementObject.intent
 ];
 
 const filterElementOptions = filterElementValues.map(
@@ -99,7 +74,7 @@ export default {
     routes() {
       return this.$store.getters.permission_routes;
     },
-    intentTexts() {
+    skillsWithIntents() {
       return this.$store.getters.skillsWithIntents;
     },
     filterElementOptions() {
@@ -210,21 +185,30 @@ export default {
     },
     findTextForRoute(router) {
       // add the texts for the intent
-      const intentText = this.intentTexts
+      const intentText = this.skillsWithIntents
         .map((intentText) => intentText.Intents)
         .flat()
         .find(
           (intentElement) =>
-            encodePathComponent(intentElement.name) === router.path &&
+            encodeURIComponent(encodePathComponent(intentElement.name)) === router.path &&
             this.checkIfRouteIsIntent(router)
         );
       return intentText?.texts;
+    },
+    findIntentForRoute(router) {
+      const mapping = this.skillsWithIntents.map((data) => data.Intents);
+      const mappingFlat = mapping.flat();
+      const searchedElement = mappingFlat.find(
+        (intentElement =>
+          encodeURIComponent(encodePathComponent(intentElement.name)) === router.path &&
+          this.checkIfRouteIsIntent(router))
+      )
+      return searchedElement?.intent;
     },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
       let res = [];
-
       for (const router of routes) {
         // skip hidden router
         if (router.hidden) {
@@ -235,6 +219,7 @@ export default {
           path: path.resolve(basePath, router.path),
           title: [...prefixTitle],
           texts: this.findTextForRoute(router),
+          intent: this.findIntentForRoute(router)
         };
 
         if (router.meta && router.meta.title) {
@@ -269,7 +254,7 @@ export default {
       const res = generatedRoutes
         .filter((route) => this.checkIfRouteIsIntent(route))
         .map((route) => {
-          route.intent = route.title[this.intentArrayIndexInTitle];
+          route.intentName = route.title[this.intentArrayIndexInTitle];
           return route;
         });
       return res;
@@ -331,7 +316,7 @@ export default {
       title.forEach((_title, i) => {
         if (
           foundTextArrayIndex === i &&
-          match.key === filterElementObject.intent.searchKey
+          match.key === filterElementObject.intentName.searchKey
         ) {
           pathText += this.markText(_title, textIndex1, textIndex2);
         } else {
@@ -343,11 +328,14 @@ export default {
       });
       if (
         match.key === filterElementObject.answerText.searchKey ||
-        match.key === filterElementObject.buttonTitle.searchKey
+        match.key === filterElementObject.buttonTitle.searchKey ||
+        match.key === filterElementObject.intent.searchKey
       ) {
         let label = filterElementObject.answerText.label;
         if (match.key === filterElementObject.buttonTitle.searchKey) {
           label = filterElementObject.buttonTitle.label;
+        } else if (match.key === filterElementObject.intent.searchKey) {
+          label = filterElementObject.intent.label
         }
         // add the text to the result - text
         pathText += `
@@ -393,6 +381,7 @@ export default {
     }
   }
 }
+
 .header-search-popper .el-select-dropdown__item {
   font-weight: normal;
   font-size: 16px;
