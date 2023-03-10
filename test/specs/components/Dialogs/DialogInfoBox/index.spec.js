@@ -15,7 +15,8 @@ function createTestObjectWithDescription(description) {
     const testUtils = createVueTestUtil();
     const testObject = testUtils.createTestObject({
         props: {
-            description
+            description,
+            entity: { }
         }
     });
     return testObject;

@@ -38,3 +38,7 @@ export const buttonTypes = {
   openUrl: 'openUrl',
   messageBack: 'messageBack'
 }
+
+export const defaultEntity = {
+  entityName: "noneEntity"
+}

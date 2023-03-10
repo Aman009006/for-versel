@@ -1,11 +1,11 @@
 export const answerConfigSimple = {
     type: 'simple',
-    readable_redirect_to_intent_name: null
+    redirectToVirtualIntentName: null
 };
 
 export const answerConfigMulti = {
     type: 'multi',
-    readable_redirect_to_intent_name: null
+    redirectToVirtualIntentName: null
 };
 
 export const buttons = [

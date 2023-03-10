@@ -1,7 +1,7 @@
 <template>
   <div class="dialogInfoBox">
-    <h5 class="utterancesTitle">technischer Intentname:</h5>
-    <div>{{ intent }}</div>
+    <h5 class="utterancesTitle">Intentname:</h5>
+    <div>{{ technicalIntentName }}</div>
     <h5 class="utterancesTitle">Beschreibung:</h5>
     <div class="description">{{ description }}</div>
     <template v-if="utterances && utterances[0]">
@@ -13,13 +13,10 @@
       </ul>
     </template>
     <div class="testButtonContainer">
-      <el-button
-        v-if="adminUiTestPageLink == null"
-        @click="startDialogForcurrentIntent()"
-      >
+      <el-button v-if="adminUiTestPageLink == null && isDefaultEntity()" @click="startDialogForcurrentIntent()">
         Antwort im Bot prüfen
       </el-button>
-      <el-button v-else @click="openLink(adminUiTestPageLink)">
+      <el-button v-else-if="adminUiTestPageLink != null" @click="openLink(adminUiTestPageLink)">
         Testseite öffnen
       </el-button>
     </div>
@@ -27,8 +24,17 @@
 </template>
 
 <script>
+import { defaultEntity } from "@/constants";
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
+
 export default {
-  props: ["intent", "description", "utterances", "adminUiTestPageLink"],
+  props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
+  computed: {
+    technicalIntentName() {
+      const intentNameGenerator = new IntentNameGenerator(this.intent, this.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    }
+  },
   methods: {
     startDialogForcurrentIntent() {
       window.hsag_chatbot.api.startDialog(this.intent);
@@ -36,6 +42,9 @@ export default {
     openLink(link) {
       window.open(link, "_blank");
     },
+    isDefaultEntity() {
+      return this.entity.entityName == defaultEntity.entityName
+    }
   },
 };
 </script>
@@ -52,6 +61,7 @@ export default {
   font-size: 14px;
   color: $darkGrey;
 }
+
 .utterancesTitle {
   font-size: 13px;
   color: #409eff;
