@@ -18,7 +18,6 @@
 <script>
 // Fuzzy searching finds strings that are approximately equal to a given pattern
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
-import { encodePathComponent } from "@/store/modules/permission";
 import path from "path-browserify";
 import HtmlEncode from "@/utils/HtmlEncode";
 import { humanReadableLabels } from "@/constants";
@@ -166,7 +165,7 @@ export default {
           intent: dataGetter.getIntent(route, this.skillsWithIntents)
         };
 
-        if (route.meta && route.meta.title) {
+        if (route.meta?.title) {
           data.title = [...data.title, route.meta.title];
 
           if (route.redirect !== "noRedirect") {
