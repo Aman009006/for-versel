@@ -148,10 +148,6 @@ export default {
     initFuse() {
       this.fuse = getFuseInstance(this.searchPool, this.getSearchKeys());
     },
-    checkIfRouteIsIntent(route) {
-      // intent - routes doesn't have children (right now)
-      return route.children == null;
-    },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
@@ -200,7 +196,8 @@ export default {
     generateAndFilterRoutes(routes) {
       const generatedRoutes = this.generateRoutes(routes);
       const res = generatedRoutes
-        .filter((route) => this.checkIfRouteIsIntent(route))
+        // intent - routes don't have children
+        .filter((route) => route.children == null)
         .map((route) => {
           route.intentName = route.title[this.intentArrayIndexInTitle];
           return route;
