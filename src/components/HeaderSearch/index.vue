@@ -56,7 +56,7 @@ import icons from "@/icons/index";
 
 const filterElementObject = {
   intent: {
-    label: "Intent",
+    label: "Intentname",
     searchKey: "intent",
   },
   answerText: {
