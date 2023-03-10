@@ -1,7 +1,7 @@
 <template>
   <div class="dialogInfoBox">
     <h5 class="utterancesTitle">Intentname:</h5>
-    <div>{{ intent }}</div>
+    <div>{{ technicalIntentName }}</div>
     <h5 class="utterancesTitle">Beschreibung:</h5>
     <div class="description">{{ description }}</div>
     <template v-if="utterances && utterances[0]">
@@ -25,9 +25,16 @@
 
 <script>
 import { defaultEntity } from "@/constants";
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 
 export default {
   props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
+  computed: {
+    technicalIntentName() {
+      const intentNameGenerator = new IntentNameGenerator(this.intent, this.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    }
+  },
   methods: {
     startDialogForcurrentIntent() {
       window.hsag_chatbot.api.startDialog(this.intent);
