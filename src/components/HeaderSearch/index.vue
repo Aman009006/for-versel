@@ -23,6 +23,7 @@ import path from "path-browserify";
 import HtmlEncode from "@/utils/HtmlEncode";
 import { humanReadableLabels } from "@/constants";
 import icons from "@/icons/index";
+import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 
 const filterElementObject = {
   intentName: {
@@ -151,28 +152,6 @@ export default {
       // intent - routes doesn't have children (right now)
       return route.children == null;
     },
-    findTextForRoute(router) {
-      // add the texts for the intent
-      const intentText = this.skillsWithIntents
-        .map((intentText) => intentText.Intents)
-        .flat()
-        .find(
-          (intentElement) =>
-            encodeURIComponent(encodePathComponent(intentElement.name)) === router.path &&
-            this.checkIfRouteIsIntent(router)
-        );
-      return intentText?.texts;
-    },
-    findIntentForRoute(router) {
-      const mapping = this.skillsWithIntents.map((data) => data.Intents);
-      const mappingFlat = mapping.flat();
-      const searchedElement = mappingFlat.find(
-        (intentElement =>
-          encodeURIComponent(encodePathComponent(intentElement.name)) === router.path &&
-          this.checkIfRouteIsIntent(router))
-      )
-      return searchedElement?.intent;
-    },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
@@ -183,11 +162,12 @@ export default {
           continue;
         }
 
+        const dataGetter = new SkillsWithIntentsDataGetterImpl();;
         const data = {
           path: path.resolve(basePath, router.path),
           title: [...prefixTitle],
-          texts: this.findTextForRoute(router),
-          intent: this.findIntentForRoute(router)
+          texts: dataGetter.getTexts(router, this.skillsWithIntents),
+          intent: dataGetter.getIntent(router, this.skillsWithIntents)
         };
 
         if (router.meta && router.meta.title) {

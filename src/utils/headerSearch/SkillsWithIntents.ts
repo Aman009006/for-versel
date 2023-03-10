@@ -6,7 +6,7 @@ export default interface SkillsWithIntents {
     title: string[]
 }
 
-interface AnswerData {
+export interface AnswerData {
     buttons: Button[];
     text: string;
 }
