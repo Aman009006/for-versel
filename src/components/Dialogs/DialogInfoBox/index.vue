@@ -1,6 +1,6 @@
 <template>
   <div class="dialogInfoBox">
-    <h5 class="utterancesTitle">Intentname:</h5>
+    <h5 class="utterancesTitle">technischer Intentname:</h5>
     <div>{{ technicalIntentName }}</div>
     <h5 class="utterancesTitle">Beschreibung:</h5>
     <div class="description">{{ description }}</div>
