@@ -26,6 +26,7 @@
 <script>
 import { defaultEntity } from "@/constants";
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
+import WebchatApi from "@/utils/WebchatApi";
 
 export default {
   props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     startDialogForcurrentIntent() {
-      window.hsag_chatbot.api.startDialog(this.intent);
+      new WebchatApi().startDialog(this.intent)
     },
     openLink(link) {
       window.open(link, "_blank");
