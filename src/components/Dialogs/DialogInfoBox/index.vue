@@ -13,7 +13,7 @@
       </ul>
     </template>
     <div class="testButtonContainer">
-      <el-button v-if="adminUiTestPageLink == null && isDefaultEntity()" @click="startDialogForcurrentIntent()">
+      <el-button v-if="adminUiTestPageLink == null" @click="startDialogForcurrentIntent()">
         Antwort im Bot prüfen
       </el-button>
       <el-button v-else-if="adminUiTestPageLink != null" @click="openLink(adminUiTestPageLink)">
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { defaultEntity } from "@/constants";
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import WebchatApi from "@/utils/WebchatApi";
 
@@ -42,9 +41,6 @@ export default {
     },
     openLink(link) {
       window.open(link, "_blank");
-    },
-    isDefaultEntity() {
-      return this.entity.entityName == defaultEntity.entityName
     }
   },
 };
