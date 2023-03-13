@@ -162,7 +162,7 @@ export default {
           path: path.resolve(basePath, route.path),
           title: [...prefixTitle],
           texts: dataGetter.getTexts(route, this.skillsWithIntents),
-          intent: dataGetter.getIntent(route, this.skillsWithIntents)
+          intent: dataGetter.getTechnicalIntentName(route, this.skillsWithIntents)
         };
 
         if (route.meta?.title) {
