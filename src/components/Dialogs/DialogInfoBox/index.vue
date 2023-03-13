@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     startDialogForcurrentIntent() {
-      new WebchatApi().startDialog(this.intent)
+      new WebchatApi().startDialog(this.technicalIntentName)
     },
     openLink(link) {
       window.open(link, "_blank");
