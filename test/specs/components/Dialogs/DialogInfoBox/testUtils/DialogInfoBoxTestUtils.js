@@ -1,5 +1,5 @@
-import DialogInfoBox from '../../../../../src/components/Dialogs/DialogInfoBox/index.vue';
-import VueTestUtils from '../../../../utils/VueTestUtils';
+import DialogInfoBox from '../../../../../../src/components/Dialogs/DialogInfoBox/index.vue';
+import VueTestUtils from '../../../../../utils/VueTestUtils';
 
 /**
  * @typedef {import('@vue/test-utils')['mount']} mount

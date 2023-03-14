@@ -1,6 +1,6 @@
 import { expect, it, describe } from 'vitest';
-import DialogInfoBoxTestUtils from './DialogInfoBoxTestUtils';
-import TestIntentButtonTestUtils from './TestIntentButtonTestUtils';
+import DialogInfoBoxTestUtils from './testUtils/DialogInfoBoxTestUtils';
+import TestIntentButtonTestUtils from './testUtils/TestIntentButtonTestUtils';
 
 const dialogInfoBoxTestUtils = new DialogInfoBoxTestUtils();
 const testIntentButtonTestUtils = new TestIntentButtonTestUtils();
