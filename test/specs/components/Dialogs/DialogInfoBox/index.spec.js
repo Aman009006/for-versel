@@ -15,9 +15,9 @@ describe('DialogInfoBox', async () => {
     describe(testIntentButtonText, function () {
         it(`doesn\'t show the "${testIntentButtonText}" - Button when a adminUiTestPageLink was provided`, function () {
             const testObject = dialogInfoBoxTestUtils.createTestObject({
-                props: {
+                props: dialogInfoBoxTestUtils.getValidProps({
                     adminUiTestPageLink: "https://www.test.com"
-                }
+                })
             });
             const testButtonContainer = dialogInfoBoxTestUtils.getTestButtonContainer(testObject);
             const hasIntentTestButton = testButtonContainer.innerHTML.includes(testIntentButtonText);

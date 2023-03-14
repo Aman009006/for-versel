@@ -9,10 +9,9 @@ import VueTestUtils from '../../../../utils/VueTestUtils';
 export default class DialogInfoBoxTestUtils {
     createTestObjectWithDescription(description) {
         return this.createTestObject({
-            props: {
+            props: this.getValidProps({
                 description,
-                entity: {}
-            },
+            }),
         });
     }
 
@@ -21,6 +20,11 @@ export default class DialogInfoBoxTestUtils {
      */
     createTestObject(options) {
         const testUtils = this.#createVueTestUtil();
+        if (options == null) {
+            options = {
+                props: this.getValidProps()
+            }
+        }
         return testUtils.createTestObject(options);
     }
 
@@ -29,6 +33,13 @@ export default class DialogInfoBoxTestUtils {
      */
     getTestButtonContainer(testObject) {
         return testObject.element.querySelector(".testButtonContainer");
+    }
+
+    getValidProps(props) {
+        return {
+            entity: {},
+            ...props
+        }
     }
 
     #createVueTestUtil() {
