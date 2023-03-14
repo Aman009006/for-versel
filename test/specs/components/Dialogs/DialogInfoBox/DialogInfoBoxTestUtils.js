@@ -4,6 +4,7 @@ import VueTestUtils from '../../../../utils/VueTestUtils';
 /**
  * @typedef {import('@vue/test-utils')['mount']} mount
  * @typedef {Parameters<mount>[1]} Options
+ * @typedef {ReturnType<mount>} TestObject
  */
 export default class DialogInfoBoxTestUtils {
     createTestObjectWithDescription(description) {
@@ -21,6 +22,13 @@ export default class DialogInfoBoxTestUtils {
     createTestObject(options) {
         const testUtils = this.#createVueTestUtil();
         return testUtils.createTestObject(options);
+    }
+
+    /**
+     * @param {TestObject} testObject
+     */
+    getTestButtonContainer(testObject) {
+        return testObject.element.querySelector(".testButtonContainer");
     }
 
     #createVueTestUtil() {
