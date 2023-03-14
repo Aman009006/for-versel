@@ -135,14 +135,21 @@ export default {
     getSearchKeys() {
       /**
        * when no filter is selected, all filterElements should be treated
-       * as selected. Sometimes I don't understand user experience o.0
+       * as selected.
        */
-      const relevantFilterElements = this.filteredElements.length
-        ? this.filteredElements
-        : this.filterElementOptions;
-      return filterElementValues
-        .filter((el) => relevantFilterElements.includes(el.label))
-        .map((el) => el.searchKey);
+      let relevantFilterElements;
+      if (this.filteredElements.length) {
+        relevantFilterElements = this.filteredElements
+      } else {
+        relevantFilterElements = this.filterElementOptions;
+      }
+      const usedFilterElementValues = filterElementValues.filter(
+        element => relevantFilterElements.includes(element.label)
+      )
+      const searchKeys = usedFilterElementValues.map(
+        element => element.searchKey
+      );
+      return searchKeys;
     },
     initFuse() {
       this.fuse = getFuseInstance(this.searchPool, this.getSearchKeys());
