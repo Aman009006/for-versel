@@ -28,13 +28,6 @@ export default class DialogInfoBoxTestUtils {
         return testUtils.createTestObject(options);
     }
 
-    /**
-     * @param {TestObject} testObject
-     */
-    getTestButtonContainer(testObject) {
-        return testObject.element.querySelector(".testButtonContainer");
-    }
-
     getValidProps(props) {
         return {
             entity: {},

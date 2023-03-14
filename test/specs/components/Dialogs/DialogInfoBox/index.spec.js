@@ -1,7 +1,9 @@
 import { expect, it, describe } from 'vitest';
 import DialogInfoBoxTestUtils from './DialogInfoBoxTestUtils';
+import TestIntentButtonTestUtils from './TestIntentButtonTestUtils';
 
 const dialogInfoBoxTestUtils = new DialogInfoBoxTestUtils();
+const testIntentButtonTestUtils = new TestIntentButtonTestUtils();
 const testIntentButtonText = "Antwort im Bot prüfen";
 
 describe('DialogInfoBox', async () => {
@@ -19,14 +21,14 @@ describe('DialogInfoBox', async () => {
                     adminUiTestPageLink: "https://www.test.com"
                 })
             });
-            const testButtonContainer = dialogInfoBoxTestUtils.getTestButtonContainer(testObject);
+            const testButtonContainer = testIntentButtonTestUtils.getTestButtonContainer(testObject);
             const hasIntentTestButton = testButtonContainer.innerHTML.includes(testIntentButtonText);
             expect(hasIntentTestButton).to.be.false;
         })
 
         it(`shows the "${testIntentButtonText}" - Button when a adminUiTestPageLink was not provided`, function () {
             const testObject = dialogInfoBoxTestUtils.createTestObject();
-            const testButtonContainer = dialogInfoBoxTestUtils.getTestButtonContainer(testObject);
+            const testButtonContainer = testIntentButtonTestUtils.getTestButtonContainer(testObject);
             const hasIntentTestButton = testButtonContainer.innerHTML.includes(testIntentButtonText);
             expect(hasIntentTestButton).to.be.true;
         })
