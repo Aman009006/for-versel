@@ -16,7 +16,7 @@ export default class DialogInfoBoxTestUtils {
     }
 
     /**
-     * @param {Options} options
+     * @param {Options} [options]
      */
     createTestObject(options) {
         const testUtils = this.#createVueTestUtil();
