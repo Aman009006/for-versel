@@ -29,6 +29,10 @@ const filterElementObject = {
     label: humanReadableLabels.intentName,
     searchKey: "intentName",
   },
+  intent: {
+    label: humanReadableLabels.technicalIntentName,
+    searchKey: "intent"
+  },
   answerText: {
     label: humanReadableLabels.answerText,
     searchKey: "texts.text",
@@ -36,18 +40,14 @@ const filterElementObject = {
   buttonTitle: {
     label: humanReadableLabels.buttonName,
     searchKey: "texts.buttons.title",
-  },
-  intent: {
-    label: humanReadableLabels.technicalIntentName,
-    searchKey: "intent"
   }
 };
 
 const filterElementValues = [
   filterElementObject.intentName,
+  filterElementObject.intent,
   filterElementObject.answerText,
-  filterElementObject.buttonTitle,
-  filterElementObject.intent
+  filterElementObject.buttonTitle
 ];
 
 const filterElementOptions = filterElementValues.map(
