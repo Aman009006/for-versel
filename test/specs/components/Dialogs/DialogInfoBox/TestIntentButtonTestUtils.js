@@ -4,10 +4,18 @@
  * @typedef {ReturnType<mount>} TestObject
  */
 export default class TestIntentButtonTestUtils {
-    /**
-     * @param {TestObject} testObject
-     */
-    getTestButtonContainer(testObject) {
+    static testIntentButtonText = "Antwort im Bot prüfen";
+
+    /** @param {TestObject} testObject */
+    hasIntentTestButton(testObject) {
+        const testButtonContainer = this.#getTestButtonContainer(testObject);
+        return testButtonContainer.innerHTML.includes(
+            TestIntentButtonTestUtils.testIntentButtonText
+        );
+    }
+
+    /** @param {TestObject} testObject */
+    #getTestButtonContainer(testObject) {
         return testObject.element.querySelector(".testButtonContainer");
     }
 }

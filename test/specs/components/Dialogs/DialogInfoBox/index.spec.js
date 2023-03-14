@@ -4,7 +4,7 @@ import TestIntentButtonTestUtils from './TestIntentButtonTestUtils';
 
 const dialogInfoBoxTestUtils = new DialogInfoBoxTestUtils();
 const testIntentButtonTestUtils = new TestIntentButtonTestUtils();
-const testIntentButtonText = "Antwort im Bot prüfen";
+const testIntentButtonText = TestIntentButtonTestUtils.testIntentButtonText;
 
 describe('DialogInfoBox', async () => {
     it('should show provided description', function () {
@@ -21,15 +21,13 @@ describe('DialogInfoBox', async () => {
                     adminUiTestPageLink: "https://www.test.com"
                 })
             });
-            const testButtonContainer = testIntentButtonTestUtils.getTestButtonContainer(testObject);
-            const hasIntentTestButton = testButtonContainer.innerHTML.includes(testIntentButtonText);
+            const hasIntentTestButton = testIntentButtonTestUtils.hasIntentTestButton(testObject);
             expect(hasIntentTestButton).to.be.false;
         })
 
         it(`shows the "${testIntentButtonText}" - Button when a adminUiTestPageLink was not provided`, function () {
             const testObject = dialogInfoBoxTestUtils.createTestObject();
-            const testButtonContainer = testIntentButtonTestUtils.getTestButtonContainer(testObject);
-            const hasIntentTestButton = testButtonContainer.innerHTML.includes(testIntentButtonText);
+            const hasIntentTestButton = testIntentButtonTestUtils.hasIntentTestButton(testObject);
             expect(hasIntentTestButton).to.be.true;
         })
     })
