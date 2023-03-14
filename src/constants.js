@@ -30,6 +30,9 @@ export const dispatchNames = {
 
 export const humanReadableLabels = {
   answerText: 'Antworttext',
+  intentName: 'Intentname',
+  technicalIntentName: 'technischer Intentname',
+  buttonName: 'Buttonname',
   edit: 'Bearbeiten',
   description: 'Beschreibung',
 }

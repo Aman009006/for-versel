@@ -26,7 +26,7 @@ import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithInte
 
 const filterElementObject = {
   intentName: {
-    label: "Intentname",
+    label: humanReadableLabels.intentName,
     searchKey: "intentName",
   },
   answerText: {
@@ -34,11 +34,11 @@ const filterElementObject = {
     searchKey: "texts.text",
   },
   buttonTitle: {
-    label: "Button Name",
+    label: humanReadableLabels.buttonName,
     searchKey: "texts.buttons.title",
   },
   intent: {
-    label: "technischer Intentname",
+    label: humanReadableLabels.technicalIntentName,
     searchKey: "intent"
   }
 };
