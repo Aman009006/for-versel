@@ -11,24 +11,25 @@ export default class SearchElementFormatter {
     getHtml() {
         const match = this.getElementForUserQuery();
         let pathText = this.formatTitleHtml(this.element.item.title, match);
-        const [startIndex, endIndex] = this.getTextIndices(match);
-        if (
-            match.key !== this.filterElementObject.intentName
-        ) {
-            let label = this.filterElementObject.answerText.label;
-            if (match.key === this.filterElementObject.buttonTitle.searchKey) {
-                label = this.filterElementObject.buttonTitle.label;
-            } else if (match.key === this.filterElementObject.intent.searchKey) {
-                label = this.filterElementObject.intent.label
-            }
-            // add the text to the result - text
-            pathText += `
-          <p class="answer-text">
-            <strong>
-              ${HtmlEncode(label)}
-            </strong>: ${this.markText(match.value, startIndex, endIndex)}
-          </p>`;
+        if (match.key !== this.filterElementObject.intentName) {
+            pathText += this.formatLabelHtml(match);
         }
+        return pathText;
+    }
+
+    formatLabelHtml(match) {
+        const [startIndex, endIndex] = this.getTextIndices(match);
+        let label = this.filterElementObject.answerText.label;
+        if (match.key === this.filterElementObject.buttonTitle.searchKey) {
+            label = this.filterElementObject.buttonTitle.label;
+        } else if (match.key === this.filterElementObject.intent.searchKey) {
+            label = this.filterElementObject.intent.label
+        }
+        // add the text to the result - text
+        const pathText = `
+        <p class="answer-text">
+            <strong>${HtmlEncode(label)}</strong>: ${this.markText(match.value, startIndex, endIndex)}
+        </p>`;
         return pathText;
     }
 
@@ -70,7 +71,6 @@ export default class SearchElementFormatter {
             Math.max(...distances)
         );
 
-        console.log(match);
         // eslint-disable-next-line prefer-const
         const startIndex = match.indices[arrayIndexOfHighestDistanceIndex][0]
         const endIndex = match.indices[arrayIndexOfHighestDistanceIndex][1] + 1;
