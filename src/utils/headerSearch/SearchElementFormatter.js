@@ -10,17 +10,7 @@ export default class SearchElementFormatter {
 
     getHtml() {
         const match = this.getElementForUserQuery();
-
-        // get the index with the longest distance from eachother
-        const distances = match.indices.map((index) => index[1] - index[0]);
-        const arrayIndexOfHighestDistanceIndex = distances.indexOf(
-            Math.max(...distances)
-        );
-
-        // eslint-disable-next-line prefer-const
-        let [textIndex1, textIndex2] =
-            match.indices[arrayIndexOfHighestDistanceIndex];
-        textIndex2++;
+        const [startIndex, endIndex] = this.getTextIndices(match);
         const { title } = this.element.item;
         /**
          * the index in the array of the element that was found.
@@ -35,7 +25,7 @@ export default class SearchElementFormatter {
                 foundTextArrayIndex === i &&
                 match.key === this.filterElementObject.intentName.searchKey
             ) {
-                pathText += this.markText(_title, textIndex1, textIndex2);
+                pathText += this.markText(_title, startIndex, endIndex);
             } else {
                 pathText += HtmlEncode(_title);
             }
@@ -57,7 +47,7 @@ export default class SearchElementFormatter {
           <p class="answer-text">
             <strong>
               ${HtmlEncode(label)}
-            </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
+            </strong>: ${this.markText(match.value, startIndex, endIndex)}
           </p>`;
         }
         return pathText;
@@ -65,14 +55,34 @@ export default class SearchElementFormatter {
 
     /**
      * @private
+     * @param {import('fuse.js').default.FuseResultMatch} match
+     * @returns {number[]}
+     */
+    getTextIndices(match) {
+        // get the index with the longest distance from eachother
+        const distances = match.indices.map((index) => index[1] - index[0]);
+        const arrayIndexOfHighestDistanceIndex = distances.indexOf(
+            Math.max(...distances)
+        );
+
+        console.log(match);
+        // eslint-disable-next-line prefer-const
+        const startIndex = match.indices[arrayIndexOfHighestDistanceIndex][0]
+        const endIndex = match.indices[arrayIndexOfHighestDistanceIndex][1] + 1;
+        return [startIndex, endIndex];
+    }
+
+    /**
+     * @private
+     * @returns {import('fuse.js').default.FuseResultMatch}
      */
     getElementForUserQuery() {
-        // search the matches to get the scores
-        const fuseRes = getFuseInstance(this.element.matches, ["value"]).search(
+        const fuse = getFuseInstance(this.element.matches, ["value"])
+        const fuseResult = fuse.search(
             this.userQuery
         );
         // the items are sorted by scores. Get the element with the highest score
-        const match = fuseRes[0].item;
+        const match = fuseResult[0].item;
         return match;
     }
 
