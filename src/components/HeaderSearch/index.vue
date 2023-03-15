@@ -238,24 +238,29 @@ export default {
       pathText += HtmlEncode(text.substring(textIndex2, text.length));
       return pathText;
     },
-    getFoundElementHtml(element) {
+    getElementForUserQuery(element) {
       // search the matches to get the scores
       const fuseRes = getFuseInstance(element.matches, ["value"]).search(
         this.userQuery
       );
       // the items are sorted by scores. Get the element with the highest score
       const match = fuseRes[0].item;
-      const { title } = element.item;
-      // eslint-disable-next-line prefer-const
+      return match;
+    },
+    getFoundElementHtml(element) {
+      console.log(element)
+      const match = this.getElementForUserQuery(element);
+
       // get the index with the longest distance from eachother
       const distances = match.indices.map((index) => index[1] - index[0]);
       const arrayIndexOfHighestDistanceIndex = distances.indexOf(
         Math.max(...distances)
       );
-      // eslint-disable-next-line prefer-const
+    
       let [textIndex1, textIndex2] =
         match.indices[arrayIndexOfHighestDistanceIndex];
       textIndex2++;
+      const { title } = element.item;
       /**
        * the index in the array of the element that was found.
        */
@@ -278,9 +283,7 @@ export default {
         }
       });
       if (
-        match.key === filterElementObject.answerText.searchKey ||
-        match.key === filterElementObject.buttonTitle.searchKey ||
-        match.key === filterElementObject.intent.searchKey
+        match.key !== filterElementObject.intentName
       ) {
         let label = filterElementObject.answerText.label;
         if (match.key === filterElementObject.buttonTitle.searchKey) {
