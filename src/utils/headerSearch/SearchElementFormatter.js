@@ -17,22 +17,26 @@ export default class SearchElementFormatter {
         return pathText;
     }
 
-    formatLabelHtml(match) {
-        const [startIndex, endIndex] = this.getTextIndices(match);
-        let label = this.filterElementObject.answerText.label;
-        if (match.key === this.filterElementObject.buttonTitle.searchKey) {
-            label = this.filterElementObject.buttonTitle.label;
-        } else if (match.key === this.filterElementObject.intent.searchKey) {
-            label = this.filterElementObject.intent.label
-        }
-        // add the text to the result - text
-        const pathText = `
-        <p class="answer-text">
-            <strong>${HtmlEncode(label)}</strong>: ${this.markText(match.value, startIndex, endIndex)}
-        </p>`;
-        return pathText;
+    /**
+    * @private
+    * @returns {import('fuse.js').default.FuseResultMatch}
+    */
+    getElementForUserQuery() {
+        const fuse = getFuseInstance(this.element.matches, ["value"])
+        const fuseResult = fuse.search(
+            this.userQuery
+        );
+        // the items are sorted by scores. Get the element with the highest score
+        const match = fuseResult[0].item;
+        return match;
     }
 
+    /**
+     *
+     * @param {*} title
+     * @param {import('fuse.js').default.FuseResultMatch} match
+     * @returns {string}
+     */
     formatTitleHtml(title, match) {
         /**
         * the index in the array of the element that was found.
@@ -60,6 +64,26 @@ export default class SearchElementFormatter {
     }
 
     /**
+     * @param {import('fuse.js').default.FuseResultMatch} match
+     * @returns {string}
+     */
+    formatLabelHtml(match) {
+        const [startIndex, endIndex] = this.getTextIndices(match);
+        let label = this.filterElementObject.answerText.label;
+        if (match.key === this.filterElementObject.buttonTitle.searchKey) {
+            label = this.filterElementObject.buttonTitle.label;
+        } else if (match.key === this.filterElementObject.intent.searchKey) {
+            label = this.filterElementObject.intent.label
+        }
+        // add the text to the result - text
+        const pathText = `
+        <p class="answer-text">
+            <strong>${HtmlEncode(label)}</strong>: ${this.markText(match.value, startIndex, endIndex)}
+        </p>`;
+        return pathText;
+    }
+
+    /**
      * @private
      * @param {import('fuse.js').default.FuseResultMatch} match
      * @returns {number[]}
@@ -78,21 +102,10 @@ export default class SearchElementFormatter {
     }
 
     /**
-     * @private
-     * @returns {import('fuse.js').default.FuseResultMatch}
-     */
-    getElementForUserQuery() {
-        const fuse = getFuseInstance(this.element.matches, ["value"])
-        const fuseResult = fuse.search(
-            this.userQuery
-        );
-        // the items are sorted by scores. Get the element with the highest score
-        const match = fuseResult[0].item;
-        return match;
-    }
-
-    /**
-     * @private
+     * @param {string} text
+     * @param {number} textIndex1
+     * @param {number} textIndex2
+     * @returns {string}
      */
     markText(text, textIndex1, textIndex2) {
         let pathText = "";
