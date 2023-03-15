@@ -222,7 +222,7 @@ export default {
     },
     getFoundElementHtml(element) {
       const formatter = new SearchElementFormatter(element, filterElementObject, this.userQuery);
-      return formatter.getHtml();
+      return formatter.getElementWithHtmlFormatting();
     },
   },
 };

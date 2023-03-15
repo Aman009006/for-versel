@@ -10,13 +10,13 @@ export default class SearchElementFormatter {
         this.userQuery = userQuery;
     }
 
-    getHtml() {
+    getElementWithHtmlFormatting() {
         const match = this.getElementForUserQuery();
-        let pathText = this.formatTitleHtml(this.element.item.title, match);
+        let returnText = this.formatTitleHtml(this.element.item.title, match);
         if (match.key !== this.filterElementObject.intentName) {
-            pathText += this.formatLabelHtml(match);
+            returnText += this.formatLabelHtml(match);
         }
-        return pathText;
+        return returnText;
     }
 
     /**
@@ -48,21 +48,21 @@ export default class SearchElementFormatter {
             (_title, i) =>
                 _title === match.value && i === this.#intentArrayIndexInTitle
         );
-        let pathText = "";
+        let returnText = "";
         title.forEach((_title, i) => {
             if (
                 foundTextArrayIndex === i &&
                 match.key === this.filterElementObject.intentName.searchKey
             ) {
-                pathText += this.markText(_title, startIndex, endIndex);
+                returnText += this.markText(_title, startIndex, endIndex);
             } else {
-                pathText += HtmlEncode(_title);
+                returnText += HtmlEncode(_title);
             }
             if (i < title.length - 1) {
-                pathText += HtmlEncode(" > ");
+                returnText += HtmlEncode(" > ");
             }
         });
-        return pathText
+        return returnText
     }
 
     /**
@@ -78,11 +78,11 @@ export default class SearchElementFormatter {
             label = this.filterElementObject.intent.label
         }
         // add the text to the result - text
-        const pathText = `
+        const returnText = `
         <p class="answer-text">
             <strong>${HtmlEncode(label)}</strong>: ${this.markText(match.value, startIndex, endIndex)}
         </p>`;
-        return pathText;
+        return returnText;
     }
 
     /**
@@ -110,7 +110,7 @@ export default class SearchElementFormatter {
      * @returns {string}
      */
     markText(text, startIndex, endIndex) {
-        let pathText = "";
+        let returnText = "";
         if (startIndex > endIndex) {
             /**
              * dont understand why this happens, but sometimes
@@ -119,13 +119,13 @@ export default class SearchElementFormatter {
             [startIndex, endIndex] = [endIndex, startIndex];
         }
         // first part of the text
-        pathText += HtmlEncode(text.substring(0, startIndex));
+        returnText += HtmlEncode(text.substring(0, startIndex));
         // text that was found
-        pathText += `<span class="text-marker">${HtmlEncode(
+        returnText += `<span class="text-marker">${HtmlEncode(
             text.substring(startIndex, endIndex)
         )}</span>`;
         // last part of the text
-        pathText += HtmlEncode(text.substring(endIndex, text.length));
-        return pathText;
+        returnText += HtmlEncode(text.substring(endIndex, text.length));
+        return returnText;
     }
 }
