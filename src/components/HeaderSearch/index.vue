@@ -23,6 +23,7 @@ import HtmlEncode from "@/utils/HtmlEncode";
 import { humanReadableLabels } from "@/constants";
 import icons from "@/icons/index";
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
+import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
 
 const filterElementObject = {
   intentName: {
@@ -219,87 +220,9 @@ export default {
         this.options = [];
       }
     },
-    markText(text, textIndex1, textIndex2) {
-      let pathText = "";
-      if (textIndex1 > textIndex2) {
-        /**
-         * dont understand why this happens, but sometimes
-         * the first index is greater than the second.
-         */
-        [textIndex1, textIndex2] = [textIndex2, textIndex1];
-      }
-      // first part of the text
-      pathText += HtmlEncode(text.substring(0, textIndex1));
-      // text that was found
-      pathText += `<span class="text-marker">${HtmlEncode(
-        text.substring(textIndex1, textIndex2)
-      )}</span>`;
-      // last part of the text
-      pathText += HtmlEncode(text.substring(textIndex2, text.length));
-      return pathText;
-    },
-    getElementForUserQuery(element) {
-      // search the matches to get the scores
-      const fuseRes = getFuseInstance(element.matches, ["value"]).search(
-        this.userQuery
-      );
-      // the items are sorted by scores. Get the element with the highest score
-      const match = fuseRes[0].item;
-      return match;
-    },
     getFoundElementHtml(element) {
-      console.log(element)
-      const match = this.getElementForUserQuery(element);
-
-      // get the index with the longest distance from eachother
-      const distances = match.indices.map((index) => index[1] - index[0]);
-      const arrayIndexOfHighestDistanceIndex = distances.indexOf(
-        Math.max(...distances)
-      );
-    
-      let [textIndex1, textIndex2] =
-        match.indices[arrayIndexOfHighestDistanceIndex];
-      textIndex2++;
-      const { title } = element.item;
-      /**
-       * the index in the array of the element that was found.
-       */
-      const foundTextArrayIndex = title.findIndex(
-        (_title, i) =>
-          _title === match.value && i === this.intentArrayIndexInTitle
-      );
-      let pathText = "";
-      title.forEach((_title, i) => {
-        if (
-          foundTextArrayIndex === i &&
-          match.key === filterElementObject.intentName.searchKey
-        ) {
-          pathText += this.markText(_title, textIndex1, textIndex2);
-        } else {
-          pathText += HtmlEncode(_title);
-        }
-        if (i < title.length - 1) {
-          pathText += HtmlEncode(" > ");
-        }
-      });
-      if (
-        match.key !== filterElementObject.intentName
-      ) {
-        let label = filterElementObject.answerText.label;
-        if (match.key === filterElementObject.buttonTitle.searchKey) {
-          label = filterElementObject.buttonTitle.label;
-        } else if (match.key === filterElementObject.intent.searchKey) {
-          label = filterElementObject.intent.label
-        }
-        // add the text to the result - text
-        pathText += `
-        <p class="answer-text">
-          <strong>
-            ${HtmlEncode(label)}
-          </strong>: ${this.markText(match.value, textIndex1, textIndex2)}
-        </p>`;
-      }
-      return pathText;
+      const formatter = new SearchElementFormatter(element, filterElementObject, this.userQuery);
+      return formatter.getHtml();
     },
   },
 };
