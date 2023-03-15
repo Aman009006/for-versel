@@ -10,29 +10,8 @@ export default class SearchElementFormatter {
 
     getHtml() {
         const match = this.getElementForUserQuery();
+        let pathText = this.formatTitleHtml(this.element.item.title, match);
         const [startIndex, endIndex] = this.getTextIndices(match);
-        const { title } = this.element.item;
-        /**
-         * the index in the array of the element that was found.
-         */
-        const foundTextArrayIndex = title.findIndex(
-            (_title, i) =>
-                _title === match.value && i === this.intentArrayIndexInTitle
-        );
-        let pathText = "";
-        title.forEach((_title, i) => {
-            if (
-                foundTextArrayIndex === i &&
-                match.key === this.filterElementObject.intentName.searchKey
-            ) {
-                pathText += this.markText(_title, startIndex, endIndex);
-            } else {
-                pathText += HtmlEncode(_title);
-            }
-            if (i < title.length - 1) {
-                pathText += HtmlEncode(" > ");
-            }
-        });
         if (
             match.key !== this.filterElementObject.intentName
         ) {
@@ -51,6 +30,32 @@ export default class SearchElementFormatter {
           </p>`;
         }
         return pathText;
+    }
+
+    formatTitleHtml(title, match) {
+        /**
+        * the index in the array of the element that was found.
+        */
+        const [startIndex, endIndex] = this.getTextIndices(match);
+        const foundTextArrayIndex = title.findIndex(
+            (_title, i) =>
+                _title === match.value && i === this.intentArrayIndexInTitle
+        );
+        let pathText = "";
+        title.forEach((_title, i) => {
+            if (
+                foundTextArrayIndex === i &&
+                match.key === this.filterElementObject.intentName.searchKey
+            ) {
+                pathText += this.markText(_title, startIndex, endIndex);
+            } else {
+                pathText += HtmlEncode(_title);
+            }
+            if (i < title.length - 1) {
+                pathText += HtmlEncode(" > ");
+            }
+        });
+        return pathText
     }
 
     /**
