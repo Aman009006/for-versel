@@ -2,6 +2,8 @@ import HtmlEncode from "@/utils/HtmlEncode";
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
 
 export default class SearchElementFormatter {
+    #intentArrayIndexInTitle = 2;
+
     constructor(element, filterElementObject, userQuery) {
         this.element = element;
         this.filterElementObject = filterElementObject;
@@ -44,7 +46,7 @@ export default class SearchElementFormatter {
         const [startIndex, endIndex] = this.getTextIndices(match);
         const foundTextArrayIndex = title.findIndex(
             (_title, i) =>
-                _title === match.value && i === this.intentArrayIndexInTitle
+                _title === match.value && i === this.#intentArrayIndexInTitle
         );
         let pathText = "";
         title.forEach((_title, i) => {
@@ -103,27 +105,27 @@ export default class SearchElementFormatter {
 
     /**
      * @param {string} text
-     * @param {number} textIndex1
-     * @param {number} textIndex2
+     * @param {number} startIndex
+     * @param {number} endIndex
      * @returns {string}
      */
-    markText(text, textIndex1, textIndex2) {
+    markText(text, startIndex, endIndex) {
         let pathText = "";
-        if (textIndex1 > textIndex2) {
+        if (startIndex > endIndex) {
             /**
              * dont understand why this happens, but sometimes
              * the first index is greater than the second.
              */
-            [textIndex1, textIndex2] = [textIndex2, textIndex1];
+            [startIndex, endIndex] = [endIndex, startIndex];
         }
         // first part of the text
-        pathText += HtmlEncode(text.substring(0, textIndex1));
+        pathText += HtmlEncode(text.substring(0, startIndex));
         // text that was found
         pathText += `<span class="text-marker">${HtmlEncode(
-            text.substring(textIndex1, textIndex2)
+            text.substring(startIndex, endIndex)
         )}</span>`;
         // last part of the text
-        pathText += HtmlEncode(text.substring(textIndex2, text.length));
+        pathText += HtmlEncode(text.substring(endIndex, text.length));
         return pathText;
     }
 }
