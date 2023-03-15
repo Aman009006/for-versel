@@ -19,7 +19,6 @@
 // Fuzzy searching finds strings that are approximately equal to a given pattern
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
 import path from "path-browserify";
-import HtmlEncode from "@/utils/HtmlEncode";
 import { humanReadableLabels } from "@/constants";
 import icons from "@/icons/index";
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"

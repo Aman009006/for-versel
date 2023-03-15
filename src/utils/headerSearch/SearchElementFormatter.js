@@ -4,17 +4,25 @@ import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
 export default class SearchElementFormatter {
     #intentArrayIndexInTitle = 2;
 
+    /**
+     * @param {import('fuse.js').default.FuseResult<FuseResultMatch>} element
+     * @param {Record<string, import("./FilterElement").FilterElement>} filterElementObject
+     * @param {string} userQuery
+     */
     constructor(element, filterElementObject, userQuery) {
         this.element = element;
         this.filterElementObject = filterElementObject;
         this.userQuery = userQuery;
     }
 
+    /**
+     * @returns {string}
+     */
     getElementWithHtmlFormatting() {
-        const match = this.getElementForUserQuery();
-        let returnText = this.formatTitleHtml(this.element.item.title, match);
+        const match = this.getMatchForUserQuery();
+        let returnText = this.getHtmlFormattedTitle(this.element.item.title, match);
         if (match.key !== this.filterElementObject.intentName) {
-            returnText += this.formatLabelHtml(match);
+            returnText += this.getHtmlFormattedElement(match);
         }
         return returnText;
     }
@@ -23,7 +31,7 @@ export default class SearchElementFormatter {
     * @private
     * @returns {import('fuse.js').default.FuseResultMatch}
     */
-    getElementForUserQuery() {
+    getMatchForUserQuery() {
         const fuse = getFuseInstance(this.element.matches, ["value"])
         const fuseResult = fuse.search(
             this.userQuery
@@ -34,12 +42,12 @@ export default class SearchElementFormatter {
     }
 
     /**
-     *
-     * @param {*} title
+     * @private
+     * @param {string[]} title
      * @param {import('fuse.js').default.FuseResultMatch} match
      * @returns {string}
      */
-    formatTitleHtml(title, match) {
+    getHtmlFormattedTitle(title, match) {
         /**
         * the index in the array of the element that was found.
         */
@@ -66,10 +74,11 @@ export default class SearchElementFormatter {
     }
 
     /**
+     * @private
      * @param {import('fuse.js').default.FuseResultMatch} match
      * @returns {string}
      */
-    formatLabelHtml(match) {
+    getHtmlFormattedElement(match) {
         const [startIndex, endIndex] = this.getTextIndices(match);
         let label = this.filterElementObject.answerText.label;
         if (match.key === this.filterElementObject.buttonTitle.searchKey) {
