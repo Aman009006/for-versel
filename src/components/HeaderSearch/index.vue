@@ -18,11 +18,10 @@
 <script>
 // Fuzzy searching finds strings that are approximately equal to a given pattern
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
-import path from "path-browserify";
 import { humanReadableLabels } from "@/constants";
 import icons from "@/icons/index";
-import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
+import RouteHandler from "@/utils/headerSearch/RouteHandler"
 
 const filterElementsObject = {
   intentName: {
@@ -132,6 +131,9 @@ export default {
         this.show = false;
       });
     },
+    initFuse() {
+      this.fuse = getFuseInstance(this.searchPool, this.getSearchKeys());
+    },
     getSearchKeys() {
       /**
        * when no filter is selected, all filterElements should be treated
@@ -151,64 +153,14 @@ export default {
       );
       return searchKeys;
     },
-    initFuse() {
-      this.fuse = getFuseInstance(this.searchPool, this.getSearchKeys());
-    },
-    // Filter out the routes that can be displayed in the sidebar
-    // And generate the internationalized title
-    generateRoutes(routes, basePath = "/", prefixTitle = []) {
-      let res = [];
-      for (const route of routes) {
-        // skip hidden router
-        if (route.hidden) {
-          continue;
-        }
-
-        const dataGetter = new SkillsWithIntentsDataGetterImpl(route, this.skillsWithIntents);
-        const data = {
-          path: path.resolve(basePath, route.path),
-          title: [...prefixTitle],
-          texts: dataGetter.getTexts(),
-          intent: dataGetter.getTechnicalIntentName()
-        };
-
-        if (route.meta?.title) {
-          data.title = [...data.title, route.meta.title];
-
-          if (route.redirect !== "noRedirect") {
-            // only push the routes with title
-            // special case: need to exclude parent router without redirect
-            res.push(data);
-          }
-        }
-
-        // recursive child routes
-        if (route.children) {
-          const tempRoutes = this.generateRoutes(
-            route.children,
-            data.path,
-            data.title
-          );
-          if (tempRoutes.length >= 1) {
-            res = [...res, ...tempRoutes];
-          }
-        }
-      }
-      return res;
-    },
     /**
      * filters out the non intent - routes. We only want to find intents
      */
     generateAndFilterRoutes(routes) {
-      const generatedRoutes = this.generateRoutes(routes);
-      const res = generatedRoutes
-        // intent - routes don't have children
-        .filter((route) => route.children == null)
-        .map((route) => {
-          route.intentName = route.title[this.intentArrayIndexInTitle];
-          return route;
-        });
-      return res;
+      const routeHandler = new RouteHandler(this.skillsWithIntents);
+      const generatedRoutes = routeHandler.generateRoutes(routes);
+      const filteredRoutes = routeHandler.filterRoutes(generatedRoutes);
+      return filteredRoutes;
     },
     querySearch(query) {
       this.userQuery = query;
