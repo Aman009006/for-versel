@@ -4,13 +4,13 @@
 
     <el-select v-model="filteredElements" collapse-tags multiple placeholder="Filter" class="header-search-select"
       @change="initFuse">
-      <el-option v-for="item in filterElementOptions" :key="item" :label="item" :value="item" />
+      <el-option v-for="item in activeFilterElements" :key="item" :label="item" :value="item" />
     </el-select>
 
     <el-select ref="headerSearchSelect" v-model="search" :remote-method="querySearch" filterable default-first-option
       remote placeholder="Suche" class="header-search-select" popper-class="header-search-popper" @change="change">
       <el-option v-for="element in options" :key="element.item.path" :value="element.item" class="header-search-option"
-        v-html="getFoundElementHtml(element)" />
+        v-html="getHtmlFormattedElement(element)" />
     </el-select>
   </div>
 </template>
@@ -24,7 +24,7 @@ import icons from "@/icons/index";
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
 
-const filterElementObject = {
+const filterElementsObject = {
   intentName: {
     label: humanReadableLabels.intentName,
     searchKey: "intentName",
@@ -43,14 +43,14 @@ const filterElementObject = {
   }
 };
 
-const filterElementValues = [
-  filterElementObject.intentName,
-  filterElementObject.intent,
-  filterElementObject.answerText,
-  filterElementObject.buttonTitle
+const filterElementsArray = [
+  filterElementsObject.intentName,
+  filterElementsObject.intent,
+  filterElementsObject.answerText,
+  filterElementsObject.buttonTitle
 ];
 
-const filterElementOptions = filterElementValues.map(
+const activeFilterElements = filterElementsArray.map(
   (filterElement) => filterElement.label
 );
 
@@ -63,7 +63,7 @@ export default {
       searchPool: [],
       show: false,
       fuse: undefined,
-      filteredElements: filterElementOptions,
+      filteredElements: activeFilterElements,
       /**
        * the text that the user searches for
        */
@@ -77,8 +77,8 @@ export default {
     skillsWithIntents() {
       return this.$store.getters.skillsWithIntents;
     },
-    filterElementOptions() {
-      return filterElementOptions;
+    activeFilterElements() {
+      return activeFilterElements;
     },
     intentArrayIndexInTitle() {
       return 2;
@@ -137,14 +137,14 @@ export default {
        * when no filter is selected, all filterElements should be treated
        * as selected.
        */
-      let relevantFilterElements;
+      let activeFilterElements;
       if (this.filteredElements.length) {
-        relevantFilterElements = this.filteredElements
+        activeFilterElements = this.filteredElements
       } else {
-        relevantFilterElements = this.filterElementOptions;
+        activeFilterElements = this.activeFilterElements;
       }
-      const usedFilterElementValues = filterElementValues.filter(
-        element => relevantFilterElements.includes(element.label)
+      const usedFilterElementValues = filterElementsArray.filter(
+        element => activeFilterElements.includes(element.label)
       )
       const searchKeys = usedFilterElementValues.map(
         element => element.searchKey
@@ -164,12 +164,12 @@ export default {
           continue;
         }
 
-        const dataGetter = new SkillsWithIntentsDataGetterImpl();;
+        const dataGetter = new SkillsWithIntentsDataGetterImpl(route, this.skillsWithIntents);
         const data = {
           path: path.resolve(basePath, route.path),
           title: [...prefixTitle],
-          texts: dataGetter.getTexts(route, this.skillsWithIntents),
-          intent: dataGetter.getTechnicalIntentName(route, this.skillsWithIntents)
+          texts: dataGetter.getTexts(),
+          intent: dataGetter.getTechnicalIntentName()
         };
 
         if (route.meta?.title) {
@@ -219,8 +219,8 @@ export default {
         this.options = [];
       }
     },
-    getFoundElementHtml(element) {
-      const formatter = new SearchElementFormatter(element, filterElementObject, this.userQuery);
+    getHtmlFormattedElement(element) {
+      const formatter = new SearchElementFormatter(element, filterElementsObject, this.userQuery);
       return formatter.getElementWithHtmlFormatting();
     },
   },

@@ -9,20 +9,25 @@ export default class SkillsWithIntentsDataGetterImpl {
     /**
      * @param {import('vue-router').RouteRecord} route
      * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
+     */
+    constructor(route, skillsWithIntents) {
+        this.route = route;
+        this.skillsWithIntents = skillsWithIntents;
+    }
+
+    /**
      * @returns {import('./SkillsWithIntents').AnswerData}
      */
-    getTexts(route, skillsWithIntents) {
-        const intentData = this.getIntentData(route, skillsWithIntents);
+    getTexts() {
+        const intentData = this.getIntentData();
         return intentData?.texts;
     }
 
     /**
-     * @param {import('vue-router').RouteRecord} route
-     * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
      * @returns {string}
      */
-    getTechnicalIntentName(route, skillsWithIntents) {
-        const intentData = this.getIntentData(route, skillsWithIntents);
+    getTechnicalIntentName() {
+        const intentData = this.getIntentData();
         if (intentData) {
             const intentNameGenerator = new IntentNameGenerator(intentData.intent, intentData.entity)
             return intentNameGenerator.getTechnicalIntentName();
@@ -33,18 +38,16 @@ export default class SkillsWithIntentsDataGetterImpl {
 
     /**
      * @private
-     * @param {import('vue-router').RouteRecord} route
-     * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
      * @returns {import('./Intent').Intent}
      */
-    getIntentData(route, skillsWithIntents) {
-        const intentsFromSkills = skillsWithIntents.map((data) => data.Intents);
+    getIntentData() {
+        const intentsFromSkills = this.skillsWithIntents.map((data) => data.Intents);
         const allIntents = intentsFromSkills.flat();
         const intent = allIntents.find(
             intentElement =>
-                encodeURIComponent(encodePathComponent(intentElement.name)) === route.path &&
+                encodeURIComponent(encodePathComponent(intentElement.name)) === this.route.path &&
                 // intent - routes don't have children
-                route.children == null
+                this.route.children == null
         )
         return intent;
     }
