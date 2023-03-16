@@ -91,7 +91,7 @@ export default {
       this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     intentTexts() {
-      // the intentTexts can change over time (when texts are changed for example)
+      // the intentTexts can change over time
       this.searchPool = this.generateAndFilterRoutes(this.routes);
     },
     searchPool() {
@@ -152,9 +152,6 @@ export default {
       );
       return searchKeys;
     },
-    /**
-     * filters out the non intent - routes. We only want to find intents
-     */
     generateAndFilterRoutes(routes) {
       const routeHandler = new RouteHandler(this.skillsWithIntents);
       const generatedRoutes = routeHandler.generateRoutes(routes);
@@ -164,7 +161,6 @@ export default {
     querySearch(query) {
       this.userQuery = query;
       if (query !== "") {
-        // get the result of the search
         this.options = this.fuse.search(query);
       } else {
         this.options = [];

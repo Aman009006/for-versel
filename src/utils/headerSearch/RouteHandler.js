@@ -70,6 +70,7 @@ export default class RouteHandler {
      * @param {import("vue-router").RouteRecord[]} routes
      */
     filterRoutes(routes) {
+        // non intent - routes don't have children
         const filteredRoutes = routes.filter(
             (route) => route.children == null
         )
