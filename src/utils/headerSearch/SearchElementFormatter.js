@@ -1,8 +1,9 @@
 import HtmlEncode from "@/utils/HtmlEncode";
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
+import { headerSearch } from "@/constants";
 
 export default class SearchElementFormatter {
-    #intentArrayIndexInTitle = 2;
+    #intentArrayIndexInTitle = headerSearch.intentArrayIndexInTitle;
 
     /**
      * @param {import('fuse.js').default.FuseResult<FuseResultMatch>} element

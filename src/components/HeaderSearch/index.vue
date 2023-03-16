@@ -16,9 +16,8 @@
 </template>
 
 <script>
-// Fuzzy searching finds strings that are approximately equal to a given pattern
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
-import { humanReadableLabels } from "@/constants";
+import { humanReadableLabels, headerSearch } from "@/constants";
 import icons from "@/icons/index";
 import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
 import RouteHandler from "@/utils/headerSearch/RouteHandler"
@@ -80,7 +79,7 @@ export default {
       return activeFilterElements;
     },
     intentArrayIndexInTitle() {
-      return 2;
+      return headerSearch.intentArrayIndexInTitle;
     },
     icons() {
       return icons;

@@ -1,17 +1,27 @@
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 import path from "path-browserify";
+import { headerSearch } from "@/constants";
 
 export default class RouteHandler {
-    #intentArrayIndexInTitle = 2;
+    #intentArrayIndexInTitle = headerSearch.intentArrayIndexInTitle;
 
-    constructor (skillsWithIntents) {
+    /**
+     * @param {import('./SkillsWithIntents').default} skillsWithIntents
+     */
+    constructor(skillsWithIntents) {
         this.skillsWithIntents = skillsWithIntents;
     }
 
+    /**
+     * @param {import("vue-router").RouteRecord[]} routes
+     * @param {string} basePath
+     * @param {string[]} prefixTitle
+     */
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
+        console.log(routes);
         let res = [];
         for (const route of routes) {
-            // skip hidden router
+            // skip hidden routes
             if (route.hidden) {
                 continue;
             }
@@ -49,13 +59,27 @@ export default class RouteHandler {
         return res;
     }
 
+    /**
+     * @param {import("vue-router").RouteRecord[]} routes
+     */
     filterRoutes(routes) {
-        const filteredRoutes = routes
-            .filter((route) => route.children == null)
-            .map((route) => {
+        const filteredRoutes = routes.filter(
+            (route) => route.children == null
+        )
+        return this.setTitleAsIntentName(filteredRoutes);
+    }
+
+    /**
+     * @private
+     * @param {import("vue-router").RouteRecord[]} routes
+     * @returns
+     */
+    setTitleAsIntentName(routes) {
+        return routes.map(
+            (route) => {
                 route.intentName = route.title[this.#intentArrayIndexInTitle];
                 return route;
-            });
-        return filteredRoutes;
+            }
+        )
     }
 }
