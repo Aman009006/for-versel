@@ -6,7 +6,7 @@ export default class RouteHandler {
     #intentArrayIndexInTitle = headerSearch.intentArrayIndexInTitle;
 
     /**
-     * @param {import('./SkillsWithIntents').default} skillsWithIntents
+     * @param {import('./interfaces/SkillsWithIntents').default} skillsWithIntents
      */
     constructor(skillsWithIntents) {
         this.skillsWithIntents = skillsWithIntents;

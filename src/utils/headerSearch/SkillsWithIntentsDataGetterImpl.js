@@ -2,13 +2,13 @@ import { encodePathComponent } from '@/store/modules/permission'
 import IntentNameGenerator from '../intents/IntentNameGenerator';
 
 /**
- * @typedef { import('./SkillsWithIntentsDataGetter').default } SkillsWithIntentsDataGetter
+ * @typedef { import('./interfaces/SkillsWithIntentsDataGetter').default } SkillsWithIntentsDataGetter
  * @implements {SkillsWithIntentsDataGetter}
  */
 export default class SkillsWithIntentsDataGetterImpl {
     /**
      * @param {import('vue-router').RouteRecord} route
-     * @param {import('./SkillsWithIntents').SkillsWithIntents} skillsWithIntents
+     * @param {import('./interfaces/SkillsWithIntents').SkillsWithIntents} skillsWithIntents
      */
     constructor(route, skillsWithIntents) {
         this.route = route;
@@ -16,7 +16,7 @@ export default class SkillsWithIntentsDataGetterImpl {
     }
 
     /**
-     * @returns {import('./SkillsWithIntents').AnswerData}
+     * @returns {import('./interfaces/SkillsWithIntents').AnswerData}
      */
     getTexts() {
         const intentData = this.getIntentData();
@@ -38,7 +38,7 @@ export default class SkillsWithIntentsDataGetterImpl {
 
     /**
      * @private
-     * @returns {import('./Intent').Intent}
+     * @returns {import('./interfaces/Intent').Intent}
      */
     getIntentData() {
         const intentsFromSkills = this.skillsWithIntents.map((data) => data.Intents);

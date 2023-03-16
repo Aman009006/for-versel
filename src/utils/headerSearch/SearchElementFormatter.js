@@ -7,7 +7,7 @@ export default class SearchElementFormatter {
 
     /**
      * @param {import('fuse.js').default.FuseResult<FuseResultMatch>} element
-     * @param {Record<string, import("./FilterElement").FilterElement>} filterElementObject
+     * @param {Record<string, import("./interfaces/FilterElement").FilterElement>} filterElementObject
      * @param {string} userQuery
      */
     constructor(element, filterElementObject, userQuery) {
