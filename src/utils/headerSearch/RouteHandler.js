@@ -18,21 +18,13 @@ export default class RouteHandler {
      * @param {string[]} prefixTitle
      */
     generateRoutes(routes, basePath = "/", prefixTitle = []) {
-        console.log(routes);
         let res = [];
         for (const route of routes) {
             // skip hidden routes
             if (route.hidden) {
                 continue;
             }
-
-            const dataGetter = new SkillsWithIntentsDataGetterImpl(route, this.skillsWithIntents);
-            const data = {
-                path: path.resolve(basePath, route.path),
-                title: [...prefixTitle],
-                texts: dataGetter.getTexts(),
-                intent: dataGetter.getTechnicalIntentName()
-            };
+            const data = this.getDataForRoute(route, basePath, prefixTitle);
 
             if (route.meta?.title) {
                 data.title = [...data.title, route.meta.title];
@@ -43,7 +35,6 @@ export default class RouteHandler {
                     res.push(data);
                 }
             }
-
             // recursive child routes
             if (route.children) {
                 const tempRoutes = this.generateRoutes(
@@ -57,6 +48,22 @@ export default class RouteHandler {
             }
         }
         return res;
+    }
+
+    /**
+     * @private
+     * @param {import("vue-router").RouteRecord[]} routes
+     * @param {string} basePath
+     * @param {string[]} prefixTitle
+     */
+    getDataForRoute(route, basePath, prefixTitle) {
+        const dataGetter = new SkillsWithIntentsDataGetterImpl(route, this.skillsWithIntents);
+        return {
+            path: path.resolve(basePath, route.path),
+            title: [...prefixTitle],
+            texts: dataGetter.getTexts(),
+            intent: dataGetter.getTechnicalIntentName()
+        };
     }
 
     /**
