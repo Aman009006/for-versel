@@ -22,7 +22,7 @@ export default class SearchElementFormatter {
     getElementWithHtmlFormatting() {
         const match = this.getMatchForUserQuery();
         let returnText = this.getHtmlFormattedTitle(this.element.item.title, match);
-        if (match.key !== this.filterElementObject.intentName) {
+        if (match.key !== this.filterElementObject.intentName.searchKey) {
             returnText += this.getHtmlFormattedElement(match);
         }
         return returnText;
