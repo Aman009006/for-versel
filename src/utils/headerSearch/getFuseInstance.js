@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 
 /**
- * @param {import("./SkillsWithIntents").SkillsWithIntents} searchPool
+ * @param {import("./interfaces/SkillsWithIntents").SkillsWithIntents} searchPool
  * @param {string[]} searchKeys
  */
 export default function getFuseInstance(searchPool, searchKeys) {
