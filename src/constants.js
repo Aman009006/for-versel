@@ -30,6 +30,9 @@ export const dispatchNames = {
 
 export const humanReadableLabels = {
   answerText: 'Antworttext',
+  intentName: 'Intentname',
+  technicalIntentName: 'technischer Intentname',
+  buttonName: 'Buttonname',
   edit: 'Bearbeiten',
   description: 'Beschreibung',
 }
@@ -41,4 +44,8 @@ export const buttonTypes = {
 
 export const defaultEntity = {
   entityName: "noneEntity"
+}
+
+export const headerSearch = {
+  intentArrayIndexInTitle: 2
 }
