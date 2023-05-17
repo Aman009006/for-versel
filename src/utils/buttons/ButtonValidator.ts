@@ -4,4 +4,5 @@ export default interface ButtonValidator {
     hasEmptyInputs(): boolean;
     hasInvalidUrlButtons(): boolean;
     hasDuplicateOrders(): boolean;
+    hasButtonLimitReached(): boolean;
 }

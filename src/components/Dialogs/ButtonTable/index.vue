@@ -88,12 +88,14 @@
       <el-alert v-if="getTitleDuplicate" type="error" title="Keine Namenduplikate erlaubt!" :closable="false" />
       <el-alert v-if="getInputEmpty" type="error" title="Keine leeren Felder erlaubt!" :closable="false" />
       <el-alert v-if="getOrderDuplicate" type="error" title="Keine Positionsduplikate erlaubt!" :closable="false" />
+      <el-alert v-if="getButtonLimitReached" type="error"
+        :title="'Es dürfen maximal ' + buttonLimit + ' Buttons angelegt werden!'" :closable="false" />
     </div>
   </div>
 </template>
 
 <script>
-import { dispatchNames, buttonTypes } from "@/constants";
+import { dispatchNames, buttonTypes, buttonLimit } from "@/constants";
 import ButtonUtilities from "@/store/utilities/ButtonUtilities";
 import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 
@@ -102,6 +104,7 @@ export default {
   inheritAttrs: true,
   data() {
     return {
+      buttonLimit: buttonLimit,
       columnMinWidth: 200,
       columnPosMinWidth: 80,
       options: [
@@ -145,6 +148,9 @@ export default {
     },
     getOrderDuplicate() {
       return this.$store.getters.buttonValidations.orderDuplicate;
+    },
+    getButtonLimitReached() {
+      return this.$store.getters.buttonValidations.buttonLimitReached;
     },
     getOrderNumbers() {
       return Array.from({ length: (this.currentEditedButtons).length }, (_, i) => i + 1)

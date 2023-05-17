@@ -49,3 +49,5 @@ export const defaultEntity = {
 export const headerSearch = {
   intentArrayIndexInTitle: 2
 }
+
+export const buttonLimit = 5

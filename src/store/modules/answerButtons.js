@@ -40,6 +40,9 @@ const mutations = {
     },
     setOrderDuplicate: (state, orderDuplicate) => {
         state.buttonValidations.orderDuplicate = orderDuplicate;
+    },
+    setButtonLimitReached: (state, buttonLimitReached) => {
+        state.buttonValidations.buttonLimitReached = buttonLimitReached
     }
 }
 
@@ -65,7 +68,11 @@ const actions = {
     },
     setOrderDuplicate: ({ commit }, orderDuplicate) => {
         commit(mutations.setOrderDuplicate.name, orderDuplicate)
+    },
+    setButtonLimitReached: ({ commit }, buttonLimitReached) => {
+        commit(mutations.setButtonLimitReached.name, buttonLimitReached)
     }
+
 }
 
 function resetState(state) {
@@ -81,7 +88,8 @@ function getInitialState() {
             titleDuplicate: false,
             inputEmpty: false,
             invalidUrl: false,
-            orderDuplicate: false
+            orderDuplicate: false,
+            buttonLimitReached: false
         }
     }
 }

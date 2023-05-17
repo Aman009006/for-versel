@@ -1,4 +1,4 @@
-import { buttonTypes } from '@/constants';
+import { buttonLimit, buttonTypes } from '@/constants';
 
 /**
  * @typedef { import('./ButtonValidator').default } ButtonValidator
@@ -33,6 +33,10 @@ export default class ButtonValidatorImpl {
     hasDuplicateOrders() {
         const orders = this.buttons.map((button) => button.order);
         return ButtonValidatorImpl.checkForDuplicates(orders);
+    }
+
+    hasButtonLimitReached() {
+        return this.buttons.length > buttonLimit;
     }
 
     static checkForDuplicates(objectList) {
