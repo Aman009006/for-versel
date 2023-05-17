@@ -11,15 +11,7 @@ export default class ButtonValidatorImpl {
 
     hasDuplicateTitles() {
         const titles = this.buttons.map((button) => button.title);
-        titles.sort();
-        var last = titles[0];
-        for (var i = 1; i < titles.length; i++) {
-            if (titles[i] == last) {
-                return true;
-            }
-            last = titles[i];
-        }
-        return false;
+        return ButtonValidatorImpl.checkForDuplicates(titles);
     }
 
     hasEmptyInputs() {
@@ -36,6 +28,23 @@ export default class ButtonValidatorImpl {
         return this.buttons.some(
             (button) => ButtonValidatorImpl.isInvalidUrlButton(button)
         );
+    }
+
+    hasDuplicateOrders() {
+        const orders = this.buttons.map((button) => button.order);
+        return ButtonValidatorImpl.checkForDuplicates(orders);
+    }
+
+    static checkForDuplicates(objectList) {
+        objectList.sort();
+        var last = objectList[0];
+        for (var i = 1; i < objectList.length; i++) {
+            if (objectList[i] == last) {
+                return true;
+            }
+            last = objectList[i];
+        }
+        return false;
     }
 
     static isInvalidUrlButton(button) {

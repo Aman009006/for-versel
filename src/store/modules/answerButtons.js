@@ -37,6 +37,9 @@ const mutations = {
     },
     setInvalidUrl: (state, urlInvalid) => {
         state.buttonValidations.invalidUrl = urlInvalid
+    },
+    setOrderDuplicate: (state, orderDuplicate) => {
+        state.buttonValidations.orderDuplicate = orderDuplicate;
     }
 }
 
@@ -59,6 +62,9 @@ const actions = {
     },
     setInvalidUrl: ({ commit }, urlInvalid) => {
         commit(mutations.setInvalidUrl.name, urlInvalid)
+    },
+    setOrderDuplicate: ({ commit }, orderDuplicate) => {
+        commit(mutations.setOrderDuplicate.name, orderDuplicate)
     }
 }
 
@@ -74,7 +80,8 @@ function getInitialState() {
         buttonValidations: {
             titleDuplicate: false,
             inputEmpty: false,
-            invalidUrl: false
+            invalidUrl: false,
+            orderDuplicate: false
         }
     }
 }
