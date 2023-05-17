@@ -148,7 +148,7 @@ export default {
       this.validateButtonsAndSaveStateInStore();
     },
     addAnswerButton() {
-      this.$store.dispatch(dispatchNames.addNewAnswerButton);
+      this.$store.dispatch(dispatchNames.addNewAnswerButton, this.currentEditedButtons.length);
       this.validateButtonsAndSaveStateInStore();
     },
     validateButtonsAndSaveStateInStore() {

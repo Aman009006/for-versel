@@ -10,13 +10,14 @@ const mutations = {
             state.currentEditedAnswerButtons = answerButtons
         }
     },
-    addNewAnswerButton: (state) => {
+    addNewAnswerButton: (state, buttonCount) => {
         const newAnswerButton = {
             title: "",
             value: "",
             type: buttonTypes.openUrl,
             identificator: null,
-            virtualIntent: null
+            virtualIntent: null,
+            order: buttonCount + 1
         }
         state.newAnswerButtons.push(newAnswerButton)
     },
@@ -44,8 +45,8 @@ const actions = {
         const copyAnswerButtons = JSON.parse(JSON.stringify(answerButtons))
         commit(mutations.resetStateAndSaveCopyOfButtons.name, copyAnswerButtons)
     },
-    addNewAnswerButton: ({ commit }) => {
-        commit(mutations.addNewAnswerButton.name)
+    addNewAnswerButton: ({ commit }, buttonCount) => {
+        commit(mutations.addNewAnswerButton.name, buttonCount)
     },
     deleteAnswerButton: ({ commit }, answerButton) => {
         commit(mutations.deleteAnswerButton.name, answerButton)
