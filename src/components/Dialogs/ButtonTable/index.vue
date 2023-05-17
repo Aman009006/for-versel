@@ -4,7 +4,8 @@
       <h2>Buttons</h2>
       <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
-    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow" :default-sort="{prop: 'order', order: 'ascending'}">
+    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow"
+      :default-sort="{ prop: 'order', order: 'ascending' }">
       <el-table-column label="Pos." align="center" prop="order" :min-width="columnPosMinWidth">
         <template #default="scope">
           <el-select v-model="scope.row.order" @change="validateButtonsAndSaveStateInStore()">
@@ -114,6 +115,9 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.validateButtonsAndSaveStateInStore()
+  },
   computed: {
     currentEditedButtons() {
       const {
@@ -138,8 +142,8 @@ export default {
     getVirtualIntents() {
       return this.$store.getters.virtualIntents;
     },
-    getOrderNumbers(){
-      return Array.from({length: (this.currentEditedButtons).length}, (_, i) => i + 1)
+    getOrderNumbers() {
+      return Array.from({ length: (this.currentEditedButtons).length }, (_, i) => i + 1)
     }
   },
   methods: {
