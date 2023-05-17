@@ -4,7 +4,15 @@
       <h2>Buttons</h2>
       <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
-    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
+    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow" :default-sort="{prop: 'order', order: 'ascending'}">
+      <el-table-column label="Pos." align="center" prop="order" :min-width="columnPosMinWidth">
+        <template #default="scope">
+          <el-select v-model="scope.row.order" @change="validateButtonsAndSaveStateInStore()">
+            <el-option v-for="item in getOrderNumbers" :key="item" :label="item" :value="item" />
+          </el-select>
+        </template>
+      </el-table-column>
+
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize
@@ -93,6 +101,7 @@ export default {
   data() {
     return {
       columnMinWidth: 200,
+      coulmnPosMinWidth: 80,
       options: [
         {
           value: buttonTypes.messageBack,
@@ -128,6 +137,9 @@ export default {
     },
     getVirtualIntents() {
       return this.$store.getters.virtualIntents;
+    },
+    getOrderNumbers(){
+      return Array.from({length: (this.currentEditedButtons).length}, (_, i) => i + 1)
     }
   },
   methods: {
