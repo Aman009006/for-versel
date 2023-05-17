@@ -87,6 +87,7 @@
     <div>
       <el-alert v-if="getTitleDuplicate" type="error" title="Keine Namenduplikate erlaubt!" :closable="false" />
       <el-alert v-if="getInputEmpty" type="error" title="Keine leeren Felder erlaubt!" :closable="false" />
+      <el-alert v-if="getOrderDuplicate" type="error" title="Keine Positionsduplikate erlaubt!" :closable="false" />
     </div>
   </div>
 </template>
@@ -141,6 +142,9 @@ export default {
     },
     getVirtualIntents() {
       return this.$store.getters.virtualIntents;
+    },
+    getOrderDuplicate() {
+      return this.$store.getters.buttonValidations.orderDuplicate;
     },
     getOrderNumbers() {
       return Array.from({ length: (this.currentEditedButtons).length }, (_, i) => i + 1)
