@@ -14,7 +14,7 @@ export function getSkillsWithIntents() {
 }
 /**
  * A button as it is described in the database
- * @typedef {{ type: string, title: string, value: string, identificator: string}} Button
+ * @typedef {{ type: string, title: string, value: string, identificator: string, order: number}} Button
  */
 /**
  * The configuration informations of an answer as described in the database
