@@ -101,7 +101,7 @@ export default {
   data() {
     return {
       columnMinWidth: 200,
-      coulmnPosMinWidth: 80,
+      columnPosMinWidth: 80,
       options: [
         {
           value: buttonTypes.messageBack,
