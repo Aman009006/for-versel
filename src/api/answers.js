@@ -67,6 +67,7 @@ export function setAnswerText(answerId, text) {
  * which has to be saved in the DB table answer_buttons
  * @param newButtonValue is the new value of the current button
  * which has to be saved in the DB table answer_buttons
+ * @param newButtonOrder is the new order of the current button
  */
 export function setButtonProperties(
   answerId,
@@ -74,7 +75,8 @@ export function setButtonProperties(
   newButtonTitle,
   newButtonType,
   newButtonValue,
-  newButtonVirtualIntent
+  newButtonVirtualIntent,
+  newButtonOrder
 ) {
   return request({
     url: authorizedBackendUrl + 'setButtonProperties',
@@ -85,7 +87,8 @@ export function setButtonProperties(
       newButtonTitle,
       newButtonType,
       newButtonValue,
-      newButtonVirtualIntent
+      newButtonVirtualIntent,
+      newButtonOrder
     },
   })
 }
