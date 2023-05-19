@@ -107,7 +107,8 @@ export default {
           updatedButton.title,
           updatedButton.type,
           updatedButton.value,
-          updatedButton.virtualIntent
+          updatedButton.virtualIntent,
+          updatedButton.order
         );
         return true;
       } catch {
@@ -152,7 +153,8 @@ export default {
       const valueDiffers = button1.value != button2.value;
       const typeDiffers = button1.type != button2.type;
       const virtualIntentDiffers = button1.virtualIntent != button2.virtualIntent
-      return titleDiffers || valueDiffers || typeDiffers || virtualIntentDiffers;
+      const orderDiffers = button1.order != button2.order
+      return titleDiffers || valueDiffers || typeDiffers || virtualIntentDiffers || orderDiffers;
     },
     showButtonTable() {
       return this.answerConfig.type == "multi"

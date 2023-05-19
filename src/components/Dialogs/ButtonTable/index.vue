@@ -5,6 +5,14 @@
       <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
     <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
+      <el-table-column label="Pos." align="center" :min-width="columnPosMinWidth">
+        <template #default="scope">
+          <el-select v-model="scope.row.order" @change="validateButtonsAndSaveStateInStore()">
+            <el-option v-for="item in getOrderNumbers" :key="item" :label="item" :value="item" />
+          </el-select>
+        </template>
+      </el-table-column>
+
       <el-table-column label="Name" align="center" :min-width="columnMinWidth">
         <template #default="scope">
           <el-input ref="titleColumn" v-model="scope.row.title" type="textarea" autosize
@@ -78,12 +86,15 @@
     <div>
       <el-alert v-if="getTitleDuplicate" type="error" title="Keine Namenduplikate erlaubt!" :closable="false" />
       <el-alert v-if="getInputEmpty" type="error" title="Keine leeren Felder erlaubt!" :closable="false" />
+      <el-alert v-if="getOrderDuplicate" type="error" title="Keine Positionsduplikate erlaubt!" :closable="false" />
+      <el-alert v-if="getButtonLimitReached" type="error"
+        :title="'Es dürfen maximal ' + buttonLimit + ' Buttons angelegt werden!'" :closable="false" />
     </div>
   </div>
 </template>
 
 <script>
-import { dispatchNames, buttonTypes } from "@/constants";
+import { dispatchNames, buttonTypes, buttonLimit } from "@/constants";
 import ButtonUtilities from "@/store/utilities/ButtonUtilities";
 import ButtonValidatorImpl from "@/utils/buttons/ButtonValidatorImpl";
 
@@ -92,7 +103,9 @@ export default {
   inheritAttrs: true,
   data() {
     return {
+      buttonLimit: buttonLimit,
       columnMinWidth: 200,
+      columnPosMinWidth: 80,
       options: [
         {
           value: buttonTypes.messageBack,
@@ -104,6 +117,9 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    this.validateButtonsAndSaveStateInStore()
   },
   computed: {
     currentEditedButtons() {
@@ -118,7 +134,7 @@ export default {
       ];
       return currentAnswerButtons.filter((button, index) => {
         return !deletedAnswerButtonIndexes.includes(index);
-      });
+      }).sort((button1, button2) => button1.order - button2.order);
     },
     getInputEmpty() {
       return this.$store.getters.buttonValidations.inputEmpty;
@@ -128,15 +144,26 @@ export default {
     },
     getVirtualIntents() {
       return this.$store.getters.virtualIntents;
+    },
+    getOrderDuplicate() {
+      return this.$store.getters.buttonValidations.orderDuplicate;
+    },
+    getButtonLimitReached() {
+      return this.$store.getters.buttonValidations.buttonLimitReached;
+    },
+    getOrderNumbers() {
+      return Array.from({ length: (this.currentEditedButtons).length }, (_, i) => i + 1)
     }
   },
   methods: {
     deleteAnswerButton(answerButton) {
       this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
+      this.updateButtonOrder(this.currentEditedButtons);
       this.validateButtonsAndSaveStateInStore();
     },
     addAnswerButton() {
-      this.$store.dispatch(dispatchNames.addNewAnswerButton);
+      this.$store.dispatch(dispatchNames.addNewAnswerButton, this.currentEditedButtons.length);
+      this.updateButtonOrder(this.currentEditedButtons);
       this.validateButtonsAndSaveStateInStore();
     },
     validateButtonsAndSaveStateInStore() {
@@ -156,6 +183,12 @@ export default {
       } else {
         return false
       }
+    },
+    updateButtonOrder(buttons) {
+      buttons.forEach((button, index) => {
+        button.order = index + 1
+      });
+      return buttons
     }
   },
 };

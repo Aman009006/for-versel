@@ -5,6 +5,8 @@ export default class ButtonUtilities {
         setTitleDuplicate: ButtonUtilities.answerButtonsModulePrefix + "setTitleDuplicate",
         setInputEmpty: ButtonUtilities.answerButtonsModulePrefix + "setInputEmpty",
         setInvalidUrl: ButtonUtilities.answerButtonsModulePrefix + "setInvalidUrl",
+        setOrderDuplicate: ButtonUtilities.answerButtonsModulePrefix + "setOrderDuplicate",
+        setButtonLimitReached: ButtonUtilities.answerButtonsModulePrefix + "setButtonLimitReached"
     }
 
     /**
@@ -20,7 +22,9 @@ export default class ButtonUtilities {
     static areButtonsValid(store) {
         const { buttonValidations } = store.getters;
         return (
-            !buttonValidations.titleDuplicate && !buttonValidations.inputEmpty && !buttonValidations.invalidUrl
+            !buttonValidations.titleDuplicate && !buttonValidations.inputEmpty &&
+            !buttonValidations.invalidUrl && !buttonValidations.orderDuplicate &&
+            !buttonValidations.buttonLimitReached
         );
     }
 
@@ -28,6 +32,8 @@ export default class ButtonUtilities {
         this.#saveDuplicateTitles();
         this.#saveEmptyInputs();
         this.#saveInvalidUrlButtons();
+        this.#saveDuplicateOrders();
+        this.#saveReachedButtonLimit();
     }
 
     #saveDuplicateTitles() {
@@ -43,5 +49,15 @@ export default class ButtonUtilities {
     #saveInvalidUrlButtons() {
         const urlInvalid = this.buttonValidator.hasInvalidUrlButtons();
         this.store.dispatch(ButtonUtilities.dispatchNames.setInvalidUrl, urlInvalid);
+    }
+
+    #saveDuplicateOrders() {
+        const hasDupplicateOrders = this.buttonValidator.hasDuplicateOrders();
+        this.store.dispatch(ButtonUtilities.dispatchNames.setOrderDuplicate, hasDupplicateOrders);
+    }
+
+    #saveReachedButtonLimit() {
+        const reachedButtonLimit = this.buttonValidator.hasButtonLimitReached();
+        this.store.dispatch(ButtonUtilities.dispatchNames.setButtonLimitReached, reachedButtonLimit);
     }
 }

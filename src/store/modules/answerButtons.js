@@ -10,13 +10,14 @@ const mutations = {
             state.currentEditedAnswerButtons = answerButtons
         }
     },
-    addNewAnswerButton: (state) => {
+    addNewAnswerButton: (state, buttonCount) => {
         const newAnswerButton = {
             title: "",
             value: "",
             type: buttonTypes.openUrl,
             identificator: null,
-            virtualIntent: null
+            virtualIntent: null,
+            order: buttonCount + 1
         }
         state.newAnswerButtons.push(newAnswerButton)
     },
@@ -36,6 +37,12 @@ const mutations = {
     },
     setInvalidUrl: (state, urlInvalid) => {
         state.buttonValidations.invalidUrl = urlInvalid
+    },
+    setOrderDuplicate: (state, orderDuplicate) => {
+        state.buttonValidations.orderDuplicate = orderDuplicate;
+    },
+    setButtonLimitReached: (state, buttonLimitReached) => {
+        state.buttonValidations.buttonLimitReached = buttonLimitReached
     }
 }
 
@@ -44,8 +51,8 @@ const actions = {
         const copyAnswerButtons = JSON.parse(JSON.stringify(answerButtons))
         commit(mutations.resetStateAndSaveCopyOfButtons.name, copyAnswerButtons)
     },
-    addNewAnswerButton: ({ commit }) => {
-        commit(mutations.addNewAnswerButton.name)
+    addNewAnswerButton: ({ commit }, buttonCount) => {
+        commit(mutations.addNewAnswerButton.name, buttonCount)
     },
     deleteAnswerButton: ({ commit }, answerButton) => {
         commit(mutations.deleteAnswerButton.name, answerButton)
@@ -58,7 +65,14 @@ const actions = {
     },
     setInvalidUrl: ({ commit }, urlInvalid) => {
         commit(mutations.setInvalidUrl.name, urlInvalid)
+    },
+    setOrderDuplicate: ({ commit }, orderDuplicate) => {
+        commit(mutations.setOrderDuplicate.name, orderDuplicate)
+    },
+    setButtonLimitReached: ({ commit }, buttonLimitReached) => {
+        commit(mutations.setButtonLimitReached.name, buttonLimitReached)
     }
+
 }
 
 function resetState(state) {
@@ -73,7 +87,9 @@ function getInitialState() {
         buttonValidations: {
             titleDuplicate: false,
             inputEmpty: false,
-            invalidUrl: false
+            invalidUrl: false,
+            orderDuplicate: false,
+            buttonLimitReached: false
         }
     }
 }
