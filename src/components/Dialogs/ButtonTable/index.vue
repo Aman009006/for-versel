@@ -158,12 +158,12 @@ export default {
   methods: {
     deleteAnswerButton(answerButton) {
       this.$store.dispatch(dispatchNames.deleteAnswerButton, answerButton);
-      this.updateButtonsOrderAtrribute(this.currentEditedButtons);
+      this.updateButtonOrder(this.currentEditedButtons);
       this.validateButtonsAndSaveStateInStore();
     },
     addAnswerButton() {
       this.$store.dispatch(dispatchNames.addNewAnswerButton, this.currentEditedButtons.length);
-      this.updateButtonsOrderAtrribute(this.currentEditedButtons);
+      this.updateButtonOrder(this.currentEditedButtons);
       this.validateButtonsAndSaveStateInStore();
     },
     validateButtonsAndSaveStateInStore() {
@@ -184,7 +184,7 @@ export default {
         return false
       }
     },
-    updateButtonsOrderAtrribute(buttons) {
+    updateButtonOrder(buttons) {
       buttons.forEach((button, index) => {
         button.order = index + 1
       });
