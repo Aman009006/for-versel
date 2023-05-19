@@ -4,9 +4,8 @@
       <h2>Buttons</h2>
       <el-button icon="icon-Plus" class="add-btn addAnswerButton" @click="addAnswerButton" />
     </div>
-    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow"
-      :default-sort="{ prop: 'order', order: 'ascending' }">
-      <el-table-column label="Pos." align="center" prop="order" :min-width="columnPosMinWidth">
+    <el-table :data="currentEditedButtons" border fixed="true" row-class-name="buttonRow">
+      <el-table-column label="Pos." align="center" :min-width="columnPosMinWidth">
         <template #default="scope">
           <el-select v-model="scope.row.order" @change="validateButtonsAndSaveStateInStore()">
             <el-option v-for="item in getOrderNumbers" :key="item" :label="item" :value="item" />
@@ -135,7 +134,7 @@ export default {
       ];
       return currentAnswerButtons.filter((button, index) => {
         return !deletedAnswerButtonIndexes.includes(index);
-      });
+      }).sort((button1, button2) => button1.order - button2.order);
     },
     getInputEmpty() {
       return this.$store.getters.buttonValidations.inputEmpty;
