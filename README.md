@@ -9,7 +9,8 @@
 # Starten der App
 Folgenden Command im Terminal ausführen:
 
-    npm run dev
+    npm run dev -- --mode <environmentName>
+    npm run dev -- --mode lichtblick_dev
 
 # Backend - URL anpassen
 Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll. Die Datei befindet sich in dem Pfad: `src\utils\backendUrl.js`.
