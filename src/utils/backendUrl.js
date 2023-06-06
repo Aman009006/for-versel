@@ -4,8 +4,6 @@
  * local url: http://localhost:3000/
  */
 const backendUrl = import.meta.env.VITE_BACKENDURL
-  ? import.meta.env.VITE_BACKENDURL
-  : 'https://adminbackend.stadtwerk.bot/';
 export default backendUrl
 
 /**
