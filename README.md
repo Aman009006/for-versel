@@ -7,14 +7,15 @@
 - [Vue - Debug extension für Chrome installieren](https://github.com/vuejs/vue-devtools)
 
 # Starten der App
-Folgenden Command im Terminal ausführen:
+Folgenden Command im Terminal ausführen. Der Platzhalter %environmentName% wird hierbei ersetzt mit einer verfügbaren environment im Ordner "environments". Ein Beispiel ist: lichtblick_dev:
 
-    npm run dev -- --mode <environmentName>
-    npm run dev -- --mode lichtblick_dev
+    npm run dev -- --mode %environmentName%
 
-# Backend - URL anpassen
-Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll. Die Datei befindet sich in dem Pfad: `src\utils\backendUrl.js`.
-Für lokale Entwicklung: http://localhost:3000/
+# Backend - URL für die Lokale Entwicklung anpassen
+Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll.
+Für das Anpassen der Backend - URL wird die Datei "environments/.env.development" geöffnet.
+Die Variable "VITE_BACKENDURL" wird auf die gewünschte URL angepasst.
+Für die lokale Entwicklung lautet die URL des lokalen Backends http://localhost:3000/
 
 # Debugging von JavaScript
 ## Empfohlen
