@@ -4,7 +4,6 @@ import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API, // url = base url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
 })

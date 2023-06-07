@@ -15,6 +15,7 @@ const defaultViteConfig = {
             "@": resolve(__dirname, "../../src"),
         },
     },
+    envDir: resolve(__dirname, "../../environments"),
     server: {
         port: 9527,
         strictPort: true
