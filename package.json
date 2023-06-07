@@ -5,8 +5,7 @@
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
     "dev": "vite",
-    "build:prod": "vite build",
-    "build:stage": "vite build --mode staging",
+    "build": "vite build",
     "test": "vitest",
     "jenkinsTest": "vitest --config ./vite/config/test/vitest.config.jenkins.js"
   },
