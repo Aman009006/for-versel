@@ -14,7 +14,7 @@ Folgenden Command im Terminal ausführen. Der Platzhalter %environmentName% wird
 # Backend - URL für die Lokale Entwicklung verwenden
 Wenn man das Frontend mit dem lokalen Backend verwenden möchte, führt man folgenden Command aus:
 
-    npm run dev -- --mode local
+    npm run dev -- --mode localBackend
 
 # Debugging von JavaScript
 ## Empfohlen
