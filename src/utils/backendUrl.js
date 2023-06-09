@@ -1,8 +1,4 @@
 
-/**
- * the url of the backend based on the environment.
- * local url: http://localhost:3000/
- */
 const backendUrl = import.meta.env.VITE_BACKENDURL
 export default backendUrl
 
