@@ -11,11 +11,10 @@ Folgenden Command im Terminal ausführen. Der Platzhalter %environmentName% wird
 
     npm run dev -- --mode %environmentName%
 
-# Backend - URL für die Lokale Entwicklung anpassen
-Durch die Backend - URL kann man anpassen, welches Backend verwendet werden soll.
-Für das Anpassen der Backend - URL wird die Datei "environments/.env.development" geöffnet.
-Die Variable "VITE_BACKENDURL" wird auf die gewünschte URL angepasst.
-Für die lokale Entwicklung lautet die URL des lokalen Backends http://localhost:3000/
+# Backend - URL für die Lokale Entwicklung verwenden
+Wenn man das Frontend mit dem lokalen Backend verwenden möchte, führt man folgenden Command aus:
+
+    npm run dev -- --mode local
 
 # Debugging von JavaScript
 ## Empfohlen
