@@ -1,0 +1,100 @@
+// Active Choice Einbindung + Konfiguration
+properties([
+    parameters([
+        [$class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Admin UI auswählen',
+            filterLength: 1,
+            filterable: false,
+            name: 'adminuiparam',
+            randomName: 'cascade-choice-parameter',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        '''
+                        return["First build after changes in the Active Choice parameter"]
+                        '''
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        '''
+                        def folderPath = '/var/lib/jenkins/workspace/Chatbot/AdminUi-Frontend-DEV/environments'
+                        def searchTerm = '.env.'
+                        def modifiedFileNames = []
+
+                        def folder = new File(folderPath)
+                        if (folder.isDirectory()) {
+                            folder.eachFile { file ->
+                                if (file.isFile()) {
+                                    def originalFileName = file.name
+                                    def modifiedFileName = originalFileName.replace(searchTerm, '')
+                                    modifiedFileNames.add(modifiedFileName)
+                                }
+                            }
+                        } else {
+                            println("Der angegebene Pfad ist nicht vorhanden")
+                        }
+
+                        def modifiedFileNamesDev = modifiedFileNames.findAll { it.contains('dev')}
+                        modifiedFileNamesDev.add("1st build")
+                        modifiedFileNamesDev.sort()
+
+                        return modifiedFileNamesDev
+                        '''
+                ]
+            ]
+        ]
+    ])
+])
+
+currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam
+pipeline {
+    agent any
+    stages {
+        stage('npm install') {
+            agent {
+                docker {
+                    image 'node:18.16.0'
+                    reuseNode true
+                }
+            }
+             environment {
+                 HOME = '.'
+            }
+            // do not execute npm install if it's the first build
+            when {
+                not {
+                    equals(actual: "${adminuiparam}", expected: "1st build")
+                }
+            }
+            steps {
+                sh "pwd"
+                sh 'npm install'
+                sh 'npm run build -- --mode ${adminuiparam}'
+            }
+        }
+
+        stage('deploy to azure') {
+            // do not deploy if it's the first build
+            when {
+                not {
+                    equals(actual: "${adminuiparam}", expected: "1st build")
+                }
+            }
+             steps {
+                sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminUiCustomersDev/${adminuiparam}'
+             }
+        }
+
+//         stage('Clean Up') {
+//              steps {
+//                  cleanWs()
+//              }
+//         }
+    }
+}
