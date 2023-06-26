@@ -42,6 +42,7 @@ properties([
 
                         def modifiedFileNamesDev = modifiedFileNames.findAll { it.contains('dev')}
                         modifiedFileNamesDev.add("1st build")
+                        modifiedFileNamesDev.add("all")
                         modifiedFileNamesDev.sort()
 
                         return modifiedFileNamesDev
