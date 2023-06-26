@@ -80,7 +80,7 @@ pipeline {
             }
         }
 
-        stage('deploy to azure') {
+        stage('deploy to mittwald') {
             // do not deploy if it's the first build
             when {
                 not {
