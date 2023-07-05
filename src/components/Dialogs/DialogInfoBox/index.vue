@@ -28,6 +28,7 @@ import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import WebchatApi from "@/utils/WebchatApi";
 
 export default {
+  name: "DialogInfoBox",
   props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity"],
   computed: {
     technicalIntentName() {
