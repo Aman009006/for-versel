@@ -1,34 +1,16 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
-    <scroll-pane
-      ref="scrollPane"
-      class="tags-view-wrapper"
-      @scroll="handleScroll"
-    >
-      <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
-        :class="isActive(tag) ? 'active' : ''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
-        @contextmenu.prevent="openMenu(tag, $event)"
-      >
+    <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
+      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''"
+        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" tag="span" class="tags-view-item"
+        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''" @contextmenu.prevent="openMenu(tag, $event)">
         {{ tag.title }}
-        <span
-          v-if="!isAffix(tag)"
-          class="el-icon-close"
-          @click.prevent.stop="closeSelectedTag(tag)"
-        />
+        <el-icon v-if="!isAffix(tag)" @click.prevent.stop="closeSelectedTag(tag)">
+          <icon-Close />
+        </el-icon>
       </router-link>
     </scroll-pane>
-    <ul
-      v-show="visible"
-      :style="{ left: left + 'px', top: top + 'px' }"
-      class="contextmenu"
-    >
+    <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">
         Close
       </li>
@@ -212,9 +194,11 @@ export default {
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+
   .tags-view-wrapper {
     .tags-view-item {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       position: relative;
       cursor: pointer;
       height: 26px;
@@ -226,16 +210,20 @@ export default {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+
       &:first-of-type {
         margin-left: 15px;
       }
+
       &:last-of-type {
         margin-right: 15px;
       }
+
       &.active {
         background-color: #409eff;
         color: #fff;
         border-color: #409eff;
+
         &::before {
           content: "";
           background: #fff;
@@ -244,11 +232,12 @@ export default {
           height: 8px;
           border-radius: 50%;
           position: relative;
-          margin-right: 2px;
+          margin-right: 5px;
         }
       }
     }
   }
+
   .contextmenu {
     margin: 0;
     background: #fff;
@@ -261,10 +250,12 @@ export default {
     font-weight: 400;
     color: #333;
     box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+
     li {
       margin: 0;
       padding: 7px 16px;
       cursor: pointer;
+
       &:hover {
         background: #eee;
       }
@@ -279,7 +270,13 @@ export default {
   div div {
     display: flex;
   }
+
   .tags-view-item {
+    
+    i {
+      margin-left: 5px;
+    }
+
     .el-icon-close {
       width: 16px;
       height: 16px;
@@ -288,11 +285,13 @@ export default {
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
+
       &:before {
         transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }
+
       &:hover {
         background-color: #b4bccc;
         color: #fff;
