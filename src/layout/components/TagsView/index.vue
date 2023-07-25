@@ -271,11 +271,8 @@ export default {
     display: flex;
   }
 
-  .tags-view-item {
-    
-    i {
+  .tags-view-item i {
       margin-left: 5px;
-    }
   }
 }
 </style>
