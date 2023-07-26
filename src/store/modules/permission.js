@@ -3,6 +3,7 @@ import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
+import { getCustomerMetaData } from '@/api/customer'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -155,6 +156,8 @@ export function makeURLRouteForPowerBI(powerBI_link) {
 
 const actions = {
   async pullIntentsAndSetRoutes({ commit, state, dispatch, rootGetters }, roles) {
+    // fill the props for report
+    actions.setReportIdAndCustomer(asyncRoutes);
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -200,6 +203,23 @@ const actions = {
     // save the data in the state
     commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
   },
+  /**
+   * @param {Array} asyncRoutes are the routes that need to be validated or be awaited.
+   */
+  async setReportIdAndCustomer(asyncRoutes) {
+    const getData = await getCustomerMetaData();
+    const customer = getData.customer;
+    const powerBiReportId = getData.powerBI_link;
+
+    for (let i = 0; i < asyncRoutes.length; i++) {
+      if (asyncRoutes[i].path == '/report') {
+        asyncRoutes[i].children[0].props = {
+          customer: customer,
+          powerBiReportId: powerBiReportId,
+        }
+      }
+    }
+  }
 }
 
 export default {
