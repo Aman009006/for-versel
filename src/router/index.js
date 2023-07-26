@@ -13,6 +13,7 @@ import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
 import PasswordReset from '@/views/passwordReset/index.vue'
 import SendResetMail from '@/views/sendResetMail/index.vue'
+import Report from '@/views/report/index.vue'
 
 export const constantRoutes = [
   {
@@ -129,6 +130,22 @@ export const asyncRoutes = [
         component: () => import('@/views/error-page/404.vue'),
         name: 'Page404',
         meta: { title: '404', noCache: true },
+      },
+    ],
+  },
+  {
+    path: '/report',
+    component: Layout,
+    children: [
+      {
+        path: paths.report,
+        component: Report,
+        props: { customer: null, powerBiReportId: null },
+        name: 'Report',
+        meta: {
+          title: 'Report',
+          icon: 'dashboard',
+        },
       },
     ],
   },
