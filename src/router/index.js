@@ -138,7 +138,7 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: paths.report,
+        path: paths.reporting,
         component: Reporting,
         props: { customer: null, powerBiReportId: null },
         name: 'Reporting',

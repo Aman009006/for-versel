@@ -212,7 +212,7 @@ const actions = {
     const powerBiReportId = getData.powerBI_link;
 
     for (let i = 0; i < asyncRoutes.length; i++) {
-      if (asyncRoutes[i].path == '/report') {
+      if (asyncRoutes[i].path == '/reporting') {
         asyncRoutes[i].children[0].props = {
           customer: customer,
           powerBiReportId: powerBiReportId,
