@@ -13,7 +13,7 @@ import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
 import PasswordReset from '@/views/passwordReset/index.vue'
 import SendResetMail from '@/views/sendResetMail/index.vue'
-import Report from '@/views/report/index.vue'
+import Reporting from '@/views/reporting/index.vue'
 
 export const constantRoutes = [
   {
@@ -134,16 +134,16 @@ export const asyncRoutes = [
     ],
   },
   {
-    path: '/report',
+    path: '/reporting',
     component: Layout,
     children: [
       {
         path: paths.report,
-        component: Report,
+        component: Reporting,
         props: { customer: null, powerBiReportId: null },
-        name: 'Report',
+        name: 'Reporting',
         meta: {
-          title: 'Report',
+          title: 'Reporting',
           icon: 'dashboard',
         },
       },

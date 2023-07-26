@@ -5,7 +5,7 @@
 
 <script>
 export default {
-    name: "Report",
+    name: "Reporting",
     components: {},
     props: {
         customer: {
