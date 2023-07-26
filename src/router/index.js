@@ -133,22 +133,6 @@ export const asyncRoutes = [
       },
     ],
   },
-  {
-    path: '/reporting',
-    component: Layout,
-    children: [
-      {
-        path: paths.reporting,
-        component: Reporting,
-        props: { customer: null, powerBiReportId: null },
-        name: 'Reporting',
-        meta: {
-          title: 'Reporting',
-          icon: 'dashboard',
-        },
-      },
-    ],
-  },
   // 404 page must be placed at the end !!!
   { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
 ]

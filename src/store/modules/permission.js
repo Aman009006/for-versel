@@ -3,7 +3,7 @@ import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
-import { getCustomerMetaData } from '@/api/customer'
+import Reporting from '@/views/reporting/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -137,27 +137,32 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
 }
 
 /**
- * @param powerBI_link is the given powerBI URL of the current customer.
+ * @param powerBi_reportId is the given powerBI Report Id of the current customer.
+ * @param customer is the current customer.
  * @return the route which redirects at the given PowerBI URL.
  */
-export function makeURLRouteForPowerBI(powerBI_link) {
-  const powerBIRoute = {
-    path: '/powerBI',
+export function createRouteForPowerBIReport(powerBi_reportId, customer) {
+  const powerBIReportRoute = {
+    path: '/reporting',
     component: Layout,
     children: [
       {
-        path: `${powerBI_link}`,
-        meta: { title: 'KPI Dashboard', icon: 'external_link' },
+        path: paths.reporting,
+        component: Reporting,
+        props: { customer: customer, powerBiReportId: powerBi_reportId },
+        name: 'Reporting',
+        meta: {
+          title: 'Reporting',
+          icon: 'dashboard',
+        },
       },
     ],
   }
-  return powerBIRoute
+  return powerBIReportRoute
 }
 
 const actions = {
   async pullIntentsAndSetRoutes({ commit, state, dispatch, rootGetters }, roles) {
-    // fill the props for report
-    actions.setReportIdAndCustomer(asyncRoutes);
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -174,14 +179,12 @@ const actions = {
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
-    // get the powerBI link from the DB for the current customer
-    const { powerBI_link } = rootGetters.metainfo
-    let powerBIRoute
+    // get PowerBI Report ID and customer name from DB to create path and fill data
+    const { powerBI_link, customer } = rootGetters.metainfo
+    let powerBIReportRoute
     if (powerBI_link) {
-      // make dynamic route for the powerBI Daashboard
-      powerBIRoute = makeURLRouteForPowerBI(powerBI_link)
-      // add it to the existing dynamic routes
-      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
+      powerBIReportRoute = createRouteForPowerBIReport(powerBI_link, customer);
+      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
@@ -203,23 +206,6 @@ const actions = {
     // save the data in the state
     commit('SET_SKILLS_WITH_INTENTS', skillsWithIntents)
   },
-  /**
-   * @param {Array} asyncRoutes are the routes that need to be validated or be awaited.
-   */
-  async setReportIdAndCustomer(asyncRoutes) {
-    const getData = await getCustomerMetaData();
-    const customer = getData.customer;
-    const powerBiReportId = getData.powerBI_link;
-
-    for (let i = 0; i < asyncRoutes.length; i++) {
-      if (asyncRoutes[i].path == '/reporting') {
-        asyncRoutes[i].children[0].props = {
-          customer: customer,
-          powerBiReportId: powerBiReportId,
-        }
-      }
-    }
-  }
 }
 
 export default {
