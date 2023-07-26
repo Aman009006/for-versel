@@ -180,10 +180,10 @@ const actions = {
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
     // get PowerBI Report ID and customer name from DB to create path and fill data
-    const { powerBI_link, customer } = rootGetters.metainfo
+    const { powerBI_reportID, customer } = rootGetters.metainfo
     let powerBIReportRoute
-    if (powerBI_link) {
-      powerBIReportRoute = createRouteForPowerBIReport(powerBI_link, customer);
+    if (powerBI_reportID) {
+      powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
     commit('SET_ROUTES', allAdditionalRoutes)
