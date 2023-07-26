@@ -61,10 +61,10 @@ const mutations = {
       '/',
       '/skills',
       '/placeholders',
+      '/reporting',
       '/jira',
       '/notes',
       '/manual',
-      '/powerBI',
       '/manualChatbot',
     ]
     state.routes.sort((route1, route2) => {
