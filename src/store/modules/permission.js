@@ -3,6 +3,7 @@ import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
+import Reporting from '@/views/reporting/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -60,10 +61,10 @@ const mutations = {
       '/',
       '/skills',
       '/placeholders',
+      '/reporting',
       '/jira',
       '/notes',
       '/manual',
-      '/powerBI',
       '/manualChatbot',
     ]
     state.routes.sort((route1, route2) => {
@@ -136,21 +137,28 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
 }
 
 /**
- * @param powerBI_link is the given powerBI URL of the current customer.
+ * @param powerBi_reportId is the given powerBI Report Id of the current customer.
+ * @param customer is the current customer.
  * @return the route which redirects at the given PowerBI URL.
  */
-export function makeURLRouteForPowerBI(powerBI_link) {
-  const powerBIRoute = {
-    path: '/powerBI',
+export function createRouteForPowerBIReport(powerBi_reportId, customer) {
+  const powerBIReportRoute = {
+    path: '/reporting',
     component: Layout,
     children: [
       {
-        path: `${powerBI_link}`,
-        meta: { title: 'KPI Dashboard', icon: 'external_link' },
+        path: paths.reporting,
+        component: Reporting,
+        props: { customer: customer, powerBiReportId: powerBi_reportId },
+        name: 'Reporting',
+        meta: {
+          title: 'Reporting',
+          icon: 'dashboard',
+        },
       },
     ],
   }
-  return powerBIRoute
+  return powerBIReportRoute
 }
 
 const actions = {
@@ -171,14 +179,12 @@ const actions = {
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
-    // get the powerBI link from the DB for the current customer
-    const { powerBI_link } = rootGetters.metainfo
-    let powerBIRoute
-    if (powerBI_link) {
-      // make dynamic route for the powerBI Daashboard
-      powerBIRoute = makeURLRouteForPowerBI(powerBI_link)
-      // add it to the existing dynamic routes
-      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIRoute)
+    // get PowerBI Report ID and customer name from DB to create path and fill data
+    const { powerBI_reportID, customer } = rootGetters.metainfo
+    let powerBIReportRoute
+    if (powerBI_reportID) {
+      powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
+      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes

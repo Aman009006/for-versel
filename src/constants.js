@@ -11,6 +11,7 @@ export const links = {
 export const paths = {
   skills: '/skills',
   placeholders: '/placeholders',
+  reporting: '/reporting',
 }
 
 const setSkillsAndIntents = 'setSkillsAndIntents'

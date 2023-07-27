@@ -8,7 +8,7 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  metainfo: { avatar_link: null, customer: null, powerBI_link: null },
+  metainfo: { avatar_link: null, customer: null, powerBI_reportID: null },
 }
 
 const mutations = {
