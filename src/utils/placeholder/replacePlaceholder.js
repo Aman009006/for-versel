@@ -10,7 +10,7 @@ export default class ReplacePlaceholder {
 
     /** @returns {Array}*/
     replaceInAnswers() {
-        const replacedAnswers = this.answers;
+        const replacedAnswers = JSON.parse(JSON.stringify(this.answers));
         for (const answer of replacedAnswers) {
             for (const placeholder of this.allPlaceholders) {
                 if (answer.text.includes(`##${placeholder.key}##`)) {
