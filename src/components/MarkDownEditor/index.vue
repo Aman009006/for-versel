@@ -29,6 +29,8 @@ import activateCkEditorTranslations from "./ckEditorTranslations";
  */
 import "./ckEditor.css";
 
+import PlaceholderToggler from "@/utils/placeholder/placeholderToggler";
+
 export default {
   name: "MarkDownEditor",
   props: {
@@ -82,6 +84,7 @@ Editor.builtinPlugins = [
   Table,
   MarkDown,
   AutoImage,
+  PlaceholderToggler,
 ];
 
 // Editor configuration.
@@ -99,6 +102,8 @@ Editor.defaultConfig = {
       "redo",
       "|",
       "sourceEditing",
+      "|",
+      "placeholderToggler",
     ],
   },
   image: {
