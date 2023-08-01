@@ -58,6 +58,9 @@ export default {
   async created() {
     await this.loadData();
   },
+  async updated() {
+    await this.loadData();
+  },
   methods: {
     async loadData() {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
