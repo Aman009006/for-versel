@@ -9,7 +9,7 @@ export default class ReplacePlaceholder {
     }
 
     /** @returns {Array}*/
-    replaceInAnswers() {
+    replaceMultipleAnswers() {
         const replacedAnswers = JSON.parse(JSON.stringify(this.answers));
         for (const answer of replacedAnswers) {
             for (const placeholder of this.allPlaceholders) {
@@ -19,5 +19,15 @@ export default class ReplacePlaceholder {
             }
         }
         return replacedAnswers;
+    }
+    /** @returns {String}*/
+    replaceSingleAnswer() {
+        let replacedAnswer = this.answers;
+        for (const placeholder of this.allPlaceholders) {
+            if (replacedAnswer.includes(`##${placeholder.key}##`)) {
+                replacedAnswer = replacedAnswer.replace(`##${placeholder.key}##`, `${placeholder.value}`);
+            }
+        }
+        return replacedAnswer;
     }
 }
