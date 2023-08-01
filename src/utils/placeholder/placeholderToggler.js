@@ -11,7 +11,9 @@ export default class PlaceholderToggler extends Plugin {
     constructor(editor) {
         super(editor);
         this.label = 'Platzhaltervorschau aktivieren';
-        this.bothTexts = {
+        this.isPlaceholderShown = false;
+        this.textContainer = {
+            originalText: '',
             placeholderText: '',
             noPlaceholderText: '',
         };
@@ -34,6 +36,7 @@ export default class PlaceholderToggler extends Plugin {
             this.listenTo(buttonView, 'execute', () => {
                 this.#toggleLabel(buttonView, t);
                 this.#togglePlaceholder(placeholders);
+                this.isPlaceholderShown === false ? this.isPlaceholderShown = true : this.isPlaceholderShown = false;
             });
             this.listenTo(editor, 'change:state', () => {
                 if (editor.state === 'ready' && this.#checkForPlaceholders()) {
@@ -67,12 +70,8 @@ export default class PlaceholderToggler extends Plugin {
     }
     /** @param {Array} placeholders */
     #togglePlaceholder(placeholders) {
-        if (this.bothTexts.placeholderText == '' && this.bothTexts.noPlaceholderText == '') {
-            this.#setBothTexts(placeholders);
-            this.#replacePlaceholders();
-        } else {
-            this.#replacePlaceholders();
-        }
+        this.#setTextContainer(placeholders);
+        this.#replacePlaceholders();
     }
     /** @returns {Boolean} */
     #checkForPlaceholders() {
@@ -81,18 +80,24 @@ export default class PlaceholderToggler extends Plugin {
     }
     #replacePlaceholders() {
         const editor = this.editor;
-        if (editor.getData() == this.bothTexts.placeholderText) {
-            editor.setData(this.bothTexts.noPlaceholderText);
+        if (editor.getData() == this.textContainer.placeholderText) {
+            editor.setData(this.textContainer.noPlaceholderText);
             editor.enableReadOnlyMode('placeholderToggler');
         } else {
-            editor.setData(this.bothTexts.placeholderText);
+            editor.setData(this.textContainer.placeholderText);
             editor.disableReadOnlyMode('placeholderToggler');
         }
     }
     /** @param {Array} placeholders */
-    #setBothTexts(placeholders) {
-        this.bothTexts.placeholderText = this.editor.getData();
-        this.bothTexts.noPlaceholderText = new ReplacePlaceholder(
-            this.bothTexts.placeholderText, placeholders).replaceSingleAnswer();
+    #setTextContainer(placeholders) {
+        if (this.isPlaceholderShown === false) {
+            this.textContainer.originalText = this.editor.getData();
+            this.textContainer.placeholderText = this.editor.getData();
+            this.textContainer.noPlaceholderText = new ReplacePlaceholder(
+                this.textContainer.placeholderText, placeholders).replaceSingleAnswer();
+        } else {
+            this.textContainer.placeholderText = this.textContainer.originalText;
+            this.textContainer.noPlaceholderText = this.editor.getData();
+        }
     }
 }
