@@ -12,22 +12,23 @@ export default class ReplacePlaceholder {
     replaceMultipleAnswers() {
         const replacedAnswers = JSON.parse(JSON.stringify(this.answers));
         for (const answer of replacedAnswers) {
-            for (const placeholder of this.allPlaceholders) {
-                if (answer.text.includes(`##${placeholder.key}##`)) {
-                    answer.text = answer.text.replace(`##${placeholder.key}##`, `${placeholder.value}`);
-                }
-            }
+            answer.text = this.#replaceFunction(answer.text);
         }
         return replacedAnswers;
     }
     /** @returns {String}*/
     replaceSingleAnswer() {
-        let replacedAnswer = this.answers;
+        const replacedAnswer = this.answers;
+        const text = this.#replaceFunction(replacedAnswer);
+        return text;
+    }
+    /** @returns {String}*/
+    #replaceFunction(text) {
         for (const placeholder of this.allPlaceholders) {
-            if (replacedAnswer.includes(`##${placeholder.key}##`)) {
-                replacedAnswer = replacedAnswer.replace(`##${placeholder.key}##`, `${placeholder.value}`);
+            if (text.includes(`##${placeholder.key}##`)) {
+                text = text.replace(`##${placeholder.key}##`, `${placeholder.value}`);
             }
         }
-        return replacedAnswer;
+        return text
     }
 }
