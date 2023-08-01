@@ -45,6 +45,10 @@ export default class PlaceholderToggler extends Plugin {
             return buttonView;
         });
     }
+    /**
+     * @param {ButtonView} buttonView
+     * @param {Object} editor
+     */
     #toggleLabel(buttonView, editor) {
         const deactivate = 'Platzhaltervorschau deaktivieren';
         const activate = 'Platzhaltervorschau aktivieren';
@@ -61,6 +65,7 @@ export default class PlaceholderToggler extends Plugin {
             });
         }
     }
+    /** @param {Array} placeholders */
     #togglePlaceholder(placeholders) {
         if (this.bothTexts.placeholderText == '' && this.bothTexts.noPlaceholderText == '') {
             this.#setBothTexts(placeholders);
@@ -69,6 +74,7 @@ export default class PlaceholderToggler extends Plugin {
             this.#replacePlaceholders();
         }
     }
+    /** @returns {Boolean} */
     #checkForPlaceholders() {
         const regex = /.*##.*/;
         return regex.test(this.editor.getData());
@@ -83,6 +89,7 @@ export default class PlaceholderToggler extends Plugin {
             editor.disableReadOnlyMode('placeholderToggler');
         }
     }
+    /** @param {Array} placeholders */
     #setBothTexts(placeholders) {
         this.bothTexts.placeholderText = this.editor.getData();
         this.bothTexts.noPlaceholderText = new ReplacePlaceholder(
