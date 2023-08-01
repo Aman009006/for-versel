@@ -22,7 +22,10 @@ export default class ReplacePlaceholder {
         const text = this.#replaceFunction(replacedAnswer);
         return text;
     }
-    /** @returns {String}*/
+    /**
+     * @param {String} text
+     * @returns {String}
+     */
     #replaceFunction(text) {
         for (const placeholder of this.allPlaceholders) {
             if (text.includes(`##${placeholder.key}##`)) {
