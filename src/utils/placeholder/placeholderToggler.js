@@ -58,15 +58,13 @@ export default class PlaceholderToggler extends Plugin {
 
         if (this.label === activate) {
             this.label = deactivate;
-            buttonView.set({
-                label: editor(this.label),
-            });
         } else {
             this.label = activate;
-            buttonView.set({
-                label: editor(this.label),
-            });
         }
+
+        buttonView.set({
+            label: editor(this.label),
+        });
     }
     /** @param {Array} placeholders */
     #togglePlaceholder(placeholders) {
