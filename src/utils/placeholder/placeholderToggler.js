@@ -1,8 +1,6 @@
 import { Plugin } from 'ckeditor5/src/core';
 import { ButtonView } from 'ckeditor5/src/ui';
 import ReplacePlaceholder from './replacePlaceholder';
-import { getPlaceholders } from '@/api/placeholders';
-
 export default class PlaceholderToggler extends Plugin {
     static get pluginName() {
         return 'PlaceholderToggler';
@@ -18,10 +16,9 @@ export default class PlaceholderToggler extends Plugin {
             noPlaceholderText: '',
         };
     }
-    async init() {
+    init() {
         const editor = this.editor;
         const t = editor.t;
-        const placeholders = await getPlaceholders();
         editor.ui.componentFactory.add('placeholderToggler', locale => {
             const buttonView = new ButtonView(locale);
             buttonView.set({
@@ -32,7 +29,7 @@ export default class PlaceholderToggler extends Plugin {
             });
             this.listenTo(buttonView, 'execute', () => {
                 this.#toggleLabel(buttonView, t);
-                this.#togglePlaceholder(placeholders);
+                this.#togglePlaceholder(this.placeholders);
                 this.isPlaceholderShown === false ? this.isPlaceholderShown = true : this.isPlaceholderShown = false;
             });
             this.listenTo(editor, 'change:state', () => {
