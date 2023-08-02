@@ -18,9 +18,6 @@ export default class PlaceholderToggler extends Plugin {
             noPlaceholderText: '',
         };
     }
-    /**
-     * @inheritDoc
-     */
     async init() {
         const editor = this.editor;
         const t = editor.t;
