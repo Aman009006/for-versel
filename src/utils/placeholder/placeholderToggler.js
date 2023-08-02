@@ -81,10 +81,16 @@ export default class PlaceholderToggler extends Plugin {
         if (editor.getData() == this.textContainer.placeholderText) {
             editor.setData(this.textContainer.noPlaceholderText[0].text);
             editor.enableReadOnlyMode('placeholderToggler');
+            this.#toggleSaveButton();
         } else {
             editor.setData(this.textContainer.placeholderText);
             editor.disableReadOnlyMode('placeholderToggler');
+            this.#toggleSaveButton();
         }
+    }
+    #toggleSaveButton() {
+        const button = document.getElementById('saveAnswerButton');
+        button.disabled === true ? button.disabled = false : button.disabled = true;
     }
     /** @param {Array} placeholders */
     #setTextContainer(placeholders) {
