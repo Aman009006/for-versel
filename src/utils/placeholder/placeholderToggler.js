@@ -79,7 +79,7 @@ export default class PlaceholderToggler extends Plugin {
     #replacePlaceholders() {
         const editor = this.editor;
         if (editor.getData() == this.textContainer.placeholderText) {
-            editor.setData(this.textContainer.noPlaceholderText);
+            editor.setData(this.textContainer.noPlaceholderText[0].text);
             editor.enableReadOnlyMode('placeholderToggler');
         } else {
             editor.setData(this.textContainer.placeholderText);
@@ -92,7 +92,7 @@ export default class PlaceholderToggler extends Plugin {
             this.textContainer.originalText = this.editor.getData();
             this.textContainer.placeholderText = this.editor.getData();
             this.textContainer.noPlaceholderText = new ReplacePlaceholder(
-                this.textContainer.placeholderText, placeholders).replaceSingleAnswer();
+                [{ text: this.textContainer.placeholderText }], placeholders).replaceAnswers();
         } else {
             this.textContainer.placeholderText = this.textContainer.originalText;
             this.textContainer.noPlaceholderText = this.editor.getData();

@@ -7,7 +7,7 @@
 
       <el-table-column :label="answerText" min-width="500">
         <template #default="scope">
-          <div v-if="humanReadableAnswer.length > 0" v-html="renderToMarkdown(humanReadableAnswer[scope.$index].text)"></div>
+          <div v-if="humanReadableAnswers.length > 0" v-html="renderToMarkdown(humanReadableAnswers[scope.$index].text)"></div>
           <div v-else v-html="renderToMarkdown(scope.row.text)" />
         </template>
       </el-table-column>
@@ -52,7 +52,7 @@ export default {
       answerText: humanReadableLabels.answerText,
       placeholderReady: false,
       allPlaceholders: [],
-      humanReadableAnswer: [],
+      humanReadableAnswers: [],
     };
   },
   async created() {
@@ -66,7 +66,7 @@ export default {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
       this.placeholderReady = true;
       this.allPlaceholders = PlaceholderUtilities.getAllPlaceholders(this.$store);
-      this.humanReadableAnswer = new ReplacePlaceholder(this.answers, this.allPlaceholders).replaceMultipleAnswers();
+      this.humanReadableAnswers = new ReplacePlaceholder(this.answers, this.allPlaceholders).replaceAnswers();
     },
     renderToMarkdown(text) {
       return md.render(text);
