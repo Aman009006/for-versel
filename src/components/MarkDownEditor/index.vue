@@ -35,6 +35,7 @@ export default {
   name: "MarkDownEditor",
   props: {
     text: { type: String },
+    placeholders: { type: Array },
   },
   data() {
     return {
@@ -42,10 +43,19 @@ export default {
     };
   },
   async mounted() {
+    function enrichPlaceholderTogglerWithPlaceholders(placeholders) {
+      return class EnrichCkEditorWithPlaceholders extends PlaceholderToggler {
+        constructor(editor) {
+          super(editor)
+          this.placeholders = placeholders;
+        }
+      }
+    }
     activateCkEditorTranslations();
     const ckEditorElement = this.$refs.ckEditor;
     const editor = await Editor.create(ckEditorElement, {
       initialData: this.text,
+      extraPlugins: [enrichPlaceholderTogglerWithPlaceholders(this.placeholders)],
       language: "de",
     });
     /**
@@ -67,7 +77,7 @@ export default {
   },
 };
 
-class Editor extends ClassicEditor {}
+class Editor extends ClassicEditor { }
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
@@ -84,7 +94,6 @@ Editor.builtinPlugins = [
   Table,
   MarkDown,
   AutoImage,
-  PlaceholderToggler,
 ];
 
 // Editor configuration.
@@ -121,10 +130,12 @@ Editor.defaultConfig = {
   a {
     text-decoration: underline;
     color: blue;
+
     &:hover {
       color: lightblue;
     }
   }
+
   /*
   svg - images are not rendering correctly without
   a min-width. An example can be found in

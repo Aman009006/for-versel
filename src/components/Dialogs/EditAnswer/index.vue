@@ -22,7 +22,7 @@
           </template>
         </el-popover>
       </h2>
-      <MarkDownEditor ref="markDownEditor" :text="answer.text" />
+      <MarkDownEditor ref="markDownEditor" :text="answer.text" :placeholders="placeholders"/>
     </div>
 
     <div v-if="showButtonTable()">
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       humanReadableLabels,
+      placeholders: this.$store.state.placeholders.placeholders,
     };
   },
   methods: {

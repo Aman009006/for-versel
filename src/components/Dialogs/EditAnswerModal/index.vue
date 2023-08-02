@@ -129,9 +129,13 @@ export default {
         border: 0 !important;
       }
     }
+    #saveAnswerButton {
+      cursor: pointer;
+    }
     #saveAnswerButton:disabled {
       background-color: lightgray !important;
       border: 0 !important;
+      cursor: default;
     }
   }
 }
