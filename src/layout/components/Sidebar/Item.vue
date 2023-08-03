@@ -1,5 +1,12 @@
 <template>
-  <span>
+  <el-tooltip v-if="isSidebarClosed()" :content="this.title" placement="right">
+    <span>
+      <i v-if="isElementIcon()" :class="['sub-el-icon', icon]" />
+      <svg-icon v-if="isSvgIcon()" :svg-icon-html="svgIconHtml" />
+      <span v-if="hasTitle()">{{ title }}</span>
+    </span>
+  </el-tooltip>
+  <span v-else popper-class="hidden-popper">
     <i v-if="isElementIcon()" :class="['sub-el-icon', icon]" />
     <svg-icon v-if="isSvgIcon()" :svg-icon-html="svgIconHtml" />
     <span v-if="hasTitle()">{{ title }}</span>
@@ -40,6 +47,10 @@ export default {
     },
     hasTitle() {
       return this.title != null;
+    },
+    isSidebarClosed() {
+      const isSidebarClosed = window.localStorage.getItem("sidebarClosed");
+      return isSidebarClosed;
     },
   },
 };
