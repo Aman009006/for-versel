@@ -1,3 +1,7 @@
 .el-popper {
     word-break: normal !important;
+
+    &.hidden-popper{
+        display: none;
+    }
 }
