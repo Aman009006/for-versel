@@ -10,7 +10,7 @@
 
   .sidebar-container {
     transition: width 0.28s;
-    width: $sideBarWidth  !important;
+    width: $sideBarWidth !important;
     background-color: $menuBg;
     height: 100%;
     position: fixed;
@@ -67,7 +67,7 @@
     .submenu-title-noDropdown,
     .el-sub-menu__title {
       &:hover {
-        background-color: $menuHover  !important;
+        background-color: $menuHover !important;
       }
 
       .svg-icon svg {
@@ -76,13 +76,13 @@
     }
 
     .is-active>.el-sub-menu__title {
-      color: $subMenuActiveText  !important;
+      color: $subMenuActiveText !important;
     }
 
     & .nest-menu .el-sub-menu>.el-sub-menu__title,
     & .el-sub-menu .el-menu-item {
-      min-width: $sideBarWidth  !important;
-      background-color: $subMenuBg  !important;
+      min-width: $sideBarWidth !important;
+      background-color: $subMenuBg !important;
       //for long names in titles 
       white-space: normal;
       height: auto;
@@ -90,7 +90,7 @@
       padding: 10px 0px;
 
       &:hover {
-        background-color: $subMenuHover  !important;
+        background-color: $subMenuHover !important;
       }
     }
 
@@ -140,18 +140,6 @@
     .el-menu--collapse {
       .submenu-title-noDropdown {
         &>span {
-          height: 0;
-          width: 0;
-          overflow: hidden;
-          visibility: hidden;
-          display: inline-block;
-        }
-      }
-    }
-
-    .el-menu--collapse {
-      .el-sub-menu {
-        &>.el-sub-menu__title {
           &>span {
             height: 0;
             width: 0;
@@ -162,10 +150,26 @@
         }
       }
     }
+
+    .el-menu--collapse {
+      .el-sub-menu {
+        &>.el-sub-menu__title {
+          &>span {
+            &>span {
+              height: 0;
+              width: 0;
+              overflow: hidden;
+              visibility: hidden;
+              display: inline-block;
+            }
+          }
+        }
+      }
+    }
   }
 
   .el-menu--collapse .el-menu .el-sub-menu {
-    min-width: $sideBarWidth  !important;
+    min-width: $sideBarWidth !important;
   }
 
   // mobile responsive
@@ -176,7 +180,7 @@
 
     .sidebar-container {
       transition: transform .28s;
-      width: $sideBarWidth  !important;
+      width: $sideBarWidth !important;
     }
 
     &.hideSidebar {
@@ -214,7 +218,7 @@
   .el-menu-item {
     &:hover {
       // you can use $subMenuHover
-      background-color: $menuHover  !important;
+      background-color: $menuHover !important;
     }
   }
 
