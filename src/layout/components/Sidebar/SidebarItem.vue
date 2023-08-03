@@ -16,8 +16,9 @@
           <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
             :class="{ 'submenu-title-noDropdown': !isNest }"
-          >
+            >
             <item
+              :popper-class="isNest ? 'hidden-popper' : ''"
               :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
               :title="onlyOneChild.meta.title"
             />
@@ -41,6 +42,7 @@
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
           :title="item.meta.title"
+          popper-class="hidden-popper"
         />
       </template>
       <sidebar-item
@@ -128,6 +130,7 @@ export default {
 <style lang="scss">
 .sidebar-container .el-badge {
   display: block;
+  width: 100%;
   sup.el-badge__content {
     right: 50px;
     top: 10px;
@@ -136,6 +139,7 @@ export default {
 
 .nest-menu .el-badge {
   display: block;
+  width: 100%;
 }
 
 // for the vertical menu (when the small sidebar is used)
