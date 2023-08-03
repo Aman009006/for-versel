@@ -6,29 +6,20 @@
           <img :src="avatar_link" />
         </el-col>
         <el-col class="text" :span="24" :sm="20">
-          <h1>Willkommen auf Ihrer Admin UI!</h1>
-          <span style="font-size: 14px"
-            >Mithilfe der ersten Version der Admin UI, ermöglichen wir Ihnen das
-            Ändern von Textbausteinen und möchten Sie mit der Navigation der
-            graphischen Oberfläche vertraut machen. Es handelt sich hierbei um
-            eine Beta-Version. Die wesentlichen Funktionen sind bereits
-            implementiert, die vollumfängliche Entwicklung der einzelnen
-            Funktionen ist jedoch noch nicht abgeschlossen, daher ist uns Ihr
-            Feedback für die Weiterentwicklung und Optimierung besonders
-            wichtig!</span
-          >
+          <h1>Willkommen auf Ihrem Redaktionsbackend!</h1>
+          <span style="font-size: 14px">
+            In diesem Bereich haben Sie die Möglichkeit, Inhalte Ihres Chatbots eigenständig
+            zu pflegen und zu aktualisieren. Für eine Schulung melden Sie sich gerne bei uns, um einen Termin zu
+            vereinbaren.
+          </span>
           <p style="font-size: 14px">
-            <span
-              style="
-                color: #0da4f0;
-                font-weight: bold;
-                text-transform: uppercase;
-                font-size: 13px;
-              "
-              >Dialoge bearbeiten:
+            <span style="font-weight: bold;">
+              Wichtig:
             </span>
-            Bitte wählen Sie links in der Navigation im Drop-down Menü unter
-            Dialoge die Chatbot Antwort aus die Sie bearbeiten möchten.
+            Sollten Sie neue Inhalte wünschen, die Sie hier noch nicht finden konnten, stellen Sie uns gerne ein Ticket
+            über das <a style="text-decoration: underline; color: blue;"
+              href="https://hsagbpo.atlassian.net/servicedesk/customer/portal/8" target="_blank"
+              rel="noopener noreferrer">Jira Service Desk</a> mit den gewünschten Inhalten.
           </p>
         </el-col>
       </el-row>
@@ -36,33 +27,13 @@
     <div class="linkbox-container">
       <el-row :gutter="20">
         <el-col :span="12" :lg="6" :xs="24">
-          <image-text-link-box
-            class="manuelButton"
+          <image-text-link-box class="manuelButton"
             link="https://hsagsoftware.atlassian.net/wiki/spaces/CHAT/pages/57803205/Bedienungsanleitung+Admin+UI"
-            text="Bedienungs&shy;anleitung lesen"
-            :image="pics.manualPic"
-          />
-        </el-col>
-        <el-col class="editDialogButton" :span="12" :lg="6" :xs="24">
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="Dieser Button wird in Kürze aktiviert! Um Dialoge zu bearbeiten klicken Sie bitte in der linken Navigation auf den Bereich 'Dialoge' und wählen Sie im Drop-down Menü den zu bearbeitenden Dialog aus."
-            placement="top"
-          >
-            <image-text-link-box
-              text="Dialoge editieren"
-              :image="pics.editAnswersPic"
-            />
-          </el-tooltip>
+            text="Bedienungs&shy;anleitung lesen" :image="pics.manualPic" />
         </el-col>
         <el-col :span="12" :lg="6" :xs="24">
-          <image-text-link-box
-            class="giveFeedbackButton"
-            text="Feedback geben"
-            :image="pics.feedbackPic"
-            :link="jiraHelpDesk"
-          />
+          <image-text-link-box class="giveFeedbackButton" text="Feedback geben" :image="pics.feedbackPic"
+            :link="jiraHelpDesk" />
         </el-col>
       </el-row>
     </div>
@@ -99,12 +70,14 @@ export default {
 
 <style lang="scss">
 @import "@/styles/element-variables.module.scss";
+
 .dashboard-container {
   * {
     color: $--color-text-regular;
   }
 
   padding: 30px 50px;
+
   @media (max-width: $--sm) {
     padding: 10px 20px;
   }
@@ -114,16 +87,19 @@ export default {
     padding: 15px 25px;
     margin-bottom: 20px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
     @media (max-width: $--sm) {
       padding: 5px 15px;
     }
+
     border-radius: 4px;
 
     @media (max-width: $--sm - 1) {
-      > * {
+      >* {
         text-align: center;
       }
     }
+
     .el-row {
       .el-col:first-child {
         img {
@@ -131,6 +107,7 @@ export default {
           width: 50px;
         }
       }
+
       .el-col:last-child {
         padding-left: 10px;
       }
@@ -142,22 +119,26 @@ export default {
       color: #303133;
     }
   }
+
   .editDialogButton {
     opacity: 0.6;
   }
+
   .item {
     border-radius: 4px;
   }
 
   .linkbox-container {
     font-size: 14px;
-    > .el-row > .el-col {
+
+    >.el-row>.el-col {
       margin-bottom: 15px;
     }
   }
 
   .manuelButton:hover {
     border: solid 2px #40a0ff;
+
     .text {
       color: #40a0ff;
     }
@@ -169,10 +150,12 @@ export default {
 
   .giveFeedbackButton:hover {
     border: solid 2px #40a0ff;
+
     .text {
       color: #40a0ff;
     }
   }
+
   .giveFeedbackButton {
     border: solid 2px #f2f6fc;
   }
