@@ -38,6 +38,9 @@ router.beforeEach(async (to, from, next) => {
     // insert the chatbotWidget
     if (to.path !== '/reporting') {
       ChatbotWidgetUtils.insertChatbotWidget()
+      ChatbotWidgetUtils.showChatbotWidget()
+    } else {
+      ChatbotWidgetUtils.hideChatbotWidget()
     }
     if (to.path === '/login') {
       // if is logged in, redirect to the home page

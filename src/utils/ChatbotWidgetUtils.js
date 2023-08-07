@@ -57,4 +57,16 @@ export default class ChatbotWidgetUtils {
       }, 1000)
     }
   }
+  static hideChatbotWidget() {
+    const chatbot = document.getElementById('hsagChatbot');
+    if (chatbot) {
+      chatbot.style.display = 'none';
+    }
+  }
+  static showChatbotWidget() {
+    const chatbot = document.getElementById('hsagChatbot');
+    if (chatbot) {
+      chatbot.style.display = 'block';
+    }
+  }
 }
