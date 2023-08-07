@@ -36,7 +36,9 @@ router.beforeEach(async (to, from, next) => {
       await store.dispatch('user/getCustomerMetainfo')
     }
     // insert the chatbotWidget
-    ChatbotWidgetUtils.insertChatbotWidget()
+    if (to.path !== '/reporting') {
+      ChatbotWidgetUtils.insertChatbotWidget()
+    }
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })

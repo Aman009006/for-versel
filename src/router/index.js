@@ -13,7 +13,6 @@ import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
 import PasswordReset from '@/views/passwordReset/index.vue'
 import SendResetMail from '@/views/sendResetMail/index.vue'
-import Reporting from '@/views/reporting/index.vue'
 
 export const constantRoutes = [
   {
