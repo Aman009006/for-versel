@@ -32,6 +32,6 @@ iframe {
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - 34px);
+    height: 100%;
 }
 </style>
