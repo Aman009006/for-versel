@@ -1,5 +1,6 @@
 <template>
     <div class="password-reset-container">
+        <el-image :src="hsagLogo" />
         <div class="title-container">
             <h3 class="title">Neues Passwort vergeben</h3>
         </div>
@@ -13,7 +14,7 @@
                 <span class="show-pwd" @click="showPwd">
                     <svg-icon :svg-icon-html="
                         passwordType === 'password' ? icons.eye : icons.eyeOpen
-                    " />
+                        " />
                 </span>
             </el-form-item>
             <el-form-item prop="repeatPassword">
@@ -25,12 +26,10 @@
                 <span class="show-pwd" @click="showPwd">
                     <svg-icon :svg-icon-html="
                         passwordType === 'password' ? icons.eye : icons.eyeOpen
-                    " />
+                        " />
                 </span>
             </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="resetPassword">Absenden</el-button>
-            </el-form-item>
+            <el-button type="primary" @click="resetPassword">Absenden</el-button>
         </el-form>
         <template v-if="successMessage">
             <div class="success-message-container">
@@ -48,6 +47,7 @@
 import icons from "@/icons/index";
 import { resetPassword } from '@/api/passwordReset';
 import { isValidPassword } from "@/utils/validate";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
 
@@ -85,7 +85,8 @@ export default {
                 ]
             },
             passwordType: 'password',
-            successMessage: false
+            successMessage: false,
+            hsagLogo,
         }
     },
     computed: {
@@ -127,34 +128,33 @@ export default {
 </script>
 
 <style lang="scss">
-$bg: #283443;
-$light_gray: #fff;
-$cursor: #fff;
-$dark_gray: #889aa4;
+@import "@/styles/variables.module.scss";
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+@supports (-webkit-mask: none) and (not (cater-color: white)) {
     .send-reset-container .el-input input {
-        color: $cursor;
+        color: white;
     }
 }
 
 .password-reset-container {
-    background-color: #2d3a4b;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 160px 35px 0;
+    background-color: $hsag-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-height: 100%;
     width: 100%;
-    background-color: $bg;
     overflow: hidden;
+
+    .el-image {
+        width: 300px;
+        margin-bottom: 30px;
+    }
 
     .title-container {
         .title {
             font-size: 26px;
-            color: #eee;
+            color: $hsag-blue;
             margin: 0px auto 40px auto;
             text-align: center;
             font-weight: bold;
@@ -162,11 +162,19 @@ $dark_gray: #889aa4;
     }
 
     button {
-        width: 100%;
-        margin-left: 0px;
+        width: 60%;
+        height: 40px;
+        margin-bottom: 20px;
+        margin-left: 0;
+        font-weight: 400;
     }
 
-    .reset-form, .success-message-container {
+    .reset-form,
+    .success-message-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         position: relative;
         width: 520px;
         max-width: 100%;
@@ -196,28 +204,27 @@ $dark_gray: #889aa4;
             -webkit-appearance: none;
             border-radius: 0px;
             padding: 12px 5px 12px 15px;
-            color: $light_gray;
+            color: $hsag-bluegrey;
             height: 46px;
-            caret-color: $cursor;
+            caret-color: white;
 
             &:-webkit-autofill {
-                box-shadow: 0 0 0px 1000px $bg inset !important;
-                -webkit-text-fill-color: $cursor !important;
+                box-shadow: 0 0 0px 1000px $hsag-white inset !important;
+                -webkit-text-fill-color: white !important;
             }
         }
     }
 
     .el-form-item {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        background-color: $hsag-lightgrey;
         border-radius: 5px;
-        color: #454545;
         margin-bottom: 30px;
     }
 
     .svg-container {
         padding: 6px 2px 6px 15px;
-        color: $dark_gray;
+        color: gray;
         vertical-align: middle;
         width: 30px;
         display: inline-block;
@@ -232,10 +239,23 @@ $dark_gray: #889aa4;
         right: 10px;
         top: 7px;
         font-size: 16px;
-        color: $dark_gray;
+        color: gray;
         cursor: pointer;
         user-select: none;
         width: 17px;
+    }
+
+    @media only screen and (max-width: 470px) {
+        .el-image {
+            width: 80%;
+        }
+
+        .reset-form {
+            .el-form-item {
+                width: 80%;
+            }
+        }
+
     }
 }
 </style>
