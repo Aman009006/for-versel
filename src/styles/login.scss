@@ -1,0 +1,44 @@
+// moved from view/login/index.vue
+
+/* 修复input 背景不协调 和光标变色 */
+/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
+/* reset element-ui css */
+.login-container {
+    .el-form-item__content {
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+  
+    .el-input__wrapper {
+      display: inline-block;
+      height: 47px;
+      width: 85%;
+      background: transparent;
+  
+      &,
+      &:hover,
+      &.is-focus {
+        box-shadow: none;
+      }
+  
+      input {
+        border: 0px;
+        -webkit-appearance: none;
+        border-radius: 0px;
+        padding: 12px 5px 12px 15px;
+        height: 46px;
+  
+        &:-webkit-autofill {
+          box-shadow: 0 0 0px 1000px $hsag-lightgrey inset !important;
+          -webkit-text-fill-color: $hsag-bluegrey !important;
+        }
+      }
+    }
+  
+    .el-form-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      color: #454545;
+    }
+  }

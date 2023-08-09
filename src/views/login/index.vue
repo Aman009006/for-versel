@@ -256,56 +256,6 @@ export default {
 };
 </script>
 
-<style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg: #283443;
-$light_gray: #fff;
-$cursor: #fff;
-
-/* reset element-ui css */
-.login-container {
-  .el-form-item__content {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  .el-input__wrapper {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-    background: transparent;
-
-    &,
-    &:hover,
-    &.is-focus {
-      box-shadow: none;
-    }
-
-    input {
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      height: 46px;
-
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
-    }
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
@@ -389,7 +339,7 @@ $cursor: #fff;
 
     .title {
       font-size: 26px;
-      color: $hsag-green;
+      color: $hsag-blue;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
