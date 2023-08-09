@@ -8,6 +8,7 @@
       autocomplete="on"
       label-position="left"
     >
+      <el-image :src="hsagLogo" />
       <div class="title-container">
         <h3 class="title">Login</h3>
       </div>
@@ -73,7 +74,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
+      <el-button type="primary" :loading="loading" @click.prevent="handleLogin"
         >Login</el-button
       >
 
@@ -81,7 +82,7 @@
         Login mit Microsoft Konto
       </el-button>
 
-      <el-button link type="primary" @click="sendResetMail" class="send-reset">
+      <el-button type="primary" link @click="sendResetMail" class="send-reset">
         Passwort vergessen
       </el-button>
     </el-form>
@@ -93,6 +94,7 @@ import { validEmail, isString } from "@/utils/validate";
 import KeycloakUtils from "@/utils/KeycloakUtils";
 import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 import icons from "@/icons/index";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
   name: "LogIn",
@@ -144,6 +146,7 @@ export default {
       redirect: undefined,
       otherQuery: {},
       visible: false,
+      hsagLogo,
     };
   },
   computed: {
@@ -261,23 +264,19 @@ $bg: #283443;
 $light_gray: #fff;
 $cursor: #fff;
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
 /* reset element-ui css */
 .login-container {
   .el-form-item__content {
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
   .el-input__wrapper {
     display: inline-block;
     height: 47px;
     width: 85%;
     background: transparent;
+
     &,
     &:hover,
     &.is-focus {
@@ -289,9 +288,7 @@ $cursor: #fff;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
       height: 46px;
-      caret-color: $cursor;
 
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
@@ -310,36 +307,60 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
+@import "@/styles/variables.module.scss";
 
 .send-reset {
   border: transparent !important
 }
 
 .login-container {
+  display: flex;
+  justify-content: center;
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: $hsag-white;
   overflow: hidden;
 
   button {
-    width: 100%;
-    margin-bottom: 30px;
+    width: 60%;
+    height: 40px;
+    margin-bottom: 20px;
     margin-left: 0px;
+    font-weight: 400;
+
+    &.send-reset{
+      color: $hsag-blue-light;
+    }
   }
 
   .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
     overflow: hidden;
+
+    .el-form-item {
+      width: 100%;
+      background-color: $hsag-lightgrey;
+    }
+
+    .el-image {
+      width: 300px;
+      margin-bottom: 30px;
+    }
 
     .email-icon {
       font-weight: bold;
+    }
+  }
+
+  .el-input__wrapper {
+    input {
+      color: $hsag-bluegrey;
     }
   }
 
@@ -357,7 +378,7 @@ $light_gray: #eee;
 
   .svg-container {
     padding: 6px 2px 6px 15px;
-    color: $dark_gray;
+    color: gray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -368,7 +389,7 @@ $light_gray: #eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $hsag-green;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -380,7 +401,7 @@ $light_gray: #eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
+    color: gray;
     cursor: pointer;
     user-select: none;
     width: 17px;
