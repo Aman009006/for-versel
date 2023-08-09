@@ -74,7 +74,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button type="primary" :loading="loading" @click.prevent="handleLogin"
+      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
         >Login</el-button
       >
 
@@ -82,7 +82,7 @@
         Login mit Microsoft Konto
       </el-button>
 
-      <el-button type="primary" link @click="sendResetMail" class="send-reset">
+      <el-button link type="primary" @click="sendResetMail" class="send-reset">
         Passwort vergessen
       </el-button>
     </el-form>

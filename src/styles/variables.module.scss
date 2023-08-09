@@ -1,3 +1,33 @@
+// Styleguide Colors
+$hsag-blue: #004175;
+$hsag-blue-light: #2F8EE9;
+$hsag-blue-dark: #0B3863;
+$hsag-blue-shade: #0D4A7C;
+$hsag-green: #97BE0D;
+$hsag-green-light: #B3DC7D;
+$hsag-green-dark: #5E8A25;
+$hsag-green-shade: #88B117;
+$hsag-green-shade-dark: #81A816;
+$hsag-orange: #F9B000;
+$hsag-isa-orange: #EC7A34;
+$hsag-lightgrey: #F1F6F9;
+$hsag-bluegrey: #8393A7;
+$hsag-white: #ffffff;
+$hsag-black: #000000;
+
+// Overwriting Element Plus Variables with hsag colors
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': $hsag-green,
+    ),
+  ),
+  $button: (
+    'bg-color': $hsag-green,
+  )
+);
+
+
 // base color
 $primary: #409EFF;
 $blue: #324157;
@@ -25,24 +55,6 @@ $subMenuBg: #1f2d3d;
 $subMenuHover: #001528;
 
 $sideBarWidth: 233px;
-
-// Styleguide Colors
-$hsag-blue: #004175;
-$hsag-blue-light:#2F8EE9;
-$hsag-blue-dark:#0B3863;
-$hsag-blue-shade: #0D4A7C;
-$hsag-green:#97BE0D;
-$hsag-green-light:#B3DC7D;
-$hsag-green-dark:#5E8A25;
-$hsag-green-shade:#88B117;
-$hsag-green-shade-dark:#81A816;
-$hsag-orange:#F9B000;
-$hsag-isa-orange:#EC7A34;
-$hsag-lightgrey:#F1F6F9;
-$hsag-bluegrey:#8393A7;
-$hsag-white:#ffffff;
-$hsag-black:#000000;
-
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
