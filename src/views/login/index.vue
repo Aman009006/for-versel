@@ -1,13 +1,7 @@
 <template>
   <div v-if="visible" class="login-container">
-    <el-form
-      ref="loginForm"
-      :model="loginForm"
-      :rules="loginRules"
-      class="login-form"
-      autocomplete="on"
-      label-position="left"
-    >
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+      label-position="left">
       <el-image :src="hsagLogo" />
       <div class="title-container">
         <h3 class="title">Login</h3>
@@ -17,66 +11,32 @@
         <span class="svg-container">
           <svg-icon :svg-icon-html="icons.user" />
         </span>
-        <el-input
-          ref="customer"
-          v-model="loginForm.customer"
-          placeholder="Mandant"
-          name="customer"
-          type="text"
-          tabindex="1"
-          autocomplete="on"
-        />
+        <el-input ref="customer" v-model="loginForm.customer" placeholder="Mandant" name="customer" type="text"
+          tabindex="1" autocomplete="on" />
       </el-form-item>
 
       <el-form-item prop="username">
         <span class="svg-container email-icon"> @ </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="E-Mail"
-          name="username"
-          type="email"
-          tabindex="2"
-          autocomplete="on"
-        />
+        <el-input ref="username" v-model="loginForm.username" placeholder="E-Mail" name="username" type="email"
+          tabindex="2" autocomplete="on" />
       </el-form-item>
 
-      <el-tooltip
-        :visible="capsTooltip"
-        content="Caps lock ist aktiviert"
-        placement="right"
-        manual
-      >
+      <el-tooltip :visible="capsTooltip" content="Caps lock ist aktiviert" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon :svg-icon-html="icons.password" />
           </span>
-          <el-input
-            :key="passwordType"
-            ref="password"
-            v-model="loginForm.password"
-            :type="passwordType"
-            placeholder="Passwort"
-            name="password"
-            tabindex="3"
-            autocomplete="on"
-            @keyup="checkCapslock"
-            @blur="capsTooltip = false"
-            @keyup.enter="handleLogin"
-          />
+          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+            placeholder="Passwort" name="password" tabindex="3" autocomplete="on" @keyup="checkCapslock"
+            @blur="capsTooltip = false" @keyup.enter="handleLogin" />
           <span class="show-pwd" @click="showPwd">
-            <svg-icon
-              :svg-icon-html="
-                passwordType === 'password' ? icons.eye : icons.eyeOpen
-              "
-            />
+            <svg-icon :svg-icon-html="passwordType === 'password' ? icons.eye : icons.eyeOpen
+              " />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
-        >Login</el-button
-      >
+      <el-button :loading="loading" type="primary" @click.prevent="handleLogin">Login</el-button>
 
       <el-button type="primary" @click="startMicrosoftLogin">
         Login mit Microsoft Konto
@@ -275,10 +235,10 @@ export default {
     width: 60%;
     height: 40px;
     margin-bottom: 20px;
-    margin-left: 0px;
+    margin-left: 0;
     font-weight: 400;
 
-    &.send-reset{
+    &.send-reset {
       color: $hsag-blue-light;
     }
   }
@@ -364,6 +324,17 @@ export default {
   }
 
   @media only screen and (max-width: 470px) {
+    .login-form {
+
+      .el-image {
+        width: 80%;
+      }
+
+      .el-form-item {
+        width: 80%;
+      }
+    }
+
     .thirdparty-button {
       display: none;
     }
