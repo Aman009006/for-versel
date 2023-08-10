@@ -1,19 +1,16 @@
 <template>
   <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
-
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
 
         <notification />
+        <hamburger
+        id="hamburger-container"
+        :is-active="sidebar.opened"
+        class="hamburger-container"
+        @toggleClick="toggleSideBar"
+      />
       </template>
 
       <el-dropdown
@@ -43,14 +40,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb/index.vue";
 import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
 
 export default {
   components: {
-    Breadcrumb,
     Hamburger,
     Search,
     Notification,
@@ -85,12 +80,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .navbar {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: $hsag-lightgrey;
 
   .hamburger-container {
     line-height: 46px;
