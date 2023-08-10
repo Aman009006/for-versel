@@ -11,9 +11,9 @@
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
     height: 100%;
     position: fixed;
+    background-color: $hsag-blue;
     font-size: 0px;
     top: 0;
     bottom: 0;
@@ -64,10 +64,20 @@
     }
 
     // menu hover
+    .el-sub-menu {
+      &.is-active {
+        background-color: $hsag-green;
+
+        .el-sub-menu__title:hover {
+          background-color: $hsag-green-dark;
+        }
+      }
+    }
+
     .submenu-title-noDropdown,
     .el-sub-menu__title {
       &:hover {
-        background-color: $menuHover !important;
+        background-color: $menuHover;
       }
 
       .svg-icon svg {
@@ -82,7 +92,7 @@
     & .nest-menu .el-sub-menu>.el-sub-menu__title,
     & .el-sub-menu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+      background-color: $subMenuBg;
       //for long names in titles 
       white-space: normal;
       height: auto;
@@ -90,10 +100,72 @@
       padding: 10px 0px;
 
       &:hover {
-        background-color: $subMenuHover !important;
+        background-color: $subMenuHover;
       }
     }
 
+    .el-sub-menu.is-active {
+      .nest-menu {
+        .el-sub-menu{
+          .el-sub-menu__title:hover{
+            background-color: $hsag-blue-dark;
+          }
+          &.is-active{
+            .el-sub-menu__title{
+              background-color: $hsag-green-shade;
+              &:hover{
+                background-color: $hsag-green-dark;
+              }
+            }
+          }
+        }
+        &:nth-child(even) {
+
+          .el-sub-menu__title,
+          .el-menu-item {
+            background-color: $hsag-blue-shade;
+          }
+        }
+
+        .el-menu {
+          .nest-menu {
+            .el-menu-item {
+              &:hover {
+                background-color: $hsag-blue-dark;
+              }
+              &.is-active {
+                background-color: $hsag-green-shade-2;
+
+                &:hover{
+                  background-color: $hsag-green-dark;
+                }
+              }
+            }
+            
+            &:nth-child(even) {
+
+              .el-sub-menu__title,
+              .el-menu-item {
+                background-color: $hsag-blue-shade;
+
+                &.is-active {
+                  background-color: $hsag-green-shade-2;
+  
+                  &:hover{
+                    background-color: $hsag-green-dark;
+                  }
+                }
+
+                &:hover {
+                  background-color: $hsag-blue-dark;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
     .el-sub-menu__icon-arrow {
       padding-left: 5px;
     }
@@ -214,11 +286,20 @@
     }
   }
 
+  :nth-child(even)>:not(svg) {
+    background-color: $hsag-blue-shade;
+  }
+
   .nest-menu .el-sub-menu>.el-sub-menu__title,
+
   .el-menu-item {
+    &.is-active {
+      background-color: $hsag-green;
+    }
+
     &:hover {
       // you can use $subMenuHover
-      background-color: $menuHover !important;
+      background-color: $menuHover;
     }
   }
 
