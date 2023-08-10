@@ -104,7 +104,8 @@
       }
     }
 
-    .el-sub-menu.is-active {
+    .el-sub-menu,
+    &.is-active {
       .nest-menu {
         .el-sub-menu{
           .el-sub-menu__title:hover{
