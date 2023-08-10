@@ -5,7 +5,7 @@
     transition: margin-left .28s;
     margin-left: $sideBarWidth;
     position: relative;
-    background-color: $grey;
+    background-color: $hsag-white;
   }
 
   .sidebar-container {
@@ -104,69 +104,42 @@
       }
     }
 
-    .el-sub-menu,
-    &.is-active {
-      .nest-menu {
-        .el-sub-menu{
-          .el-sub-menu__title:hover{
-            background-color: $hsag-blue-dark;
-          }
-          &.is-active{
-            .el-sub-menu__title{
-              background-color: $hsag-green-shade;
-              &:hover{
-                background-color: $hsag-green-dark;
-              }
-            }
-          }
-        }
-        &:nth-child(even) {
+    // el sub menu non active hover
+    .el-sub-menu .nest-menu .el-sub-menu .el-sub-menu__title:hover,
+    .el-sub-menu .nest-menu .el-sub-menu .el-menu-item:hover {
+      background-color: $hsag-blue-dark;
+    }
 
-          .el-sub-menu__title,
-          .el-menu-item {
-            background-color: $hsag-blue-shade;
-          }
-        }
-
-        .el-menu {
-          .nest-menu {
-            .el-menu-item {
-              &:hover {
-                background-color: $hsag-blue-dark;
-              }
-              &.is-active {
-                background-color: $hsag-green-shade-2;
-
-                &:hover{
-                  background-color: $hsag-green-dark;
-                }
-              }
-            }
-            
-            &:nth-child(even) {
-
-              .el-sub-menu__title,
-              .el-menu-item {
-                background-color: $hsag-blue-shade;
-
-                &.is-active {
-                  background-color: $hsag-green-shade-2;
-  
-                  &:hover{
-                    background-color: $hsag-green-dark;
-                  }
-                }
-
-                &:hover {
-                  background-color: $hsag-blue-dark;
-                }
-              }
-            }
-          }
-        }
+    // el-sub-menu shades
+    .el-menu {
+      .nest-menu:nth-child(odd) .el-sub-menu__title {
+        background-color: $hsag-blue-shade;
       }
     }
-    
+
+    .nest-menu .nest-menu:nth-child(even) {
+
+      .el-sub-menu__title,
+      .el-menu-item {
+        background-color: $hsag-blue-shade;
+      }
+    }
+
+    // el-sub-menu active state
+    .el-sub-menu.is-active .el-menu .el-sub-menu.is-active .el-sub-menu__title {
+      background-color: $hsag-green-shade;
+
+      &:hover{
+        background-color: $hsag-green-dark;
+      }
+    }
+    .el-sub-menu.is-active .el-menu .el-sub-menu.is-active .el-menu-item.is-active{
+      background-color: $hsag-green-shade-2;
+
+      &:hover{
+        background-color: $hsag-green-dark;
+      }
+    }
     .el-sub-menu__icon-arrow {
       padding-left: 5px;
     }
@@ -287,7 +260,7 @@
     }
   }
 
-  :nth-child(even)>:not(svg) {
+  :nth-child(even) .el-menu-item {
     background-color: $hsag-blue-shade;
   }
 
