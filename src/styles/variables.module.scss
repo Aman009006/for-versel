@@ -6,8 +6,8 @@ $hsag-blue-shade: #0D4A7C;
 $hsag-green: #97BE0D;
 $hsag-green-light: #B3DC7D;
 $hsag-green-dark: #5E8A25;
-$hsag-green-shade: #88B117;
-$hsag-green-shade-dark: #81A816;
+$hsag-green-shade: #85a70d;
+$hsag-green-shade-2: #75920c;
 $hsag-orange: #F9B000;
 $hsag-isa-orange: #EC7A34;
 $hsag-lightgrey: #F1F6F9;
@@ -24,7 +24,12 @@ $hsag-black: #000000;
   ),
   $button: (
     'bg-color': $hsag-green,
-  )
+  ),
+  $menu: (
+    'bg-color': $hsag-blue,
+    'active-color': $hsag-white,
+    'text-color': $hsag-white,
+    )
 );
 
 
@@ -49,10 +54,10 @@ $menuActiveText: $primary;
 $subMenuActiveText: #f4f4f5; // https://github.com/ElemeFE/element/issues/12951
 
 $menuBg: #304156;
-$menuHover: #263445;
+$menuHover: $hsag-blue-dark;
 
-$subMenuBg: #1f2d3d;
-$subMenuHover: #001528;
+$subMenuBg: $hsag-blue;
+$subMenuHover: $hsag-blue-shade;
 
 $sideBarWidth: 233px;
 
