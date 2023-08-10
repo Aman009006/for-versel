@@ -188,6 +188,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .tags-view-container {
   height: 34px;
   width: 100%;
@@ -220,9 +222,9 @@ export default {
       }
 
       &.active {
-        background-color: #409eff;
+        background-color: $hsag-green;
         color: #fff;
-        border-color: #409eff;
+        border: none;
 
         &::before {
           content: "";
