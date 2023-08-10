@@ -1,13 +1,14 @@
 <template>
-  <div v-if="visible" class="login-container">
+  <div
+    v-if="visible"
+    class="login-container">
     <el-form
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
       autocomplete="on"
-      label-position="left"
-    >
+      label-position="left">
       <el-image :src="hsagLogo" />
       <div class="title-container">
         <h3 class="title">Login</h3>
@@ -24,8 +25,7 @@
           name="customer"
           type="text"
           tabindex="1"
-          autocomplete="on"
-        />
+          autocomplete="on" />
       </el-form-item>
 
       <el-form-item prop="username">
@@ -37,16 +37,14 @@
           name="username"
           type="email"
           tabindex="2"
-          autocomplete="on"
-        />
+          autocomplete="on" />
       </el-form-item>
 
       <el-tooltip
         :visible="capsTooltip"
         content="Caps lock ist aktiviert"
         placement="right"
-        manual
-      >
+        manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon :svg-icon-html="icons.password" />
@@ -62,27 +60,33 @@
             autocomplete="on"
             @keyup="checkCapslock"
             @blur="capsTooltip = false"
-            @keyup.enter="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon
-              :svg-icon-html="
-                passwordType === 'password' ? icons.eye : icons.eyeOpen
-              "
-            />
+            @keyup.enter="handleLogin" />
+          <span
+            class="show-pwd"
+            @click="showPwd">
+            <svg-icon :svg-icon-html="passwordType === 'password' ? icons.eye : icons.eyeOpen
+              " />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
-        >Login</el-button
-      >
+      <el-button
+        :loading="loading"
+        type="primary"
+        @click.prevent="handleLogin">Login
+      </el-button>
 
-      <el-button type="primary" @click="startMicrosoftLogin">
+      <el-button
+        type="primary"
+        @click="startMicrosoftLogin">
         Login mit Microsoft Konto
       </el-button>
 
-      <el-button link type="primary" @click="sendResetMail" class="send-reset">
+      <el-button
+        link
+        type="primary"
+        @click="sendResetMail"
+        class="send-reset">
         Passwort vergessen
       </el-button>
     </el-form>
