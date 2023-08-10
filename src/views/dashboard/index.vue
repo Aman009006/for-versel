@@ -83,10 +83,9 @@ export default {
   }
 
   .description {
-    background-color: white;
+    background-color: $hsag-lightgrey;
     padding: 15px 25px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
     @media (max-width: $--sm) {
       padding: 5px 15px;
@@ -137,10 +136,10 @@ export default {
   }
 
   .manuelButton:hover {
-    border: solid 2px #40a0ff;
+    border: solid 2px $hsag-blue-light;
 
     .text {
-      color: #40a0ff;
+      color: $hsag-blue-light;
     }
   }
 
@@ -149,10 +148,10 @@ export default {
   }
 
   .giveFeedbackButton:hover {
-    border: solid 2px #40a0ff;
+    border: solid 2px $hsag-blue-light;
 
     .text {
-      color: #40a0ff;
+      color: $hsag-blue-light;
     }
   }
 
