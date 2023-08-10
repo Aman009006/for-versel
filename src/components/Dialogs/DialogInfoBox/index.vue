@@ -51,10 +51,9 @@ export default {
 @import "@/styles/variables.module.scss";
 
 .dialogInfoBox {
-  background-color: white;
+  background-color: $hsag-lightgrey;
   padding: 5px 25px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   font-size: 14px;
   color: $darkGrey;
@@ -62,7 +61,7 @@ export default {
 
 .utterancesTitle {
   font-size: 13px;
-  color: #409eff;
+  color: $hsag-green;
   margin-bottom: 0px;
   text-transform: uppercase;
 }
