@@ -46,11 +46,12 @@
 </template>
 
 <style lang="scss">
+@import "@/styles/variables.module.scss";
+
 .placeholderInfoBox {
-  background-color: white;
+  background-color: $hsag-lightgrey;
   padding: 15px 25px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
   h1 {
     margin-top: 0px;
