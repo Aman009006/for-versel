@@ -24,6 +24,10 @@ $hsag-black: #000000;
   ),
   $button: (
     'bg-color': $hsag-green,
+    'text-color': $hsag-white,
+    'hover-text-color': $hsag-white,
+    'hover-border-color': $hsag-green,
+    'hover-bg-color': $hsag-green-shade,
   ),
   $menu: (
     'bg-color': $hsag-blue,

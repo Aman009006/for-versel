@@ -115,12 +115,12 @@
 
     // el-sub-menu shades
     .el-menu {
-      .nest-menu:nth-child(odd) .el-sub-menu__title {
+      .nest-menu:nth-child(even) .el-sub-menu__title {
         background-color: $hsag-blue-shade;
       }
     }
 
-    .nest-menu .nest-menu:nth-child(even) {
+    .nest-menu .nest-menu:nth-child(odd) {
 
       .el-sub-menu__title,
       .el-menu-item {
@@ -129,18 +129,23 @@
     }
 
     // el-sub-menu active state
-    .el-sub-menu.is-active .el-menu .el-sub-menu.is-active .el-sub-menu__title {
-      background-color: $hsag-green-shade;
-
-      &:hover{
-        background-color: $hsag-green-dark;
+    .el-sub-menu.is-active {
+      .el-menu .el-sub-menu.is-active .el-sub-menu__title {
+        background-color: $hsag-green-shade;
+  
+        &:hover{
+          background-color: $hsag-green-dark;
+        }
       }
-    }
-    .el-sub-menu.is-active .el-menu .el-sub-menu.is-active .el-menu-item.is-active{
-      background-color: $hsag-green-shade-2;
-
-      &:hover{
-        background-color: $hsag-green-dark;
+      .el-menu .el-sub-menu.is-active .el-menu-item.is-active{
+        background-color: $hsag-green-shade-2;
+  
+        &:hover{
+          background-color: $hsag-green-dark;
+        }
+      }
+      .el-sub-menu__title{
+        background-color: $hsag-green;
       }
     }
     .el-sub-menu__icon-arrow {
@@ -263,8 +268,11 @@
     }
   }
 
-  :nth-child(even) .el-menu-item {
-    background-color: $hsag-blue-shade;
+  :nth-child(even){
+    .el-menu-item,
+    .el-sub-menu__title {
+      background-color: $hsag-blue-shade;
+    }
   }
 
   .nest-menu .el-sub-menu>.el-sub-menu__title,

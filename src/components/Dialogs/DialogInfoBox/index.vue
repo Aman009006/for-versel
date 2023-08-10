@@ -61,7 +61,7 @@ export default {
 
 .utterancesTitle {
   font-size: 13px;
-  color: $hsag-green;
+  color: $hsag-black;
   margin-bottom: 0px;
   text-transform: uppercase;
 }
