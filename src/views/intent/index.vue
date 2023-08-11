@@ -107,6 +107,6 @@ export default {
 
 <style lang="scss" scoped>
 .intent-element-container {
-  padding: 0px 15px;
+  padding: 0px 50px 30px 50px;
 }
 </style>
