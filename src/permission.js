@@ -3,6 +3,7 @@ import store from './store'
 import { ElMessage as Message } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
+import '@/styles/nprogress.scss' // overwrite progressbar
 import getPageTitle from '@/utils/get-page-title'
 import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/store/modules/permission'

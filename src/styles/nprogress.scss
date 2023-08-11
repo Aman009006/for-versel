@@ -1,0 +1,6 @@
+@import './variables.module.scss';
+
+#nprogress .bar {
+    z-index: 200000000000;
+    background: $hsag-green;
+}

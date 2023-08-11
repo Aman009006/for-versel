@@ -84,7 +84,7 @@ export default {
   width: 100%;
   height: $navBarHeight;
   top: 0;
-  z-index: 2000;
+  z-index: 1000;
   background: $hsag-lightgrey;
 }
 
