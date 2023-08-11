@@ -26,6 +26,7 @@ import language from './svg/language.svg?raw';
 import link from './svg/link.svg?raw';
 import list from './svg/list.svg?raw';
 import lock from './svg/lock.svg?raw';
+import logout from './svg/logout.svg?raw';
 import message from './svg/message.svg?raw';
 import money from './svg/money.svg?raw';
 import nested from './svg/nested.svg?raw';
@@ -77,6 +78,7 @@ const icons = {
     link,
     list,
     lock,
+    logout,
     message,
     money,
     nested,

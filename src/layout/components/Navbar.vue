@@ -15,28 +15,8 @@
             :is-active="sidebar.opened"
             class="hamburger-container"
             @toggleClick="toggleSideBar" />
+          <Logout id="logout-icon"/>
         </template>
-
-        <el-dropdown
-          class="avatar-container right-menu-item hover-effect"
-          trigger="click">
-          <div class="avatar-wrapper">
-            <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-            <el-icon>
-              <icon-CaretBottom />
-            </el-icon>
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <router-link to="/">
-                <el-dropdown-item>Home</el-dropdown-item>
-              </router-link>
-              <el-dropdown-item divided @click="logout">
-                <span style="display: block">Log Out</span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
       </div>
     </div>
   </div>
@@ -47,6 +27,7 @@ import { mapGetters } from "vuex";
 import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
+import Logout from "@/components/Logout/index.vue";
 import TagsView from "@/layout/components/TagsView/index.vue";
 import hsagLogo from "@/assets/images/hsag_logo.png";
 
@@ -56,6 +37,7 @@ export default {
     TagsView,
     Search,
     Notification,
+    Logout,
   },
   inheritAttrs: true,
   computed: {
@@ -125,8 +107,7 @@ export default {
   background: $hsag-lightgrey;
 
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
+    height: auto;
     float: left;
     cursor: pointer;
     transition: background 0.3s;
@@ -147,6 +128,9 @@ export default {
   }
 
   .right-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     position: absolute;
     right: 0;
     height: 100%;
@@ -157,9 +141,11 @@ export default {
     }
 
     .right-menu-item {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       padding: 0 8px;
-      height: 100%;
+      height: auto;
+      width: auto;
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
