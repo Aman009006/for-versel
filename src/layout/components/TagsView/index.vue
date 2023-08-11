@@ -209,7 +209,8 @@ export default {
       cursor: pointer;
       height: 26px;
       line-height: 24px;
-      border: 1px solid #d8dce5;
+      border: solid #d8dce5;
+      border-width: 1px 1px 0 1px;
       color: #495060;
       background: #fff;
       padding: 0 8px;

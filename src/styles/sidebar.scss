@@ -22,6 +22,7 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+      padding-top: 56px;
     }
 
     .el-scrollbar__bar.is-vertical {
@@ -30,7 +31,6 @@
 
     .el-scrollbar {
       height: 100%;
-      padding-top: 56px;
     }
 
     .is-horizontal {
