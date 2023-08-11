@@ -15,11 +15,16 @@ $hsag-bluegrey: #8393A7;
 $hsag-white: #ffffff;
 $hsag-black: #000000;
 
+$hsag-font-size-button: 12px;
+
 // Overwriting Element Plus Variables with hsag colors
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   $colors: (
     'primary': (
       'base': $hsag-green,
+    ),
+    info: (
+      'base': $hsag-black,
     ),
   ),
   $button: (
@@ -33,7 +38,17 @@ $hsag-black: #000000;
     'bg-color': $hsag-blue,
     'active-color': $hsag-white,
     'text-color': $hsag-white,
-    )
+  ),
+  $table: (
+    'header-bg-color': $hsag-lightgrey,
+    'bg-color': $hsag-lightgrey,
+    'tr-bg-color': $hsag-lightgrey,
+    'text-color': $hsag-black,
+    'header-text-color': $hsag-black,
+  ),
+  $alert: (
+    'bg-color': $hsag-bluegrey,
+  )
 );
 
 

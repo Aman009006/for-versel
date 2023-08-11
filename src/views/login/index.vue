@@ -282,6 +282,7 @@ export default {
     margin-bottom: 20px;
     margin-left: 0;
     font-weight: 400;
+    font-size: 14px;
 
     &.send-reset {
       color: $hsag-blue-light;

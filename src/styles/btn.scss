@@ -99,8 +99,9 @@
 }
 
 .el-button {
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
+  font-size: $hsag-font-size-button;
 
   a {
     text-decoration: none !important;
@@ -143,17 +144,16 @@
 }
 
 .edit-btn {
-  border: solid #409eff 2px !important;
-  border-radius: 9px !important;
-  color: white !important;
-  background-color: #409eff !important;
-  margin-left: 0px !important;
+  border: none;
+  color: $hsag-white;
+  background-color: $hsag-green;
+  margin-left: 0px;
   width: 100%;
 
   &:hover {
-    border: solid #66b1ff 2px !important;
-    color: white !important;
-    background-color: #66b1ff !important;
+    border: none;
+    color: $hsag-white;
+    background-color: $hsag-green-dark;
   }
 }
 
