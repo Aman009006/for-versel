@@ -16,6 +16,7 @@
             class="hamburger-container"
             @toggleClick="toggleSideBar" />
           <Logout id="logout-icon"/>
+          <CustomerLogo id="customer-logo" />
         </template>
       </div>
     </div>
@@ -28,6 +29,7 @@ import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
 import Logout from "@/components/Logout/index.vue";
+import CustomerLogo from "@/components/CustomerLogo/index.vue";
 import TagsView from "@/layout/components/TagsView/index.vue";
 import hsagLogo from "@/assets/images/hsag_logo.png";
 
@@ -38,6 +40,7 @@ export default {
     Search,
     Notification,
     Logout,
+    CustomerLogo,
   },
   inheritAttrs: true,
   computed: {
