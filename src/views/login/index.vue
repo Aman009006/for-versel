@@ -274,6 +274,7 @@ export default {
   width: 100%;
   background-color: $hsag-white;
   overflow: hidden;
+  caret-color: $hsag-bluegrey;
 
   button {
     width: 60%;

@@ -191,15 +191,17 @@ export default {
 @import "@/styles/variables.module.scss";
 
 .tags-view-container {
+  position: absolute;
+  bottom: 0;
   height: 34px;
   width: 100%;
-  margin-left: 0;	
+  margin-left: 0;
   background: $hsag-lightgrey;
   border-bottom: 1px solid #d8dce5;
 
   .tags-view-wrapper {
     width: calc(100% - $sideBarWidth);
-    margin-left: $sideBarWidth;
+
     .tags-view-item {
       display: flex;
       align-items: center;
@@ -273,10 +275,11 @@ export default {
 .tags-view-wrapper {
   div div {
     display: flex;
+    margin-left: 35px;
   }
 
   .tags-view-item i {
-      margin-left: 5px;
+    margin-left: 5px;
   }
 }
 </style>

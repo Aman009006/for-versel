@@ -76,7 +76,7 @@ export default {
     color: $--color-text-regular;
   }
 
-  padding: 30px 50px;
+  padding: 0px 50px 30px 50px;
 
   @media (max-width: $--sm) {
     padding: 10px 20px;

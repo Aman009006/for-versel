@@ -30,6 +30,7 @@
 
     .el-scrollbar {
       height: 100%;
+      padding-top: 56px;
     }
 
     .is-horizontal {
@@ -113,7 +114,7 @@
 
     // el-sub-menu shades
     .el-menu {
-      .nest-menu:nth-child(even) .el-sub-menu__title {
+      .nest-menu:nth-child(odd) .el-sub-menu__title {
         background-color: $hsag-blue-shade;
       }
     }
@@ -262,7 +263,7 @@
     }
   }
 
-  :nth-child(even){
+  >div:nth-child(odd) {
     .el-menu-item,
     .el-sub-menu__title {
       background-color: $hsag-blue-shade;

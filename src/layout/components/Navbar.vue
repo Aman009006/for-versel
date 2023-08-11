@@ -1,39 +1,43 @@
 <template>
-  <div class="navbar">
-    <div class="right-menu">
-      <template v-if="device !== 'mobile'">
-        <search id="header-search" class="right-menu-item" />
+  <div class="navbar-wrap">
+    <div class="logo">
+      <el-image :src="hsagLogo" class="hsag-logo" :fit="contain" />
+    </div>
+    <div class="navbar">
+      <tags-view />
+      <div class="right-menu">
+        <template v-if="device !== 'mobile'">
+          <search id="header-search" class="right-menu-item" />
 
-        <notification />
-        <hamburger
-        id="hamburger-container"
-        :is-active="sidebar.opened"
-        class="hamburger-container"
-        @toggleClick="toggleSideBar"
-      />
-      </template>
-
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
-        trigger="click"
-      >
-        <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <el-icon>
-            <icon-CaretBottom />
-          </el-icon>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <router-link to="/">
-              <el-dropdown-item>Home</el-dropdown-item>
-            </router-link>
-            <el-dropdown-item divided @click="logout">
-              <span style="display: block">Log Out</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
+          <notification />
+          <hamburger
+            id="hamburger-container"
+            :is-active="sidebar.opened"
+            class="hamburger-container"
+            @toggleClick="toggleSideBar" />
         </template>
-      </el-dropdown>
+
+        <el-dropdown
+          class="avatar-container right-menu-item hover-effect"
+          trigger="click">
+          <div class="avatar-wrapper">
+            <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+            <el-icon>
+              <icon-CaretBottom />
+            </el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <router-link to="/">
+                <el-dropdown-item>Home</el-dropdown-item>
+              </router-link>
+              <el-dropdown-item divided @click="logout">
+                <span style="display: block">Log Out</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -43,10 +47,13 @@ import { mapGetters } from "vuex";
 import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
+import TagsView from "@/layout/components/TagsView/index.vue";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
   components: {
     Hamburger,
+    TagsView,
     Search,
     Notification,
   },
@@ -76,14 +83,43 @@ export default {
       this.$router.go();
     },
   },
+  data() {
+    return {
+      hsagLogo,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
+.navbar-wrap {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: $navBarHeight;
+  top: 0;
+  z-index: 2000;
+  background: $hsag-lightgrey;
+}
+.logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: $sideBarWidth;
+
+  .hsag-logo {
+    width: 200px;
+  }
+}
+
 .navbar {
-  height: 50px;
+  display: flex;
+  width: calc(100% - 200px);
+  height: $navBarHeight;
   overflow: hidden;
   position: relative;
   background: $hsag-lightgrey;
@@ -111,7 +147,8 @@ export default {
   }
 
   .right-menu {
-    float: right;
+    position: absolute;
+    right: 0;
     height: 100%;
     line-height: 50px;
 
