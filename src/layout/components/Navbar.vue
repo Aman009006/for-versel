@@ -105,7 +105,8 @@ export default {
   z-index: 2000;
   background: $hsag-lightgrey;
 }
-.logo{
+
+.logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,7 +121,6 @@ export default {
   display: flex;
   width: calc(100% - 200px);
   height: $navBarHeight;
-  overflow: hidden;
   position: relative;
   background: $hsag-lightgrey;
 

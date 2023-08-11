@@ -267,6 +267,10 @@
     .el-menu-item,
     .el-sub-menu__title {
       background-color: $hsag-blue-shade;
+
+      &.is-active {
+        background-color: $hsag-green;
+      }
     }
   }
 
