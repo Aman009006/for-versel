@@ -1,13 +1,15 @@
 <template>
-  <div v-if="visible" class="login-container">
+  <div
+    v-if="visible"
+    class="login-container">
     <el-form
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
       autocomplete="on"
-      label-position="left"
-    >
+      label-position="left">
+      <el-image :src="hsagLogo" />
       <div class="title-container">
         <h3 class="title">Login</h3>
       </div>
@@ -23,8 +25,7 @@
           name="customer"
           type="text"
           tabindex="1"
-          autocomplete="on"
-        />
+          autocomplete="on" />
       </el-form-item>
 
       <el-form-item prop="username">
@@ -36,16 +37,14 @@
           name="username"
           type="email"
           tabindex="2"
-          autocomplete="on"
-        />
+          autocomplete="on" />
       </el-form-item>
 
       <el-tooltip
         :visible="capsTooltip"
         content="Caps lock ist aktiviert"
         placement="right"
-        manual
-      >
+        manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon :svg-icon-html="icons.password" />
@@ -61,27 +60,33 @@
             autocomplete="on"
             @keyup="checkCapslock"
             @blur="capsTooltip = false"
-            @keyup.enter="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon
-              :svg-icon-html="
-                passwordType === 'password' ? icons.eye : icons.eyeOpen
-              "
-            />
+            @keyup.enter="handleLogin" />
+          <span
+            class="show-pwd"
+            @click="showPwd">
+            <svg-icon :svg-icon-html="passwordType === 'password' ? icons.eye : icons.eyeOpen
+              " />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" @click.prevent="handleLogin"
-        >Login</el-button
-      >
+      <el-button
+        :loading="loading"
+        type="primary"
+        @click.prevent="handleLogin">Login
+      </el-button>
 
-      <el-button type="primary" @click="startMicrosoftLogin">
+      <el-button
+        type="primary"
+        @click="startMicrosoftLogin">
         Login mit Microsoft Konto
       </el-button>
 
-      <el-button link type="primary" @click="sendResetMail" class="send-reset">
+      <el-button
+        link
+        type="primary"
+        @click="sendResetMail"
+        class="send-reset">
         Passwort vergessen
       </el-button>
     </el-form>
@@ -93,6 +98,7 @@ import { validEmail, isString } from "@/utils/validate";
 import KeycloakUtils from "@/utils/KeycloakUtils";
 import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 import icons from "@/icons/index";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
   name: "LogIn",
@@ -144,6 +150,7 @@ export default {
       redirect: undefined,
       otherQuery: {},
       visible: false,
+      hsagLogo,
     };
   },
   computed: {
@@ -253,93 +260,63 @@ export default {
 };
 </script>
 
-<style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
-$bg: #283443;
-$light_gray: #fff;
-$cursor: #fff;
-
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
-/* reset element-ui css */
-.login-container {
-  .el-form-item__content {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  .el-input__wrapper {
-    display: inline-block;
-    height: 47px;
-    width: 85%;
-    background: transparent;
-    &,
-    &:hover,
-    &.is-focus {
-      box-shadow: none;
-    }
-
-    input {
-      border: 0px;
-      -webkit-appearance: none;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 46px;
-      caret-color: $cursor;
-
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: $cursor !important;
-      }
-    }
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
-$bg: #2d3a4b;
-$dark_gray: #889aa4;
-$light_gray: #eee;
+@import "@/styles/variables.module.scss";
 
 .send-reset {
   border: transparent !important
 }
 
 .login-container {
+  display: flex;
+  justify-content: center;
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  background-color: $hsag-white;
   overflow: hidden;
+  caret-color: $hsag-bluegrey;
 
   button {
-    width: 100%;
-    margin-bottom: 30px;
-    margin-left: 0px;
+    width: 60%;
+    height: 40px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    font-weight: 400;
+    font-size: 14px;
+
+    &.send-reset {
+      color: $hsag-blue-light;
+    }
   }
 
   .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
     overflow: hidden;
+
+    .el-form-item {
+      width: 100%;
+      background-color: $hsag-lightgrey;
+    }
+
+    .el-image {
+      width: 300px;
+      margin-bottom: 30px;
+    }
 
     .email-icon {
       font-weight: bold;
+    }
+  }
+
+  .el-input__wrapper {
+    input {
+      color: $hsag-bluegrey;
     }
   }
 
@@ -357,7 +334,7 @@ $light_gray: #eee;
 
   .svg-container {
     padding: 6px 2px 6px 15px;
-    color: $dark_gray;
+    color: gray;
     vertical-align: middle;
     width: 30px;
     display: inline-block;
@@ -368,7 +345,7 @@ $light_gray: #eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $hsag-blue;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
@@ -380,7 +357,7 @@ $light_gray: #eee;
     right: 10px;
     top: 7px;
     font-size: 16px;
-    color: $dark_gray;
+    color: gray;
     cursor: pointer;
     user-select: none;
     width: 17px;
@@ -393,6 +370,17 @@ $light_gray: #eee;
   }
 
   @media only screen and (max-width: 470px) {
+    .login-form {
+
+      .el-image {
+        width: 80%;
+      }
+
+      .el-form-item {
+        width: 80%;
+      }
+    }
+
     .thirdparty-button {
       display: none;
     }

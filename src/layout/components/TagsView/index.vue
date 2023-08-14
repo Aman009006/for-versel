@@ -173,7 +173,7 @@ export default {
         this.left = left;
       }
 
-      this.top = e.clientY;
+      this.top = e.clientY - 20;
       this.visible = true;
       this.selectedTag = tag;
     },
@@ -188,14 +188,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .tags-view-container {
+  position: absolute;
+  bottom: 0;
   height: 34px;
   width: 100%;
-  background: #fff;
+  margin-left: 0;
+  background: $hsag-lightgrey;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
 
   .tags-view-wrapper {
+    width: calc(100% - $sideBarWidth);
+
     .tags-view-item {
       display: flex;
       align-items: center;
@@ -203,7 +209,8 @@ export default {
       cursor: pointer;
       height: 26px;
       line-height: 24px;
-      border: 1px solid #d8dce5;
+      border: solid #d8dce5;
+      border-width: 1px 1px 0 1px;
       color: #495060;
       background: #fff;
       padding: 0 8px;
@@ -220,9 +227,9 @@ export default {
       }
 
       &.active {
-        background-color: #409eff;
+        background-color: $hsag-green;
         color: #fff;
-        border-color: #409eff;
+        border: none;
 
         &::before {
           content: "";
@@ -269,10 +276,11 @@ export default {
 .tags-view-wrapper {
   div div {
     display: flex;
+    margin-left: 35px;
   }
 
   .tags-view-item i {
-      margin-left: 5px;
+    margin-left: 5px;
   }
 }
 </style>

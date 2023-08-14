@@ -99,8 +99,9 @@
 }
 
 .el-button {
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
+  font-size: $hsag-font-size-button;
 
   a {
     text-decoration: none !important;
@@ -122,66 +123,62 @@
   border-color: $orange  !important;
   border-width: 2px !important;
   background-color: $--color-warning-lighter  !important;
-  font-weight: bold !important;
+  font-weight: normal !important;
 }
 
 .el-button--warning:hover {
   color: white !important;
   background-color: $orange  !important;
-  font-weight: bold !important;
-}
-
-.el-button--default {
-  border: solid $--color-primary 2px !important;
-  color: $--color-primary;
+  font-weight: normal !important;
 }
 
 .link-button {
-  color: $--color-primary  !important;
-  font-weight: bold !important;
+  color: $hsag-white  !important;
+  font-weight: normal !important;
+  border: none;
 }
 
 .link-button:hover {
   color: white !important;
-  font-weight: bold !important;
-  background-color: $--color-primary  !important;
+  font-weight: normal !important;
+  background-color: $hsag-green-dark !important;
+  border: none;
 }
 
 .edit-btn {
-  border: solid #409eff 2px !important;
-  border-radius: 9px !important;
-  color: white !important;
-  background-color: #409eff !important;
-  margin-left: 0px !important;
+  border: none;
+  color: $hsag-white;
+  background-color: $hsag-green;
+  margin-left: 0px;
   width: 100%;
 
   &:hover {
-    border: solid #66b1ff 2px !important;
-    color: white !important;
-    background-color: #66b1ff !important;
+    border: none;
+    color: $hsag-white;
+    background-color: $hsag-green-dark;
   }
 }
 
 .cancel-btn {
   color: white !important;
-  background-color: #fa4c4c !important;
-  border-color: #fa4c4c !important;
+  background-color: $hsag-bluegrey;
+  border: none;
 
   &:hover {
     color: white !important;
-    background-color: #f78989 !important;
-    border-color: #f78989 !important;
+    background-color: #4f5965;
+    border: none;
   }
 }
 
 .confirm-btn {
-  color: white !important;
-  background-color: #63c731 !important;
-  border-color: #63c731 !important;
+  color: white;
+  background-color: $hsag-green;
+  border: none;
 
   &:hover {
-    color: white !important;
-    background-color: #85ce61 !important;
-    border-color: #85ce61 !important;
+    color: white;
+    background-color: $hsag-green-dark;
+    border: none;
   }
 }

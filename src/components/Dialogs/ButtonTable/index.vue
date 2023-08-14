@@ -195,6 +195,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
+#tableButtonContainer{
+  h2{
+    font-size: 18px;
+  }  
+}
 .popOverContent {
   text-align: left;
 }
@@ -210,23 +217,19 @@ export default {
 .addAnswerButton,
 .addAnswerButton:hover {
   color: white !important;
-  border-radius: 10px !important;
   margin-left: 10px !important;
   margin-top: 15px !important;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 5px;
+  padding: 5px;
   font-size: 15px;
 }
 
 .addAnswerButton {
-  background-color: #63c731 !important;
-  border-color: #63c731 !important;
+  background-color: $hsag-green !important;
+  border: none;
 }
 
 .addAnswerButton:hover {
-  background-color: #85ce61 !important;
-  border-color: #85ce61 !important;
+  background-color: $hsag-green-dark !important;
+  border: none;
 }
 </style>

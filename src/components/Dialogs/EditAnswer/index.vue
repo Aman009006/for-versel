@@ -189,9 +189,11 @@ export default {
 .editHeadline {
   color: $primary;
   font-size: 1.5em;
+  font-weight: normal;
 }
 
 h2 {
+  font-size: 18px;
   margin-top: 30px;
 }
 </style>

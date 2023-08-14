@@ -8,21 +8,17 @@
         :description="$route.meta.description"
         :utterances="utterances"
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
-        :entity="$route.meta.entity"
-      />
+        :entity="$route.meta.entity" />
 
       <RedirectionInfoBox
         v-if="answerConfig != null"
-        :readableRedirectToIntentName="
-          answerConfig.redirectToVirtualIntentName
-        "
-      />
+        :readableRedirectToIntentName="answerConfig.redirectToVirtualIntentName
+          " />
 
       <AnswerTable
         :disabled="isRedirectedToOtherIntent()"
         :answers="answers"
-        :answerConfig="answerConfig"
-      />
+        :answerConfig="answerConfig" />
     </template>
   </div>
 </template>
@@ -107,6 +103,10 @@ export default {
 
 <style lang="scss" scoped>
 .intent-element-container {
-  padding: 0px 15px;
+  padding: 0px 50px 30px 50px;
+
+  h1 {
+    margin-top: 0;
+  }
 }
 </style>

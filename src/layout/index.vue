@@ -1,16 +1,14 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div
-      v-if="device === 'mobile' && sidebar.opened"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    />
-    <sidebar class="sidebar-container" />
     <div class="main-container">
       <div>
         <navbar />
-        <tags-view />
       </div>
+      <div
+        v-if="device === 'mobile' && sidebar.opened"
+        class="drawer-bg"
+        @click="handleClickOutside" />
+      <sidebar class="sidebar-container" />
       <app-main />
     </div>
   </div>
@@ -20,7 +18,6 @@
 import AppMain from "./components/AppMain.vue";
 import Navbar from "./components/Navbar.vue";
 import Sidebar from "./components/Sidebar/index.vue";
-import TagsView from "./components/TagsView/index.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -29,7 +26,6 @@ export default {
     AppMain,
     Navbar,
     Sidebar,
-    TagsView,
   },
   computed: {
     ...mapState({

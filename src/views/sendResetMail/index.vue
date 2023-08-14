@@ -1,5 +1,6 @@
 <template>
     <div class="send-reset-container">
+        <el-image :src="hsagLogo" />
         <div class="title-container">
             <h3 class="title">Passwort vergessen</h3>
         </div>
@@ -8,9 +9,7 @@
                 <span class="svg-container email-icon"> @ </span>
                 <el-input v-model="input.mail" @keyup.enter="sendPasswordResetMail()" placeholder="E-Mail" />
             </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
-            </el-form-item>
+            <el-button type="primary" @click="sendPasswordResetMail()">Absenden</el-button>
         </el-form>
         <template v-if="successMessage">
             <el-result icon="success" title="Mail versendet"
@@ -22,6 +21,7 @@
 <script>
 import { sendPasswordResetMail } from '@/api/passwordReset';
 import { validEmail } from "@/utils/validate";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
     name: "SendResetMail",
@@ -40,7 +40,8 @@ export default {
             inputRules: {
                 mail: { validator: validateEmail, trigger: 'blur' }
             },
-            successMessage: false
+            successMessage: false,
+            hsagLogo,
         }
     },
     methods: {
@@ -59,46 +60,46 @@ export default {
 </script>
 
 <style lang="scss">
-$bg: #283443;
-$light_gray: #fff;
-$cursor: #fff;
-$dark_gray: #889aa4;
+@import "@/styles/variables.module.scss";
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+@supports (-webkit-mask: none) and (not (cater-color: white)) {
     .send-reset-container .el-input input {
-        color: $cursor;
+        color: $hsag-bluegrey;
     }
 }
 
 .send-reset-container {
-    background-color: #2d3a4b;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 160px 35px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     min-height: 100%;
     width: 100%;
-    background-color: $bg;
+    background-color: $hsag-white;
     overflow: hidden;
 
     .title-container {
         .title {
             font-size: 26px;
-            color: #eee;
-            margin: 0px auto 40px auto;
+            color: $hsag-blue;
+            margin: 0px auto 20px auto;
             text-align: center;
             font-weight: bold;
         }
     }
 
     button {
-        width: 100%;
-        margin-left: 0px;
+        width: 60%;
+        height: 40px;
+        margin-bottom: 20px;
+        margin-left: 0;
+        font-weight: 400;
     }
 
     .send-reset-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         position: relative;
         width: 520px;
         max-width: 100%;
@@ -128,27 +129,37 @@ $dark_gray: #889aa4;
             -webkit-appearance: none;
             border-radius: 0px;
             padding: 12px 5px 12px 15px;
-            color: $light_gray;
+            color: $hsag-bluegrey;
             height: 46px;
-            caret-color: $cursor;
+            caret-color: $hsag-bluegrey;
 
             &:-webkit-autofill {
-                box-shadow: 0 0 0px 1000px $bg inset !important;
-                -webkit-text-fill-color: $cursor !important;
+                box-shadow: 0 0 0px 1000px $hsag-white inset !important;
+                -webkit-text-fill-color: white !important;
             }
         }
     }
 
     .el-form-item {
+        width: 100%;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(0, 0, 0, 0.1);
+        background: $hsag-lightgrey;
         border-radius: 5px;
         color: #454545;
     }
 
+    .el-result {
+        color: $hsag-black;
+    }
+
+    .el-image {
+        width: 300px;
+        margin-bottom: 30px;
+    }
+
     .svg-container {
         padding: 6px 2px 6px 15px;
-        color: $dark_gray;
+        color: grey;
         vertical-align: middle;
         width: 30px;
         display: inline-block;
@@ -156,6 +167,14 @@ $dark_gray: #889aa4;
 
     .email-icon {
         font-weight: bold;
+    }
+
+    @media only screen and (max-width: 470px) {
+        .send-reset-form {
+            .el-form-item {
+                width: 80%;
+            }
+        }
     }
 }
 </style>

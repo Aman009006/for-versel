@@ -1,59 +1,46 @@
 <template>
-  <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+  <div class="navbar-wrap">
+    <a href="#/home" class="logo">
+      <el-image :src="hsagLogo" class="hsag-logo" :fit="contain" />
+    </a>
+    <div class="navbar">
+      <tags-view />
+      <div class="right-menu">
+        <template v-if="device !== 'mobile'">
+          <search id="header-search" class="right-menu-item" />
 
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
-    <div class="right-menu">
-      <template v-if="device !== 'mobile'">
-        <search id="header-search" class="right-menu-item" />
-
-        <notification />
-      </template>
-
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
-        trigger="click"
-      >
-        <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <el-icon>
-            <icon-CaretBottom />
-          </el-icon>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <router-link to="/">
-              <el-dropdown-item>Home</el-dropdown-item>
-            </router-link>
-            <el-dropdown-item divided @click="logout">
-              <span style="display: block">Log Out</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
+          <notification />
+          <hamburger
+            id="hamburger-container"
+            :is-active="sidebar.opened"
+            class="hamburger-container"
+            @toggleClick="toggleSideBar" />
+          <Logout id="logout-icon" />
+          <CustomerLogo id="customer-logo" />
         </template>
-      </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb/index.vue";
 import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
+import Logout from "@/components/Logout/index.vue";
+import CustomerLogo from "@/components/CustomerLogo/index.vue";
+import TagsView from "@/layout/components/TagsView/index.vue";
+import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
   components: {
-    Breadcrumb,
     Hamburger,
+    TagsView,
     Search,
     Notification,
+    Logout,
+    CustomerLogo,
   },
   inheritAttrs: true,
   computed: {
@@ -81,20 +68,49 @@ export default {
       this.$router.go();
     },
   },
+  data() {
+    return {
+      hsagLogo,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
+.navbar-wrap {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: $navBarHeight;
+  top: 0;
+  z-index: 1000;
+  background: $hsag-lightgrey;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: $sideBarWidth;
+
+  .hsag-logo {
+    width: 200px;
+  }
+}
+
 .navbar {
-  height: 50px;
-  overflow: hidden;
+  display: flex;
+  width: calc(100% - 200px);
+  height: $navBarHeight;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background: $hsag-lightgrey;
 
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
+    height: auto;
     float: left;
     cursor: pointer;
     transition: background 0.3s;
@@ -115,7 +131,11 @@ export default {
   }
 
   .right-menu {
-    float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    right: 20px;
     height: 100%;
     line-height: 50px;
 
@@ -124,9 +144,11 @@ export default {
     }
 
     .right-menu-item {
-      display: inline-block;
+      display: flex;
+      align-items: center;
       padding: 0 8px;
-      height: 100%;
+      height: auto;
+      width: auto;
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;

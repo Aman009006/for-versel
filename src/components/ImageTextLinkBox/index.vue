@@ -35,8 +35,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .imageTextLinkBox {
-  background-color: white;
+  background-color: $hsag-lightgrey;
   border-radius: 4px;
 
   height: 100%;

@@ -21,6 +21,6 @@ export default {
 
 <style lang="scss" scoped>
 .placeholder-element-container {
-  padding: 30px 50px;
+  padding: 0 50px 30px 50px;
 }
 </style>

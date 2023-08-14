@@ -102,6 +102,7 @@ export default {
 @import "@/styles/variables.module.scss";
 
 .modalBox {
+  display: flex;
   position: fixed;
   left: 0;
   top: 0;
@@ -130,7 +131,12 @@ export default {
       }
     }
     #saveAnswerButton {
+      background-color: $hsag-green;
       cursor: pointer;
+
+      &:hover {
+        background-color: $hsag-green-dark;
+      }
     }
     #saveAnswerButton:disabled {
       background-color: lightgray !important;

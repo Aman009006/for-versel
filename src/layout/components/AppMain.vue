@@ -1,5 +1,6 @@
 <template>
   <section class="app-main">
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
     <router-view :key="key" v-slot="{ Component }">
       <transition name="fade-transform" mode="out-in">
         <keep-alive :include="cachedViews">
@@ -11,9 +12,14 @@
 </template>
 
 <script>
+import Breadcrumb from "@/components/Breadcrumb/index.vue";
+
 export default {
   name: "AppMain",
   inheritAttrs: true,
+  components: {
+    Breadcrumb,
+  },
   computed: {
     cachedViews() {
       return this.$store.state.tagsView.cachedViews;
@@ -26,18 +32,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .app-main {
-  /* 50= navbar  50  */
-  min-height: calc(100vh - 84px);
-  width: 100%;
+  min-height: calc(100vh - $navBarHeight);
+  width: calc(100% - $sideBarWidth);
+  margin-top: $navBarHeight;
+  margin-left: $sideBarWidth;
   position: relative;
   overflow: hidden;
+  transition: margin-left 0.28s;
 }
 
 .hasTagsView {
   .app-main {
-    /* 84 = navbar + tags-view = 50 + 34 */
-    min-height: calc(100vh - 84px);
+    min-height: calc(100vh - $navBarHeight);
+  }
+}
+.hideSidebar {
+  .app-main {
+    width: calc(100% - $sideBarWidthCollapsed);
+    margin-left: $sideBarWidthCollapsed;
   }
 }
 </style>
