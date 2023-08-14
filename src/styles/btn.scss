@@ -123,24 +123,26 @@
   border-color: $orange  !important;
   border-width: 2px !important;
   background-color: $--color-warning-lighter  !important;
-  font-weight: bold !important;
+  font-weight: normal !important;
 }
 
 .el-button--warning:hover {
   color: white !important;
   background-color: $orange  !important;
-  font-weight: bold !important;
+  font-weight: normal !important;
 }
 
 .link-button {
-  color: $--color-primary  !important;
-  font-weight: bold !important;
+  color: $hsag-white  !important;
+  font-weight: normal !important;
+  border: none;
 }
 
 .link-button:hover {
   color: white !important;
-  font-weight: bold !important;
-  background-color: $--color-primary  !important;
+  font-weight: normal !important;
+  background-color: $hsag-green-dark !important;
+  border: none;
 }
 
 .edit-btn {
@@ -171,12 +173,12 @@
 
 .confirm-btn {
   color: white;
-  background-color: #63c731;
+  background-color: $hsag-green;
   border: none;
 
   &:hover {
     color: white;
-    background-color: #85ce61;
+    background-color: $hsag-green-dark;
     border: none;
   }
 }

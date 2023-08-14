@@ -1,8 +1,8 @@
 <template>
   <div class="navbar-wrap">
-    <div class="logo">
+    <a href="#/home" class="logo">
       <el-image :src="hsagLogo" class="hsag-logo" :fit="contain" />
-    </div>
+    </a>
     <div class="navbar">
       <tags-view />
       <div class="right-menu">
@@ -15,7 +15,7 @@
             :is-active="sidebar.opened"
             class="hamburger-container"
             @toggleClick="toggleSideBar" />
-          <Logout id="logout-icon"/>
+          <Logout id="logout-icon" />
           <CustomerLogo id="customer-logo" />
         </template>
       </div>
@@ -135,7 +135,7 @@ export default {
     flex-direction: row;
     align-items: center;
     position: absolute;
-    right: 0;
+    right: 20px;
     height: 100%;
     line-height: 50px;
 

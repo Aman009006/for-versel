@@ -28,7 +28,6 @@
         <p style="font-size: 14px">
           <span
             style="
-              color: #0da4f0;
               font-weight: bold;
               text-transform: uppercase;
               font-size: 13px;

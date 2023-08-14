@@ -206,7 +206,7 @@ export default {
             padding: 12px 5px 12px 15px;
             color: $hsag-bluegrey;
             height: 46px;
-            caret-color: white;
+            caret-color: $hsag-bluegrey;
 
             &:-webkit-autofill {
                 box-shadow: 0 0 0px 1000px $hsag-white inset !important;

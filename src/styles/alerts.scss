@@ -14,3 +14,8 @@
         font-size: 14px;
     }
 }
+
+.el-alert--info.is-light {
+    background-color: $hsag-bluegrey;
+    color: $hsag-white;
+}

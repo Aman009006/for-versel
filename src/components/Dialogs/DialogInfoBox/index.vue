@@ -52,7 +52,7 @@ export default {
 
 .dialogInfoBox {
   background-color: $hsag-lightgrey;
-  padding: 5px 25px;
+  padding: 20px 20px;
   margin-bottom: 20px;
   border-radius: 4px;
   font-size: 14px;
@@ -64,6 +64,10 @@ export default {
   color: $hsag-black;
   margin-bottom: 0px;
   text-transform: uppercase;
+
+  &:first-child {
+    margin-top: 0px;
+  }
 }
 
 .utterances {

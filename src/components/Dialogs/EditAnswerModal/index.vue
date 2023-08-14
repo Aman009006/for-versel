@@ -102,6 +102,7 @@ export default {
 @import "@/styles/variables.module.scss";
 
 .modalBox {
+  display: flex;
   position: fixed;
   left: 0;
   top: 0;
