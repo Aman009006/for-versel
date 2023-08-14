@@ -1,5 +1,5 @@
 <template>
-    <div class="customer-logo">
+    <div v-if="this.logo" class="customer-logo">
         <el-image class="logo" :src="logo">
         </el-image>
     </div>
