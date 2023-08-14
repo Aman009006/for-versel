@@ -159,24 +159,24 @@
 
 .cancel-btn {
   color: white !important;
-  background-color: #fa4c4c !important;
-  border-color: #fa4c4c !important;
+  background-color: $hsag-bluegrey;
+  border: none;
 
   &:hover {
     color: white !important;
-    background-color: #f78989 !important;
-    border-color: #f78989 !important;
+    background-color: #4f5965;
+    border: none;
   }
 }
 
 .confirm-btn {
-  color: white !important;
-  background-color: #63c731 !important;
-  border-color: #63c731 !important;
+  color: white;
+  background-color: #63c731;
+  border: none;
 
   &:hover {
-    color: white !important;
-    background-color: #85ce61 !important;
-    border-color: #85ce61 !important;
+    color: white;
+    background-color: #85ce61;
+    border: none;
   }
 }

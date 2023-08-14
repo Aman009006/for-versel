@@ -130,7 +130,12 @@ export default {
       }
     }
     #saveAnswerButton {
+      background-color: $hsag-green;
       cursor: pointer;
+
+      &:hover {
+        background-color: $hsag-green-dark;
+      }
     }
     #saveAnswerButton:disabled {
       background-color: lightgray !important;

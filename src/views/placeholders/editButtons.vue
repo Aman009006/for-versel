@@ -165,14 +165,4 @@ export default {
   background-color: #85ce61 !important;
   border-color: #85ce61 !important;
 }
-
-.edit-btn {
-  border: solid #409eff 2px !important;
-  background-color: #409eff !important;
-}
-
-.edit-btn:hover {
-  border: solid #66b1ff 2px !important;
-  background-color: #66b1ff !important;
-}
 </style>
