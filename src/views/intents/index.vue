@@ -2,7 +2,8 @@
   <intentsInfoBox></intentsInfoBox>
   <div class="intent-groups-container">
     <intentGroupContainer
-      v-for="intentGroup in intentGroupCollection"
+      v-for="intentGroup in getIntentGroups"
+      :intentGroup="intentGroup"
     ></intentGroupContainer>
   </div>
 </template>
@@ -17,14 +18,14 @@ export default {
     intentsInfoBox,
     intentGroupContainer,
   },
-  props: {
-    intentGroupCollection: {
-      type: Array,
-      required: true,
-    },
-  },
+  props: {},
   data() {
     return {};
+  },
+  computed: {
+    getIntentGroups() {
+      return this.$store.getters.skillsWithIntents;
+    },
   },
 };
 </script>

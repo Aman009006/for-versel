@@ -92,27 +92,57 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
- * Create dialogs route for the dialog view
+ * Create intents routes for the dialog view
  */
 
-export function createDialogsRoute() {
-  const dialogsRoute = {
+export function createIntentsRoute(skillsWithIntents) {
+  const routes = []
+  const route = {
     path: paths.intents,
     component: Layout,
     name: 'Dialoge',
+    isNotNested: true,
+    meta: {
+      title: 'Dialoge',
+      icon: 'comment',
+    },
     children: [
       {
         path: paths.intents,
         component: Intents,
         name: 'Dialoge',
-        meta: {
-          title: 'Dialoge',
-          icon: 'comment',
-        },
       },
     ],
   }
-  return dialogsRoute
+  skillsWithIntents.forEach((skillWithIntent) => {
+    route.children.push({
+      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
+      component: routerView,
+      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
+      name: `skill-${skillWithIntent.SkillName}`,
+      meta: {
+        title: `${skillWithIntent.SkillName}`,
+      },
+      children: [],
+    })
+    skillWithIntent.Intents.forEach((intent) => {
+      route.children[route.children.length - 1].children.push({
+        path: encodeURIComponent(encodePathComponent(intent.name)),
+        component: () => import('@/views/intents/single-intent/index.vue'),
+        name: `intent-${intent.name}`,
+        meta: {
+          title: `${intent.name}`,
+          intent: `${intent.intent}`,
+          entity: intent.entity,
+          description: `${intent.description}`,
+          newIntent: intent.newIntent,
+          creationTimestamp: intent.creationTimestamp,
+        },
+      })
+    })
+  })
+  routes.push(route)
+  return routes
 }
 
 /**
@@ -214,7 +244,7 @@ const actions = {
     }
 
     // add dialog route
-    const dialogsRoute = createDialogsRoute();
+    const dialogsRoute = createIntentsRoute(state.skillsWithIntents);
     allAdditionalRoutes = allAdditionalRoutes.concat(dialogsRoute)
 
     commit('SET_ROUTES', allAdditionalRoutes)
