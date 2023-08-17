@@ -4,6 +4,7 @@ import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
+import Intents from '@/views/intent-groups/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -60,6 +61,7 @@ const mutations = {
     const order = [
       '/',
       '/skills',
+      '/intents',
       '/placeholders',
       '/reporting',
       '/jira',
@@ -87,6 +89,30 @@ const mutations = {
  */
 export function encodePathComponent(pathComponent) {
   return pathComponent.replace('(', '').replace(')', '').replace('?', '%3F')
+}
+
+/**
+ * Create dialogs route for the dialog view
+ */
+
+export function createDialogsRoute() {
+  const dialogsRoute = {
+    path: paths.intents,
+    component: Layout,
+    name: 'Dialoge',
+    children: [
+      {
+        path: paths.intents,
+        component: Intents,
+        name: 'Dialoge',
+        meta: {
+          title: 'Dialoge',
+          icon: 'comment',
+        },
+      },
+    ],
+  }
+  return dialogsRoute
 }
 
 /**
@@ -119,7 +145,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     skillWithIntent.Intents.forEach((intent) => {
       route.children[route.children.length - 1].children.push({
         path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intent/index.vue'),
+        component: () => import('@/views/intent-groups/single-intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
@@ -186,6 +212,11 @@ const actions = {
       powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
+
+    // add dialog route
+    const dialogsRoute = createDialogsRoute();
+    allAdditionalRoutes = allAdditionalRoutes.concat(dialogsRoute)
+
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
   },
