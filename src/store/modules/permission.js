@@ -4,7 +4,7 @@ import Layout from '@/layout/index.vue'
 import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
-import Intents from '@/views/intent-groups/index.vue'
+import Intents from '@/views/intents/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -145,7 +145,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
     skillWithIntent.Intents.forEach((intent) => {
       route.children[route.children.length - 1].children.push({
         path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intent-groups/single-intent/index.vue'),
+        component: () => import('@/views/intents/single-intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
