@@ -6,6 +6,9 @@
 </template>
 
 <script>
+import path from "path-browserify";
+import { isExternal } from '@/utils/validate';
+
 export default {
   name: "IntentGroupContainer",
   components: {},
@@ -23,18 +26,24 @@ export default {
       return this.intentGroup.Intents.length;
     },
     getThisIntentsPath() {
-      const currentPath = this.$router.currentRoute.value.path;
+      const basePath = this.$router.currentRoute.value.href;
       const intentPaths = this.getIntentPaths();
       const thisIntentsPaths = intentPaths[0].children.filter(
         (child) => child.meta && child.meta.title === this.intentGroup.SkillName
       );
-      return `${currentPath}/${thisIntentsPaths[0].path}`;
+      return `${basePath}/${thisIntentsPaths[0].path}`;
     },
   },
   methods: {
     getIntentPaths() {
       const paths = this.$store.getters.permission_routes;
-      return paths.filter((path) => path.name === "Dialoge");
+      return paths.filter((path) => path.name === "IntentGroup");
+    },
+    resolvePath(routePath) {
+      if (isExternal(routePath)) {
+        return routePath;
+      }
+      return path.resolve(routePath);
     },
   },
 };

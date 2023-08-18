@@ -5,6 +5,7 @@ import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
 import Intents from '@/views/intents/index.vue'
+import IntentGroup from '@/views/intents/intent-group/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -61,13 +62,13 @@ const mutations = {
     const order = [
       '/',
       '/skills',
-      '/intents',
       '/placeholders',
       '/reporting',
       '/jira',
       '/notes',
       '/manual',
       '/manualChatbot',
+      '/intents',
     ]
     state.routes.sort((route1, route2) => {
       const { path: path1 } = route1
@@ -89,60 +90,6 @@ const mutations = {
  */
 export function encodePathComponent(pathComponent) {
   return pathComponent.replace('(', '').replace(')', '').replace('?', '%3F')
-}
-
-/**
- * Create intents routes for the dialog view
- */
-
-export function createIntentsRoute(skillsWithIntents) {
-  const routes = []
-  const route = {
-    path: paths.intents,
-    component: Layout,
-    name: 'Dialoge',
-    isNotNested: true,
-    meta: {
-      title: 'Dialoge',
-      icon: 'comment',
-    },
-    children: [
-      {
-        path: paths.intents,
-        component: Intents,
-        name: 'Dialoge',
-      },
-    ],
-  }
-  skillsWithIntents.forEach((skillWithIntent) => {
-    route.children.push({
-      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
-      component: routerView,
-      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
-      name: `skill-${skillWithIntent.SkillName}`,
-      meta: {
-        title: `${skillWithIntent.SkillName}`,
-      },
-      children: [],
-    })
-    skillWithIntent.Intents.forEach((intent) => {
-      route.children[route.children.length - 1].children.push({
-        path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intents/single-intent/index.vue'),
-        name: `intent-${intent.name}`,
-        meta: {
-          title: `${intent.name}`,
-          intent: `${intent.intent}`,
-          entity: intent.entity,
-          description: `${intent.description}`,
-          newIntent: intent.newIntent,
-          creationTimestamp: intent.creationTimestamp,
-        },
-      })
-    })
-  })
-  routes.push(route)
-  return routes
 }
 
 /**
@@ -193,6 +140,90 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
 }
 
 /**
+ * Make the routes for intent group overview
+ */
+
+export function makeRouteForIntentGroupOverview() {
+  const intentGroupOverview = {
+    name: 'IntentGroupOverview',
+    path: '/intents',
+    component: Layout,
+    children: [
+      {
+        path: paths.intents,
+        component: Intents,
+        name: 'Intents',
+        meta: {
+          title: 'Dialog Übersicht',
+          icon: 'comment',
+        },
+      },
+    ],
+  }
+  return intentGroupOverview
+}
+
+/**
+ * Make the routes for intent-groups
+ */
+
+export function makeRouteForIntentGroup(skillsWithIntents) {
+  const intentGroup = {
+    name: 'IntentGroup',
+    path: '/intents',
+    // hidden: true,
+    component: Layout,
+    children: [],
+  }
+  skillsWithIntents.forEach((skillWithIntent) => {
+    intentGroup.children.push({
+      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
+      component: IntentGroup,
+      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
+      name: `skill-${skillWithIntent.SkillName}`,
+      meta: {
+        title: `${skillWithIntent.SkillName}`,
+      },
+      children: [],
+    })
+  })
+  return intentGroup
+}
+
+/**
+ * Make the routes for single intents
+ */
+
+export function makeRouteForIntents(skillsWithIntents) {
+  const intents = {
+    name: 'AllIntents',
+    path: '/intents',
+    hidden: true,
+    component: Layout,
+    children: [],
+  }
+  skillsWithIntents.forEach((skillWithIntent) => {
+    const intentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
+    skillWithIntent.Intents.forEach((intent) => {
+      intents.children.push({
+        path: `${intentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
+        component: () => import('@/views/intents/single-intent/index.vue'),
+        name: `intent-${intent.name}`,
+        meta: {
+          title: `${intent.name}`,
+          intent: `${intent.intent}`,
+          entity: intent.entity,
+          description: `${intent.description}`,
+          newIntent: intent.newIntent,
+          creationTimestamp: intent.creationTimestamp,
+        },
+      })
+    })
+  })
+  return intents
+}
+
+/**
  * @param powerBi_reportId is the given powerBI Report Id of the current customer.
  * @param customer is the current customer.
  * @return the route which redirects at the given PowerBI URL.
@@ -235,6 +266,18 @@ const actions = {
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
+    // add IntentOverview route
+    const intentOveriewRoute = makeRouteForIntentGroupOverview();
+    allAdditionalRoutes = allAdditionalRoutes.concat(intentOveriewRoute)
+
+    // add IntentGroups route
+    const intentGroup = makeRouteForIntentGroup(state.skillsWithIntents);
+    allAdditionalRoutes = allAdditionalRoutes.concat(intentGroup)
+
+    // // add Intents route
+    const intents = makeRouteForIntents(state.skillsWithIntents);
+    allAdditionalRoutes = allAdditionalRoutes.concat(intents)
+
     // get PowerBI Report ID and customer name from DB to create path and fill data
     const { powerBI_reportID, customer } = rootGetters.metainfo
     let powerBIReportRoute
@@ -242,10 +285,6 @@ const actions = {
       powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
-
-    // add dialog route
-    const dialogsRoute = createIntentsRoute(state.skillsWithIntents);
-    allAdditionalRoutes = allAdditionalRoutes.concat(dialogsRoute)
 
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes

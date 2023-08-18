@@ -10,9 +10,9 @@ export const links = {
 
 export const paths = {
   skills: '/skills',
-  intents: '/intents',
   placeholders: '/placeholders',
   reporting: '/reporting',
+  intents: '/intents',
 }
 
 const setSkillsAndIntents = 'setSkillsAndIntents'
