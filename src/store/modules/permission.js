@@ -92,25 +92,37 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
- * Make the routes for the given skills and intents
- * and fill in the corresponding Vues.
+ * Make the routes for intent group overview
  */
-export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
-  const routes = []
+
+export function makeRouteForIntents(skillsWithIntents) {
+  const routes = [];
   const route = {
-    path: paths.skills,
-    component: Layout,
-    name: 'Skills and intents',
+    name: 'IntentGroupOverview',
+    path: '/intents',
+    isNotNested: true,
     meta: {
-      title: 'Dialoge',
+      title: 'Dialog Übersicht',
       icon: 'comment',
     },
-    children: [],
+    component: Layout,
+    children: [
+      {
+        path: paths.intents,
+        component: Intents,
+        name: 'Intents',
+        meta: {
+          title: 'Dialog Übersicht',
+          icon: 'comment',
+        },
+      },
+    ],
   }
   skillsWithIntents.forEach((skillWithIntent) => {
     route.children.push({
       path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
       component: routerView,
+      props: { children: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
@@ -134,76 +146,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
       })
     })
   })
-  routes.push(route)
-  return routes
-}
-
-/**
- * Make the routes for intent group overview
- */
-
-export function makeRouteForIntentGroupOverview() {
-  const intentGroupOverview = {
-    name: 'IntentGroupOverview',
-    path: '/intents',
-    component: Layout,
-    children: [
-      {
-        path: paths.intents,
-        component: Intents,
-        name: 'Intents',
-        meta: {
-          title: 'Dialog Übersicht',
-          icon: 'comment',
-        },
-      },
-    ],
-  }
-  return intentGroupOverview
-}
-
-/**
- * Make the routes for intent-groups and all intents
- */
-
-export function makeRouteForIntentGroup(skillsWithIntents) {
-  const routes = [];
-  const intentGroups = {
-    name: 'IntentGroup',
-    path: '/intents',
-    // hidden: true,
-    component: Layout,
-    children: [],
-  }
-  skillsWithIntents.forEach((skillWithIntent) => {
-    intentGroups.children.push({
-      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
-      component: IntentGroup,
-      props: { children: skillWithIntent.Intents },
-      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
-      name: `skill-${skillWithIntent.SkillName}`,
-      meta: {
-        title: `${skillWithIntent.SkillName}`,
-      },
-      children: [],
-    })
-    skillWithIntent.Intents.forEach((intent) => {
-      intentGroups.children[intentGroups.children.length - 1].children.push({
-        path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intents/single-intent/index.vue'),
-        name: `intent-${intent.name}`,
-        meta: {
-          title: `${intent.name}`,
-          intent: `${intent.intent}`,
-          entity: intent.entity,
-          description: `${intent.description}`,
-          newIntent: intent.newIntent,
-          creationTimestamp: intent.creationTimestamp,
-        },
-      })
-    })
-  })
-  routes.push(intentGroups);
+  routes.push(route);
   return routes
 }
 
@@ -244,15 +187,10 @@ const actions = {
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
     // make dynamic routes for skills and intents
-    const additionalRoutes = makeRouteForIntentGroup(state.skillsWithIntents);
+    const additionalRoutes = makeRouteForIntents(state.skillsWithIntents);
 
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
-
-    // add IntentOverview route
-    const intentOveriewRoute = makeRouteForIntentGroupOverview();
-    allAdditionalRoutes = allAdditionalRoutes.concat(intentOveriewRoute)
-
 
     // get PowerBI Report ID and customer name from DB to create path and fill data
     const { powerBI_reportID, customer } = rootGetters.metainfo

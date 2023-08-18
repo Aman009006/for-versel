@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import path from "path-browserify";
-import { isExternal } from '@/utils/validate';
 
 export default {
   name: "IntentGroupContainer",
@@ -37,13 +35,7 @@ export default {
   methods: {
     getIntentPaths() {
       const paths = this.$store.getters.permission_routes;
-      return paths.filter((path) => path.name === "IntentGroup");
-    },
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath;
-      }
-      return path.resolve(routePath);
+      return paths.filter((path) => path.name === "IntentGroupOverview");
     },
   },
 };
