@@ -61,14 +61,13 @@ const mutations = {
     // set the order of the routes:
     const order = [
       '/',
-      '/skills',
+      '/intents',
       '/placeholders',
       '/reporting',
       '/jira',
       '/notes',
       '/manual',
       '/manualChatbot',
-      '/intents',
     ]
     state.routes.sort((route1, route2) => {
       const { path: path1 } = route1
@@ -164,11 +163,12 @@ export function makeRouteForIntentGroupOverview() {
 }
 
 /**
- * Make the routes for intent-groups
+ * Make the routes for intent-groups and all intents
  */
 
 export function makeRouteForIntentGroup(skillsWithIntents) {
-  const intentGroup = {
+  const routes = [];
+  const intentGroups = {
     name: 'IntentGroup',
     path: '/intents',
     // hidden: true,
@@ -176,9 +176,10 @@ export function makeRouteForIntentGroup(skillsWithIntents) {
     children: [],
   }
   skillsWithIntents.forEach((skillWithIntent) => {
-    intentGroup.children.push({
+    intentGroups.children.push({
       path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
       component: IntentGroup,
+      props: { children: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
@@ -186,27 +187,9 @@ export function makeRouteForIntentGroup(skillsWithIntents) {
       },
       children: [],
     })
-  })
-  return intentGroup
-}
-
-/**
- * Make the routes for single intents
- */
-
-export function makeRouteForIntents(skillsWithIntents) {
-  const intents = {
-    name: 'AllIntents',
-    path: '/intents',
-    hidden: true,
-    component: Layout,
-    children: [],
-  }
-  skillsWithIntents.forEach((skillWithIntent) => {
-    const intentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
     skillWithIntent.Intents.forEach((intent) => {
-      intents.children.push({
-        path: `${intentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
+      intentGroups.children[intentGroups.children.length - 1].children.push({
+        path: encodeURIComponent(encodePathComponent(intent.name)),
         component: () => import('@/views/intents/single-intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
@@ -220,7 +203,8 @@ export function makeRouteForIntents(skillsWithIntents) {
       })
     })
   })
-  return intents
+  routes.push(intentGroups);
+  return routes
 }
 
 /**
@@ -260,9 +244,8 @@ const actions = {
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
     // make dynamic routes for skills and intents
-    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(
-      state.skillsWithIntents
-    )
+    const additionalRoutes = makeRouteForIntentGroup(state.skillsWithIntents);
+
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
@@ -270,13 +253,6 @@ const actions = {
     const intentOveriewRoute = makeRouteForIntentGroupOverview();
     allAdditionalRoutes = allAdditionalRoutes.concat(intentOveriewRoute)
 
-    // add IntentGroups route
-    const intentGroup = makeRouteForIntentGroup(state.skillsWithIntents);
-    allAdditionalRoutes = allAdditionalRoutes.concat(intentGroup)
-
-    // // add Intents route
-    const intents = makeRouteForIntents(state.skillsWithIntents);
-    allAdditionalRoutes = allAdditionalRoutes.concat(intents)
 
     // get PowerBI Report ID and customer name from DB to create path and fill data
     const { powerBI_reportID, customer } = rootGetters.metainfo
