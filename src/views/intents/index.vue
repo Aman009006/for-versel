@@ -1,13 +1,13 @@
 <template>
-  <router-view>
+  <div>
     <intentsInfoBox></intentsInfoBox>
-    <div class="intent-groups-container">
-      <intentGroupContainer
-        v-for="intentGroup in getIntentGroups"
-        :intentGroup="intentGroup"
-      ></intentGroupContainer>
-    </div>
-  </router-view>
+     <div class="intent-groups-container">
+       <intentGroupContainer
+         v-for="intentGroup in getIntentGroups"
+         :intentGroup="intentGroup"
+       ></intentGroupContainer>
+     </div>
+  </div>
 </template>
 
 <script>

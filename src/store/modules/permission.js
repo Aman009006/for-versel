@@ -1,11 +1,11 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
-import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
 import Intents from '@/views/intents/index.vue'
 import IntentGroup from '@/views/intents/intent-group/index.vue'
+import Intent from '@/views/intents/single-intent/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -98,8 +98,8 @@ export function encodePathComponent(pathComponent) {
 export function makeRouteForIntents(skillsWithIntents) {
   const routes = [];
   const route = {
+    path: paths.intents,
     name: 'IntentGroupOverview',
-    path: '/intents',
     isNotNested: true,
     meta: {
       title: 'Dialog Übersicht',
@@ -119,9 +119,10 @@ export function makeRouteForIntents(skillsWithIntents) {
     ],
   }
   skillsWithIntents.forEach((skillWithIntent) => {
+    const specificIntentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
     route.children.push({
-      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
-      component: routerView,
+      path: `${paths.intents}/${encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))}`,
+      component: IntentGroup,
       props: { children: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
@@ -131,9 +132,9 @@ export function makeRouteForIntents(skillsWithIntents) {
       children: [],
     })
     skillWithIntent.Intents.forEach((intent) => {
-      route.children[route.children.length - 1].children.push({
-        path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intents/single-intent/index.vue'),
+      route.children.push({
+        path: `${paths.intents}/${specificIntentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
+        component: Intent,
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
