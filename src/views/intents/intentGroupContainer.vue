@@ -30,7 +30,7 @@ export default {
       const thisIntentsPaths = intentPaths[0].children.filter(
         (child) => child.meta && child.meta.title === this.intentGroup.SkillName
       );
-      return `${basePath}${encodeURIComponent(encodePathComponent(thisIntentsPaths[0].meta.title))}`;
+      return `${basePath}/${encodeURIComponent(encodePathComponent(thisIntentsPaths[0].meta.title))}`;
     },
   },
   methods: {

@@ -102,17 +102,18 @@ export function makeRouteForIntents(skillsWithIntents) {
     name: 'IntentGroupOverview',
     isNotNested: true,
     meta: {
-      title: 'Dialog Übersicht',
+      title: 'Dialoge',
       icon: 'comment',
     },
     component: Layout,
     children: [
       {
         path: paths.intents,
+        props: { intentGroups: skillsWithIntents },
         component: Intents,
         name: 'Intents',
         meta: {
-          title: 'Dialog Übersicht',
+          title: 'Dialoge',
           icon: 'comment',
         },
       },
