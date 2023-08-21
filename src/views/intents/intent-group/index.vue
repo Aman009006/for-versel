@@ -20,7 +20,6 @@ export default {
     },
   },
   data() {
-    console.log(this.$store.getters.permission_routes);
     return {};
   },
 };

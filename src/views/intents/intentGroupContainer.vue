@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { encodePathComponent } from '@/store/modules/permission'
 
 export default {
   name: "IntentGroupContainer",
@@ -29,7 +30,7 @@ export default {
       const thisIntentsPaths = intentPaths[0].children.filter(
         (child) => child.meta && child.meta.title === this.intentGroup.SkillName
       );
-      return `${basePath}/${thisIntentsPaths[0].path}`;
+      return `${basePath}${encodeURIComponent(encodePathComponent(thisIntentsPaths[0].meta.title))}`;
     },
   },
   methods: {
