@@ -23,7 +23,6 @@ export default {
                 const name = intent.SkillName || intent.name;
                 return name.toLowerCase().includes(newValue.toLowerCase())
             });
-            console.log(filteredArray.value);
             emit("filteredArray", filteredArray.value);
         });
 
