@@ -51,6 +51,12 @@ export default {
       filteredArray: this.intents,
     };
   },
+  mounted() {
+    this.addActiveToSidebar();
+  },
+  unmounted() {
+    this.removeActiveFromSidebar();
+  },
   methods: {
     updateIntents(array) {
       this.filteredArray = array;
@@ -86,6 +92,14 @@ export default {
       const basePath = this.$router.currentRoute.value.href;
       return `${basePath}/${encodeURIComponent(encodePathComponent(path))}`
     },
+    addActiveToSidebar()  {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.add('is-active');
+    },
+    removeActiveFromSidebar() {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.remove('is-active');
+    }
   }
 };
 </script>

@@ -44,6 +44,12 @@ export default {
       dataReady: false,
     };
   },
+  mounted() {
+    this.addActiveToSidebar();
+  },
+  unmounted() {
+    this.removeActiveFromSidebar();
+  },
   computed: {
     intentInfo() {
       return this.$store.getters.intents[this.readableIntentName];
@@ -97,6 +103,14 @@ export default {
       );
       this.dataReady = true;
     },
+    addActiveToSidebar() {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.add('is-active');
+    },
+    removeActiveFromSidebar() {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.remove('is-active');
+    }
   },
 };
 </script>

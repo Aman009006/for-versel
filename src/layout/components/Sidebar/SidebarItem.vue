@@ -29,12 +29,11 @@
           :hidden="!(onlyOneChild.meta && onlyOneChild.meta.newIntent)">
           <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-active' : isIntents}"
-            >
+            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-intent': isIntents(item)}">
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
               :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
-              :title="onlyOneChild.meta.title" />
+              :title="onlyOneChild.meta.placeholderTitle" />
           </el-menu-item>
         </el-badge>
       </app-link>
