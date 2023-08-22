@@ -113,8 +113,6 @@ export function makeRouteForIntents(skillsWithIntents) {
         component: Intents,
         name: 'Intents',
         meta: {
-          title: 'Dialoge',
-          icon: 'comment',
         },
       },
     ],
