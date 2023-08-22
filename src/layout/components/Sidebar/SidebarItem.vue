@@ -21,19 +21,19 @@
         </el-badge>
       </app-link>
     </template>
-    <template v-else-if="item.isNotNested">
-      <app-link :to="resolvePath(item.path)">
+    <template v-else-if="isNotNested(item)">
+      <app-link :to="resolvePath(onlyOneChild.path)">
         <el-badge
           value="Neu"
           class="item"
-          :hidden="!(item.meta && item.meta.newIntent)">
+          :hidden="!(onlyOneChild.meta && onlyOneChild.meta.newIntent)">
           <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
             :class="{ 'submenu-title-noDropdown': !isNest }">
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
-              :icon="item.meta.icon || (item.meta && item.meta.icon)"
-              :title="item.meta.title" />
+              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
+              :title="onlyOneChild.meta.title" />
           </el-menu-item>
         </el-badge>
       </app-link>
@@ -122,6 +122,12 @@ export default {
       }
 
       return false;
+    },
+    isNotNested(item) {
+      if (item.isNotNested) {
+        this.onlyOneChild = { ...item.children[0] };
+        return true;
+      }
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
