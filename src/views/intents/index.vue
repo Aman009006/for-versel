@@ -34,10 +34,24 @@ export default {
       filteredArray: this.intentGroups,
     };
   },
+  mounted() {
+    this.addActiveToSidebar();
+  },
+  unmounted() {
+    this.removeActiveFromSidebar();
+  },
   methods: {
     updateIntentGroups(array) {
       this.filteredArray = array;
+    }, 
+    addActiveToSidebar() {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.add('is-active');
     },
+    removeActiveFromSidebar() {
+      const intentContainer = document.getElementsByClassName('is-intent')[0];
+      intentContainer.classList.remove('is-active');
+    }
   }
 };
 </script>
