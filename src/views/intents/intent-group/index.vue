@@ -1,6 +1,6 @@
 <template>
   <div>
-    <intentGroupInfobox></intentGroupInfobox>
+    <intentGroupInfobox :headline="headline"></intentGroupInfobox>
     <intentSearch :searchableArray="intents" @filteredArray="updateIntents"></intentSearch>
     <div id="intent-hover" class="hidden" @mouseover="displayHover">
       <div class="intent-hover-text"></div>
@@ -32,6 +32,10 @@ export default {
     intentSearch,
   },
   props: {
+    headline: {
+      type: String,
+      required: true,
+    },
     intents: {
       type: Array,
       required: true,

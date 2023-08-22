@@ -1,7 +1,7 @@
 <template>
     <div class="intents-infobox">
         <h2>Dialog:</h2>
-        <h1>Test</h1>
+        <h1>{{ headline }}</h1>
     </div>
 </template>
   
@@ -9,6 +9,12 @@
 export default {
     name: "IntentGroupInfoBox",
     components: {},
+    props: {
+        headline: {
+            type: String,
+            required: true,
+        },
+    },
     data() {
         return {};
     },
