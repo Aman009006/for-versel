@@ -100,7 +100,7 @@ export function makeRouteForIntents(skillsWithIntents) {
   const route = {
     path: paths.intents,
     name: 'IntentGroupOverview',
-    isNotNested: true,
+    isIntents: true,
     component: Layout,
     children: [
       {

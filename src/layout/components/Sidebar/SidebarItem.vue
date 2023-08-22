@@ -21,7 +21,7 @@
         </el-badge>
       </app-link>
     </template>
-    <template v-else-if="isNotNested(item)">
+    <template v-else-if="isIntents(item)">
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-badge
           value="Neu"
@@ -29,7 +29,8 @@
           :hidden="!(onlyOneChild.meta && onlyOneChild.meta.newIntent)">
           <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNest }">
+            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-active' : isIntents}"
+            >
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
               :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
@@ -123,8 +124,8 @@ export default {
 
       return false;
     },
-    isNotNested(item) {
-      if (item.isNotNested) {
+    isIntents(item) {
+      if (item.isIntents) {
         this.onlyOneChild = { ...item.children[0] };
         return true;
       }
