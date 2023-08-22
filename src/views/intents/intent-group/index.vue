@@ -1,7 +1,7 @@
 <template>
   <div>
-    <intentGroupInfobox :headline="headline"></intentGroupInfobox>
-    <intentSearch :searchableArray="intents" @filteredArray="updateIntents"></intentSearch>
+    <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
+    <intentSearch searchScope="intents" :searchableArray="intents" @filteredArray="updateIntents"></intentSearch>
     <div id="intent-hover" class="hidden">
       <div class="intent-hover-text"></div>
     </div>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import intentGroupInfobox from "./intentGroupInfobox.vue";
+import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import MarkdownIt from "markdown-it";
@@ -33,7 +33,7 @@ const md = MarkdownIt({ html: false });
 export default {
   name: "IntentGroup",
   components: {
-    intentGroupInfobox,
+    intentGroupInfoBox,
     intentSearch,
   },
   props: {

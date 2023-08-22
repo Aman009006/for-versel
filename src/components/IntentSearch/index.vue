@@ -13,6 +13,10 @@ export default {
             type: Array,
             required: true,
         },
+        searchScope: {
+            type: String,
+            required: true,
+        },
     },
     setup(props, { emit }) {
         const intentSearchValue = ref("");
@@ -20,10 +24,15 @@ export default {
 
         watch(intentSearchValue, (newValue) => {
             filteredArray.value = props.searchableArray.filter((intent) => {
-                const name =  intent.SkillName || intent.name;
+                const name = intent.SkillName || intent.name;
                 const technicalIntent = intent.intent
-                return name.toLowerCase().includes(newValue.toLowerCase()) || technicalIntent.toLowerCase().includes(newValue.toLowerCase());
+                if (props.searchScope === 'intentGroup') {
+                    return name.toLowerCase().includes(newValue.toLowerCase());
+                } else {
+                    return name.toLowerCase().includes(newValue.toLowerCase()) || technicalIntent.toLowerCase().includes(newValue.toLowerCase());
+                }
             });
+
             emit("filteredArray", filteredArray.value);
         });
 

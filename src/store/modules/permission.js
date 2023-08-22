@@ -92,10 +92,23 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
+ * sort skillsWithIntents alphabetically by a given key
+ */
+
+function sortSkillsWithIntentsAlphabetically(array) {
+  array.sort(function (a, b) {
+    var textA = a.SkillName.toUpperCase();
+    var textB = b.SkillName.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  });
+}
+
+/**
  * Make the routes for intent group overview
  */
 
 export function makeRouteForIntents(skillsWithIntents) {
+  sortSkillsWithIntentsAlphabetically(skillsWithIntents);
   const routes = [];
   const route = {
     path: paths.intents,

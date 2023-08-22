@@ -1,7 +1,7 @@
 <template>
   <div>
     <intentsInfoBox></intentsInfoBox>
-    <intentSearch :searchableArray="intentGroups" @filteredArray="updateIntentGroups">
+    <intentSearch searchScope="intentGroup" :searchableArray="intentGroups" @filteredArray="updateIntentGroups">
     </intentSearch>
     <div class="intent-groups-container">
       <intentGroupContainer
@@ -37,7 +37,7 @@ export default {
   methods: {
     updateIntentGroups(array) {
       this.filteredArray = array;
-    }
+    },
   }
 };
 </script>
