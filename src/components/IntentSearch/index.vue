@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { ref, watch, computed, defineProps, defineEmits } from "vue";
+import { ref, watch } from "vue";
 
 export default {
     name: "IntentSearch",
@@ -20,8 +20,9 @@ export default {
 
         watch(intentSearchValue, (newValue) => {
             filteredArray.value = props.searchableArray.filter((intent) => {
-                const name = intent.SkillName || intent.name;
-                return name.toLowerCase().includes(newValue.toLowerCase())
+                const name =  intent.SkillName || intent.name;
+                const technicalIntent = intent.intent
+                return name.toLowerCase().includes(newValue.toLowerCase()) || technicalIntent.toLowerCase().includes(newValue.toLowerCase());
             });
             emit("filteredArray", filteredArray.value);
         });

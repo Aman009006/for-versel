@@ -2,18 +2,22 @@
   <div>
     <intentGroupInfobox :headline="headline"></intentGroupInfobox>
     <intentSearch :searchableArray="intents" @filteredArray="updateIntents"></intentSearch>
-    <div id="intent-hover" class="hidden" @mouseover="displayHover">
+    <div id="intent-hover" class="hidden">
       <div class="intent-hover-text"></div>
     </div>
-    <el-table :data="filteredArray" stripe @cell-mouse-enter="displayHover" @cell-mouse-leave="hideHover">
+    <el-table :data="filteredArray" stripe @row-click="toggleHover">
       <el-table-column prop="name" label="Name">
       </el-table-column>
-      <el-table-column prop="utterances" label="Beispiele / Beschreibung">
+      <el-table-column prop="description" label="Beispiele / Beschreibung">
       </el-table-column>
-      <el-table-column label="Aktion">
-        <el-button>
-          Öffnen
-        </el-button>
+      <el-table-column prop="name" label="Aktion">
+        <template v-slot="{ row }">
+          <a :href="parsePath(row.name)">
+            <el-button>
+              Öffnen
+            </el-button>
+          </a>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -22,6 +26,7 @@
 <script>
 import intentGroupInfobox from "./intentGroupInfobox.vue";
 import intentSearch from "../../../components/IntentSearch/index.vue"
+import { encodePathComponent } from '@/store/modules/permission'
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: false });
 
@@ -50,10 +55,10 @@ export default {
     updateIntents(array) {
       this.filteredArray = array;
     },
-    displayHover(row) {
+    toggleHover(row) {
       const intentContainer = document.getElementById('intent-hover');
       const intentContainerText = intentContainer.getElementsByClassName('intent-hover-text')[0];
-      intentContainer.classList.remove('hidden');
+      intentContainer.classList.toggle('hidden');
       if (row.texts) {
         intentContainerText.innerHTML = md.render(
           this.truncateString(row.texts[0].text, 20)
@@ -76,7 +81,11 @@ export default {
       }
 
       return string;
-    }
+    },
+    parsePath(path) {
+      const basePath = this.$router.currentRoute.value.href;
+      return `${basePath}/${encodeURIComponent(encodePathComponent(path))}`
+    },
   }
 };
 </script>
