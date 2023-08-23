@@ -1,6 +1,7 @@
 // Styleguide Colors
 $hsag-blue: #004175;
 $hsag-blue-light: #2F8EE9;
+$hsag-blue-light-shade: #2675be;
 $hsag-blue-dark: #0B3863;
 $hsag-blue-shade: #0D4A7C;
 $hsag-green: #97BE0D;
@@ -28,11 +29,11 @@ $hsag-font-size-button: 12px;
     ),
   ),
   $button: (
-    'bg-color': $hsag-green,
+    'bg-color': $hsag-blue-light,
     'text-color': $hsag-white,
     'hover-text-color': $hsag-white,
-    'hover-border-color': $hsag-green,
-    'hover-bg-color': $hsag-green-shade,
+    'hover-border-color': $hsag-blue-light,
+    'hover-bg-color': $hsag-blue-light-shade,
   ),
   $menu: (
     'bg-color': $hsag-blue,
@@ -40,11 +41,11 @@ $hsag-font-size-button: 12px;
     'text-color': $hsag-white,
   ),
   $table: (
-    'header-bg-color': $hsag-lightgrey,
+    'header-bg-color': $hsag-bluegrey,
     'bg-color': $hsag-lightgrey,
     'tr-bg-color': $hsag-lightgrey,
     'text-color': $hsag-black,
-    'header-text-color': $hsag-black,
+    'header-text-color': $hsag-white,
   ),
   $alert: (
     'bg-color': $hsag-bluegrey,

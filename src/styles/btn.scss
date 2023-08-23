@@ -148,14 +148,14 @@
 .edit-btn {
   border: none;
   color: $hsag-white;
-  background-color: $hsag-green;
+  background-color: $hsag-blue-light;
   margin-left: 0px;
   width: 100%;
 
   &:hover {
     border: none;
     color: $hsag-white;
-    background-color: $hsag-green-dark;
+    background-color: $hsag-blue-light-shade;
   }
 }
 

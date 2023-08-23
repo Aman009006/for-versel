@@ -1,7 +1,9 @@
 <template>
-  <a :href="getThisIntentsPath" class="intent-group">
-    <h3>{{ intentGroup.SkillName }}</h3>
-    <p>{{ getIntentAmount }} Anliegen</p>
+  <a :href="getThisIntentsPath">
+    <div class="intent-group">
+      <h3>{{ intentGroup.SkillName }}</h3>
+      <p>{{ getIntentAmount }} Anliegen</p>
+    </div>
   </a>
 </template>
 
@@ -42,4 +44,27 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
+.intent-group {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  height: 130px;
+  background-color: $hsag-lightgrey;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover{
+    background-color: $hsag-bluegrey;
+    color: $hsag-white;
+  }
+  h3{
+    margin: 0;
+  }
+  p{
+    margin: 5px 0 0 0;
+  }
+}
+</style>

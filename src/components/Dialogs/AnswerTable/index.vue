@@ -2,7 +2,7 @@
   <div class="table-container">
     <div v-if="disabled" class="disabled-layer" />
 
-    <el-table :data="answers" border>
+    <el-table :data="answers" stripe >
       <el-table-column align="center" label="Beschreibung" prop="description" width="150" />
 
       <el-table-column :label="answerText" min-width="500">

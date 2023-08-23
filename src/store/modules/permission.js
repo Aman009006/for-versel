@@ -153,6 +153,7 @@ export function makeRouteForIntents(skillsWithIntents) {
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
+          intentGroup: `${skillWithIntent.SkillName}`,
           parentPath: `#${paths.intents}/${specificIntentGroupPath}`,
           intent: `${intent.intent}`,
           entity: intent.entity,

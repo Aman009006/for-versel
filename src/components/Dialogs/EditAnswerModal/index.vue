@@ -131,11 +131,11 @@ export default {
       }
     }
     #saveAnswerButton {
-      background-color: $hsag-green;
+      background-color: $hsag-blue-light;
       cursor: pointer;
 
       &:hover {
-        background-color: $hsag-green-dark;
+        background-color: $hsag-blue-light-shade;
       }
     }
     #saveAnswerButton:disabled {
