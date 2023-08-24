@@ -1,14 +1,15 @@
 <template>
   <div class="intent-element-container">
     <template v-if="dataReady">
-      <h1 style="font-size: 18px">{{ $route.meta.title }}</h1>
-
       <DialogInfoBox
         :intent="$route.meta.intent"
         :description="$route.meta.description"
         :utterances="utterances"
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
-        :entity="$route.meta.entity" />
+        :entity="$route.meta.entity"
+        :parentPath="parentPath"
+        :readable-intent-name="readableIntentName"
+        :intent-group="intentGroup" />
 
       <RedirectionInfoBox
         v-if="answerConfig != null"
@@ -30,6 +31,7 @@ import DialogInfoBox from "@/components/Dialogs/DialogInfoBox/index.vue";
 import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox/index.vue";
 import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
+import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 
 export default {
   name: "Intent",
@@ -42,7 +44,15 @@ export default {
   data() {
     return {
       dataReady: false,
+      parentPath: this.$route.meta.parentPath,
+      intentGroup: this.$route.meta.intentGroup,
     };
+  },
+  mounted() {
+    addActiveToSidebar('is-intent');
+  },
+  unmounted() {
+    removeActiveFromSidebar('is-intent');
   },
   computed: {
     intentInfo() {

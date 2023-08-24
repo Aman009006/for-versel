@@ -187,7 +187,7 @@ export default {
 @import "@/styles/variables.module.scss";
 
 .editHeadline {
-  color: $primary;
+  color: $hsag-black;
   font-size: 1.5em;
   font-weight: normal;
 }

@@ -1,9 +1,10 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
-import routerView from '@/views/routerView/index.vue'
 import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
+import Intents from '@/views/intents/index.vue'
+import IntentGroup from '@/views/intents/intent-group/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -59,7 +60,7 @@ const mutations = {
     // set the order of the routes:
     const order = [
       '/',
-      '/skills',
+      '/intents',
       '/placeholders',
       '/reporting',
       '/jira',
@@ -90,39 +91,69 @@ export function encodePathComponent(pathComponent) {
 }
 
 /**
- * Make the routes for the given skills and intents
- * and fill in the corresponding Vues.
+ * sort skillsWithIntents alphabetically by a given key
  */
-export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
-  const routes = []
+
+function sortSkillsWithIntentsAlphabetically(array) {
+  array.sort(function (a, b) {
+    var textA = a.SkillName.toUpperCase();
+    var textB = b.SkillName.toUpperCase();
+    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+  });
+}
+
+/**
+ * Make the routes for intent group overview
+ */
+
+export function makeRouteForIntents(skillsWithIntents) {
+  sortSkillsWithIntentsAlphabetically(skillsWithIntents);
+  const routes = [];
   const route = {
-    path: paths.skills,
+    path: paths.intents,
+    name: 'IntentGroupOverview',
+    isIntents: true,
     component: Layout,
-    name: 'Skills and intents',
     meta: {
       title: 'Dialoge',
       icon: 'comment',
     },
-    children: [],
+    children: [
+      {
+        path: paths.intents,
+        props: { intentGroups: skillsWithIntents },
+        component: Intents,
+        name: 'Intents',
+        meta: {
+          placeholderTitle: 'Dialoge',
+          icon: 'comment',
+        },
+      },
+    ],
   }
   skillsWithIntents.forEach((skillWithIntent) => {
+    const specificIntentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
     route.children.push({
-      path: encodeURIComponent(encodePathComponent(skillWithIntent.SkillName)),
-      component: routerView,
+      path: `${paths.intents}/${encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))}`,
+      component: IntentGroup,
+      props: { headline: skillWithIntent.SkillName, intents: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {
         title: `${skillWithIntent.SkillName}`,
+        parentPath: `#${paths.intents}`,
       },
       children: [],
     })
     skillWithIntent.Intents.forEach((intent) => {
-      route.children[route.children.length - 1].children.push({
-        path: encodeURIComponent(encodePathComponent(intent.name)),
-        component: () => import('@/views/intent/index.vue'),
+      route.children.push({
+        path: `${paths.intents}/${specificIntentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
+        component: () => import('@/views/intents/single-intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
+          intentGroup: `${skillWithIntent.SkillName}`,
+          parentPath: `#${paths.intents}/${specificIntentGroupPath}`,
           intent: `${intent.intent}`,
           entity: intent.entity,
           description: `${intent.description}`,
@@ -132,7 +163,7 @@ export function makeRoutesForGivenSkillsAndIntents(skillsWithIntents) {
       })
     })
   })
-  routes.push(route)
+  routes.push(route);
   return routes
 }
 
@@ -173,9 +204,8 @@ const actions = {
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
     // make dynamic routes for skills and intents
-    const additionalRoutes = makeRoutesForGivenSkillsAndIntents(
-      state.skillsWithIntents
-    )
+    const additionalRoutes = makeRouteForIntents(state.skillsWithIntents);
+
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
@@ -186,6 +216,7 @@ const actions = {
       powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
     }
+
     commit('SET_ROUTES', allAdditionalRoutes)
     return allAdditionalRoutes
   },

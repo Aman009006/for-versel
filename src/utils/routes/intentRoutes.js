@@ -4,7 +4,7 @@ import { paths } from '@/constants';
  * @returns all the routes, which represent intents.
  */
 export function getSkillRoute(permissionRoutes) {
-  return permissionRoutes.find((route) => route.path === paths.skills)
+  return permissionRoutes.find((route) => route.path === paths.intents)
 }
 
 /**

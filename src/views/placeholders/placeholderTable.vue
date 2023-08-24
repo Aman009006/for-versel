@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <template v-if="dataReady">
-      <el-table :data="allPlaceholders" class="placeholder_table" border>
+      <el-table :data="allPlaceholders" class="placeholder_table" stripe >
         <el-table-column
           align="center"
           label="Platzhalterbezeichnung"
@@ -114,10 +114,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-table {
-  font-size: 13px !important;
-}
-
 .table-container {
   position: relative;
   // The chatbot, which has a fixed position, should not cover the table

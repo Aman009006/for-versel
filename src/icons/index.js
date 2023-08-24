@@ -1,7 +1,9 @@
 import icon404 from './svg/404.svg?raw';
+import arrowleft from './svg/arrowleft.svg?raw';
 import bug from './svg/bug.svg?raw';
 import chart from './svg/chart.svg?raw';
 import clipboard from './svg/clipboard.svg?raw';
+import close from './svg/close.svg?raw';
 import comment from './svg/comment.svg?raw';
 import component from './svg/component.svg?raw';
 import dashboard from './svg/dashboard.svg?raw';
@@ -51,9 +53,11 @@ import zip from './svg/zip.svg?raw';
 
 const icons = {
     icon404,
+    arrowleft,
     bug,
     chart,
     clipboard,
+    close,
     comment,
     component,
     dashboard,

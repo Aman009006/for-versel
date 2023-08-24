@@ -1,27 +1,39 @@
 <template>
   <div v-if="!item.hidden">
     <template
-      v-if="
-        hasOneShowingChild(item.children, item) &&
+      v-if="hasOneShowingChild(item.children, item) &&
         (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
         !item.alwaysShow
-      "
-    >
+        ">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-badge
           value="Neu"
           class="item"
-          :hidden="!(item.meta && item.meta.newIntent)"
-        >
+          :hidden="!(item.meta && item.meta.newIntent)">
           <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNest }"
-            >
+            :class="{ 'submenu-title-noDropdown': !isNest }">
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
               :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
-              :title="onlyOneChild.meta.title"
-            />
+              :title="onlyOneChild.meta.title" />
+          </el-menu-item>
+        </el-badge>
+      </app-link>
+    </template>
+    <template v-else-if="isIntents(item)">
+      <app-link :to="resolvePath(onlyOneChild.path)">
+        <el-badge
+          value="Neu"
+          class="item"
+          :hidden="!(onlyOneChild.meta && onlyOneChild.meta.newIntent)">
+          <el-menu-item
+            :index="resolvePath(onlyOneChild.path)"
+            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-intent': isIntents(item)}">
+            <item
+              :popper-class="isNest ? 'hidden-popper' : ''"
+              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
+              :title="onlyOneChild.meta.placeholderTitle" />
           </el-menu-item>
         </el-badge>
       </app-link>
@@ -35,15 +47,13 @@
       v-else
       ref="subMenu"
       :index="resolvePath(item.path)"
-      popper-append-to-body
-    >
+      popper-append-to-body>
       <template #title="title">
         <item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
           :title="item.meta.title"
-          popper-class="hidden-popper"
-        />
+          popper-class="hidden-popper" />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -51,8 +61,7 @@
         :is-nest="true"
         :item="child"
         :base-path="resolvePath(child.path)"
-        class="nest-menu"
-      />
+        class="nest-menu" />
     </el-sub-menu>
   </div>
 </template>
@@ -114,6 +123,12 @@ export default {
 
       return false;
     },
+    isIntents(item) {
+      if (item.isIntents) {
+        this.onlyOneChild = { ...item.children[0] };
+        return true;
+      }
+    },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath;
@@ -131,6 +146,7 @@ export default {
 .sidebar-container .el-badge {
   display: block;
   width: 100%;
+
   sup.el-badge__content {
     right: 50px;
     top: 10px;
@@ -151,43 +167,26 @@ export default {
 .el-menu--vertical:not(.el-menu--collapse) {
   min-height: 400px;
 }
+
 .el-menu-item {
   font-size: 14px !important;
 }
 
-.el-menu > div > .el-sub-menu > .el-sub-menu__title {
+.el-menu>div>.el-sub-menu>.el-sub-menu__title {
   padding-left: 20px !important;
   font-size: 14px !important;
 }
 
-div
-  > .el-sub-menu
-  > .el-menu
-  > .nest-menu
-  > .el-sub-menu
-  > .el-sub-menu__title {
+div>.el-sub-menu>.el-menu>.nest-menu>.el-sub-menu>.el-sub-menu__title {
   padding-left: 40px !important;
   font-size: 14px !important;
 }
 
-.el-menu
-  > div
-  > .el-sub-menu
-  > .el-menu
-  > .nest-menu
-  > a
-  > .el-badge
-  > .el-menu-item {
+.el-menu>div>.el-sub-menu>.el-menu>.nest-menu>a>.el-badge>.el-menu-item {
   padding-left: 40px !important;
 }
-.el-menu
-  > .nest-menu
-  > .el-sub-menu
-  > .el-menu
-  > .nest-menu
-  > a
-  > .el-badge
-  > .el-menu-item {
+
+.el-menu>.nest-menu>.el-sub-menu>.el-menu>.nest-menu>a>.el-badge>.el-menu-item {
   padding-left: 60px !important;
 }
 </style>

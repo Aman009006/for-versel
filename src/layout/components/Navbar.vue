@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-wrap">
     <a href="#/home" class="logo">
-      <el-image :src="hsagLogo" class="hsag-logo" :fit="contain" />
+      <el-image :src="hsagLogo" class="hsag-logo" />
     </a>
     <div class="navbar">
       <tags-view />
