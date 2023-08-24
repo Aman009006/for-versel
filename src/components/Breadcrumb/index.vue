@@ -2,7 +2,7 @@
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item, index) in levelList" :key="item.path">
-        <span class="no-redirect">{{ item.meta.title }}</span>
+        <span v-if="!hideOnHome" class="no-redirect">{{ item.meta.title }}</span>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -24,6 +24,11 @@ export default {
       this.getBreadcrumb();
     },
   },
+  computed: {
+    hideOnHome() {
+      return this.$route.fullPath === '/home';
+    }
+  },
   created() {
     this.getBreadcrumb();
   },
@@ -34,10 +39,6 @@ export default {
         (item) => item.meta && item.meta.title
       );
       const first = matched[0];
-
-      if (!this.isHome(first)) {
-        matched = [{ path: "/home", meta: { title: "Home" } }].concat(matched);
-      }
 
       this.levelList = matched.filter(
         (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
@@ -60,10 +61,14 @@ export default {
   font-size: 14px;
   line-height: 50px;
   margin-left: 50px;
+  min-height: 50px;
 
   .no-redirect {
     color: #97a8be;
     cursor: text;
   }
+}
+.breadcrumb-placeholder{
+  margin-bottom: 52px
 }
 </style>

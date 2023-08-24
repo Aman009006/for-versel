@@ -224,12 +224,12 @@ export default {
 }
 
 .addAnswerButton {
-  background-color: $hsag-green !important;
+  background-color: $hsag-blue-light !important;
   border: none;
 }
 
 .addAnswerButton:hover {
-  background-color: $hsag-green-dark !important;
+  background-color: $hsag-blue-light-shade !important;
   border: none;
 }
 </style>

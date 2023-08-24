@@ -72,7 +72,7 @@ export default {
 }
 
 .el-dropdown-link {
-  font-size: 18px;
+  font-size: 23px;
 }
 .el-badge {
   display: inline;

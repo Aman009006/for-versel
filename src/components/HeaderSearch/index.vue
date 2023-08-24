@@ -180,9 +180,9 @@ export default {
 
   .search-icon {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
     vertical-align: middle;
-    width: 17px;
+    width: 22px;
     display: inline-block;
   }
 

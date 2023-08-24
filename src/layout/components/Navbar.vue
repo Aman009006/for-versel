@@ -8,13 +8,7 @@
       <div class="right-menu">
         <template v-if="device !== 'mobile'">
           <search id="header-search" class="right-menu-item" />
-
           <notification />
-          <hamburger
-            id="hamburger-container"
-            :is-active="sidebar.opened"
-            class="hamburger-container"
-            @toggleClick="toggleSideBar" />
           <Logout id="logout-icon" />
           <CustomerLogo id="customer-logo" />
         </template>
@@ -25,7 +19,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Hamburger from "@/components/Hamburger/index.vue";
 import Search from "@/components/HeaderSearch/index.vue";
 import Notification from "@/components/Notification/index.vue";
 import Logout from "@/components/Logout/index.vue";
@@ -35,7 +28,6 @@ import hsagLogo from "@/assets/images/hsag_logo.png";
 
 export default {
   components: {
-    Hamburger,
     TagsView,
     Search,
     Notification,
@@ -48,9 +40,6 @@ export default {
     ...mapGetters(["sidebar", "avatar", "device"]),
   },
   methods: {
-    toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
-    },
     async logout() {
       await this.$store.dispatch("user/logout");
       /**
@@ -146,7 +135,7 @@ export default {
     .right-menu-item {
       display: flex;
       align-items: center;
-      padding: 0 8px;
+      padding: 0 10px;
       height: auto;
       width: auto;
       font-size: 18px;
