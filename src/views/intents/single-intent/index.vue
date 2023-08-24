@@ -8,6 +8,8 @@
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
         :entity="$route.meta.entity" 
         :parentPath="parentPath"
+        :readable-intent-name="readableIntentName"
+        :intent-group="intentGroup"
         />
 
       <RedirectionInfoBox
@@ -43,6 +45,7 @@ export default {
     return {
       dataReady: false,
       parentPath: this.$route.meta.parentPath,
+      intentGroup: this.$route.meta.intentGroup,
     };
   },
   mounted() {

@@ -7,8 +7,8 @@
         </span>
       </a>
       <div>
-        <h2>Dialoge / {{ $route.meta.intentGroup }}</h2>
-        <h1>{{ $route.meta.title }}</h1>
+        <h2>Dialoge / {{ intentGroup }}</h2>
+        <h1>{{ readableIntentName }}</h1>
       </div>
     </div>
     <div class="dialogInfoBox-technical">
@@ -45,7 +45,10 @@ import icons from "@/icons/index";
 
 export default {
   name: "DialogInfoBox",
-  props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity", "parentPath"],
+  props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity", "parentPath", "readableIntentName", "intentGroup"],
+  data() {
+    return {};
+  },
   computed: {
     technicalIntentName() {
       const intentNameGenerator = new IntentNameGenerator(this.intent, this.entity);
