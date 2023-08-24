@@ -1,7 +1,7 @@
 <template>
   <div class="placeholderInfoBox">
     <el-row>
-      <h1 style="font-size: 18px">Platzhalter</h1>
+      <h1>Platzhalter</h1>
       <span>
         <p style="font-size: 14px">
           Mithilfe von Platzhaltern können Sie einmalig definierte Textpassagen
@@ -54,7 +54,6 @@
 
   h1 {
     margin-top: 0px;
-    font-size: 18px;
     color: #303133;
   }
 }
