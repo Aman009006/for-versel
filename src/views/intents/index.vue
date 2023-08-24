@@ -18,6 +18,7 @@
 import intentsInfoBox from "./intentsInfoBox.vue";
 import intentGroupContainer from "./intentGroupContainer.vue";
 import intentSearch from "../../components/IntentSearch/index.vue"
+import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 
 export default {
   name: "Intents",
@@ -38,10 +39,10 @@ export default {
     };
   },
   mounted() {
-    this.addActiveToSidebar();
+    addActiveToSidebar('is-intent');
   },
   unmounted() {
-    this.removeActiveFromSidebar();
+    removeActiveFromSidebar('is-intent');
   },
   methods: {
     updateIntentGroups(array) {

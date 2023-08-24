@@ -6,11 +6,10 @@
         :description="$route.meta.description"
         :utterances="utterances"
         :adminUiTestPageLink="$store.getters.metainfo.admin_ui_test_page_link"
-        :entity="$route.meta.entity" 
+        :entity="$route.meta.entity"
         :parentPath="parentPath"
         :readable-intent-name="readableIntentName"
-        :intent-group="intentGroup"
-        />
+        :intent-group="intentGroup" />
 
       <RedirectionInfoBox
         v-if="answerConfig != null"
@@ -32,6 +31,7 @@ import DialogInfoBox from "@/components/Dialogs/DialogInfoBox/index.vue";
 import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox/index.vue";
 import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
+import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 
 export default {
   name: "Intent",
@@ -49,10 +49,10 @@ export default {
     };
   },
   mounted() {
-    this.addActiveToSidebar();
+    addActiveToSidebar('is-intent');
   },
   unmounted() {
-    this.removeActiveFromSidebar();
+    removeActiveFromSidebar('is-intent');
   },
   computed: {
     intentInfo() {
@@ -107,14 +107,6 @@ export default {
       );
       this.dataReady = true;
     },
-    addActiveToSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.add('is-active');
-    },
-    removeActiveFromSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.remove('is-active');
-    }
   },
 };
 </script>

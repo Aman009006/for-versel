@@ -51,6 +51,7 @@
 import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
+import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: true });
@@ -78,10 +79,10 @@ export default {
     };
   },
   mounted() {
-    this.addActiveToSidebar();
+    addActiveToSidebar('is-intent');
   },
   unmounted() {
-    this.removeActiveFromSidebar();
+    removeActiveFromSidebar('is-intent');
   },
   computed: {
     icons() {
@@ -144,14 +145,6 @@ export default {
       const basePath = this.$router.currentRoute.value.href;
       return `${basePath}/${encodeURIComponent(encodePathComponent(path))}`
     },
-    addActiveToSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.add('is-active');
-    },
-    removeActiveFromSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.remove('is-active');
-    },
   }
 };
 </script>
@@ -201,7 +194,7 @@ export default {
   }
 }
 
-.el-table a{
+.el-table a {
   position: relative;
   z-index: 2000;
 }
