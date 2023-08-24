@@ -196,6 +196,7 @@ export default {
   height: 34px;
   width: 100%;
   margin-left: 0;
+  z-index: 100;
   background: $hsag-lightgrey;
   border-bottom: 1px solid #d8dce5;
 

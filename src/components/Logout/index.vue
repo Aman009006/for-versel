@@ -1,6 +1,6 @@
 <template>
-    <el-icon class="svg-icon logout-icon right-menu-item" @click="logout" :size="34">
-        <svg-icon :svg-icon-html="svgIconHtml" style="width: 18px; height: 18px" />
+    <el-icon class="svg-icon logout-icon right-menu-item" @click="logout" :size="40">
+        <svg-icon :svg-icon-html="svgIconHtml" style="width: 22px; height: 22px" />
     </el-icon>
 </template>
   

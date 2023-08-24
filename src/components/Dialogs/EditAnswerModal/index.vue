@@ -6,6 +6,9 @@
     <Teleport to="body">
       <div v-if="editModalOpened" class="modalBox">
         <div class="modalContent">
+          <span class="svg-container" @click="closeEditModal()">
+            <svg-icon :svg-icon-html="icons.close" />
+          </span>
           <EditAnswer
             ref="editAnswerRef"
             :answer="answer"
@@ -13,21 +16,21 @@
           />
           <div class="buttonsContainer">
             <el-button
-              id="saveAnswerButton"
-              class="confirm-btn"
-              :disabled="confirmButtonDisabled"
-              :loading="saveAnswerClicked"
-              @click="saveAnswer()"
+            class="cancel-btn"
+            :disabled="savingCurrently"
+            @click="closeEditModal()"
             >
-              Speichern
-            </el-button>
-            <el-button
-              class="cancel-btn"
-              :disabled="savingCurrently"
-              @click="closeEditModal()"
-            >
-              Abbrechen
-            </el-button>
+            Abbrechen
+          </el-button>
+          <el-button
+            id="saveAnswerButton"
+            class="confirm-btn"
+            :disabled="confirmButtonDisabled"
+            :loading="saveAnswerClicked"
+            @click="saveAnswer()"
+          >
+            Speichern
+          </el-button>
           </div>
         </div>
       </div>
@@ -39,6 +42,7 @@
 import EditAnswer from "@/components/Dialogs/EditAnswer/index.vue";
 import { dispatchNames } from "@/constants";
 import ButtonUtilities from "@/store/utilities/ButtonUtilities";
+import icons from "@/icons/index";
 
 export default {
   components: {
@@ -61,6 +65,9 @@ export default {
     },
     confirmButtonDisabled() {
       return this.savingCurrently || this.buttonsInValid;
+    },
+    icons() {
+      return icons;
     },
   },
   methods: {
@@ -114,16 +121,29 @@ export default {
   background-color: rgb(0 0 0 / 38%);
   overflow-y: scroll;
   color: $darkGrey;
-
+  
   .modalContent {
+    position: relative;
     width: 95%;
     margin: auto;
     max-width: 850px;
     padding: 25px;
     background-color: white;
     text-align: left;
+    
+    .svg-container {
+      position: absolute;
+      width: 20px;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      color: $hsag-black;
+      cursor: pointer;
+    }
 
     .buttonsContainer {
+      float: right;
       margin-top: 15px;
       .cancel-btn:disabled {
         background-color: #f78989 !important;
