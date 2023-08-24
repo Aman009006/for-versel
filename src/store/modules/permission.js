@@ -5,7 +5,6 @@ import { paths } from '@/constants'
 import Reporting from '@/views/reporting/index.vue'
 import Intents from '@/views/intents/index.vue'
 import IntentGroup from '@/views/intents/intent-group/index.vue'
-import Intent from '@/views/intents/single-intent/index.vue'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -149,7 +148,7 @@ export function makeRouteForIntents(skillsWithIntents) {
     skillWithIntent.Intents.forEach((intent) => {
       route.children.push({
         path: `${paths.intents}/${specificIntentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
-        component: Intent,
+        component: () => import('@/views/intents/single-intent/index.vue'),
         name: `intent-${intent.name}`,
         meta: {
           title: `${intent.name}`,
