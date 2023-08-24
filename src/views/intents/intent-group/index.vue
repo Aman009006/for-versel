@@ -94,6 +94,9 @@ export default {
       this.filteredArray = array;
     },
     handleHover(row) {
+      if (event.target.tagName === "BUTTON" || event.target.tagName === "SPAN") {
+        return;
+      }
       const intentContainer = document.getElementById('intent-hover');
       if (intentContainer.getAttribute('data-intent') === row.intent) {
         this.hideHover();
@@ -105,6 +108,7 @@ export default {
         intentContainer.classList.add('hidden');
         setTimeout(() => {
           this.fillHoverText(row.texts)
+          intentContainer.setAttribute('data-intent', row.intent);
           this.showHover();
         }, 400);
       }
