@@ -194,7 +194,7 @@ export default {
   transition: bottom 0.3s ease-in-out;
 
   &.hidden {
-    bottom: -200px;
+    bottom: -300px;
   }
 }
 
