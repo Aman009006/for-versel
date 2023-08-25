@@ -45,7 +45,9 @@ export default class SkillsWithIntentsDataGetterImpl {
         const allIntents = intentsFromSkills.flat();
         const intent = allIntents.find(
             intentElement =>
-                encodeURIComponent(encodePathComponent(intentElement.name)) === this.route.path &&
+                this.route.meta &&
+                this.route.meta.title &&
+                intentElement.intent === this.route.meta.intent &&
                 // intent - routes don't have children
                 this.route.children == null
         )
