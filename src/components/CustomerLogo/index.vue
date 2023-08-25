@@ -28,5 +28,6 @@ export default {
     width: 150px;
     margin: 0 20px;
     mix-blend-mode: multiply;
+    z-index: 200;
 }
 </style>
