@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^13.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/test-utils": "^2.3.1",
     "eslint": "^8.36.0",
