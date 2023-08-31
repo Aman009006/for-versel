@@ -18,7 +18,8 @@ const defaultViteConfig = {
     envDir: resolve(__dirname, "../../environments"),
     server: {
         port: 9527,
-        strictPort: true
+        strictPort: true,
+        open: true,
     },
     build: {
         chunkSizeWarningLimit: 2000
