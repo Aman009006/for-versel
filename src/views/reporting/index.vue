@@ -18,7 +18,7 @@ export default {
         }
     },
     created() {
-        this.combinedLink = `https://app.powerbi.com/reportEmbed?reportId=${this.powerBiReportId}&autoAuth=true`;
+        this.combinedLink = `https://app.powerbi.com/reportEmbed?reportId=${this.powerBiReportId}&autoAuth=true&ctid=58edcd46-9a0e-4d7f-9e4d-8da23bf52b1c`;
     },
     data() {
         return {};
