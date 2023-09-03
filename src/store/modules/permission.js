@@ -61,6 +61,7 @@ const mutations = {
       '/',
       '/skills',
       '/placeholders',
+      '/benutzer',
       '/reporting',
       '/jira',
       '/notes',
