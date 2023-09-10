@@ -7,6 +7,7 @@ import permission from './modules/permission';
 import placeholders from './modules/placeholders';
 import tagsView from './modules/tagsView';
 import user from './modules/user';
+import users from './modules/users';
 import virtualIntents from './modules/virtualIntents';
 
 const modules = createModules();
@@ -24,6 +25,7 @@ function createModules() {
     placeholders,
     tagsView,
     user,
+    users,
     virtualIntents
   };
   return modules;

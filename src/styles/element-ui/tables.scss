@@ -1,4 +1,11 @@
 .el-table {
+  --el-table-header-bg-color : #8393A7 !important;
+  --el-table-header-text-color: #FFFFFF !important;
+  --el-table-row-hover-bg-color: none !important;
+  --el-table-border: none !important;
+    .el-table__row:nth-child(2n) {
+      --el-table-tr-bg-color: #e7ebee !important;
+    }
     .cell {
         word-break: normal !important;
     }

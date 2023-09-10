@@ -13,6 +13,7 @@ import Dashboard from '@/views/dashboard/index.vue'
 import PlaceHolders from '@/views/placeholders/index.vue'
 import PasswordReset from '@/views/passwordReset/index.vue'
 import SendResetMail from '@/views/sendResetMail/index.vue'
+import AdminPage from '@/views/admin-page/index.vue'
 
 export const constantRoutes = [
   {
@@ -54,6 +55,21 @@ export const constantRoutes = [
         meta: {
           title: 'Platzhalter',
           icon: 'edit',
+        },
+      },
+    ],
+  },
+  {
+    path: paths.benutzer,
+    component: Layout,
+    children: [
+      {
+        path: paths.benutzer,
+        component: AdminPage,
+        name: 'Benutzer',
+        meta: {
+          title: 'Benutzer',
+          icon: 'user',
         },
       },
     ],

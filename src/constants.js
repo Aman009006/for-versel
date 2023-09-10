@@ -11,6 +11,7 @@ export const links = {
 export const paths = {
   intents: '/intents',
   placeholders: '/placeholders',
+  benutzer: '/benutzer',
   reporting: '/reporting',
 }
 
