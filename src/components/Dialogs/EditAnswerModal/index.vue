@@ -121,7 +121,7 @@ export default {
   background-color: rgb(0 0 0 / 38%);
   overflow-y: scroll;
   color: $darkGrey;
-  
+
   .modalContent {
     position: relative;
     width: 95%;
@@ -130,7 +130,7 @@ export default {
     padding: 25px;
     background-color: white;
     text-align: left;
-    
+
     .svg-container {
       position: absolute;
       width: 20px;

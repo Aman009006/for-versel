@@ -126,6 +126,10 @@
   font-weight: normal !important;
 }
 
+.el-message-box .el-button--default:first-child {
+  background-color: $hsag-bluegrey;
+}
+
 .el-button--warning:hover {
   color: white !important;
   background-color: $orange  !important;
