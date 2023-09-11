@@ -1,12 +1,14 @@
 .el-table {
-  --el-table-header-bg-color : #8393A7 !important;
-  --el-table-header-text-color: #FFFFFF !important;
-  --el-table-row-hover-bg-color: none !important;
-  --el-table-border: none !important;
-    .el-table__row:nth-child(2n) {
-      --el-table-tr-bg-color: #e7ebee !important;
-    }
+  --el-table-header-bg-color : #8393A7 ;
+  --el-table-header-text-color: #FFFFFF ;
     .cell {
         word-break: normal !important;
     }
+}
+.add-btn,
+.add-btn:hover {
+  color: white ;
+  border-radius: 9px ;
+  margin-left: 0px ;
+  margin-top: 10px ;
 }

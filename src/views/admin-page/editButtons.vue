@@ -202,7 +202,6 @@ export default {
             type: "success",
           });
         }
-        console.log(updateSuccessful,'updateSuccessful')
         return updateSuccessful;
       }
     },
@@ -266,8 +265,7 @@ export default {
   background: red;
 }
 .el-table .custom-first-column {
-  background-color: red !important; /* Здесь используем !important для переопределения стилей */
-  /* Дополнительные стили, если необходимо */
+  background-color: red !important;
 }
 
 </style>

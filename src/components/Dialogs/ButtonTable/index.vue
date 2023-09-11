@@ -200,7 +200,7 @@ export default {
 #tableButtonContainer{
   h2{
     font-size: 18px;
-  }  
+  }
 }
 .popOverContent {
   text-align: left;

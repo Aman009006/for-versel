@@ -1,5 +1,5 @@
 <template>
-  <div class="placeholderInfoBoxAdmin">
+  <div class="userInfoBoxAdmin">
     <el-row>
       <h1 style="font-size: 18px">Benutzerverwaltung</h1>
       <span>
@@ -20,7 +20,7 @@
 <style lang="scss">
 @import "@/styles/variables.module.scss";
 
-.placeholderInfoBoxAdmin {
+.userInfoBoxAdmin {
   background-color: $hsag-lightgrey;
   padding: 15px 25px;
   margin-bottom: 20px;
@@ -32,7 +32,4 @@
   }
 }
 
-.text {
-  font-size: 14px;
-}
 </style>

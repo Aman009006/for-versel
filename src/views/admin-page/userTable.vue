@@ -1,7 +1,7 @@
 <template >
-  <div class="table-container-admin">
+  <div>
     <template v-if="dataReady">
-      <el-table :data="allUsers" class="alternate-column-colors" >
+      <el-table :data="allUsers" stripe>
         <el-table-column
           align="start"
           label="E-Mail"
@@ -46,8 +46,10 @@
 </template>
 
 <style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
 .shadow-text{
-  background: #000;
+  background: $hsag-black;
   position: absolute;
   top: -1px;
   left: 0;
