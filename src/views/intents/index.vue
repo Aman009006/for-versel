@@ -48,14 +48,6 @@ export default {
     updateIntentGroups(array) {
       this.filteredArray = array;
     },
-    addActiveToSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.add('is-active');
-    },
-    removeActiveFromSidebar() {
-      const intentContainer = document.getElementsByClassName('is-intent')[0];
-      intentContainer.classList.remove('is-active');
-    }
   }
 };
 </script>
