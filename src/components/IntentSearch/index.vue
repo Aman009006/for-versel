@@ -3,7 +3,7 @@
         <span class="svg-container">
             <svg-icon :svg-icon-html="icons.search" />
         </span>
-        <el-input placeholder="Intent Suche" v-model="intentSearchValue" id="intentSearchInput">
+        <el-input placeholder="Intent Suche" v-model="intentSearchValue">
         </el-input>
     </el-form-item>
 </template>
@@ -31,6 +31,10 @@ export default {
 
     },
     methods: {
+        /**
+         * add overflow to main app to prevent the scrollbar from disappearing
+         * which would result in a jump of the content
+         */
         addOverflowToMainApp() {
             document.body.style.overflowY = "scroll";
         }
@@ -42,15 +46,19 @@ export default {
         const intentSearchValue = ref("");
         const filteredArray = ref(props.searchableArray);
 
+        const ignoreCaseAndCheckInclude = (intent, searchString) => {
+            return intent.toLowerCase().includes(searchString.toLowerCase())
+        }
+
         watch(intentSearchValue, (newValue) => {
 
             filteredArray.value = props.searchableArray.filter((intent) => {
                 const name = intent.SkillName || intent.name;
                 const technicalIntent = intent.intent
                 if (props.searchScope === 'intentGroup') {
-                    return name.toLowerCase().includes(newValue.toLowerCase());
+                    return ignoreCaseAndCheckInclude(name, newValue);
                 } else {
-                    return name.toLowerCase().includes(newValue.toLowerCase()) || technicalIntent.toLowerCase().includes(newValue.toLowerCase());
+                    return ignoreCaseAndCheckInclude(name, newValue) || ignoreCaseAndCheckInclude(technicalIntent, newValue);
                 }
             });
 
