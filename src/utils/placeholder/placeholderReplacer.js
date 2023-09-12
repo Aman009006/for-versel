@@ -12,7 +12,7 @@ export default class PlaceholderReplacer {
     replaceAnswers() {
         const replacedAnswers = JSON.parse(JSON.stringify(this.answers));
         for (const answer of replacedAnswers) {
-            answer.text = this.#replaceFunction(answer.text);
+            answer.text = this.#fillPlaceholdersInText(answer.text);
         }
         return replacedAnswers;
     }
@@ -20,7 +20,7 @@ export default class PlaceholderReplacer {
      * @param {String} text
      * @returns {String}
      */
-    #replaceFunction(text) {
+    #fillPlaceholdersInText(text) {
         for (const placeholder of this.allPlaceholders) {
             if (text.includes(`##${placeholder.key}##`)) {
                 text = text.replaceAll(`##${placeholder.key}##`, `${placeholder.value}`);
