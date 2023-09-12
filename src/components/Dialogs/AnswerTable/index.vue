@@ -37,7 +37,7 @@ import ButtonList from "@/components/Dialogs/ButtonList/index.vue";
 import EditAnswerModal from "@/components/Dialogs/EditAnswerModal/index.vue";
 import { humanReadableLabels } from "@/constants";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
-import ReplacePlaceholder from "@/utils/placeholder/replacePlaceholder";
+import PlaceholderReplacer from "@/utils/placeholder/placeholderReplacer";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: false });
 
@@ -66,7 +66,7 @@ export default {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
       this.placeholderReady = true;
       this.allPlaceholders = PlaceholderUtilities.getAllPlaceholders(this.$store);
-      this.humanReadableAnswers = new ReplacePlaceholder(this.answers, this.allPlaceholders).replaceAnswers();
+      this.humanReadableAnswers = new PlaceholderReplacer(this.answers, this.allPlaceholders).replaceAnswers();
     },
     renderToMarkdown(text) {
       return md.render(text);

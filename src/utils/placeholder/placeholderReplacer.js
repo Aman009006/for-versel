@@ -1,4 +1,4 @@
-export default class ReplacePlaceholder {
+export default class PlaceholderReplacer {
     /*
     * @param {Array} answers
     * @param {Array} allPlaceholders
@@ -23,7 +23,7 @@ export default class ReplacePlaceholder {
     #replaceFunction(text) {
         for (const placeholder of this.allPlaceholders) {
             if (text.includes(`##${placeholder.key}##`)) {
-                text = text.replace(`##${placeholder.key}##`, `${placeholder.value}`);
+                text = text.replaceAll(`##${placeholder.key}##`, `${placeholder.value}`);
             }
         }
         return text
