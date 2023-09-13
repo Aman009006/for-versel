@@ -27,14 +27,14 @@
 
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <div v-if="getSelectedUser(user)" class="shadow-text"></div>
+        <div v-if="isNotCurrentSelectedUser(user)" class="shadow-text"></div>
 
         <el-row class="button-row" align="middle">
           <el-col style="margin-right: 10px" class="button-col" :span="12">
             <el-button
               class="edit-btn"
               icon="icon-Edit"
-              @click="startEdit(user) , getSelectedUser(user)"
+              @click="startEdit(user) , isNotCurrentSelectedUser(user)"
             >
               Bearbeiten
             </el-button>
@@ -73,9 +73,9 @@ export default {
       );
       return isEditing;
     },
-    getSelectedUser (user) {
+    isNotCurrentSelectedUser (user) {
       const selectedRow = Object.values(this.$store._state.data.users.editableUsers)[0]?.email;
-      if (selectedRow)  {
+      if (selectedRow !== undefined)  {
         return selectedRow !== user.email
       }
       return false
@@ -93,7 +93,7 @@ export default {
     },
     async deleteUser(user) {
       this.$confirm(
-        "Sind Sie sich sicher, dass sie den Benutzer “John Smith” löschen\n" +
+        `Sind Sie sich sicher, dass sie den Benutzer ${user.email} löschen\n` +
         "wollen? Diese Aktion ist nicht rückgängig zu machen.",
         "Benutzer löschen",
         {

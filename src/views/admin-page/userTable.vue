@@ -33,7 +33,7 @@
               />
             </template>
             <template v-else>
-              <div v-if="getSelectedUser(row)" class="shadow-text"></div>
+              <div v-if="isNotCurrentSelectedUser(row)" class="shadow-text"></div>
               <span class="text-input">{{ row.email }}</span>
             </template>
           </template>
@@ -94,9 +94,9 @@ export default {
       );
       return isEditing;
     },
-    getSelectedUser (user) {
+    isNotCurrentSelectedUser (user) {
       const selectedRow = Object.values(this.$store._state.data.users.editableUsers)[0]?.email;
-      if (selectedRow)  {
+      if (selectedRow !== undefined)  {
         return selectedRow !== user.email
       }
       return false

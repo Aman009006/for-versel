@@ -64,9 +64,9 @@ export default {
 }
 
 function getUser(state, placeholderKey) {
-  return state.users.find(isUserWithKey(placeholderKey));
+  return state.users.find(isUserWithEmail(placeholderKey));
 }
 
-function isUserWithKey(placeholderKey) {
+function isUserWithEmail(placeholderKey) {
   return (users) => users.email == placeholderKey;
 }

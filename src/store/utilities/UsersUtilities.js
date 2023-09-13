@@ -34,9 +34,9 @@ export default class UsersUtilities {
 
   static stopCreatingOrAddingUser(store, user) {
     if (this.isNewUser(store, user)) {
-      this.#stopCreatingNewPlaceholder(store);
+      this.#stopCreatingNewEmail(store);
     } else {
-      this.#stopEditingPlaceholder(
+      this.#stopEditingEmail(
         store,
         user.email
       );
@@ -56,12 +56,12 @@ export default class UsersUtilities {
     return newUsers == user;
   }
 
-  static #stopCreatingNewPlaceholder(store) {
+  static #stopCreatingNewEmail(store) {
     const dispatchName = this.#getDispatchName('stopCreatingNewUserAction');
     store.dispatch(dispatchName);
   }
 
-  static #stopEditingPlaceholder(store, user) {
+  static #stopEditingEmail(store, user) {
     const dispatchName = this.#getDispatchName('stopEditingUserAction');
     store.dispatch(dispatchName, user);
   }
