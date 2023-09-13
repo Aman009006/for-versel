@@ -4,8 +4,8 @@
       <!-- When the editing mode is turned on: -->
       <template v-if="isUserEditing(user)">
 
-        <el-row>
-          <el-col style="margin-right: 10px" span="12">
+        <el-row class="button-row">
+          <el-col style="margin-right: 10px" :span="12">
             <el-button
               class="confirm-btn"
               icon="icon-Check"
@@ -14,7 +14,7 @@
               Speichern
             </el-button>
           </el-col>
-          <el-col span="12">
+          <el-col :span="12">
             <el-button
               style="background: #FA5050; width: 31px;"
               class="cancel-btn"
@@ -30,7 +30,7 @@
         <div v-if="getSelectedUser(user)" class="shadow-text"></div>
 
         <el-row class="button-row" align="middle">
-          <el-col style="margin-right: 10px" class="button-col" span="12">
+          <el-col style="margin-right: 10px" class="button-col" :span="12">
             <el-button
               class="edit-btn"
               icon="icon-Edit"
@@ -39,7 +39,7 @@
               Bearbeiten
             </el-button>
           </el-col>
-          <el-col class="button-col" span="12">
+          <el-col class="button-col" :span="12">
             <el-button
               style="border-radius: 10px; background: #FA5050; width: 33px;"
               class="delete-btn"
@@ -249,6 +249,9 @@ export default {
   width: 100%;
   margin-top: 2px;
   margin-bottom: 2px;
+}
+.button-row{
+  flex-wrap: nowrap;
 }
 .shadow-text{
   background: #000;
