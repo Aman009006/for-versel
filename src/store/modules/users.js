@@ -9,8 +9,8 @@ const state = {
 }
 
 const mutations = {
-  setUsers: (state, placeholders) => {
-    state.users = placeholders
+  setUsers: (state, users) => {
+    state.users = users
   },
   addNewUser: (state) => {
     if (state.newUsers == null) {
@@ -36,8 +36,8 @@ const mutations = {
 
 const actions = {
   async fetchUsersAction({ commit }) {
-    const placeholders = await getAllUsers()
-    commit(mutations.setUsers.name, placeholders)
+    const allUsers = await getAllUsers()
+    commit(mutations.setUsers.name, allUsers)
   },
   startCreatingNewUserAction({ commit }) {
     commit(mutations.addNewUser.name)
@@ -63,10 +63,10 @@ export default {
   actions,
 }
 
-function getUser(state, placeholderKey) {
-  return state.users.find(isUserWithEmail(placeholderKey));
+function getUser(state, user) {
+  return state.users.find(isUserWithEmail(user));
 }
 
-function isUserWithEmail(placeholderKey) {
-  return (users) => users.email == placeholderKey;
+function isUserWithEmail(userEmail) {
+  return (users) => users.email == userEmail;
 }

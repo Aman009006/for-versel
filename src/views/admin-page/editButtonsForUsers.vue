@@ -27,7 +27,7 @@
 
       <!-- When the editing mode is turned off: -->
       <template v-else>
-        <div v-if="isNotCurrentSelectedUser(user)" class="shadow-text"></div>
+        <div v-if="isNotCurrentSelectedUser(user)" class="shadow-table"></div>
 
         <el-row class="button-row" align="middle">
           <el-col style="margin-right: 10px" class="button-col" :span="12">
@@ -60,6 +60,9 @@ import UsersUtilities from "@/store/utilities/UsersUtilities";
 import {addUser, deleteUser, editUser} from "@/api/users";
 
 export default {
+  props: {
+    defaultInputType: Function
+  },
   computed: {
     currentUsers() {
       return this.$store.getters.users;
@@ -81,6 +84,7 @@ export default {
       return false
     },
     removeInputFields(user) {
+      this.defaultInputType()
       this.resetPassword()
       UsersUtilities.stopCreatingOrAddingUser(this.$store, user);
     },
@@ -124,7 +128,7 @@ export default {
         }
       } else {
         this.$message({
-          message: "Bitte Platzhalterbezeichnung und Wert eingeben",
+          message: "E-Mail darf nicht leer sein",
           type: "warning",
         });
         savedSuccessfully = false;
@@ -225,7 +229,7 @@ export default {
         if (setSuccessful) {
           this.resetPassword()
           this.$message({
-            message: "Der neue Platzhalter wurde erfolgreich gespeichert",
+            message: "Der neue email wurde erfolgreich gespeichert",
             type: "success",
           });
         }
@@ -253,20 +257,7 @@ export default {
 .button-row{
   flex-wrap: nowrap;
 }
-.shadow-text{
-  background: #000;
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  z-index: 99;
-}
 
-.cancel-btn {
-  background: red;
-}
 .el-table .custom-first-column {
   background-color: red !important;
 }

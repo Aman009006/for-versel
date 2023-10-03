@@ -28,8 +28,8 @@ export default class UsersUtilities {
 
   static isUserEditing(store, user) {
     const { editableUsers } = store.getters;
-    const editingPlaceholderKeys = Object.keys(editableUsers)
-    return editingPlaceholderKeys.includes(user.email) || this.isNewUser(store, user);
+    const editingEmailKeys = Object.keys(editableUsers)
+    return editingEmailKeys.includes(user.email) || this.isNewUser(store, user);
   }
 
   static stopCreatingOrAddingUser(store, user) {

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import userInfoBox from "./userInfoBox.vue";
+import userInfoBox from "./usersInfoBox.vue";
 import userTable from "./userTable.vue";
 
 export default {

@@ -1,14 +1,14 @@
 <template>
-  <div class="userInfoBoxAdmin">
+  <div class="infoBox">
     <el-row>
-      <h1 style="font-size: 18px">Benutzerverwaltung</h1>
+      <h1>Benutzerverwaltung</h1>
       <span>
-        <p style="font-size: 14px">
+        <p style="font-size: 12px;">
           Administratoren haben Zugriff auf Funktionen zur Erstellung, Bearbeitung und Löschung von Benutzerkonten. Sie können Benutzernamen, E-Mail-Adressen und Passwörter verwalten.
             Es ist möglich Konten zu sperren oder entsperren.
         </p>
 
-        <p style="font-size: 14px">
+        <p style="font-size: 12px">
           Die Übersicht bietet eine nahtlose Verwaltung der Benutzerkonten, um einen reibungslosen Ablauf im System zu gewährleisten.
         </p>
 
@@ -16,20 +16,3 @@
     </el-row>
   </div>
 </template>
-
-<style lang="scss">
-@import "@/styles/variables.module.scss";
-
-.userInfoBoxAdmin {
-  background-color: $hsag-lightgrey;
-  padding: 15px 25px;
-  margin-bottom: 20px;
-
-  h1 {
-    margin-top: 0px;
-    font-size: 18px;
-    color: #303133;
-  }
-}
-
-</style>

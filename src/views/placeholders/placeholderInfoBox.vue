@@ -1,9 +1,9 @@
 <template>
-  <div class="placeholderInfoBox">
+  <div class="infoBox">
     <el-row>
       <h1>Platzhalter</h1>
       <span>
-        <p style="font-size: 14px">
+        <p style="font-size: 12px">
           Mithilfe von Platzhaltern können Sie einmalig definierte Textpassagen
           in beliebig vielen Dialogantworten parallel anzeigen lassen. Sobald
           Sie am Inhalt der Textpassage eine Änderung vornehmen, überträgt sich
@@ -11,7 +11,7 @@
           Pflege der einzelnen Dialogantworten entfällt.
         </p>
 
-        <p style="font-size: 14px">
+        <p style="font-size: 12px">
           Alle Platzhalter setzen sich aus zwei Teilen zusammen: Die
           Platzhalterbezeichnung dient als ID des Platzhalters und wird in einer
           Dialogantwort an gewünschter Stelle in der Form
@@ -43,22 +43,3 @@
     </el-row>
   </div>
 </template>
-
-<style lang="scss">
-@import "@/styles/variables.module.scss";
-
-.placeholderInfoBox {
-  background-color: $hsag-lightgrey;
-  padding: 15px 25px;
-  margin-bottom: 20px;
-
-  h1 {
-    margin-top: 0px;
-    color: #303133;
-  }
-}
-
-.text {
-  font-size: 14px;
-}
-</style>
