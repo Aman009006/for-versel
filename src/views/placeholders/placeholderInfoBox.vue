@@ -1,5 +1,5 @@
 <template>
-  <div class="infoBox">
+  <div class="placeholderInfoBox infoBox">
     <el-row>
       <h1>Platzhalter</h1>
       <span>

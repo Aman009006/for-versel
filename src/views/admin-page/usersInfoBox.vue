@@ -1,5 +1,5 @@
 <template>
-  <div class="infoBox">
+  <div class="userInfoBox infoBox">
     <el-row>
       <h1>Benutzerverwaltung</h1>
       <span>

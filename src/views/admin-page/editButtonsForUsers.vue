@@ -1,5 +1,5 @@
 <template>
-  <el-table-column class="custom-first-column" label="Aktion" align="start" width="206px">
+  <el-table-column label="Aktion" align="start" width="206px">
     <template #default="{ row: user }">
       <!-- When the editing mode is turned on: -->
       <template v-if="isUserEditing(user)">
@@ -243,10 +243,7 @@ export default {
 <style lang="scss" scoped>
 .cancel-btn,
 .confirm-btn,
-.edit-btn,
-.cancel-btn:hover,
-.confirm-btn:hover,
-.edit-btn:hover {
+.edit-btn {
   color: white !important;
   border-radius: 9px !important;
   margin-left: 0px !important;
@@ -256,10 +253,6 @@ export default {
 }
 .button-row{
   flex-wrap: nowrap;
-}
-
-.el-table .custom-first-column {
-  background-color: red !important;
 }
 
 </style>
