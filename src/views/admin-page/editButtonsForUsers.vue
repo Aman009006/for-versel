@@ -244,9 +244,9 @@ export default {
 .cancel-btn,
 .confirm-btn,
 .edit-btn {
-  color: white !important;
-  border-radius: 9px !important;
-  margin-left: 0px !important;
+  color: white;
+  border-radius: 9px;
+  margin-left: 0px;
   width: 100%;
   margin-top: 2px;
   margin-bottom: 2px;
