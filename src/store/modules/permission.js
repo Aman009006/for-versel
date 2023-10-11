@@ -135,7 +135,7 @@ export function makeRouteForIntents(skillsWithIntents) {
   skillsWithIntents.forEach((skillWithIntent) => {
     const specificIntentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
     route.children.push({
-      path: `${paths.intents}/${encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))}`,
+      path: `${paths.intents}/${specificIntentGroupPath}`,
       component: IntentGroup,
       props: { headline: skillWithIntent.SkillName, intents: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes

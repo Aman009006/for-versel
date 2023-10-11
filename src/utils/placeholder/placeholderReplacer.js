@@ -1,4 +1,4 @@
-export default class ReplacePlaceholder {
+export default class PlaceholderReplacer {
     /*
     * @param {Array} answers
     * @param {Array} allPlaceholders
@@ -12,7 +12,7 @@ export default class ReplacePlaceholder {
     replaceAnswers() {
         const replacedAnswers = JSON.parse(JSON.stringify(this.answers));
         for (const answer of replacedAnswers) {
-            answer.text = this.#replaceFunction(answer.text);
+            answer.text = this.#fillPlaceholdersInText(answer.text);
         }
         return replacedAnswers;
     }
@@ -20,10 +20,10 @@ export default class ReplacePlaceholder {
      * @param {String} text
      * @returns {String}
      */
-    #replaceFunction(text) {
+    #fillPlaceholdersInText(text) {
         for (const placeholder of this.allPlaceholders) {
             if (text.includes(`##${placeholder.key}##`)) {
-                text = text.replace(`##${placeholder.key}##`, `${placeholder.value}`);
+                text = text.replaceAll(`##${placeholder.key}##`, `${placeholder.value}`);
             }
         }
         return text

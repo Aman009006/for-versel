@@ -1,11 +1,11 @@
 import { Plugin } from 'ckeditor5/src/core';
 import { ButtonView } from 'ckeditor5/src/ui';
-import ReplacePlaceholder from './replacePlaceholder';
+import PlaceholderReplacer from './placeholderReplacer';
 export default class PlaceholderToggler extends Plugin {
     static get pluginName() {
         return 'PlaceholderToggler';
     }
-    props = [];
+
     constructor(editor) {
         super(editor);
         this.label = 'Platzhaltervorschau aktivieren';
@@ -16,6 +16,7 @@ export default class PlaceholderToggler extends Plugin {
             noPlaceholderText: '',
         };
     }
+
     init() {
         const editor = this.editor;
         const t = editor.t;
@@ -42,6 +43,7 @@ export default class PlaceholderToggler extends Plugin {
             return buttonView;
         });
     }
+
     /**
      * @param {ButtonView} buttonView
      * @param {Object} editor
@@ -60,16 +62,32 @@ export default class PlaceholderToggler extends Plugin {
             label: editor(this.label),
         });
     }
+
     /** @param {Array} placeholders */
     #togglePlaceholder(placeholders) {
         this.#setTextContainer(placeholders);
         this.#replacePlaceholders();
     }
+
     /** @returns {Boolean} */
     #checkForPlaceholders() {
         const regex = /.*##.*/;
         return regex.test(this.editor.getData());
     }
+
+    /** @param {Array} placeholders */
+    #setTextContainer(placeholders) {
+        if (this.isPlaceholderShown === false) {
+            this.textContainer.originalText = this.editor.getData();
+            this.textContainer.placeholderText = this.editor.getData();
+            this.textContainer.noPlaceholderText = new PlaceholderReplacer(
+                [{ text: this.textContainer.placeholderText }], placeholders).replaceAnswers();
+        } else {
+            this.textContainer.placeholderText = this.textContainer.originalText;
+            this.textContainer.noPlaceholderText = this.editor.getData();
+        }
+    }
+
     #replacePlaceholders() {
         const editor = this.editor;
         if (editor.getData() == this.textContainer.placeholderText) {
@@ -82,20 +100,9 @@ export default class PlaceholderToggler extends Plugin {
             this.#toggleSaveButton();
         }
     }
+
     #toggleSaveButton() {
         const button = document.getElementById('saveAnswerButton');
         button.disabled === true ? button.disabled = false : button.disabled = true;
-    }
-    /** @param {Array} placeholders */
-    #setTextContainer(placeholders) {
-        if (this.isPlaceholderShown === false) {
-            this.textContainer.originalText = this.editor.getData();
-            this.textContainer.placeholderText = this.editor.getData();
-            this.textContainer.noPlaceholderText = new ReplacePlaceholder(
-                [{ text: this.textContainer.placeholderText }], placeholders).replaceAnswers();
-        } else {
-            this.textContainer.placeholderText = this.textContainer.originalText;
-            this.textContainer.noPlaceholderText = this.editor.getData();
-        }
     }
 }
