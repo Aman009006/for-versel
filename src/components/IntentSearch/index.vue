@@ -11,6 +11,7 @@
 <script>
 import { ref, watch } from "vue";
 import icons from "@/icons/index";
+import { searchIntentGroup, searchSingleIntent } from "@/utils/intentSearch/intentSearch.js";
 
 export default {
     name: "IntentSearch",
@@ -46,24 +47,19 @@ export default {
         const intentSearchValue = ref("");
         const filteredArray = ref(props.searchableArray);
 
-        const ignoreCaseAndCheckInclude = (intent, searchString) => {
-            return intent.toLowerCase().includes(searchString.toLowerCase())
-        }
-
-        watch(intentSearchValue, (newValue) => {
-
+        function filterArray(newValue) {
             filteredArray.value = props.searchableArray.filter((intent) => {
-                const name = intent.SkillName || intent.name;
-                const technicalIntent = intent.intent
                 if (props.searchScope === 'intentGroup') {
-                    return ignoreCaseAndCheckInclude(name, newValue);
+                    return searchIntentGroup(intent, newValue);
                 } else {
-                    return ignoreCaseAndCheckInclude(name, newValue) || ignoreCaseAndCheckInclude(technicalIntent, newValue);
+                    return searchSingleIntent(intent, newValue);
                 }
             });
 
             emit("filteredArray", filteredArray.value);
-        });
+        }
+
+        watch(intentSearchValue, filterArray)
 
         return {
             intentSearchValue,
