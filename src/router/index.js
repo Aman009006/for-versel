@@ -14,6 +14,8 @@ import PlaceHolders from '@/views/placeholders/index.vue'
 import PasswordReset from '@/views/passwordReset/index.vue'
 import SendResetMail from '@/views/sendResetMail/index.vue'
 import AdminPage from '@/views/admin-page/index.vue'
+import AdminRolePage from '@/views/admin-page-roles/index.vue'
+import AdminRolePageEdit from '@/views/admin-page-roles-edit-create/index.vue'
 
 export const constantRoutes = [
   {
@@ -62,14 +64,36 @@ export const constantRoutes = [
   {
     path: paths.benutzer,
     component: Layout,
+    meta: {
+      title: 'Benutzer',
+      icon: 'user',
+    },
     children: [
       {
-        path: paths.benutzer,
+        path: "",
         component: AdminPage,
         name: 'Benutzer',
         meta: {
           title: 'Benutzer',
-          icon: 'user',
+          parentPath: `#${paths.benutzer}`,
+        },
+      },
+      {
+        path: paths.benutzerRole,
+        component: AdminRolePage,
+        name: 'Rollenübersicht',
+        meta: {
+          title: 'Rollenübersicht',
+          parentPath: `#${paths.benutzer}`,
+        },
+      },
+      {
+        path: paths.benutzerBerechtigungs,
+        component: AdminRolePageEdit,
+        name: 'Berechtigungs Optionen',
+        meta: {
+          title: 'Berechtigungs Optionen',
+          parentPath: `#${paths.benutzer}`,
         },
       },
     ],

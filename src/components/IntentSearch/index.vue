@@ -3,7 +3,7 @@
         <span class="svg-container">
             <svg-icon :svg-icon-html="icons.search" />
         </span>
-        <el-input placeholder="Intent Suche" v-model="intentSearchValue">
+        <el-input :placeholder="placeholder ? placeholder : 'Intent Suche'" v-model="intentSearchValue">
         </el-input>
     </el-form-item>
 </template>
@@ -22,6 +22,10 @@ export default {
         searchScope: {
             type: String,
             required: true,
+        },
+        placeholder: {
+            type: String,
+            required: false,
         },
     },
     computed: {

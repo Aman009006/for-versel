@@ -41,10 +41,20 @@
           </el-col>
           <el-col class="button-col" :span="12">
             <el-button
-              style="border-radius: 10px; background: #FA5050; width: 33px;"
-              class="delete-btn"
-              icon="icon-Delete"
-              @click="deleteUser(user)"
+                v-if="eyeType"
+                style="border-radius: 10px; padding: 0px; width: 33px;"
+                class="confirm-btn"
+                @click="redirectToEdit()"
+            >
+              <svg-icon style="width: 12px;" :svg-icon-html="icons.eyeOpen"/>
+            </el-button>
+
+            <el-button
+                v-else
+                style="border-radius: 10px; background: #FA5050; width: 33px;"
+                class="delete-btn"
+                icon="icon-Delete"
+                @click="deleteUser(user)"
             />
           </el-col>
         </el-row>
@@ -58,17 +68,33 @@
 <script>
 import UsersUtilities from "@/store/utilities/UsersUtilities";
 import {addUser, deleteUser, editUser} from "@/api/users";
+import {paths} from "@/constants";
+import icons from "@/icons/index";
 
 export default {
   props: {
-    defaultInputType: Function
+    eyeType: {
+      type: Boolean,
+      required: false,
+    },
+    isEditRole: {
+      type: Boolean,
+      required: false,
+    },
   },
   computed: {
+    icons() {
+      return icons
+    },
     currentUsers() {
       return this.$store.getters.users;
     }
   },
   methods: {
+    redirectToEdit(user) {
+      const role = user?.email ? user.email : "none";
+      this.$router.push(paths.benutzerBerechtigungs + "?role=" + role);
+    },
     isUserEditing(user) {
       const isEditing = UsersUtilities.isUserEditing(
         this.$store,
@@ -84,16 +110,18 @@ export default {
       return false
     },
     removeInputFields(user) {
-      this.defaultInputType()
-      this.resetPassword()
       UsersUtilities.stopCreatingOrAddingUser(this.$store, user);
     },
-
     async startEdit(user) {
-      UsersUtilities.startEditingUser(
-        this.$store,
-        user.email
-      );
+      if (this.isEditRole) {
+        this.redirectToEdit(user)
+      } else {
+        this.isNotCurrentSelectedUser(user)
+        UsersUtilities.startEditingUser(
+            this.$store,
+            user.email
+        );
+      }
     },
     async deleteUser(user) {
       this.$confirm(
@@ -149,12 +177,6 @@ export default {
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       return emailRegex.test(email);
     },
-    resetPassword () {
-      return UsersUtilities.editPassword(
-        this.$store,
-        ''
-      );
-    },
     removeEmptyStrings(obj) {
       const result = {};
       for (let key in obj) {
@@ -177,7 +199,7 @@ export default {
         user.email
       );
       if (
-        newUser.email == user.email && password === ''
+        newUser.email == user.email
       ) {
         this.$message({
           message: "Es wurden keine Änderungen erkannt",
@@ -200,7 +222,6 @@ export default {
           this.removeEmptyStrings(data)
         );
         if (updateSuccessful) {
-          this.resetPassword()
           this.$message({
             message: "Die Änderungen wurden erfolgreich gespeichert",
             type: "success",
@@ -227,7 +248,6 @@ export default {
           this.removeEmptyStrings(data)
         );
         if (setSuccessful) {
-          this.resetPassword()
           this.$message({
             message: "Der neue email wurde erfolgreich gespeichert",
             type: "success",

@@ -95,7 +95,7 @@
     & .el-sub-menu .el-menu-item {
       min-width: $sideBarWidth !important;
       background-color: $subMenuBg;
-      //for long names in titles 
+      //for long names in titles
       white-space: normal;
       height: auto;
       line-height: normal;
@@ -131,14 +131,14 @@
     .el-sub-menu.is-active {
       .el-menu .el-sub-menu.is-active .el-sub-menu__title {
         background-color: $hsag-green-shade;
-  
+
         &:hover{
           background-color: $hsag-green-dark;
         }
       }
       .el-menu .el-sub-menu.is-active .el-menu-item.is-active{
         background-color: $hsag-green-shade-2;
-  
+
         &:hover{
           background-color: $hsag-green-dark;
         }

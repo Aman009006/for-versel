@@ -12,6 +12,8 @@ export const paths = {
   intents: '/intents',
   placeholders: '/placeholders',
   benutzer: '/benutzer',
+  benutzerRole: '/role',
+  benutzerBerechtigungs: '/berechtigungs',
   reporting: '/reporting',
 }
 

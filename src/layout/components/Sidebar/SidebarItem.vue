@@ -38,6 +38,33 @@
         https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
         This is used here for FixiOSBug.js to reference this element.
        -->
+    <template
+      v-else-if="basePath === paths.benutzer">
+      <app-link :to="paths.benutzer">
+        <el-badge
+          class="item">
+          <el-menu-item
+            :index="resolvePath(paths.benutzer)"
+            :class="{ 'submenu-title-noDropdown': !isNest }">
+            <item
+              :popper-class="isNest ? 'hidden-popper' : ''"
+              :icon="(item.meta && item.meta.icon)"
+              :title="item.meta.title" />
+          </el-menu-item>
+        </el-badge>
+      </app-link>
+
+      <sidebar-item
+        v-if="isUserPage"
+        v-for="child in item.children.length && item.children.slice(1)"
+        :key="child.path"
+        :is-nest="true"
+        :item="child"
+        :base-path="resolvePath(child.path)"
+        class="nest-menu"
+      />
+    </template>
+
     <el-sub-menu
       v-else
       ref="subMenu"
@@ -67,9 +94,15 @@ import { isExternal } from "@/utils/validate";
 import Item from "./Item.vue";
 import AppLink from "./Link.vue";
 import FixiOSBug from "./FixiOSBug";
-
+import {paths} from "@/constants";
+import "../../../styles/variables.module.scss"
 export default {
   name: "SidebarItem",
+  computed: {
+    paths() {
+      return paths
+    }
+  },
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
@@ -91,9 +124,23 @@ export default {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
     this.onlyOneChild = null;
-    return {};
+    return {
+      isUserPage: !!this.isBenutzerPage(this.$route)
+    };
+  },
+  watch: {
+    $route(to, from) {
+      this.isUserPage = this.isBenutzerPage(to);
+    },
   },
   methods: {
+    isBenutzerPage(route) {
+      return (
+        route.fullPath.includes(paths.benutzer) ||
+        route.fullPath.includes(paths.benutzerRole) ||
+        route.fullPath.includes(paths.benutzerBerechtigungs)
+      );
+    },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter((item) => {
         if (item.hidden) {
@@ -124,6 +171,16 @@ export default {
         return true;
       }
     },
+    // isUsersPage(page) {
+    //   console.log(window.location.href, page)
+    //   const foundIndex = window.location.href.indexOf(page);
+    //
+    //   if (foundIndex !== -1) {
+    //     return true
+    //   } else {
+    //     return false
+    //   }
+    // },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath;
@@ -138,6 +195,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../../styles/variables.module.scss";
+
 .sidebar-container .el-badge {
   display: block;
   width: 100%;
@@ -151,6 +210,10 @@ export default {
 .nest-menu .el-badge {
   display: block;
   width: 100%;
+}
+
+.nest-menu:nth-child(even) {
+  background: $hsag-blue-shade;
 }
 
 // for the vertical menu (when the small sidebar is used)

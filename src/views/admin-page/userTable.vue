@@ -5,12 +5,11 @@
         <el-table-column
           align="start"
           autosize
-          label="E-Mail"
+          label="Name"
           prop="key"
         >
           <template #default="{ row }">
             <template v-if="isUserEditing(row)">
-              <span>E-Mail editieren</span>
               <el-input
                 :modelValue="getEditableUser(row.email)?.email"
                 autosize
@@ -20,21 +19,6 @@
                   (newKey) => setEditableUser(row.email, newKey)
                 "
               />
-              <span>Passwort editieren</span>
-              <div class="edit-password">
-                <el-input
-                  :model-value="getPasswordFromStore()"
-                  autosize
-                  class="edit-input-password"
-                  placeholder="********"
-                  :type="inputType"
-                  @update:modelValue="(newKey) => editPassword(newKey)"
-                />
-                  <svg-icon
-                    class="show-pwd"
-                    @click="togglePasswordType"
-                    :svg-icon-html="inputType === 'password' ? icons.eye : icons.eyeOpen"/>
-              </div>
             </template>
             <template v-else>
               <div v-if="isNotCurrentSelectedUser(row)" class="shadow-table"></div>
@@ -42,7 +26,51 @@
             </template>
           </template>
         </el-table-column>
-        <editButtons :defaultInputType="defaultInputType"/>
+        <el-table-column
+          align="start"
+          autosize
+          label="E-Mail"
+          prop="key"
+        >
+          <template #default="{ row }">
+            <template v-if="isUserEditing(row)">
+              <el-input
+                :modelValue="getEditableUser(row.email)?.email"
+                autosize
+                class="edit-input"
+                type="textarea"
+                @update:modelValue="
+                  (newKey) => setEditableUser(row.email, newKey)
+                "
+              />
+            </template>
+            <template v-else>
+              <div v-if="isNotCurrentSelectedUser(row)" class="shadow-table"></div>
+              <span class="text-input">{{ row.email }}</span>
+            </template>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="start"
+          autosize
+          label="Zugewiesene Rolle"
+          prop="key"
+        >
+          <template #default="{ row }">
+            <template v-if="isUserEditing(row)">
+              <select style="margin: 0" class="custom-select">
+                <option>admin</option>
+                <option>write</option>
+                <option>read</option>
+              </select>
+            </template>
+            <template v-else>
+              <div v-if="isNotCurrentSelectedUser(row)" class="shadow-table"></div>
+              <span class="text-input">{{ row.email }}</span>
+            </template>
+          </template>
+        </el-table-column>
+        <editButtons />
       </el-table>
       <addButtonAdmin/>
     </template>
@@ -64,6 +92,10 @@
 .edit-input-password .el-input__wrapper {
     padding-right: 35px !important;
 }
+.user-select {
+  width: 100%;
+  padding: 5px 10px;
+}
 
 </style>
 
@@ -72,17 +104,17 @@ import editButtons from "./editButtonsForUsers.vue";
 import addButtonAdmin from "./addButtonAdmin.vue";
 import UsersUtilities from "@/store/utilities/UsersUtilities";
 import icons from "@/icons";
+import {Select} from "@element-plus/icons-vue";
 
 export default {
   components: {
+    Select,
     editButtons,
     addButtonAdmin,
   },
   data() {
     return {
       dataReady: false,
-      password: '',
-      inputType: 'password'
     };
   },
   computed: {
@@ -108,12 +140,6 @@ export default {
       );
       return isEditing;
     },
-    togglePasswordType() {
-      this.inputType = this.inputType === 'password' ? 'text' : 'password';
-    },
-    defaultInputType() {
-      this.inputType = 'password';
-    },
     isNotCurrentSelectedUser(user) {
       const selectedRow = Object.values(this.$store._state.data.users.editableUsers)[0]?.email;
       if (selectedRow !== undefined) {
@@ -134,18 +160,6 @@ export default {
     setEditableUser(user, newKey) {
       const editableUser = this.getEditableUser(user);
       editableUser.email = newKey;
-    },
-
-    getPasswordFromStore() {
-      return this.$store._state.data.users.userPassword
-    },
-
-
-    editPassword(password) {
-      return UsersUtilities.editPassword(
-        this.$store,
-        password
-      );
     },
   },
 };
