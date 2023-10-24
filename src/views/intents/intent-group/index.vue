@@ -33,6 +33,26 @@
         label="Beispiele / Beschreibung">
       </el-table-column>
       <el-table-column
+        prop="answers"
+        label="Status">
+        <template v-slot="{ row }">
+          <template v-if="fillRedirectAndAnswerInfo(row) === 'Weiterleitung'">
+            <a :href="getRedirectPath(row)">
+              <div class="intent-status-pill is-redirect">
+                <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+              </div>
+            </a>
+          </template>
+          <template v-else-if="fillRedirectAndAnswerInfo(row) === 'Keine Antwort'">
+            <div class="intent-status-pill is-no-answer">
+              <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+            </div>
+          </template>
+          <template v-else>
+          </template>
+        </template>
+      </el-table-column>
+      <el-table-column
         label="Aktion"
         width="230">
         <template v-slot="{ row }">
@@ -112,7 +132,6 @@ export default {
           this.showHover();
         }, 400);
       }
-
     },
     hideHover() {
       const intentContainer = document.getElementById('intent-hover');
@@ -149,6 +168,26 @@ export default {
       const basePath = this.$router.currentRoute.value.href;
       return `${basePath}/${encodeURIComponent(encodePathComponent(path))}`
     },
+    fillRedirectAndAnswerInfo(row) {
+      let result = '';
+      const redirect = row.answers.isRedirected;
+      const hasAnswers = row.answers.answers
+      if (redirect === true) {
+        result += 'Weiterleitung';
+      } else if (hasAnswers === false && redirect === false) {
+        result += 'Keine Antwort';
+      }
+      return result;
+    },
+    getRedirectPath(row) {
+      const routes = this.$router.getRoutes();
+      const redirectRoute = row.answers.redirectsTo;
+      const findRoute = routes.find(route => route.meta.title === redirectRoute);
+      if (findRoute !== undefined) {
+        const resolvedRoute = this.$router.resolve(findRoute.path);
+        return resolvedRoute.href;
+      }
+    }
   }
 };
 </script>
@@ -195,6 +234,28 @@ export default {
 
   &.hidden {
     bottom: -300px;
+  }
+}
+
+.intent-status-pill {
+  display: flex;
+  width: 70%;
+  justify-content: center;
+  padding: 5px 30px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: $hsag-white;
+
+  p {
+    margin: 0;
+  }
+
+  &.is-redirect {
+    background-color: $hsag-warning;
+  }
+
+  &.is-no-answer {
+    background-color: $hsag-error;
   }
 }
 
