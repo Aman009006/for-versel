@@ -239,7 +239,7 @@ export default {
 
 .intent-status-pill {
   display: flex;
-  width: 70%;
+  width: 50%;
   justify-content: center;
   padding: 5px 30px;
   border-radius: 5px;
