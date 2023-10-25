@@ -55,6 +55,9 @@ properties([
 currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam + " 🚀 "
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('npm install') {
             agent {
