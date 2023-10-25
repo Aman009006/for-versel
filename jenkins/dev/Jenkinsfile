@@ -52,7 +52,7 @@ properties([
     ])
 ])
 
-currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam
+currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam + " 🚀 "
 pipeline {
     agent any
     stages {
