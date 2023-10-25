@@ -74,8 +74,8 @@ pipeline {
             }
             steps {
                 sh "pwd"
-                sh 'npm install'
-                sh 'npm run build -- --mode ${adminuiparam}'
+                //sh 'npm install'
+                //sh 'npm run build -- --mode ${adminuiparam}'
             }
         }
 
