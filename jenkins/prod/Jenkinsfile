@@ -40,8 +40,9 @@ properties([
                             println("Der angegebene Pfad ist nicht vorhanden")
                         }
 
-                        def modifiedFileNamesDev = modifiedFileNames.findAll { it.contains('prod')}
+                        def modifiedFileNamesDev = modifiedFileNames.findAll { !it.contains('dev')}
                         modifiedFileNamesDev.add("1st build")
+                        modifiedFileNamesDev.remove("localBackend")
                         modifiedFileNamesDev.sort()
 
                         return modifiedFileNamesDev
@@ -52,9 +53,12 @@ properties([
     ])
 ])
 
-currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam
+currentBuild.displayName= "#" + currentBuild.number + " -> " + adminuiparam + " 🚀 "
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('npm install') {
             agent {
@@ -87,10 +91,10 @@ pipeline {
                 }
             }
              steps {
-                echo "\033[42m ---> deploy ${adminuiparam} to Mittwald <---\033[0m"
+                echo "\033[42m ---> Deploy ${adminuiparam} to Mittwald <---\033[0m"
                 //sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminUiCustomersProd/${adminuiparam}'
                 echo "######################################################"
-                echo "\033[34m################# ${adminuiparam} frontend url ##################\033[0m"
+                echo "\033[34m################# ${adminuiparam} Frontend URL ##################\033[0m"
                 echo "https://${adminuiparam}.stadtwerk.bot"
                 echo "\033[34m#######################################################################\033[0m"
              }
