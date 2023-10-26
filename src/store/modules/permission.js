@@ -136,7 +136,7 @@ export function makeRouteForIntents(skillsWithIntents) {
     route.children.push({
       path: `${paths.intents}/${specificIntentGroupPath}`,
       component: IntentGroup,
-      props: { headline: skillWithIntent.SkillName, intents: skillWithIntent.Intents },
+      props: { intentGroup: skillWithIntent.SkillName, intents: skillWithIntent.Intents },
       // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
       name: `skill-${skillWithIntent.SkillName}`,
       meta: {

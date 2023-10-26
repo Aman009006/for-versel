@@ -1,7 +1,7 @@
 <template>
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
-      <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
+      <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
       <intentSearch
         class="intent-search"
         searchScope="intents"
@@ -57,7 +57,7 @@
         width="230">
         <template v-slot="{ row }">
           <a class="intent-group-button" :href="parsePath(row.name)">
-            <el-button>
+            <el-button @click="writeIntentToSession(row.intent)">
               Öffnen
             </el-button>
           </a>
@@ -72,6 +72,7 @@ import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/lastClickedIntent"
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: true });
@@ -83,7 +84,7 @@ export default {
     intentSearch,
   },
   props: {
-    headline: {
+    intentGroup: {
       type: String,
       required: true,
     },
@@ -187,7 +188,11 @@ export default {
         const resolvedRoute = this.$router.resolve(findRoute.path);
         return resolvedRoute.href;
       }
-    }
+    },
+    writeIntentToSession(intent) {
+      const lastClickedIntent = new LastClickedIntent(intent, this.intentGroup).addDataToSession();
+      return lastClickedIntent;
+    },
   }
 };
 </script>
