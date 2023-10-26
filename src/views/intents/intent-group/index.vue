@@ -239,9 +239,9 @@ export default {
 
 .intent-status-pill {
   display: flex;
-  width: 50%;
+  max-width: 70%;
   justify-content: center;
-  padding: 5px 30px;
+  padding: 5px 20px;
   border-radius: 5px;
   font-size: 12px;
   color: $hsag-white;
