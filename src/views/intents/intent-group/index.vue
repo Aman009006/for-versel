@@ -1,7 +1,7 @@
 <template>
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
-      <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
+      <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
       <intentSearch
         class="intent-search"
         searchScope="intents"
@@ -21,6 +21,7 @@
       :data="filteredArray"
       stripe
       @row-click="handleHover"
+      :row-class-name="addClassToTableRowMatchingStorage"
       :header-cell-style="{ padding: '0 0 0 20px', height: '50px' }"
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
       <el-table-column
@@ -72,6 +73,7 @@ import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/LastClickedIntent"
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: true });
@@ -83,7 +85,7 @@ export default {
     intentSearch,
   },
   props: {
-    headline: {
+    intentGroup: {
       type: String,
       required: true,
     },
@@ -97,6 +99,13 @@ export default {
       filteredArray: this.intents,
       forwarded: false
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (from.meta.intent) {
+        vm.startScrollToProcess();
+      }
+    });
   },
   mounted() {
     addActiveToSidebar('is-intent');
@@ -186,6 +195,22 @@ export default {
       if (findRoute !== undefined) {
         const resolvedRoute = this.$router.resolve(findRoute.path);
         return resolvedRoute.href;
+      }
+    },
+    getIntentSessionStorage() {
+      const intent = sessionStorage.getItem('lastClickedIntent');
+      const intentGroup = sessionStorage.getItem('lastClickedIntentGroup');
+      return { intent, intentGroup };
+    },
+    startScrollToProcess() {
+      const { intent } = this.getIntentSessionStorage();
+      const handleScrollProcess = new LastClickedIntent(intent, this.intentGroup).handleScrollProcess();
+      return handleScrollProcess;
+    },
+    addClassToTableRowMatchingStorage({ row }) {
+      const storageIntent = sessionStorage.getItem('lastClickedVirtualIntent');
+      if (row.intent === storageIntent) { 
+        return 'is-storage-intent';
       }
     }
   }
