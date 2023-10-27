@@ -26,8 +26,7 @@
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
       <el-table-column
         prop="name"
-        label="Name"
-        width="500">
+        label="Name">
       </el-table-column>
       <el-table-column
         prop="description"
@@ -55,7 +54,7 @@
       </el-table-column>
       <el-table-column
         label="Aktion"
-        width="230">
+        width="180">
         <template v-slot="{ row }">
           <a class="intent-group-button" :href="parsePath(row.name)">
             <el-button>
@@ -270,12 +269,17 @@ export default {
 
 .intent-status-pill {
   display: flex;
-  max-width: 70%;
+  width: 150px;
   justify-content: center;
   padding: 5px 20px;
   border-radius: 5px;
   font-size: 12px;
   color: $hsag-white;
+
+  @media screen and (max-width: 1430px){
+    width: 100px;
+    padding: 5px;
+  }
 
   p {
     margin: 0;
