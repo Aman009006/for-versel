@@ -74,6 +74,7 @@ import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import LastClickedIntent from "@/utils/LastClickedIntent"
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 const md = MarkdownIt({ html: true });
@@ -209,10 +210,15 @@ export default {
     },
     addClassToTableRowMatchingStorage({ row }) {
       const storageIntent = sessionStorage.getItem('lastClickedVirtualIntent');
-      if (row.intent === storageIntent) { 
+      const rowIntent = this.technicalIntentName(row);
+      if (rowIntent === storageIntent) { 
         return 'is-storage-intent';
       }
-    }
+    },
+    technicalIntentName(row) {
+      const intentNameGenerator = new IntentNameGenerator(row.intent, row.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    },
   }
 };
 </script>

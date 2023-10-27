@@ -33,6 +33,7 @@ import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import LastClickedIntent from "@/utils/LastClickedIntent"
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 
 export default {
   name: "Intent",
@@ -46,7 +47,7 @@ export default {
     return {
       dataReady: false,
       parentPath: this.$route.meta.parentPath,
-      technicalIntent: this.$route.meta.intent,
+      technicalIntent: this.technicalIntentName(),
       intentGroup: this.$route.meta.intentGroup,
     };
   },
@@ -91,6 +92,10 @@ export default {
     this.refreshRoutesIfNewIntentWasClicked();
   },
   methods: {
+    technicalIntentName() {
+      const intentNameGenerator = new IntentNameGenerator(this.$route.meta.intent, this.$route.meta.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    },
     isRedirectedToOtherIntent() {
       return this.answerConfig?.redirectToVirtualIntentName != null;
     },
