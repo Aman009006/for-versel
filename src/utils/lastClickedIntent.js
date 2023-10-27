@@ -15,14 +15,22 @@ export default class LastClickedIntent {
     }
 
     handleScrollProcess() {
-        if (this.#confirmSessionStorageData()) {
+        let confirmed = false;
+        try {
+            confirmed = this.#confirmSessionStorageData();
+        } catch (e) {
+            return false;
+        }
+        if (confirmed) {
             this.#scrollToIntent();
         }
     }
 
     /** @returns {boolean} */
     #confirmSessionStorageData() {
-        if (this.storageIntentGroup === this.intentGroup) {
+        if (this.storageIntentGroup != this.intentGroup) {
+            throw new Error('Intent Group isnt matching.');
+        } else {
             return true;
         }
     }
