@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="button in sortedButtons">{{ button.title }}</li>
+    <li v-for="button in sortedButtons" v-html="highlightSearchWord(button.title, searchValue)"></li>
   </ul>
 </template>
 
@@ -11,7 +11,16 @@ export default {
   computed: {
     sortedButtons(){
       return this.buttons.sort((a,b) => a.order - b.order);
+    },
+    searchValue() {
+      return this.$store.getters.search
     }
+  },
+  methods: {
+    highlightSearchWord(text, searchWord) {
+      const regex = new RegExp(`(${searchWord})`, 'gi');
+      return text.replace(regex, '<span class="search-word">$1</span>');
+    },
   }
 };
 </script>

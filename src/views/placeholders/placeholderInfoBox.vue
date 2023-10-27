@@ -1,9 +1,10 @@
 <template>
-  <div class="placeholderInfoBox">
-    <el-row>
-      <h1>Platzhalter</h1>
-      <span>
-        <p style="font-size: 14px">
+  <div class="placeholderInfoBox infoBox">
+    <div class="placeholderInfoBoxContent">
+      <div>
+        <h1>Platzhalter</h1>
+        <span>
+        <p style="font-size: 12px">
           Mithilfe von Platzhaltern können Sie einmalig definierte Textpassagen
           in beliebig vielen Dialogantworten parallel anzeigen lassen. Sobald
           Sie am Inhalt der Textpassage eine Änderung vornehmen, überträgt sich
@@ -40,11 +41,61 @@
           Suchfeld ein.
         </p>
       </span>
-    </el-row>
+      </div>
+      <div class="input-content">
+        <intent-search class="intent-search" placeholder="Platzhalter Suche" searchScope="tintentGroup"
+                       :searchableArray="allPlaceholders" @filteredArray="updateIntentGroups">
+        </intent-search>
+      </div>
+    </div>
   </div>
+  <placeholderTable :dataReady="this.dataReady" :allPlaceholdersProps="filteredArray"/>
 </template>
+<script>
+import IntentSearch from "@/components/IntentSearch/index.vue";
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+import placeholderTable from "@/views/placeholders/placeholderTable.vue";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
 
-<style lang="scss">
+export default {
+  components: {
+    placeholderTable,
+    IntentSearch
+  },
+  computed: {
+    allPlaceholders() {
+      return PlaceholderUtilities.getAllPlaceholders(this.$store);
+    },
+  },
+  async created() {
+    /**
+     * Fetch the data when the view is created
+     * and the data is already being observed
+     */
+    await this.loadData();
+    this.filteredArray = this.allPlaceholders
+  },
+  data() {
+    return {
+      filteredArray: this.$store.getters.placeholders,
+      dataReady: false,
+    };
+  },
+  unmounted() {
+    SearchUtilities.addSearchTextToStore(this.$store, '')
+  },
+  methods: {
+    async loadData() {
+      await PlaceholderUtilities.fetchPlaceholders(this.$store);
+      this.dataReady = true;
+    },
+    updateIntentGroups(array) {
+      this.filteredArray = array.slice();
+    },
+  }
+}
+</script>
+<style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
 .placeholderInfoBox {
@@ -61,4 +112,15 @@
 .text {
   font-size: 14px;
 }
+
+.placeholderInfoBoxContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.input-content {
+  min-width: 380px;
+}
 </style>
+

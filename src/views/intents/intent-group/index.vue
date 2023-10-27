@@ -27,10 +27,16 @@
         prop="name"
         label="Name"
         width="500">
+        <template #default="{ row }">
+          <p v-html="highlightSearchWord(row.name, searchValue)"></p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="description"
         label="Beispiele / Beschreibung">
+        <template #default="{ row }">
+          <p v-html="highlightSearchWord(row.description, searchValue)"></p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="answers"
@@ -108,10 +114,17 @@ export default {
     icons() {
       return icons;
     },
+    searchValue() {
+      return this.$store.getters.search
+    }
   },
   methods: {
     updateIntents(array) {
       this.filteredArray = array;
+    },
+    highlightSearchWord(text, searchWord) {
+      const regex = new RegExp(`(${searchWord})`, 'gi');
+      return text.replace(regex, '<span class="search-word">$1</span>');
     },
     handleHover(row) {
       if (event.target.tagName === "BUTTON" || event.target.tagName === "SPAN") {
@@ -170,8 +183,8 @@ export default {
     },
     fillRedirectAndAnswerInfo(row) {
       let result = '';
-      const redirect = row.answers.isRedirected;
-      const hasAnswers = row.answers.answers
+      const redirect = row.answers?.isRedirected;
+      const hasAnswers = row.answers?.answers
       if (redirect === true) {
         result += 'Weiterleitung';
       } else if (hasAnswers === false && redirect === false) {

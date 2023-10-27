@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
     <template v-if="dataReady">
-      <el-table :data="allPlaceholders" class="placeholder_table" stripe >
+      <el-table :data="allPlaceholdersProps" class="placeholder_table" stripe >
         <el-table-column
           align="center"
           label="Platzhalterbezeichnung"
@@ -66,22 +66,15 @@ export default {
     addButton,
     deleteButton,
   },
-  data() {
-    return {
-      dataReady: false,
-    };
-  },
-  computed: {
-    allPlaceholders() {
-      return PlaceholderUtilities.getAllPlaceholders(this.$store);
+  props: {
+    allPlaceholdersProps: {
+      type: Array,
+      required: true,
     },
-  },
-  async created() {
-    /**
-     * Fetch the data when the view is created
-     * and the data is already being observed
-     */
-    await this.loadData();
+    dataReady: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
     isPlaceholderEditing(placeholder) {
@@ -90,10 +83,6 @@ export default {
         placeholder
       );
       return isEditing;
-    },
-    async loadData() {
-      await PlaceholderUtilities.fetchPlaceholders(this.$store);
-      this.dataReady = true;
     },
     getEditablePlaceholder(placeholderKey) {
       return PlaceholderUtilities.getEditablePlaceholder(

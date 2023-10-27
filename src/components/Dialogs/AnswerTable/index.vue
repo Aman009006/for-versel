@@ -55,6 +55,11 @@ export default {
       humanReadableAnswers: [],
     };
   },
+  computed: {
+    searchValue() {
+      return this.$store.getters.search
+    }
+  },
   async created() {
     await this.loadData();
   },
@@ -69,7 +74,12 @@ export default {
       this.humanReadableAnswers = new PlaceholderReplacer(this.answers, this.allPlaceholders).replaceAnswers();
     },
     renderToMarkdown(text) {
-      return md.render(text);
+      const renderText = md.render(text);
+      return this.highlightSearchWord(renderText, this.searchValue);
+    },
+    highlightSearchWord(text, searchWord) {
+      const regex = new RegExp(`(${searchWord})`, 'gi');
+      return text.replace(regex, '<span class="search-word">$1</span>');
     },
   },
 };

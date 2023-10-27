@@ -3,7 +3,7 @@
         <span class="svg-container">
             <svg-icon :svg-icon-html="icons.search" />
         </span>
-        <el-input placeholder="Intent Suche" v-model="intentSearchValue">
+        <el-input :placeholder="placeholder ? placeholder : 'Intent Suche'" v-model="intentSearchValue">
         </el-input>
     </el-form-item>
 </template>
@@ -12,6 +12,8 @@
 import { ref, watch } from "vue";
 import icons from "@/icons/index";
 import { searchIntentGroup, searchSingleIntent } from "@/utils/intentSearch/intentSearch.js";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+import { useStore } from 'vuex';
 
 export default {
     name: "IntentSearch",
@@ -23,6 +25,10 @@ export default {
         searchScope: {
             type: String,
             required: true,
+        },
+        placeholder: {
+            type: String,
+            required: false,
         },
     },
     computed: {
@@ -46,8 +52,11 @@ export default {
     setup(props, { emit }) {
         const intentSearchValue = ref("");
         const filteredArray = ref(props.searchableArray);
+        const store = useStore();
 
         function filterArray(newValue) {
+          SearchUtilities.addSearchTextToStore(store, newValue)
+
             filteredArray.value = props.searchableArray.filter((intent) => {
                 if (props.searchScope === 'intentGroup') {
                     return searchIntentGroup(intent, newValue);
