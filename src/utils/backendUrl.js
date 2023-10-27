@@ -1,5 +1,5 @@
 
-const backendUrl = 'https://4264-212-112-100-88.ngrok-free.app/'
+const backendUrl = import.meta.env.VITE_BACKENDURL
 export default backendUrl
 
 /**
