@@ -32,6 +32,7 @@ import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox/index.vu
 import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/LastClickedIntent"
 
 export default {
   name: "Intent",
@@ -45,11 +46,13 @@ export default {
     return {
       dataReady: false,
       parentPath: this.$route.meta.parentPath,
+      technicalIntent: this.$route.meta.intent,
       intentGroup: this.$route.meta.intentGroup,
     };
   },
   mounted() {
     addActiveToSidebar('is-intent');
+    this.setIntentSessionStorage(this.technicalIntent);
   },
   unmounted() {
     removeActiveFromSidebar('is-intent');
@@ -91,7 +94,10 @@ export default {
     isRedirectedToOtherIntent() {
       return this.answerConfig?.redirectToVirtualIntentName != null;
     },
-
+    setIntentSessionStorage(intent) {
+      const lastClickedIntent = new LastClickedIntent(intent, this.intentGroup).addDataToSession();
+      return lastClickedIntent;
+    },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
       const routeNames = newIntentRoutes.map((intentRoute) => intentRoute.name);

@@ -197,10 +197,6 @@ export default {
         return resolvedRoute.href;
       }
     },
-    setIntentSessionStorage(intent) {
-      const lastClickedIntent = new LastClickedIntent(intent, this.intentGroup).addDataToSession();
-      return lastClickedIntent;
-    },
     getIntentSessionStorage() {
       const intent = sessionStorage.getItem('lastClickedIntent');
       const intentGroup = sessionStorage.getItem('lastClickedIntentGroup');
