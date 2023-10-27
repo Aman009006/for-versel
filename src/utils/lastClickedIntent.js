@@ -20,29 +20,43 @@ export default class LastClickedIntent {
         }
     }
 
-    /*
-     * @return {boolean} true if the last clicked intent is the same as the current intent
-     */
+    /** @returns {boolean} */
     #confirmSessionStorageData() {
-        console.log('confirming')
         if (this.storageIntentGroup === this.intentGroup) {
             return true;
         }
     }
 
-    #scrollToIntent() {
-        const cords = this.#getTableCoordinates();
-        console.log('cords: ', cords);
+    async #scrollToIntent() {
+        const cords = await this.#getTableCoordinates();
+        const tableRowHeight = 80;
         window.scrollTo({
-            top: cords,
+            top: cords - tableRowHeight,
             behavior: 'smooth'
+        });
+        this.#highlightIntent();
+    }
+
+    /** @returns {Promise} */
+    async #getTableCoordinates() {
+        return new Promise((resolve) => {
+            const checkForTable = setInterval(() => {
+                const tableRow = document.getElementsByClassName('is-storage-intent')[0];
+                if (tableRow) {
+                    clearInterval(checkForTable);
+                    const rect = tableRow.getBoundingClientRect();
+                    const cords = rect.top;
+                    resolve(cords);
+                }
+            }, 100);
         });
     }
 
-    #getTableCoordinates() {
+    #highlightIntent() {
         const tableRow = document.getElementsByClassName('is-storage-intent')[0];
-        const rect = tableRow.getBoundingClientRect();
-        const cords = rect.top;
-        return cords;
+        tableRow.classList.add('is-highlighted');
+        setTimeout(() => {
+            tableRow.classList.remove('is-highlighted');
+        }, 2000);
     }
 }
