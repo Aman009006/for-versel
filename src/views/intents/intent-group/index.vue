@@ -58,7 +58,7 @@
         width="230">
         <template v-slot="{ row }">
           <a class="intent-group-button" :href="parsePath(row.name)">
-            <el-button @click="setIntentSessionStorage(row.intent)">
+            <el-button>
               Öffnen
             </el-button>
           </a>
