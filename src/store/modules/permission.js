@@ -91,15 +91,17 @@ const actions = {
     }
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
+
     // make dynamic routes for skills and intents
     const additionalRoutes = new IntentRouteCreator().makeRouteForIntents(state.skillsWithIntents);
 
-    // add them to the existing dynamic routes
+    // create all additionalRoutes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
     // create PowerBI Route
     const powerBiReportRoute = new PowerBiRouteCreator().createRouteForPowerBIReport()
     if (powerBiReportRoute !== null) {
+      // add powerBiReportRoute to the existing dynamic routes
       allAdditionalRoutes = allAdditionalRoutes.concat(powerBiReportRoute)
     }
 
