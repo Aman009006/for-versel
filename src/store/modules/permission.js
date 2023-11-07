@@ -2,9 +2,9 @@ import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
 import Layout from '@/layout/index.vue'
 import { paths } from '@/constants'
-import Reporting from '@/views/reporting/index.vue'
 import Intents from '@/views/intents/index.vue'
 import IntentGroup from '@/views/intents/intent-group/index.vue'
+import PowerBiRouteCreator from '@/utils/routes/PowerBiRouteCreator.js'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -167,33 +167,8 @@ export function makeRouteForIntents(skillsWithIntents) {
   return routes
 }
 
-/**
- * @param powerBi_reportId is the given powerBI Report Id of the current customer.
- * @param customer is the current customer.
- * @return the route which redirects at the given PowerBI URL.
- */
-export function createRouteForPowerBIReport(powerBi_reportId, customer) {
-  const powerBIReportRoute = {
-    path: '/reporting',
-    component: Layout,
-    children: [
-      {
-        path: paths.reporting,
-        component: Reporting,
-        props: { customer: customer, powerBiReportId: powerBi_reportId },
-        name: 'Reporting',
-        meta: {
-          title: 'Reporting',
-          icon: 'dashboard',
-        },
-      },
-    ],
-  }
-  return powerBIReportRoute
-}
-
 const actions = {
-  async pullIntentsAndSetRoutes({ commit, state, dispatch, rootGetters }, roles) {
+  async pullIntentsAndSetRoutes({ commit, state, dispatch }, roles) {
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -209,12 +184,10 @@ const actions = {
     // add them to the existing dynamic routes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
-    // get PowerBI Report ID and customer name from DB to create path and fill data
-    const { powerBI_reportID, customer } = rootGetters.metainfo
-    let powerBIReportRoute
-    if (powerBI_reportID) {
-      powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
-      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
+    // create PowerBI Route
+    const powerBiReportRoute = new PowerBiRouteCreator().createRouteForPowerBIReport()
+    if (powerBiReportRoute !== null) {
+      allAdditionalRoutes = allAdditionalRoutes.concat(powerBiReportRoute)
     }
 
     commit('SET_ROUTES', allAdditionalRoutes)
