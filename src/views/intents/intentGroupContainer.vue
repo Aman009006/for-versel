@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { encodePathComponent } from '@/store/modules/permission'
+import { encodePathComponent } from '@/utils/encodePath'
 
 export default {
   name: "IntentGroupContainer",

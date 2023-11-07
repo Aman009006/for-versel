@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css' // progress bar style
 import '@/styles/nprogress.scss' // overwrite progressbar
 import getPageTitle from '@/utils/get-page-title'
 import { isLoggedIn, getRefreshToken } from './api/user'
-import { encodePathComponent } from '@/store/modules/permission'
+import { encodePathComponent } from '@/utils/encodePath'
 import ChatbotWidgetUtils from './utils/ChatbotWidgetUtils'
 import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
 
