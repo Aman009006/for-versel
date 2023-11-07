@@ -84,13 +84,6 @@ const mutations = {
 }
 
 /**
- * translates a path - component into a browser - readable name
- */
-export function encodePathComponent(pathComponent) {
-  return pathComponent.replace('(', '').replace(')', '').replace('?', '%3F')
-}
-
-/**
  * sort skillsWithIntents alphabetically by a given key
  */
 
