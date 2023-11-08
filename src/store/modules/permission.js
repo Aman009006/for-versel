@@ -93,7 +93,7 @@ const actions = {
     await dispatch(actions.setSkillsAndIntents.name)
 
     // make dynamic routes for skills and intents
-    const additionalRoutes = new IntentRouteCreator().makeRouteForIntents(state.skillsWithIntents);
+    const additionalRoutes = new IntentRouteCreator(state.skillsWithIntents).createIntentRouting();
 
     // create all additionalRoutes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
