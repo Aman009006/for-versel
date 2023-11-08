@@ -29,8 +29,8 @@ export default {
     getThisIntentsPath() {
       const basePath = this.$router.currentRoute.value.href;
       const intentPaths = this.getIntentPaths();
-      const thisIntentsPaths = intentPaths[0].children.filter(
-        (child) => child.meta && child.meta.title === this.intentGroup.SkillName
+      const thisIntentsPaths = intentPaths.children.filter(
+        (intentPath) => intentPath.meta && intentPath.meta.title === this.intentGroup.SkillName
       );
       return `${basePath}/${encodeURIComponent(encodePathComponent(thisIntentsPaths[0].meta.title))}`;
     },
@@ -38,7 +38,8 @@ export default {
   methods: {
     getIntentPaths() {
       const paths = this.$store.getters.permission_routes;
-      return paths.filter((path) => path.name === "IntentGroupOverview");
+      const intentPaths = paths.filter((path) => path.name === "intentGroups");
+      return intentPaths[0];
     },
   },
 };
@@ -56,14 +57,16 @@ export default {
   background-color: $hsag-lightgrey;
   transition: background-color 0.2s ease-in-out;
 
-  &:hover{
+  &:hover {
     background-color: $hsag-bluegrey;
     color: $hsag-white;
   }
-  h3{
+
+  h3 {
     margin: 0;
   }
-  p{
+
+  p {
     margin: 5px 0 0 0;
   }
 }
