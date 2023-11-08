@@ -34,15 +34,35 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      // only show routes with meta.title
-      let matched = this.$route.matched.filter(
-        (item) => item.meta && item.meta.title
-      );
-      const first = matched[0];
+      // combine intent info into breadcrumb
+      if (this.$route.fullPath.includes('/intent')) {
+        const route = this.$route;
+        const routes = this.$store.getters.permission_routes;
+        const intentBreadcrumbElements = {};
 
-      this.levelList = matched.filter(
-        (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
-      );
+        const intentDefault = routes.find(item => item.path === '/intents').children[0];
+        const intentGroup = this.findIntentGroup(routes, route);
+        const intent = this.findTechnicalIntent(routes, route);
+
+        const intentData = [intentDefault, intentGroup, intent];
+
+        for (let i = 0; i < intentData.length; i++) {
+          if (intentData[i]) {
+            intentBreadcrumbElements[i] = intentData[i];
+          }
+        }
+        this.levelList = intentBreadcrumbElements;
+      } else {
+        // only show routes with meta.title
+        let matched = this.$route.matched.filter(
+          (item) => item.meta && item.meta.title
+          );
+        
+        this.levelList = matched.filter(
+          (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
+        );
+        console.log(this.levelList)
+      }
     },
     isHome(route) {
       const name = route && route.name;
@@ -51,6 +71,12 @@ export default {
       }
       return name.trim().toLocaleLowerCase() === "Home".toLocaleLowerCase();
     },
+    findIntentGroup(routes, route) { 
+      return routes.find(item => item.name === 'intentGroups').children.find(item => item.meta.title === route.meta.intentGroup);
+    },
+    findTechnicalIntent(routes, route) {
+      return routes.find(item => item.name === 'TechnicalIntents').children.find(item => item.meta.title === route.meta.title);
+    }
   },
 };
 </script>
