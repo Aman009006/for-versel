@@ -184,5 +184,4 @@ export default class IntentRouteCreator {
         routes.push(route);
         return routes
     }
-
 }
