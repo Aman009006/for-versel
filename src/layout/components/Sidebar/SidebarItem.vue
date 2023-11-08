@@ -4,7 +4,7 @@
       <app-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-intent': isIntents(item)}">
+            :class="{ 'submenu-title-noDropdown': !isNest, 'is-intent': isIntents(item)}">
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
               :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
