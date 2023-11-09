@@ -66,7 +66,7 @@ export default {
       const intent = this.findTechnicalIntent(routes, route);
 
       const intentData = [intentDefault, intentGroup, intent];
-      console.log(intentData)
+      
       for (let i = 0; i < intentData.length; i++) {
         if (intentData[i]) {
           intentBreadcrumbElements[i] = intentData[i];
