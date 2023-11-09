@@ -11,7 +11,6 @@ export default class IntentRouteCreator {
 
     constructor(skillsWithIntents) {
         this.skillsWithIntents = skillsWithIntents
-        this.routes = [];
     }
 
     createIntentRouting() {
