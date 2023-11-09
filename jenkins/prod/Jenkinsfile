@@ -78,12 +78,12 @@ pipeline {
             }
             steps {
                 sh "pwd"
-                //sh 'npm install'
-                //sh 'npm run build -- --mode ${adminuiparam}'
+                sh 'npm install'
+                sh 'npm run build -- --mode ${adminuiparam}'
             }
         }
 
-        stage('deploy to azure') {
+        stage('deploy to mittwald') {
             // do not deploy if it's the first build
             when {
                 not {
@@ -92,11 +92,11 @@ pipeline {
             }
              steps {
                 echo "\033[42m ---> Deploy ${adminuiparam} to Mittwald <---\033[0m"
-                //sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminUiCustomersProd/${adminuiparam}'
+                sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminUiCustomersProd/${adminuiparam}'
                 echo "######################################################"
                 echo "\033[34m################# ${adminuiparam} Frontend URL ##################\033[0m"
                 echo "https://${adminuiparam}.stadtwerk.bot"
-                echo "\033[34m#######################################################################\033[0m"
+                echo "\033[34m#####################################################################\033[0m"
              }
         }
 

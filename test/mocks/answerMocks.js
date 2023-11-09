@@ -51,3 +51,9 @@ export const intentSearchValues = {
         ]
     }
 };
+
+export const lastClickedIntentData = {
+    virtualIntentName: 'technicalTestIntent',
+    intentGroup: 'testIntentGroup',
+    intentGroupFalse: 'testIntentGroupFalse'
+}

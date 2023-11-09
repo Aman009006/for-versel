@@ -1,5 +1,23 @@
-.el-table {
+.el-table,
+.el-table--striped {
     .cell {
         word-break: normal !important;
+    }
+
+    .el-table__body {
+
+        tr.el-table__row--striped,
+        tr.el-table__row {
+            &.is-storage-intent {
+                transition: background-color 0.3s ease-in-out;
+                &.is-highlighted {
+                    background-color: #4fe92f2b;
+
+                    td.el-table__cell {
+                        background-color: #4fe92f2b;
+                    }
+                }
+            }
+        }
     }
 }

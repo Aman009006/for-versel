@@ -1,7 +1,7 @@
 <template>
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
-      <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
+      <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
       <searchInput
         class="intent-search"
         searchScope="intents"
@@ -21,6 +21,7 @@
       :data="filteredArray"
       stripe
       @row-click="handleHover"
+      :row-class-name="addClassToTableRowMatchingStorage"
       :header-cell-style="{ padding: '0 0 0 20px', height: '50px' }"
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
       <el-table-column
@@ -60,7 +61,7 @@
       </el-table-column>
       <el-table-column
         label="Aktion"
-        width="230">
+        width="180">
         <template v-slot="{ row }">
           <a class="intent-group-button" :href="parsePath(row.name)">
             <el-button>
@@ -78,6 +79,8 @@ import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import searchInput from "@/components/SearchInput/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/LastClickedIntent"
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
@@ -90,7 +93,7 @@ export default {
     searchInput,
   },
   props: {
-    headline: {
+    intentGroup: {
       type: String,
       required: true,
     },
@@ -104,6 +107,13 @@ export default {
       filteredArray: this.intents,
       forwarded: false
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (from.meta.intent) {
+        vm.startScrollToProcess();
+      }
+    });
   },
   mounted() {
     addActiveToSidebar('is-intent');
@@ -198,7 +208,28 @@ export default {
         const resolvedRoute = this.$router.resolve(findRoute.path);
         return resolvedRoute.href;
       }
-    }
+    },
+    getIntentSessionStorage() {
+      const intent = sessionStorage.getItem('lastClickedIntent');
+      const intentGroup = sessionStorage.getItem('lastClickedIntentGroup');
+      return { intent, intentGroup };
+    },
+    startScrollToProcess() {
+      const { intent } = this.getIntentSessionStorage();
+      const handleScrollProcess = new LastClickedIntent(intent, this.intentGroup).handleScrollProcess();
+      return handleScrollProcess;
+    },
+    addClassToTableRowMatchingStorage({ row }) {
+      const storageIntent = sessionStorage.getItem('lastClickedVirtualIntent');
+      const rowIntent = this.technicalIntentName(row);
+      if (rowIntent === storageIntent) {
+        return 'is-storage-intent';
+      }
+    },
+    technicalIntentName(row) {
+      const intentNameGenerator = new IntentNameGenerator(row.intent, row.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    },
   }
 };
 </script>
@@ -250,12 +281,17 @@ export default {
 
 .intent-status-pill {
   display: flex;
-  max-width: 70%;
+  width: 150px;
   justify-content: center;
   padding: 5px 20px;
   border-radius: 5px;
   font-size: 12px;
   color: $hsag-white;
+
+  @media screen and (max-width: 1430px){
+    width: 100px;
+    padding: 5px;
+  }
 
   p {
     margin: 0;
