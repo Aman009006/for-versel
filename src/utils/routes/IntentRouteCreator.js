@@ -65,6 +65,7 @@ export default class IntentRouteCreator {
         const routes = {
             path: '',
             hidden: true,
+            isIntents: true,
             name: 'intentGroups',
             component: Layout,
             children: [],
@@ -94,6 +95,7 @@ export default class IntentRouteCreator {
         const routes = {
             path: '',
             hidden: true,
+            isIntents: true,
             name: 'TechnicalIntents',
             component: Layout,
             children: [],
