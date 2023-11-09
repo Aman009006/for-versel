@@ -36,28 +36,14 @@ export default {
     getBreadcrumb() {
       // combine intent info into breadcrumb
       if (this.$route.fullPath.includes('/intent')) {
-        const route = this.$route;
-        const routes = this.$store.getters.permission_routes;
-        const intentBreadcrumbElements = {};
-
-        const intentDefault = routes.find(item => item.path === '/intents').children[0];
-        const intentGroup = this.findIntentGroup(routes, route);
-        const intent = this.findTechnicalIntent(routes, route);
-
-        const intentData = [intentDefault, intentGroup, intent];
-
-        for (let i = 0; i < intentData.length; i++) {
-          if (intentData[i]) {
-            intentBreadcrumbElements[i] = intentData[i];
-          }
-        }
+        const intentBreadcrumbElements = this.defineIntentBreadcrumb();
         this.levelList = intentBreadcrumbElements;
       } else {
         // only show routes with meta.title
         let matched = this.$route.matched.filter(
           (item) => item.meta && item.meta.title
-          );
-        
+        );
+
         this.levelList = matched.filter(
           (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
         );
@@ -70,8 +56,27 @@ export default {
       }
       return name.trim().toLocaleLowerCase() === "Home".toLocaleLowerCase();
     },
-    findIntentGroup(routes, route) { 
-      return routes.find(item => item.name === 'intentGroups').children.find(item => item.meta.title === route.meta.intentGroup);
+    defineIntentBreadcrumb() {
+      const route = this.$route;
+      const routes = this.$store.getters.permission_routes;
+      const intentBreadcrumbElements = {};
+
+      const intentDefault = routes.find(item => item.path === '/intents').children[0];
+      const intentGroup = this.findIntentGroup(routes, route);
+      const intent = this.findTechnicalIntent(routes, route);
+
+      const intentData = [intentDefault, intentGroup, intent];
+      console.log(intentData)
+      for (let i = 0; i < intentData.length; i++) {
+        if (intentData[i]) {
+          intentBreadcrumbElements[i] = intentData[i];
+        }
+      }
+      return intentBreadcrumbElements;
+    },
+    findIntentGroup(routes, route) {
+      const intentGroups = routes.find(item => item.name === 'intentGroups');
+      return intentGroups.children.find(item => item.meta.title === route.meta.title || item.meta.title === route.meta.intentGroup);
     },
     findTechnicalIntent(routes, route) {
       return routes.find(item => item.name === 'TechnicalIntents').children.find(item => item.meta.title === route.meta.title);
@@ -93,7 +98,8 @@ export default {
     cursor: text;
   }
 }
-.breadcrumb-placeholder{
+
+.breadcrumb-placeholder {
   margin-bottom: 52px
 }
 </style>
