@@ -11,6 +11,7 @@ export default class IntentRouteCreator {
 
     constructor(skillsWithIntents) {
         this.skillsWithIntents = skillsWithIntents
+        this.routes = [];
     }
 
     createIntentRouting() {
@@ -19,9 +20,7 @@ export default class IntentRouteCreator {
         const intentRoute = this.#createIntentRoute();
         const intentGroupRoutes = this.#createIntentGroupRoutes()
         const technicalIntentRoutes = this.#createTechnicalIntentRoutes()
-        routes.push(intentRoute)
-        routes.push(intentGroupRoutes)
-        routes.push(technicalIntentRoutes)
+        routes.push(intentRoute, intentGroupRoutes, technicalIntentRoutes)
         return routes
     }
 
