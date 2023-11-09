@@ -39,6 +39,7 @@ import { humanReadableLabels } from "@/constants";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 import PlaceholderReplacer from "@/utils/placeholder/placeholderReplacer";
 import MarkdownIt from "markdown-it";
+import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
 const md = MarkdownIt({ html: false });
 
 export default {
@@ -75,11 +76,7 @@ export default {
     },
     renderToMarkdown(text) {
       const renderText = md.render(text);
-      return this.highlightSearchWord(renderText, this.searchValue);
-    },
-    highlightSearchWord(text, searchWord) {
-      const regex = new RegExp(`(${searchWord})`, 'gi');
-      return text.replace(regex, '<span class="search-word">$1</span>');
+      return addHighlightSearchWord(renderText, this.searchValue)
     },
   },
 };

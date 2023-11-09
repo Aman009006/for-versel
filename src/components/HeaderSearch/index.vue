@@ -10,8 +10,10 @@
     <el-select ref="headerSearchSelect" v-model="search" :remote-method="querySearch" filterable default-first-option
                remote placeholder="Suche" class="header-search-select" popper-class="header-search-popper"
                @change="change">
-      <el-option v-for="element in options" :key="element.item.path" :value="element.item" class="header-search-option"
-                 v-html="getHtmlFormattedElement(element)"/>
+      <el-option v-for="element in options" :key="element.item.path" :value="element.item"
+                 class="header-search-option"
+                 v-html="getHtmlFormattedElement(element)"
+                 @click="addSearchToStore(element.item.intentName)"/>
     </el-select>
   </div>
 </template>
@@ -23,6 +25,7 @@ import icons from "@/icons/index";
 import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
 import RouteHandler from "@/utils/headerSearch/RouteHandler"
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
 
 const filterElementsObject = {
   intentName: {
@@ -117,6 +120,9 @@ export default {
     this.searchPool = this.generateAndFilterRoutes(this.routes);
   },
   methods: {
+    addSearchToStore(choosedName) {
+      SearchUtilities.addSearchTextToStore(this.$store, choosedName)
+    },
     async loadDataPlaceholders() {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
     },
@@ -128,14 +134,14 @@ export default {
           intentName: placeholder.key,
           path: "/placeholders",
           texts: undefined,
-          title: ['Placeholder', placeholder.key]
+          title: ['Platzhalter', placeholder.key]
         },
         {
           intent: null,
           intentName: placeholder.value,
           path: "/placeholders",
           texts: undefined,
-          title: ['Placeholder', placeholder.value]
+          title: ['Platzhalter', placeholder.value]
         }
       ]);
       this.placeholdersData = result;

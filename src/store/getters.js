@@ -15,6 +15,7 @@ const getters = {
   search: (state) => state.search.searchText,
   editablePlaceholders: (state) => state.placeholders.editablePlaceholders,
   newPlaceholder: (state) => state.placeholders.newPlaceholder,
+  filteredPlaceholders: (state) => state.placeholders.filteredPlaceholders,
   intents: (state) => state.dialogs.intents,
   deletedAnswerButtonIndexes: (state) => state.answerButtons.deletedAnswerButtonIndexes,
   newAnswerButtons: (state) => state.answerButtons.newAnswerButtons,

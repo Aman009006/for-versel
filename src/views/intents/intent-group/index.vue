@@ -2,12 +2,12 @@
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
       <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
-      <intentSearch
+      <searchInput
         class="intent-search"
         searchScope="intents"
         :searchableArray="intents"
         @filteredArray="updateIntents">
-      </intentSearch>
+      </searchInput>
     </div>
     <div id="intent-hover" class="hidden">
       <span class="svg-container" @click="hideHover">
@@ -28,14 +28,14 @@
         label="Name"
         width="500">
         <template #default="{ row }">
-          <p v-html="highlightSearchWord(row.name, searchValue)"></p>
+          <p v-html="addHighlightSearchWord(row.name, searchValue)"></p>
         </template>
       </el-table-column>
       <el-table-column
         prop="description"
         label="Beispiele / Beschreibung">
         <template #default="{ row }">
-          <p v-html="highlightSearchWord(row.description, searchValue)"></p>
+          <p v-html="addHighlightSearchWord(row.description, searchValue)"></p>
         </template>
       </el-table-column>
       <el-table-column
@@ -75,18 +75,19 @@
 
 <script>
 import intentGroupInfoBox from "./intentGroupInfoBox.vue";
-import intentSearch from "../../../components/IntentSearch/index.vue"
+import searchInput from "@/components/SearchInput/index.vue"
 import { encodePathComponent } from '@/store/modules/permission'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
+import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
 const md = MarkdownIt({ html: true });
 
 export default {
   name: "IntentGroup",
   components: {
     intentGroupInfoBox,
-    intentSearch,
+    searchInput,
   },
   props: {
     headline: {
@@ -119,12 +120,9 @@ export default {
     }
   },
   methods: {
+    addHighlightSearchWord,
     updateIntents(array) {
       this.filteredArray = array;
-    },
-    highlightSearchWord(text, searchWord) {
-      const regex = new RegExp(`(${searchWord})`, 'gi');
-      return text.replace(regex, '<span class="search-word">$1</span>');
     },
     handleHover(row) {
       if (event.target.tagName === "BUTTON" || event.target.tagName === "SPAN") {
@@ -183,8 +181,8 @@ export default {
     },
     fillRedirectAndAnswerInfo(row) {
       let result = '';
-      const redirect = row.answers?.isRedirected;
-      const hasAnswers = row.answers?.answers
+      const redirect = row.answers.isRedirected;
+      const hasAnswers = row.answers.answers
       if (redirect === true) {
         result += 'Weiterleitung';
       } else if (hasAnswers === false && redirect === false) {

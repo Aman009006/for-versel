@@ -1,10 +1,12 @@
 <template>
   <ul>
-    <li v-for="button in sortedButtons" v-html="highlightSearchWord(button.title, searchValue)"></li>
+    <li v-for="button in sortedButtons" v-html="addHighlightSearchWord(button.title, searchValue)"></li>
   </ul>
 </template>
 
 <script>
+import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
+
 export default {
   props: ["buttons"],
 
@@ -17,10 +19,7 @@ export default {
     }
   },
   methods: {
-    highlightSearchWord(text, searchWord) {
-      const regex = new RegExp(`(${searchWord})`, 'gi');
-      return text.replace(regex, '<span class="search-word">$1</span>');
-    },
+    addHighlightSearchWord,
   }
 };
 </script>

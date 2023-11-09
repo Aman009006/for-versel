@@ -1,7 +1,7 @@
 <template>
   <div class="table-container">
-    <template v-if="dataReady">
-      <el-table :data="allPlaceholdersProps" class="placeholder_table" stripe >
+    <template v-if="allPlaceholders">
+      <el-table :data="allPlaceholders" class="placeholder_table" stripe >
         <el-table-column
           align="center"
           label="Platzhalterbezeichnung"
@@ -21,7 +21,7 @@
               />
             </template>
             <template v-else>
-              <span class="text-input">{{ row.key }}</span>
+              <span class="text-input" v-html="addHighlightSearchWord(row.key, searchValue)"></span>
             </template>
           </template>
         </el-table-column>
@@ -39,7 +39,7 @@
               />
             </template>
             <template v-else>
-              <span class="text-input">{{ row.value }}</span>
+              <span class="text-input" v-html="addHighlightSearchWord(row.value, searchValue)"></span>
             </template>
           </template>
         </el-table-column>
@@ -59,6 +59,7 @@ import editButtons from "./editButtons.vue";
 import addButton from "./addButton.vue";
 import deleteButton from "./deleteButton.vue";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
 
 export default {
   components: {
@@ -66,17 +67,16 @@ export default {
     addButton,
     deleteButton,
   },
-  props: {
-    allPlaceholdersProps: {
-      type: Array,
-      required: true,
+  computed: {
+    searchValue() {
+      return this.$store.getters.search
     },
-    dataReady: {
-      type: Boolean,
-      required: true,
-    },
+    allPlaceholders() {
+      return this.$store.getters.filteredPlaceholders
+    }
   },
   methods: {
+    addHighlightSearchWord,
     isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
         this.$store,

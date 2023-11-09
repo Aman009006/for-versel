@@ -2,9 +2,9 @@
   <div class="intent-container">
     <div class="intents-info-container">
       <intentsInfoBox></intentsInfoBox>
-      <intentSearch class="intent-search" searchScope="intentGroup" :searchableArray="intentGroups"
+      <searchInput class="intent-search" searchScope="intentGroup" :searchableArray="intentGroups"
         @filteredArray="updateIntentGroups">
-      </intentSearch>
+      </searchInput>
     </div>
     <div class="intent-groups-container">
       <intentGroupContainer
@@ -17,14 +17,14 @@
 <script>
 import intentsInfoBox from "./intentsInfoBox.vue";
 import intentGroupContainer from "./intentGroupContainer.vue";
-import intentSearch from "../../components/IntentSearch/index.vue"
+import searchInput from "@/components/SearchInput/index.vue"
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 
 export default {
   name: "Intents",
   components: {
     intentsInfoBox,
-    intentSearch,
+    searchInput,
     intentGroupContainer,
   },
   props: {
