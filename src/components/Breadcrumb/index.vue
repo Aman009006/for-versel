@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { intentConstants } from '@/constants'
+
 export default {
   data() {
     return {
@@ -63,7 +65,7 @@ export default {
 
       const intentDefault = routes.find(item => item.path === '/intents').children[0];
       const intentGroup = this.findIntentGroup(routes, route);
-      const intent = this.findTechnicalIntent(routes, route);
+      const intent = this.findVirtualIntent(routes, route);
 
       const intentData = [intentDefault, intentGroup, intent];
       
@@ -75,15 +77,15 @@ export default {
       return intentBreadcrumbElements;
     },
     findIntentGroup(routes, route) {
-      const intentGroups = routes.find(item => item.name === 'intentGroups');
+      const intentGroups = routes.find(item => item.name === intentConstants.intentGroups);
       return intentGroups.children.find(item => item.meta.title === route.meta.title || item.meta.title === route.meta.intentGroup);
     },
-    findTechnicalIntent(routes, route) {
+    findVirtualIntent(routes, route) {
       if (!route.meta.intent) {
         return;
       }
-      const technicalIntents = routes.find(item => item.name === 'TechnicalIntents');
-      return technicalIntents.children.find(item => item.meta.title === route.meta.title);
+      const virtualIntent = routes.find(item => item.name === intentConstants.intents);
+      return virtualIntent.children.find(item => item.meta.title === route.meta.title);
     }
   },
 };

@@ -7,7 +7,7 @@
         </span>
       </a>
       <div>
-        <h2>Dialoge / {{ intentGroup }}</h2>
+        <h2>{{ headline }} / {{ intentGroup }}</h2>
         <h1>{{ readableIntentName }}</h1>
       </div>
     </div>
@@ -42,12 +42,15 @@
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import WebchatApi from "@/utils/WebchatApi";
 import icons from "@/icons/index";
+import { intentConstants } from '@/constants'
 
 export default {
   name: "DialogInfoBox",
   props: ["intent", "description", "utterances", "adminUiTestPageLink", "entity", "parentPath", "readableIntentName", "intentGroup"],
   data() {
-    return {};
+    return {
+      headline: intentConstants.dialogs,
+    };
   },
   computed: {
     technicalIntentName() {

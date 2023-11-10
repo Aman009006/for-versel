@@ -47,6 +47,12 @@ export const defaultEntity = {
   entityName: "noneEntity"
 }
 
+export const intentConstants = {
+  dialogs: "Dialoge",
+  intentGroups: "Intent Groups",
+  intents: "Virtual Intents",
+}
+
 export const headerSearch = {
   intentArrayIndexInTitle: 2
 }
