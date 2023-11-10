@@ -1,4 +1,3 @@
-import { encodePathComponent } from '@/store/modules/permission'
 import IntentNameGenerator from '../intents/IntentNameGenerator';
 
 /**

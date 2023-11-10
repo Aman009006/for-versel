@@ -21,7 +21,7 @@ export default class RouteHandler {
         let res = [];
         for (const route of routes) {
             // skip hidden routes
-            if (route.hidden) {
+            if (route.hidden && !route.isIntents) {
                 continue;
             }
             const data = this.getDataForRoute(route, basePath, prefixTitle);
@@ -78,6 +78,7 @@ export default class RouteHandler {
     }
 
     /**
+     * sets route.intentName to the defined index of route.title (see constants.js)
      * @private
      * @param {import("vue-router").RouteRecord[]} routes
      * @returns

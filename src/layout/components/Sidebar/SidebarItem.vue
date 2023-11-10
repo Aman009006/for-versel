@@ -1,7 +1,19 @@
 <template>
   <div v-if="!item.hidden">
+    <template v-if="isIntents(item)">
+      <app-link :to="resolvePath(onlyOneChild.path)">
+        <el-menu-item
+            :index="resolvePath(onlyOneChild.path)"
+            :class="{ 'submenu-title-noDropdown': !isNest, 'is-intent': isIntents(item)}">
+            <item
+              :popper-class="isNest ? 'hidden-popper' : ''"
+              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
+              :title="onlyOneChild.meta.title" />
+          </el-menu-item>
+      </app-link>
+    </template>
     <template
-      v-if="hasOneShowingChild(item.children, item) &&
+      v-else-if="hasOneShowingChild(item.children, item) &&
         (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
         !item.alwaysShow
         ">
@@ -21,18 +33,7 @@
         </el-badge>
       </app-link>
     </template>
-    <template v-else-if="isIntents(item)">
-      <app-link :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item
-            :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-intent': isIntents(item)}">
-            <item
-              :popper-class="isNest ? 'hidden-popper' : ''"
-              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
-              :title="onlyOneChild.meta.placeholderTitle" />
-          </el-menu-item>
-      </app-link>
-    </template>
+    
     <!--
         meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
         https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
