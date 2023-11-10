@@ -27,8 +27,13 @@ export default class RouteHandler {
             const data = this.getDataForRoute(route, basePath, prefixTitle);
 
             if (route.meta?.title) {
-                data.title = [...data.title, route.meta.title];
-
+                if (route.meta.intent) {
+                    data.title = ['Dialoge', route.meta.intentGroup, route.meta.title]
+                } else if (route.meta.intentGroup && !route.meta.intent) {
+                    data.title = ['Dialoge']
+                } else {
+                    data.title = [...data.title, route.meta.title];
+                }
                 if (route.redirect !== "noRedirect") {
                     // only push the routes with title
                     // special case: need to exclude parent router without redirect
