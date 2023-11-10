@@ -79,7 +79,11 @@ export default {
       return intentGroups.children.find(item => item.meta.title === route.meta.title || item.meta.title === route.meta.intentGroup);
     },
     findTechnicalIntent(routes, route) {
-      return routes.find(item => item.name === 'TechnicalIntents').children.find(item => item.meta.title === route.meta.title);
+      if (!route.meta.intent) {
+        return;
+      }
+      const technicalIntents = routes.find(item => item.name === 'TechnicalIntents');
+      return technicalIntents.children.find(item => item.meta.title === route.meta.title);
     }
   },
 };
