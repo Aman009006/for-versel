@@ -1,10 +1,10 @@
-import { paths } from '@/constants';
+import { intentConstants } from '@/constants';
 /**
  * @param permissionRoutes the permission-routes. You can get them in a component like this `this.$store.getters.permission_routes`
  * @returns all the routes, which represent intents.
  */
 export function getSkillRoute(permissionRoutes) {
-  return permissionRoutes.find((route) => route.path === paths.intents)
+  return permissionRoutes.find((route) => route.name === intentConstants.intents)
 }
 
 /**
@@ -12,24 +12,19 @@ export function getSkillRoute(permissionRoutes) {
  * @returns {{pathTitles: string[]; name: string}[]} the intents, which are new for the current user.
  */
 export function getNewIntentRoutes(permissionRoutes) {
-  const skillRoutes = getSkillRoute(permissionRoutes)
-  const skillRouteChildren = skillRoutes.children
+  const intentRoute = getSkillRoute(permissionRoutes)
+  const intentRouteChildren = intentRoute.children
   const newIntentRoutes = []
-  for (const skillRoute of skillRouteChildren) {
-    if (skillRoute.children?.length > 0) {
-      skillRoute.children.forEach((intentRoute) => {
-        if (intentRoute.meta.newIntent) {
-          // the intent is marked as new intent.
-          newIntentRoutes.push({
-            name: intentRoute.name,
-            creationTimestamp: intentRoute.meta.creationTimestamp,
-            pathTitles: [
-              skillRoutes.meta.title,
-              skillRoute.meta.title,
-              intentRoute.meta.title,
-            ],
-          })
-        }
+  for (const intent of intentRouteChildren) {
+    if (intent.meta.newIntent) {
+      // the intent is marked as new intent.
+      newIntentRoutes.push({
+        name: intent.name,
+        creationTimestamp: intent.meta.creationTimestamp,
+        pathTitles: [
+          intent.meta.intentGroup,
+          intent.meta.title,
+        ],
       })
     }
   }

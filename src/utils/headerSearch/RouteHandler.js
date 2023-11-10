@@ -1,6 +1,6 @@
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 import path from "path-browserify";
-import { headerSearch } from "@/constants";
+import { headerSearch, intentConstants } from "@/constants";
 
 export default class RouteHandler {
     #intentArrayIndexInTitle = headerSearch.intentArrayIndexInTitle;
@@ -28,9 +28,9 @@ export default class RouteHandler {
 
             if (route.meta?.title) {
                 if (route.meta.intent) {
-                    data.title = ['Dialoge', route.meta.intentGroup, route.meta.title]
+                    data.title = [intentConstants.dialogs, route.meta.intentGroup, route.meta.title]
                 } else if (route.meta.intentGroup && !route.meta.intent) {
-                    data.title = ['Dialoge']
+                    data.title = [intentConstants.dialogs]
                 } else {
                     data.title = [...data.title, route.meta.title];
                 }

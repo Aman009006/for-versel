@@ -1,7 +1,7 @@
 import Layout from '@/layout/index.vue'
 import Intents from '@/views/intents/index.vue'
 import IntentGroup from '@/views/intents/intent-group/index.vue'
-import { paths } from '@/constants'
+import { paths, intentConstants } from '@/constants'
 import { encodePathComponent } from '@/utils/encodePath'
 
 export default class IntentRouteCreator {
@@ -18,8 +18,8 @@ export default class IntentRouteCreator {
         this.#sortSkillsWithIntentsAlphabetically();
         const intentRoute = this.#createIntentRoute();
         const intentGroupRoutes = this.#createIntentGroupRoutes()
-        const technicalIntentRoutes = this.#createTechnicalIntentRoutes()
-        routes.push(intentRoute, intentGroupRoutes, technicalIntentRoutes)
+        const virtualIntentRoutes = this.#createVirtualIntentRoutes()
+        routes.push(intentRoute, intentGroupRoutes, virtualIntentRoutes)
         return routes
     }
 
@@ -45,9 +45,9 @@ export default class IntentRouteCreator {
                     path: paths.intents,
                     component: Intents,
                     props: { intentGroups: this.skillsWithIntents },
-                    name: 'Dialoge',
+                    name: intentConstants.dialogs,
                     meta: {
-                        title: 'Dialoge',
+                        title: intentConstants.dialogs,
                         icon: 'comment',
                     },
                 },
@@ -64,7 +64,7 @@ export default class IntentRouteCreator {
             path: '',
             hidden: true,
             isIntents: true,
-            name: 'intentGroups',
+            name: intentConstants.intentGroups,
             component: Layout,
             children: [],
         };
@@ -89,12 +89,12 @@ export default class IntentRouteCreator {
     /**
      * @returns {Array}
      */
-    #createTechnicalIntentRoutes() {
+    #createVirtualIntentRoutes() {
         const routes = {
             path: '',
             hidden: true,
             isIntents: true,
-            name: 'TechnicalIntents',
+            name: intentConstants.intents,
             component: Layout,
             children: [],
         };

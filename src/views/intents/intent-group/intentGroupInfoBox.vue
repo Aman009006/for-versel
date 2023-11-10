@@ -6,7 +6,7 @@
             </span>
         </a>
         <div class="intent-group-headline">
-            <h2>Dialoge:</h2>
+            <h2>{{ dialogHeadline }}:</h2>
             <h1>{{ headline }}</h1>
         </div>
     </div>
@@ -14,7 +14,7 @@
   
 <script>
 import icons from "@/icons/index";
-
+import { intentConstants } from "@/constants";
 export default {
     name: "IntentGroupInfoBox",
     components: {},
@@ -26,6 +26,7 @@ export default {
     },
     data() {
         return {
+            dialogHeadline: intentConstants.dialogs,
             parentPath: this.$route.meta.parentPath,
         };
     },

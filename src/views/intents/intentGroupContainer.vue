@@ -9,6 +9,7 @@
 
 <script>
 import { encodePathComponent } from '@/utils/encodePath'
+import { intentConstants } from '@/constants'
 
 export default {
   name: "IntentGroupContainer",
@@ -38,7 +39,7 @@ export default {
   methods: {
     getIntentPaths() {
       const paths = this.$store.getters.permission_routes;
-      const intentPaths = paths.filter((path) => path.name === "intentGroups");
+      const intentPaths = paths.filter((path) => path.name === intentConstants.intentGroups);
       return intentPaths[0];
     },
   },
