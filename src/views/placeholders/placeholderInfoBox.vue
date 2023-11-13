@@ -43,7 +43,7 @@
       </span>
       </div>
       <div class="input-content">
-        <searchInput class="intent-search" placeholder="Platzhalter Suche" searchScope="placeholderGroup"
+        <searchInput class="intent-search" placeholder="Platzhalter Suche"
           :searchableArray="allPlaceholders" @filteredArray="updateIntentGroups">
         </searchInput>
       </div>

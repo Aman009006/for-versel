@@ -2,7 +2,7 @@
   <div class="intent-container">
     <div class="intents-info-container">
       <intentsInfoBox></intentsInfoBox>
-      <searchInput class="intent-search" searchScope="intentGroup" :searchableArray="intentGroups"
+      <searchInput class="intent-search" :searchableArray="intentGroups"
         @filteredArray="updateIntentGroups">
       </searchInput>
     </div>

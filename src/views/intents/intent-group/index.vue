@@ -4,7 +4,6 @@
       <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
       <searchInput
         class="intent-search"
-        searchScope="intents"
         :searchableArray="intents"
         @filteredArray="updateIntents">
       </searchInput>

@@ -1,22 +1,10 @@
 /**
- * Returns true if the intentGroups SkillName matches the newValue string
- * @param {String} intentData
- * @param {String} newValue
- * @returns {Boolean}
- */
-export function searchIntentGroup(intentGroup, newValue) {
-    const intentName = intentGroup.SkillName || intentGroup.name;
-    const technicalIntent = intentGroup.Intents;
-    return ignoreCaseAndCheckInclude(intentName, newValue) || searchIntentSubArray(technicalIntent, newValue);
-}
-
-/**
  * Returns true if the intentData string matches the newValue string
  * @param {String} intentData
  * @param {String} newValue
  * @returns {Boolean}
  */
-export function searchSingleIntent(intentData, newValue) {
+export function searchUniversal(intentData, newValue) {
     const intentName = intentData.name;
     const intentTechnicalName = intentData.intent;
     const intentDescription = intentData.description;
@@ -24,13 +12,17 @@ export function searchSingleIntent(intentData, newValue) {
     const intentAnswer = intentData.texts;
     const intentPlaceholderKey = intentData.key;
     const intentPlaceholderValue = intentData.value;
+    const intentSkillName = intentData.SkillName;
+    const intentIntents = intentData.Intents;
 
     return ignoreCaseAndCheckInclude(intentName, newValue) ||
     ignoreCaseAndCheckInclude(intentTechnicalName, newValue) ||
     ignoreCaseAndCheckInclude(intentDescription, newValue) ||
     ignoreCaseAndCheckInclude(intentPlaceholderKey, newValue) ||
     ignoreCaseAndCheckInclude(intentPlaceholderValue, newValue) ||
+    ignoreCaseAndCheckInclude(intentSkillName, newValue) ||
     searchIntentSubArray(intentExample, newValue) ||
+    searchIntentSubArray(intentIntents, newValue) ||
     searchIntentSubArray(intentAnswer, newValue);
 }
 

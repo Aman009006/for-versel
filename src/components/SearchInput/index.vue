@@ -11,7 +11,7 @@
 <script>
 import {computed, ref, watch} from "vue";
 import icons from "@/icons/index";
-import { searchIntentGroup, searchSingleIntent } from "@/utils/intentSearch/intentSearch.js";
+import {searchUniversal} from "@/utils/intentSearch/intentSearch.js";
 import SearchUtilities from "@/store/utilities/SearchUtilities";
 import { useStore } from 'vuex';
 
@@ -20,10 +20,6 @@ export default {
     props: {
         searchableArray: {
             type: Array,
-            required: true,
-        },
-        searchScope: {
-            type: String,
             required: true,
         },
         placeholder: {
@@ -62,11 +58,7 @@ export default {
           searchValue.value = newValue
 
             filteredArray.value = props.searchableArray.filter((intent) => {
-                if (props.searchScope === 'intentGroup') {
-                    return searchIntentGroup(intent, newValue);
-                } else {
-                    return searchSingleIntent(intent, newValue);
-                }
+              return searchUniversal(intent, newValue)
             });
 
             emit("filteredArray", filteredArray.value);
