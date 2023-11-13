@@ -83,7 +83,7 @@ import LastClickedIntent from "@/utils/LastClickedIntent"
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
-import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 const md = MarkdownIt({ html: true });
 
 export default {

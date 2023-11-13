@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 
 export default {
   props: ["buttons"],

@@ -59,7 +59,7 @@ import editButtons from "./editButtons.vue";
 import addButton from "./addButton.vue";
 import deleteButton from "./deleteButton.vue";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
-import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 
 export default {
   components: {

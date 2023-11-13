@@ -39,7 +39,7 @@ import { humanReadableLabels } from "@/constants";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 import PlaceholderReplacer from "@/utils/placeholder/placeholderReplacer";
 import MarkdownIt from "markdown-it";
-import addHighlightSearchWord from "@/utils/AddHihlightSearchWordUtils";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 const md = MarkdownIt({ html: false });
 
 export default {
