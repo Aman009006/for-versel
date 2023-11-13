@@ -4,7 +4,7 @@ export default class SearchUtilities {
         const dispatchName = this.#getDispatchName('addSearchText');
         store.dispatch(dispatchName, text);
     }
-    static removeSearchTextToStore (store) {
+    static removeSearchTextFromStore (store) {
         const dispatchName = this.#getDispatchName('removeSearchText');
         store.dispatch(dispatchName);
     }

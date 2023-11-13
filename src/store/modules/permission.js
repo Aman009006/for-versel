@@ -1,10 +1,7 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import { getSkillsWithIntents } from '@/api/answers'
-import Layout from '@/layout/index.vue'
-import { paths } from '@/constants'
-import Reporting from '@/views/reporting/index.vue'
-import Intents from '@/views/intents/index.vue'
-import IntentGroup from '@/views/intents/intent-group/index.vue'
+import IntentRouteCreator from '@/utils/routes/IntentRouteCreator'
+import PowerBiRouteCreator from '@/utils/routes/PowerBiRouteCreator.js'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -83,117 +80,8 @@ const mutations = {
   },
 }
 
-/**
- * translates a path - component into a browser - readable name
- */
-export function encodePathComponent(pathComponent) {
-  return pathComponent.replace('(', '').replace(')', '').replace('?', '%3F')
-}
-
-/**
- * sort skillsWithIntents alphabetically by a given key
- */
-
-function sortSkillsWithIntentsAlphabetically(array) {
-  array.sort(function (a, b) {
-    var textA = a.SkillName.toUpperCase();
-    var textB = b.SkillName.toUpperCase();
-    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-  });
-}
-
-/**
- * Make the routes for intent group overview
- */
-
-export function makeRouteForIntents(skillsWithIntents) {
-  sortSkillsWithIntentsAlphabetically(skillsWithIntents);
-  const routes = [];
-  const route = {
-    path: paths.intents,
-    name: 'IntentGroupOverview',
-    isIntents: true,
-    component: Layout,
-    meta: {
-      title: 'Dialoge',
-      icon: 'comment',
-    },
-    children: [
-      {
-        path: paths.intents,
-        props: { intentGroups: skillsWithIntents },
-        component: Intents,
-        name: 'Intents',
-        meta: {
-          placeholderTitle: 'Dialoge',
-          icon: 'comment',
-        },
-      },
-    ],
-  }
-  skillsWithIntents.forEach((skillWithIntent) => {
-    const specificIntentGroupPath = encodeURIComponent(encodePathComponent(skillWithIntent.SkillName))
-    route.children.push({
-      path: `${paths.intents}/${specificIntentGroupPath}`,
-      component: IntentGroup,
-      props: { intentGroup: skillWithIntent.SkillName, intents: skillWithIntent.Intents },
-      // do i really need the names? --> Yes, you can use the name as an identifikator to go to specific routes
-      name: `skill-${skillWithIntent.SkillName}`,
-      meta: {
-        title: `${skillWithIntent.SkillName}`,
-        parentPath: `#${paths.intents}`,
-      },
-      children: [],
-    })
-    skillWithIntent.Intents.forEach((intent) => {
-      route.children.push({
-        path: `${paths.intents}/${specificIntentGroupPath}/${encodeURIComponent(encodePathComponent(intent.name))}`,
-        component: () => import('@/views/intents/single-intent/index.vue'),
-        name: `intent-${intent.name}`,
-        meta: {
-          title: `${intent.name}`,
-          intentGroup: `${skillWithIntent.SkillName}`,
-          parentPath: `#${paths.intents}/${specificIntentGroupPath}`,
-          intent: `${intent.intent}`,
-          entity: intent.entity,
-          description: `${intent.description}`,
-          newIntent: intent.newIntent,
-          creationTimestamp: intent.creationTimestamp,
-        },
-      })
-    })
-  })
-  routes.push(route);
-  return routes
-}
-
-/**
- * @param powerBi_reportId is the given powerBI Report Id of the current customer.
- * @param customer is the current customer.
- * @return the route which redirects at the given PowerBI URL.
- */
-export function createRouteForPowerBIReport(powerBi_reportId, customer) {
-  const powerBIReportRoute = {
-    path: '/reporting',
-    component: Layout,
-    children: [
-      {
-        path: paths.reporting,
-        component: Reporting,
-        props: { customer: customer, powerBiReportId: powerBi_reportId },
-        name: 'Reporting',
-        meta: {
-          title: 'Reporting',
-          icon: 'dashboard',
-        },
-      },
-    ],
-  }
-  return powerBIReportRoute
-}
-
 const actions = {
-  async pullIntentsAndSetRoutes({ commit, state, dispatch, rootGetters }, roles) {
+  async pullIntentsAndSetRoutes({ commit, state, dispatch }, roles) {
     // add dynamic routes here
     let accessedRoutes
     if (roles.includes('admin')) {
@@ -203,18 +91,18 @@ const actions = {
     }
     // call the action which gets skills and intents from the DB and saves them in the state
     await dispatch(actions.setSkillsAndIntents.name)
-    // make dynamic routes for skills and intents
-    const additionalRoutes = makeRouteForIntents(state.skillsWithIntents);
 
-    // add them to the existing dynamic routes
+    // make dynamic routes for skills and intents
+    const additionalRoutes = new IntentRouteCreator(state.skillsWithIntents).createIntentRouting();
+
+    // create all additionalRoutes
     let allAdditionalRoutes = additionalRoutes.concat(accessedRoutes)
 
-    // get PowerBI Report ID and customer name from DB to create path and fill data
-    const { powerBI_reportID, customer } = rootGetters.metainfo
-    let powerBIReportRoute
-    if (powerBI_reportID) {
-      powerBIReportRoute = createRouteForPowerBIReport(powerBI_reportID, customer);
-      allAdditionalRoutes = allAdditionalRoutes.concat(powerBIReportRoute)
+    // create PowerBI Route
+    const powerBiReportRoute = new PowerBiRouteCreator().createRouteForPowerBIReport()
+    if (powerBiReportRoute !== null) {
+      // add powerBiReportRoute to the existing dynamic routes
+      allAdditionalRoutes = allAdditionalRoutes.concat(powerBiReportRoute)
     }
 
     commit('SET_ROUTES', allAdditionalRoutes)

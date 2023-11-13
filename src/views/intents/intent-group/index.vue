@@ -76,7 +76,7 @@
 <script>
 import intentGroupInfoBox from "./intentGroupInfoBox.vue";
 import searchInput from "@/components/SearchInput/index.vue"
-import { encodePathComponent } from '@/store/modules/permission'
+import { encodePathComponent } from '@/utils/encodePath'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import LastClickedIntent from "@/utils/LastClickedIntent"
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";

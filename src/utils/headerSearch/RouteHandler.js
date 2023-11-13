@@ -1,6 +1,6 @@
 import SkillsWithIntentsDataGetterImpl from "@/utils/headerSearch/SkillsWithIntentsDataGetterImpl"
 import path from "path-browserify";
-import { headerSearch } from "@/constants";
+import { headerSearch, intentConstants } from "@/constants";
 
 export default class RouteHandler {
     #intentArrayIndexInTitle = headerSearch.intentArrayIndexInTitle;
@@ -21,14 +21,19 @@ export default class RouteHandler {
         let res = [];
         for (const route of routes) {
             // skip hidden routes
-            if (route.hidden) {
+            if (route.hidden && !route.isIntents) {
                 continue;
             }
             const data = this.getDataForRoute(route, basePath, prefixTitle);
 
             if (route.meta?.title) {
-                data.title = [...data.title, route.meta.title];
-
+                if (route.meta.intent) {
+                    data.title = [intentConstants.dialogs, route.meta.intentGroup, route.meta.title]
+                } else if (route.meta.intentGroup && !route.meta.intent) {
+                    data.title = [intentConstants.dialogs]
+                } else {
+                    data.title = [...data.title, route.meta.title];
+                }
                 if (route.redirect !== "noRedirect") {
                     // only push the routes with title
                     // special case: need to exclude parent router without redirect
@@ -78,6 +83,7 @@ export default class RouteHandler {
     }
 
     /**
+     * sets route.intentName to the defined index of route.title (see constants.js)
      * @private
      * @param {import("vue-router").RouteRecord[]} routes
      * @returns

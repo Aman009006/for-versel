@@ -47,8 +47,14 @@ export const defaultEntity = {
   entityName: "noneEntity"
 }
 
+export const intentConstants = {
+  dialogs: "Dialoge",
+  intentGroups: "Intent Groups",
+  intents: "Virtual Intents",
+}
+
 export const headerSearch = {
-  intentArrayIndexInTitle: 1
+  intentArrayIndexInTitle: 2
 }
 
 export const buttonLimit = 5
