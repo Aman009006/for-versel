@@ -1,43 +1,46 @@
 /**
- * Returns true if the searchableObject string matches the newValue string
- * @param {Object} searchableObject
+ * Returns true if the intentGroups SkillName matches the newValue string
+ * @param {String} intentData
  * @param {String} newValue
  * @returns {Boolean}
  */
-export function searchComponentData(searchableObject, newValue) {
-    const intentName = searchableObject.name;
-    const intentTechnicalName = searchableObject.intent;
-    const intentDescription = searchableObject.description;
-    const intentExample = searchableObject.utterances;
-    const intentAnswer = searchableObject.texts;
-    const placeholderKey = searchableObject.key;
-    const placeholderValue = searchableObject.value;
-    const intentSkillName = searchableObject.SkillName;
-    const intentIntents = searchableObject.Intents;
+export function searchIntentGroup(intentGroup, newValue) {
+    const intentName = intentGroup.SkillName
+    return ignoreCaseAndCheckInclude(intentName, newValue);
+}
+
+/**
+ * Returns true if the intentData string matches the newValue string
+ * @param {String} intentData
+ * @param {String} newValue
+ * @returns {Boolean}
+ */
+export function searchSingleIntent(intentData, newValue) {
+    const intentName = intentData.name;
+    const intentTechnicalName = intentData.intent
+    const intentDescription = intentData.description
+    const intentExample = intentData.utterances
+    const intentAnswer = intentData.texts
 
     return ignoreCaseAndCheckInclude(intentName, newValue) ||
     ignoreCaseAndCheckInclude(intentTechnicalName, newValue) ||
     ignoreCaseAndCheckInclude(intentDescription, newValue) ||
-    ignoreCaseAndCheckInclude(placeholderKey, newValue) ||
-    ignoreCaseAndCheckInclude(placeholderValue, newValue) ||
-    ignoreCaseAndCheckInclude(intentSkillName, newValue) ||
-    searchSubArray(intentExample, newValue) ||
-    searchSubArray(intentIntents, newValue) ||
-    searchSubArray(intentAnswer, newValue);
+    searchIntentSubArray(intentExample, newValue) ||
+    searchIntentSubArray(intentAnswer, newValue);
 }
 
-function ignoreCaseAndCheckInclude(keyToCheckAgainst, searchString) {
-    return keyToCheckAgainst?.toLowerCase().includes(searchString.toLowerCase());
+function ignoreCaseAndCheckInclude(intent, searchString) {
+    return intent.toLowerCase().includes(searchString.toLowerCase());
 }
 
 /**
- * @param {Array} subArray
+ * @param {Array} intentArray
  * @param {String} newValue
  * @returns {Boolean}
  */
-function searchSubArray(subArray, newValue) {
-    if (subArray !== undefined) {
-        for (const item of subArray) {
+function searchIntentSubArray(intentArray, newValue) {
+    if (intentArray !== undefined) {
+        for (const item of intentArray) {
             if (item === null) {
                 continue;
             } else if (typeof item === 'string') {
@@ -46,10 +49,6 @@ function searchSubArray(subArray, newValue) {
                 }
             } else if ('text' in item) {
                 if (ignoreCaseAndCheckInclude(item.text, newValue)) {
-                    return true;
-                }
-            } else if ('name' in item) {
-                if (ignoreCaseAndCheckInclude(item.name, newValue)) {
                     return true;
                 }
             }

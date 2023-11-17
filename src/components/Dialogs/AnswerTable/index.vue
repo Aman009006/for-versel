@@ -39,7 +39,6 @@ import { humanReadableLabels } from "@/constants";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 import PlaceholderReplacer from "@/utils/placeholder/placeholderReplacer";
 import MarkdownIt from "markdown-it";
-import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 const md = MarkdownIt({ html: false });
 
 export default {
@@ -56,11 +55,6 @@ export default {
       humanReadableAnswers: [],
     };
   },
-  computed: {
-    searchValue() {
-      return this.$store.getters.search
-    }
-  },
   async created() {
     await this.loadData();
   },
@@ -75,8 +69,7 @@ export default {
       this.humanReadableAnswers = new PlaceholderReplacer(this.answers, this.allPlaceholders).replaceAnswers();
     },
     renderToMarkdown(text) {
-      const renderText = md.render(text);
-      return addHighlightSearchWord(renderText, this.searchValue)
+      return md.render(text);
     },
   },
 };

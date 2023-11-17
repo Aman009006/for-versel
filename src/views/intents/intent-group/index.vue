@@ -2,11 +2,12 @@
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
       <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
-      <searchInput
+      <intentSearch
         class="intent-search"
+        searchScope="intents"
         :searchableArray="intents"
         @filteredArray="updateIntents">
-      </searchInput>
+      </intentSearch>
     </div>
     <div id="intent-hover" class="hidden">
       <span class="svg-container" @click="hideIntentHover">
@@ -25,18 +26,11 @@
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
       <el-table-column
         prop="name"
-        label="Name"
-        width="500">
-        <template #default="{ row }">
-          <p v-html="addHighlightSearchWord(row.name, searchValue)"></p>
-        </template>
+        label="Name">
       </el-table-column>
       <el-table-column
         prop="description"
         label="Beispiele / Beschreibung">
-        <template #default="{ row }">
-          <p v-html="addHighlightSearchWord(row.description, searchValue)"></p>
-        </template>
       </el-table-column>
       <el-table-column
         prop="answers"
@@ -84,21 +78,20 @@
 
 <script>
 import intentGroupInfoBox from "./intentGroupInfoBox.vue";
-import searchInput from "@/components/SearchInput/index.vue"
+import intentSearch from "../../../components/IntentSearch/index.vue"
 import { encodePathComponent } from '@/utils/encodePath'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import LastClickedIntent from "@/utils/LastClickedIntent"
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
-import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 const md = MarkdownIt({ html: true });
 
 export default {
   name: "IntentGroup",
   components: {
     intentGroupInfoBox,
-    searchInput,
+    intentSearch,
   },
   props: {
     intentGroup: {
@@ -133,12 +126,8 @@ export default {
     icons() {
       return icons;
     },
-    searchValue() {
-      return this.$store.getters.search
-    }
   },
   methods: {
-    addHighlightSearchWord,
     updateIntents(array) {
       this.filteredArray = array;
     },
