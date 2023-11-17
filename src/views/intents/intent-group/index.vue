@@ -10,7 +10,7 @@
       </intentSearch>
     </div>
     <div id="intent-hover" class="hidden">
-      <span class="svg-container" @click="hideHover">
+      <span class="svg-container" @click="hideIntentHover">
         <svg-icon :svg-icon-html="icons.close" />
       </span>
       <h3>Beispiel Antwort:</h3>
@@ -20,7 +20,7 @@
     <el-table
       :data="filteredArray"
       stripe
-      @row-click="handleHover"
+      @row-click="handleIntentHover"
       :row-class-name="addClassToTableRowMatchingStorage"
       :header-cell-style="{ padding: '0 0 0 20px', height: '50px' }"
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
@@ -37,11 +37,20 @@
         label="Status">
         <template v-slot="{ row }">
           <template v-if="fillRedirectAndAnswerInfo(row) === 'Weiterleitung'">
-            <a :href="getRedirectPath(row)">
-              <div class="intent-status-pill is-redirect">
-                <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
-              </div>
-            </a>
+            <el-popover
+              placement="top"
+              :width="200"
+              trigger="hover"
+              popper-class="redirect-hover">
+              <template #reference>
+                <a class="intent-redirect-info" :href="getRedirectPath(row)">
+                  <div class="intent-status-pill is-redirect">
+                    <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+                  </div>
+                </a>
+              </template>
+              <p>{{ row.answers.redirectsTo }}</p>
+            </el-popover>
           </template>
           <template v-else-if="fillRedirectAndAnswerInfo(row) === 'Keine Antwort'">
             <div class="intent-status-pill is-no-answer">
@@ -122,32 +131,32 @@ export default {
     updateIntents(array) {
       this.filteredArray = array;
     },
-    handleHover(row) {
+    handleIntentHover(row) {
       if (event.target.tagName === "BUTTON" || event.target.tagName === "SPAN") {
         return;
       }
       const intentContainer = document.getElementById('intent-hover');
       if (intentContainer.getAttribute('data-intent') === row.intent) {
-        this.hideHover();
+        this.hideIntentHover();
       } else if (intentContainer.classList.contains('hidden')) {
         intentContainer.setAttribute('data-intent', row.intent);
         this.fillHoverText(row.texts)
-        this.showHover();
+        this.showIntentHover();
       } else {
         intentContainer.classList.add('hidden');
         setTimeout(() => {
           this.fillHoverText(row.texts)
           intentContainer.setAttribute('data-intent', row.intent);
-          this.showHover();
+          this.showIntentHover();
         }, 400);
       }
     },
-    hideHover() {
+    hideIntentHover() {
       const intentContainer = document.getElementById('intent-hover');
       intentContainer.classList.add('hidden');
       intentContainer.removeAttribute('data-intent');
     },
-    showHover() {
+    showIntentHover() {
       const intentContainer = document.getElementById('intent-hover');
       intentContainer.classList.remove('hidden');
     },
@@ -188,6 +197,12 @@ export default {
       }
       return result;
     },
+    showRedirectHover(event) {
+      event.target.parentElement.nextSibling.classList.remove('is--hidden');
+    },
+    hideRedirectHover(event) {
+      event.target.parentElement.nextSibling.classList.add('is--hidden');
+    },
     getRedirectPath(row) {
       const routes = this.$router.getRoutes();
       const redirectRoute = row.answers.redirectsTo;
@@ -210,7 +225,7 @@ export default {
     addClassToTableRowMatchingStorage({ row }) {
       const storageIntent = sessionStorage.getItem('lastClickedVirtualIntent');
       const rowIntent = this.technicalIntentName(row);
-      if (rowIntent === storageIntent) { 
+      if (rowIntent === storageIntent) {
         return 'is-storage-intent';
       }
     },
@@ -267,8 +282,18 @@ export default {
   }
 }
 
+a.intent-redirect-info {
+  display: block;
+  width: 150px;
+
+  @media screen and (max-width: 1430px) {
+    width: 100px;
+  }
+}
+
 .intent-status-pill {
   display: flex;
+  position: relative;
   width: 150px;
   justify-content: center;
   padding: 5px 20px;
@@ -276,7 +301,7 @@ export default {
   font-size: 12px;
   color: $hsag-white;
 
-  @media screen and (max-width: 1430px){
+  @media screen and (max-width: 1430px) {
     width: 100px;
     padding: 5px;
   }
