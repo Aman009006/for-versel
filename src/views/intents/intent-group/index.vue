@@ -37,15 +37,20 @@
         label="Status">
         <template v-slot="{ row }">
           <template v-if="fillRedirectAndAnswerInfo(row) === 'Weiterleitung'">
-            <a class="intent-redirect-info" :href="getRedirectPath(row)">
-              <div @mouseover.self="showRedirectHover" @mouseleave.self="hideRedirectHover"
-                class="intent-status-pill is-redirect">
-                <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
-              </div>
-            </a>
-            <div class="redirect-hover is--hidden">
-              <span>{{ row.answers.redirectsTo }}</span>
-            </div>
+            <el-popover
+              placement="top"
+              :width="200"
+              trigger="hover"
+              popper-class="redirect-hover">
+              <template #reference>
+                <a class="intent-redirect-info" :href="getRedirectPath(row)">
+                  <div class="intent-status-pill is-redirect">
+                    <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+                  </div>
+                </a>
+              </template>
+              <p>{{ row.answers.redirectsTo }}</p>
+            </el-popover>
           </template>
           <template v-else-if="fillRedirectAndAnswerInfo(row) === 'Keine Antwort'">
             <div class="intent-status-pill is-no-answer">
@@ -311,41 +316,6 @@ a.intent-redirect-info {
 
   &.is-no-answer {
     background-color: $hsag-error;
-  }
-}
-
-.redirect-hover {
-  position: absolute;
-  width: auto;
-  z-index: 20000;
-  left: 28%;
-  top: 0%;
-  transform: translate(-50%, -50%);
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: $hsag-bluegrey;
-  color: white;
-  text-align: center;
-  font-size: 12px;
-
-  @media screen and (max-width: 1430px) {
-    left: 30%;
-    top: -10%;
-  }
-
-  &.is--hidden {
-    display: none;
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    bottom: -9px;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid $hsag-bluegrey;
   }
 }
 
