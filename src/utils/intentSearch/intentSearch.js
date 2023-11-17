@@ -15,19 +15,19 @@ export function searchComponentData(searchableObject, newValue) {
     const intentSkillName = searchableObject.SkillName;
     const intentIntents = searchableObject.Intents;
 
-    return keyToCheckAgainst(intentName, newValue) ||
-    keyToCheckAgainst(intentTechnicalName, newValue) ||
-    keyToCheckAgainst(intentDescription, newValue) ||
-    keyToCheckAgainst(placeholderKey, newValue) ||
-    keyToCheckAgainst(placeholderValue, newValue) ||
-    keyToCheckAgainst(intentSkillName, newValue) ||
+    return ignoreCaseAndCheckInclude(intentName, newValue) ||
+    ignoreCaseAndCheckInclude(intentTechnicalName, newValue) ||
+    ignoreCaseAndCheckInclude(intentDescription, newValue) ||
+    ignoreCaseAndCheckInclude(placeholderKey, newValue) ||
+    ignoreCaseAndCheckInclude(placeholderValue, newValue) ||
+    ignoreCaseAndCheckInclude(intentSkillName, newValue) ||
     searchSubArray(intentExample, newValue) ||
     searchSubArray(intentIntents, newValue) ||
     searchSubArray(intentAnswer, newValue);
 }
 
-function keyToCheckAgainst(intent, searchString) {
-    return intent?.toLowerCase().includes(searchString.toLowerCase());
+function ignoreCaseAndCheckInclude(keyToCheckAgainst, searchString) {
+    return keyToCheckAgainst?.toLowerCase().includes(searchString.toLowerCase());
 }
 
 /**
@@ -41,15 +41,15 @@ function searchSubArray(subArray, newValue) {
             if (item === null) {
                 continue;
             } else if (typeof item === 'string') {
-                if (keyToCheckAgainst(item, newValue)) {
+                if (ignoreCaseAndCheckInclude(item, newValue)) {
                     return true;
                 }
             } else if ('text' in item) {
-                if (keyToCheckAgainst(item.text, newValue)) {
+                if (ignoreCaseAndCheckInclude(item.text, newValue)) {
                     return true;
                 }
             } else if ('name' in item) {
-                if (keyToCheckAgainst(item.name, newValue)) {
+                if (ignoreCaseAndCheckInclude(item.name, newValue)) {
                     return true;
                 }
             }
