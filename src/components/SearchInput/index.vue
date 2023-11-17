@@ -11,7 +11,7 @@
 <script>
 import {computed, ref, watch} from "vue";
 import icons from "@/icons/index";
-import {searchUniversal} from "@/utils/intentSearch/intentSearch.js";
+import {searchComponentData} from "@/utils/intentSearch/intentSearch.js";
 import SearchUtilities from "@/store/utilities/SearchUtilities";
 import { useStore } from 'vuex';
 
@@ -58,7 +58,7 @@ export default {
           searchValue.value = newValue
 
             filteredArray.value = props.searchableArray.filter((intent) => {
-              return searchUniversal(intent, newValue)
+              return searchComponentData(intent, newValue)
             });
 
             emit("filteredArray", filteredArray.value);
