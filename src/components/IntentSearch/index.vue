@@ -11,7 +11,9 @@
 <script>
 import { ref, watch } from "vue";
 import icons from "@/icons/index";
-import { searchIntentGroup, searchSingleIntent } from "@/utils/intentSearch/intentSearch.js";
+import {searchComponentData} from "@/utils/componentSearch/componentSearch.js";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+import { useStore } from 'vuex';
 
 export default {
     name: "IntentSearch",
