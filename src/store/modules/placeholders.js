@@ -9,7 +9,8 @@ const state = {
    */
   placeholders: [],
   editablePlaceholders: {},
-  newPlaceholder: null
+  newPlaceholder: null,
+  filteredPlaceholders: []
 }
 
 const mutations = {
@@ -33,6 +34,9 @@ const mutations = {
   },
   deleteEditingPlaceholder: (state, placeholderKey) => {
     delete state.editablePlaceholders[placeholderKey];
+  },
+  setFilteredPlaceholders: (state, filteredPlaceholders) => {
+    state.filteredPlaceholders = filteredPlaceholders;
   }
 }
 
@@ -52,6 +56,9 @@ const actions = {
   },
   stopEditingPlaceholder({ commit }, placeholderKey) {
     commit(mutations.deleteEditingPlaceholder.name, placeholderKey)
+  },
+  setFilteredPlaceholdersAction({ commit }, filteredPlaceholders) {
+    commit(mutations.setFilteredPlaceholders.name, filteredPlaceholders)
   },
 }
 

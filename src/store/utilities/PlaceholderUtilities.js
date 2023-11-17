@@ -12,6 +12,10 @@ export default class PlaceholderUtilities {
         }
         return placeholders;
     }
+    static setFilteredPlaceholders(store, filteredPlaceholders) {
+        const dispatchName = this.#getDispatchName('setFilteredPlaceholdersAction');
+        store.dispatch(dispatchName, filteredPlaceholders);
+    }
 
     static startCreatingNewPlaceholder(store) {
         const dispatchName = this.#getDispatchName('startCreatingNewPlaceholder');

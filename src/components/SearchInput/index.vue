@@ -3,33 +3,34 @@
         <span class="svg-container">
             <svg-icon :svg-icon-html="icons.search" />
         </span>
-        <el-input placeholder="Intent Suche" v-model="intentSearchValue">
+        <el-input :placeholder="placeholder ? placeholder : 'Intent Suche'" v-model="searchValue">
         </el-input>
     </el-form-item>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 import icons from "@/icons/index";
-import { searchIntentGroup, searchSingleIntent } from "@/utils/intentSearch/intentSearch.js";
+import {searchComponentData} from "@/utils/intentSearch/intentSearch.js";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+import { useStore } from 'vuex';
 
 export default {
-    name: "IntentSearch",
+    name: "SearchInput",
     props: {
         searchableArray: {
             type: Array,
             required: true,
         },
-        searchScope: {
+        placeholder: {
             type: String,
-            required: true,
+            required: false,
         },
     },
     computed: {
         icons() {
             return icons;
         },
-
     },
     methods: {
         /**
@@ -44,25 +45,30 @@ export default {
         this.addOverflowToMainApp();
     },
     setup(props, { emit }) {
-        const intentSearchValue = ref("");
+        const store = useStore();
+        const searchValueFromProps = computed(() => {
+          return store.getters.search;
+        });
+        const searchValue = ref(searchValueFromProps.value);
         const filteredArray = ref(props.searchableArray);
 
+
         function filterArray(newValue) {
+          SearchUtilities.addSearchTextToStore(store, newValue)
+          searchValue.value = newValue
+
             filteredArray.value = props.searchableArray.filter((intent) => {
-                if (props.searchScope === 'intentGroup') {
-                    return searchIntentGroup(intent, newValue);
-                } else {
-                    return searchSingleIntent(intent, newValue);
-                }
+              return searchComponentData(intent, newValue)
             });
 
             emit("filteredArray", filteredArray.value);
         }
 
-        watch(intentSearchValue, filterArray)
+        watch(searchValue, filterArray, { immediate: true, deep: true })
+        watch(searchValueFromProps, filterArray,{ immediate: true, deep: true })
 
         return {
-            intentSearchValue,
+            searchValue,
             filteredArray
         };
     }

@@ -1,17 +1,25 @@
 <template>
   <ul>
-    <li v-for="button in sortedButtons">{{ button.title }}</li>
+    <li v-for="button in sortedButtons" v-html="addHighlightSearchWord(button.title, searchValue)"></li>
   </ul>
 </template>
 
 <script>
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+
 export default {
   props: ["buttons"],
 
   computed: {
     sortedButtons(){
       return this.buttons.sort((a,b) => a.order - b.order);
+    },
+    searchValue() {
+      return this.$store.getters.search
     }
+  },
+  methods: {
+    addHighlightSearchWord,
   }
 };
 </script>
