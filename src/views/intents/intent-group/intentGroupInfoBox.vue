@@ -1,6 +1,6 @@
 <template>
     <div class="intents-infobox">
-        <a :href="parentPath">
+        <a :href="parentPath" @click="clearSearch">
             <span class="svg-container">
                 <svg-icon :svg-icon-html="icons.arrowleft" />
             </span>
@@ -11,10 +11,12 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 import icons from "@/icons/index";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
 import { intentConstants } from "@/constants";
+
 export default {
     name: "IntentGroupInfoBox",
     components: {},
@@ -38,11 +40,14 @@ export default {
     methods: {
         updateIntentGroups(array) {
             this.filteredArray = array;
+        },
+        clearSearch() {
+          SearchUtilities.addSearchTextToStore(this.$store, '')
         }
     },
 };
 </script>
-  
+
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
@@ -79,4 +84,3 @@ export default {
     }
 }
 </style>
-  

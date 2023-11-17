@@ -1,7 +1,7 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="isIntents(item)">
-      <app-link :to="resolvePath(onlyOneChild.path)">
+      <app-link @click="removeSearchValue" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
             :index="resolvePath(onlyOneChild.path)"
             :class="{ 'submenu-title-noDropdown': !isNest, 'is-intent': isIntents(item)}">
@@ -17,7 +17,7 @@
         (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
         !item.alwaysShow
         ">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <app-link @click="removeSearchValue" v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-badge
           value="Neu"
           class="item"
@@ -33,7 +33,7 @@
         </el-badge>
       </app-link>
     </template>
-    
+
     <!--
         meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
         https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
@@ -68,6 +68,7 @@ import { isExternal } from "@/utils/validate";
 import Item from "./Item.vue";
 import AppLink from "./Link.vue";
 import FixiOSBug from "./FixiOSBug";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
 
 export default {
   name: "SidebarItem",
@@ -124,6 +125,9 @@ export default {
         this.onlyOneChild = { ...item.children[0] };
         return true;
       }
+    },
+    removeSearchValue() {
+      SearchUtilities.removeSearchTextFromStore(this.$store)
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {

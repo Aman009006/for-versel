@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <template v-if="dataReady">
+    <template v-if="allPlaceholders">
       <el-table :data="allPlaceholders" class="placeholder_table" stripe >
         <el-table-column
           align="center"
@@ -21,7 +21,7 @@
               />
             </template>
             <template v-else>
-              <span class="text-input">{{ row.key }}</span>
+              <span class="text-input" v-html="addHighlightSearchWord(row.key, searchValue)"></span>
             </template>
           </template>
         </el-table-column>
@@ -39,7 +39,7 @@
               />
             </template>
             <template v-else>
-              <span class="text-input">{{ row.value }}</span>
+              <span class="text-input" v-html="addHighlightSearchWord(row.value, searchValue)"></span>
             </template>
           </template>
         </el-table-column>
@@ -59,6 +59,7 @@ import editButtons from "./editButtons.vue";
 import addButton from "./addButton.vue";
 import deleteButton from "./deleteButton.vue";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
 
 export default {
   components: {
@@ -66,34 +67,22 @@ export default {
     addButton,
     deleteButton,
   },
-  data() {
-    return {
-      dataReady: false,
-    };
-  },
   computed: {
-    allPlaceholders() {
-      return PlaceholderUtilities.getAllPlaceholders(this.$store);
+    searchValue() {
+      return this.$store.getters.search
     },
-  },
-  async created() {
-    /**
-     * Fetch the data when the view is created
-     * and the data is already being observed
-     */
-    await this.loadData();
+    allPlaceholders() {
+      return this.$store.getters.filteredPlaceholders
+    }
   },
   methods: {
+    addHighlightSearchWord,
     isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
         this.$store,
         placeholder
       );
       return isEditing;
-    },
-    async loadData() {
-      await PlaceholderUtilities.fetchPlaceholders(this.$store);
-      this.dataReady = true;
     },
     getEditablePlaceholder(placeholderKey) {
       return PlaceholderUtilities.getEditablePlaceholder(
