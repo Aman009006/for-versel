@@ -13,7 +13,7 @@
       <el-option v-for="element in options" :key="element.item.path" :value="element.item"
                  class="header-search-option"
                  v-html="getHtmlFormattedElement(element)"
-                 @click="addSearchToStore(element.item.intentName)"/>
+                 @click="addSearchToStore()"/>
     </el-select>
   </div>
 </template>
@@ -120,8 +120,8 @@ export default {
     this.searchPool = this.generateAndFilterRoutes(this.routes);
   },
   methods: {
-    addSearchToStore(choosedName) {
-      SearchUtilities.addSearchTextToStore(this.$store, choosedName)
+    addSearchToStore() {
+      SearchUtilities.addSearchTextToStore(this.$store, this.userQuery)
     },
     async loadDataPlaceholders() {
       await PlaceholderUtilities.fetchPlaceholders(this.$store);
@@ -134,14 +134,14 @@ export default {
           intentName: placeholder.key,
           path: "/placeholders",
           texts: undefined,
-          title: ['Platzhalter', placeholder.key]
+          title: ['Platzhalter', 'Platzhalterbezeichnung', placeholder.key]
         },
         {
           intent: null,
           intentName: placeholder.value,
           path: "/placeholders",
           texts: undefined,
-          title: ['Platzhalter', placeholder.value]
+          title: ['Platzhalter', 'Wert', placeholder.value]
         }
       ]);
       this.placeholdersData = result;

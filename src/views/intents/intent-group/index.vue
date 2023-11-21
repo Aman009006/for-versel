@@ -35,7 +35,7 @@
         prop="description"
         label="Beispiele / Beschreibung">
         <template #default="{ row }">
-          <p v-html="addHighlightSearchWord(row.description, searchValue)"></p>
+          <p>{{row.description}}</p>
         </template>
       </el-table-column>
       <el-table-column
