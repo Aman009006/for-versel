@@ -1,0 +1,78 @@
+<template>
+    <div class="redirect-wrapper">
+        <div v-if="redirectsToggled" @click="toggleRedirects()" class="redirect-pill">Weiterleitungen ausblenden</div>
+        <div v-else @click="toggleRedirects()" class="redirect-pill">
+            Weiterleitungen einblenden</div>
+        <template v-if="this.redirectsToggled" v-for="redirect of incomingRedirectsArray">
+            <a :href="getRedirectPath(redirect)">
+                <div class="redirect-pill lighter">
+                    <span>{{ redirect.name }}</span>
+                </div>
+            </a>
+        </template>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'IncomingRedirects',
+    props: {
+        incomingRedirectsArray: {
+            type: Array,
+            required: true
+        }
+    },
+    data() {
+        return {
+            redirectsToggled: false,
+        };
+    },
+    methods: {
+        toggleRedirects() {
+            this.redirectsToggled ? this.redirectsToggled = false : this.redirectsToggled = true;
+        },
+        getRedirectPath(intent) {
+            const routes = this.$router.getRoutes();
+            const redirectRoute = intent.name;
+            const findRoute = routes.find(route => route.meta.title === redirectRoute);
+            if (findRoute !== undefined) {
+                const resolvedRoute = this.$router.resolve(findRoute.path);
+                return resolvedRoute.href;
+            }
+        },
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+@import "@/styles/variables.module.scss";
+
+.redirect-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    column-gap: 20px;
+    margin-bottom: 20px;
+    transition: height 0.3s ease-in-out;
+}
+
+.redirect-pill {
+    background: #FFE399;
+    border-radius: 50px;
+    padding: 5px 30px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+
+    &.lighter {
+        font-weight: 400;
+        background-color: #FFF1CC;
+    }
+
+    span {
+        opacity: 100%;
+    }
+
+    ;
+}</style>

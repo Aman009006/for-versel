@@ -201,18 +201,12 @@ export default {
       let result = '';
       const redirect = row.answers.isRedirected;
       const hasAnswers = row.answers.answers
-      if (redirect === true) {
+      if (redirect) {
         result += 'Weiterleitung';
-      } else if (hasAnswers === false && redirect === false) {
+      } else if (!hasAnswers && !redirect) {
         result += 'Keine Antwort';
       }
       return result;
-    },
-    showRedirectHover(event) {
-      event.target.parentElement.nextSibling.classList.remove('is--hidden');
-    },
-    hideRedirectHover(event) {
-      event.target.parentElement.nextSibling.classList.add('is--hidden');
     },
     getRedirectPath(row) {
       const routes = this.$router.getRoutes();
