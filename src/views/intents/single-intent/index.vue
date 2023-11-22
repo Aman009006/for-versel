@@ -16,7 +16,7 @@
         :readableRedirectToIntentName="answerConfig.redirectToVirtualIntentName
           " />
       <IncomingRedirects
-        v-if="redirectData != null"
+        v-if="redirectData.length > 0"
         :incomingRedirectsArray="redirectData" />
       <AnswerTable
         :disabled="isRedirectedToOtherIntent()"
