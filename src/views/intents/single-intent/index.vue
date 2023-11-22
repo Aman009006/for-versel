@@ -15,7 +15,9 @@
         v-if="answerConfig != null"
         :readableRedirectToIntentName="answerConfig.redirectToVirtualIntentName
           " />
-
+      <IncomingRedirects
+        v-if="redirectData.length > 0"
+        :incomingRedirectsArray="redirectData" />
       <AnswerTable
         :disabled="isRedirectedToOtherIntent()"
         :answers="answers"
@@ -34,12 +36,14 @@ import { dispatchNames } from "@/constants";
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
 import LastClickedIntent from "@/utils/LastClickedIntent"
 import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
+import IncomingRedirects from "@/components/Dialogs/IncomingRedirects/index.vue";
 
 export default {
   name: "Intent",
   components: {
     DialogInfoBox,
     RedirectionInfoBox,
+    IncomingRedirects,
     AnswerTable,
   },
   props: {},
@@ -86,6 +90,9 @@ export default {
     readableIntentName() {
       return this.$route.meta.title;
     },
+    redirectData() {
+      return this.getRedirectData();
+    },
   },
   async created() {
     await this.loadAnswers();
@@ -118,6 +125,20 @@ export default {
       );
       this.dataReady = true;
     },
+    getRedirectData() {
+      const skillsWithIntents = this.$store.state.permission.skillsWithIntents;
+      const redirectMatched = [];
+      for (const skill of skillsWithIntents) {
+        for (const intent of skill.Intents) {
+          if (intent.answers.redirectsTo === this.$route.meta.title) {
+            redirectMatched.push({
+              name: intent.name
+            });
+          }
+        }
+      }
+      return redirectMatched;
+    }
   },
 };
 </script>
