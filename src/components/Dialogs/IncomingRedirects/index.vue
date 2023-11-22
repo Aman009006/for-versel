@@ -68,6 +68,11 @@ export default {
     &.lighter {
         font-weight: 400;
         background-color: #FFF1CC;
+        transition: background-color 0.15s ease-in-out;
+
+        &:hover {
+            background-color: #FFE399;
+        }
     }
 
     span {
