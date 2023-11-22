@@ -49,7 +49,7 @@
               trigger="hover"
               popper-class="redirect-hover">
               <template #reference>
-                <a class="intent-redirect-info" :href="getRedirectPath(row)">
+                <a class="intent-redirect-info" :href="findIntentPath(row.answers.redirectsTo)">
                   <div class="intent-status-pill is-redirect">
                     <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
                   </div>
@@ -92,6 +92,8 @@ import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
 import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+import findIntentPath from "@/utils/intents/findIntentPath";
+
 const md = MarkdownIt({ html: true });
 
 export default {
@@ -208,15 +210,7 @@ export default {
       }
       return result;
     },
-    getRedirectPath(row) {
-      const routes = this.$router.getRoutes();
-      const redirectRoute = row.answers.redirectsTo;
-      const findRoute = routes.find(route => route.meta.title === redirectRoute);
-      if (findRoute !== undefined) {
-        const resolvedRoute = this.$router.resolve(findRoute.path);
-        return resolvedRoute.href;
-      }
-    },
+    findIntentPath,
     getIntentSessionStorage() {
       const intent = sessionStorage.getItem('lastClickedIntent');
       const intentGroup = sessionStorage.getItem('lastClickedIntentGroup');

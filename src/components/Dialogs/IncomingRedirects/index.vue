@@ -4,7 +4,7 @@
         <div v-else @click="toggleRedirects()" class="redirect-pill">
             Weiterleitungen einblenden</div>
         <template v-if="this.redirectsToggled" v-for="redirect of incomingRedirectsArray">
-            <a :href="getRedirectPath(redirect)">
+            <a :href="findIntentPath(redirect.name)">
                 <div class="redirect-pill lighter">
                     <span>{{ redirect.name }}</span>
                 </div>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import findIntentPath from "@/utils/intents/findIntentPath";
+
 export default {
     name: 'IncomingRedirects',
     props: {
@@ -31,15 +33,7 @@ export default {
         toggleRedirects() {
             this.redirectsToggled ? this.redirectsToggled = false : this.redirectsToggled = true;
         },
-        getRedirectPath(intent) {
-            const routes = this.$router.getRoutes();
-            const redirectRoute = intent.name;
-            const findRoute = routes.find(route => route.meta.title === redirectRoute);
-            if (findRoute !== undefined) {
-                const resolvedRoute = this.$router.resolve(findRoute.path);
-                return resolvedRoute.href;
-            }
-        },
+        findIntentPath,
     },
 }
 </script>
