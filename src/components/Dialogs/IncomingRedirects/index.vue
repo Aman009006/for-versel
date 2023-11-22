@@ -51,9 +51,8 @@ export default {
     display: flex;
     flex-wrap: wrap;
     row-gap: 10px;
-    column-gap: 20px;
+    column-gap: 10px;
     margin-bottom: 20px;
-    transition: height 0.3s ease-in-out;
 }
 
 .redirect-pill {
@@ -64,11 +63,16 @@ export default {
     font-weight: 700;
     cursor: pointer;
     user-select: none;
+    transition: background-color 0.15s ease-in-out;
+
+    &:hover{
+        background-color: #FFDD80;
+    }
 
     &.lighter {
         font-weight: 400;
         background-color: #FFF1CC;
-        transition: background-color 0.15s ease-in-out;
+       
 
         &:hover {
             background-color: #FFE399;
