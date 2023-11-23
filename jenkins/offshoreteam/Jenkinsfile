@@ -73,7 +73,7 @@ properties([
     ])
 ])
 
-currentBuild.displayName= "#" + currentBuild.number + " -> offshoreteam_dev 🚀 "
+currentBuild.displayName= "#" + currentBuild.number + " -> offshoreteam-devadmin 🚀 "
 currentBuild.description = "branch: " + branch
 
 pipeline {
@@ -95,7 +95,7 @@ pipeline {
             steps {
                 sh "pwd"
                 sh 'npm install'
-                sh 'npm run build -- --mode offshoreteam_dev'
+                sh 'npm run build -- --mode offshoreteam-devadmin'
             }
         }
 
