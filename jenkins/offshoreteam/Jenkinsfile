@@ -23,7 +23,7 @@ properties([
                     sandbox: false,
                     script:
                         '''
-                        def gitURL = "ssh://git@gogs.hsag.info:1722/Chatbots/Chatbot-Backend.git"
+                        def gitURL = "ssh://git@gogs.hsag.info:1722/Chatbots/Chatbot-Frontend-AdminUI.git"
                         def command = "git ls-remote -h $gitURL"
 
                         def proc = command.execute()
@@ -110,14 +110,5 @@ pipeline {
                echo "\033[34m#########################################################################\033[0m"
             }
         }
-
-         stage('Clean Up') {
-              steps {
-                  cleanWs(
-                     // delete all files and folders except powershell folder and the content in the powershell folder
-                     deleteDirs: true, patterns: [[pattern: 'powershell/**', type: 'EXCLUDE']]
-                  )
-              }
-         }
     }
 }
