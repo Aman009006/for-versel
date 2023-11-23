@@ -1,0 +1,123 @@
+// Active Choice Einbindung + Konfiguration
+properties([
+    parameters([
+        [$class: 'CascadeChoiceParameter',
+            choiceType: 'PT_SINGLE_SELECT',
+            description: 'Select branch',
+            filterLength: 1,
+            filterable: false,
+            name: 'branch',
+            randomName: 'cascade-choice-parameter-2',
+            script: [
+                $class: 'GroovyScript',
+                fallbackScript: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        '''
+                        return["develop"]
+                        '''
+                ],
+                script: [
+                    classpath: [],
+                    sandbox: false,
+                    script:
+                        '''
+                        def gitURL = "ssh://git@gogs.hsag.info:1722/Chatbots/Chatbot-Backend.git"
+                        def command = "git ls-remote -h $gitURL"
+
+                        def proc = command.execute()
+                        proc.waitFor()
+
+                        if ( proc.exitValue() != 0 ) {
+                           println "Error, ${proc.err.text}"
+                           System.exit(-1)
+                        }
+
+                        def branches = proc.in.text.readLines().collect {
+                            it.replaceAll(/[a-z0-9]*\\trefs\\\\/heads\\\\//, '')
+                        }
+
+                        return branches
+                        '''
+                ]
+            ]
+        ],
+        [$class: 'ChoiceParameter',
+               choiceType: 'PT_RADIO',
+               description: 'Update Node.js version in Azure App Service?',
+               filterLength: 1,
+               filterable: false,
+               name: 'updateNodeVersion',
+               randomName: 'choice-parameter-2',
+               script: [
+                   $class: 'GroovyScript',
+                   fallbackScript: [
+                       classpath: [],
+                       sandbox: false,
+                       script:
+                           '''
+                           return["First build after changes in the Active Choice parameter"]
+                           '''
+                   ],
+                   script: [
+                       classpath: [],
+                       sandbox: false,
+                       script:
+                           '''
+                           return ['no:selected', 'yes']
+                           '''
+                   ]
+               ]
+        ]
+    ])
+])
+
+currentBuild.displayName= "#" + currentBuild.number + " -> offshoreteam_dev 🚀 "
+currentBuild.description = "branch: " + branch
+
+pipeline {
+    agent any
+    stages {
+
+        stage('npm install') {
+            agent {
+                docker {
+                    image 'node:18.16.0'
+                    reuseNode true
+                }
+            }
+            environment {
+                HOME = '.'
+            }
+            steps {
+                sh "pwd"
+                sh 'npm install'
+                sh 'npm run build -- --mode offshoreteam_dev'
+            }
+        }
+
+        stage('deploy to server') {
+            environment {
+                HOME = '.'
+            }
+            steps {
+               echo "\033[42m ---> Deploy offshoreteam-devadmin to Mittwald <---\033[0m"
+               sh 'rsync -avzd -e ssh dist/* p568245@p568245.mittwaldserver.info:/html/adminUiCustomersDev/offshoreteam-devadmin'
+               echo "######################################################"
+               echo "\033[34m################# offshoreteam-devadmin Frontend URL ##################\033[0m"
+               echo "https://offshoreteam-devadmin.stadtwerk.bot"
+               echo "\033[34m#########################################################################\033[0m"
+            }
+        }
+
+         stage('Clean Up') {
+              steps {
+                  cleanWs(
+                     // delete all files and folders except powershell folder and the content in the powershell folder
+                     deleteDirs: true, patterns: [[pattern: 'powershell/**', type: 'EXCLUDE']]
+                  )
+              }
+         }
+    }
+}
