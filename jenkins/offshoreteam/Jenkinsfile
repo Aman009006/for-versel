@@ -78,6 +78,9 @@ currentBuild.description = "branch: " + branch
 
 pipeline {
     agent any
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('npm install') {
             agent {
