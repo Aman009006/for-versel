@@ -1,6 +1,6 @@
 <template>
   <div class="singleSelect-content">
-    <div :class="isCreate ? 'single-select create' : 'single-select'" @click="openMultiselect">
+    <div :class="isCreate ? 'single-select create' : 'single-select'" @click="openDropdown">
       {{ selected }}
       <svg-icon :style="isOpen ? 'transform: translateY(-50%) rotate(180deg); transition: 0.4s; top: 50%; height: 20px !important;' : 'transition: 0.4s; height: 20px !important;'" class="arrow-multiselect" :svg-icon-html="icons.arrowAccordion"/>
     </div>
@@ -67,7 +67,7 @@ export default {
     isChecked(role) {
       return this.selected === role
     },
-    openMultiselect() {
+    openDropdown() {
         this.isOpen = !this.isOpen;
     }
   }

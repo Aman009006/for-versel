@@ -128,16 +128,16 @@ export default {
     // TODO: refactor with render function
     this.onlyOneChild = null;
     return {
-      isUserPage: !!this.isBenutzerPage(this.$route)
+      isUserPage: !!this.checkPathForUsersPage(this.$route)
     };
   },
   watch: {
     $route(to, from) {
-      this.isUserPage = this.isBenutzerPage(to);
+      this.isUserPage = this.checkPathForUsersPage(to);
     },
   },
   methods: {
-    isBenutzerPage(route) {
+    checkPathForUsersPage(route) {
       return (
         route.fullPath.includes(paths.users) ||
         route.fullPath.includes(paths.permissionSets) ||
