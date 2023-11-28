@@ -5,3 +5,22 @@
         display: none;
     }
 }
+
+.el-popper.is-light.el-popover.redirect-hover {
+    position: absolute;
+    width: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: $hsag-bluegrey;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1;
+    border: none;
+    
+    .el-popper__arrow{
+        &::before{
+            background: $hsag-bluegrey;
+        }
+    }
+  }

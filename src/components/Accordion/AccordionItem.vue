@@ -1,19 +1,26 @@
 <template>
   <div class="accordion-item">
     <div class="accordion-header" @click="toggleAccordion">
-        <p class="accordion-title">{{ title }}</p>
+      <p class="accordion-title" v-html="addHighlightSearchWord(title, searchValue)"></p>
       <div class="radio-input">
         <label>
-          <input class="radio-custom" type="radio" :id="title" :name="title" value="option1">
-          <span class="radio-button radio-button-disabled"></span>
+          <input class="radio-custom" :checked="read" type="radio" :id="title + '2'" :name="title + '1'"
+                 value="option1">
+          <span @click="selectedAll(title, 'read',)"
+                :class="`radio-button ${disabled && !read && 'radio-button-disabled'}`"></span>
         </label>
       </div>
       <div class="radio-input">
         <label>
-          <input class="radio-custom" type="radio" :id="title + '1'" :name="title" value="option2">
-          <span class="radio-button"></span>
+          <input class="radio-custom" :checked="write" type="radio" :id="title + '1'" :name="title + '1'"
+                 value="option2">
+          <span @click="selectedAll(title, 'write',)"
+                :class="`radio-button ${disabled && !write && 'radio-button-disabled'}`"></span>
         </label>
       </div>
+      <svg-icon
+          :style="isOpen ? 'transform: translateY(-50%) rotate(180deg); transition: 0.4s; top: 50%;' : 'transition: 0.4s;'"
+          class="arrow" :svg-icon-html="icons.arrowAccordion"/>
     </div>
 
     <div v-show="isOpen" class="accordion-content">
@@ -23,6 +30,11 @@
 </template>
 
 <script>
+import RoleUtilities from "@/store/utilities/RoleUtilities";
+import icons from "@/icons/index";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+
+
 export default {
   data() {
     return {
@@ -31,10 +43,27 @@ export default {
   },
   props: {
     title: String,
+    read: Boolean,
+    write: Boolean,
+    disabled: Boolean,
+  },
+  computed: {
+    icons() {
+      return icons
+    },
+    searchValue() {
+      return this.$store.getters.search
+    },
   },
   methods: {
+    addHighlightSearchWord,
     toggleAccordion() {
       this.isOpen = !this.isOpen;
+    },
+    selectedAll(title, key) {
+      if (!this.disabled) {
+        RoleUtilities.selectAllPermissionInGroup(this.$store, title, key)
+      }
     },
   },
 };
@@ -54,6 +83,16 @@ export default {
   justify-content: space-between;
   padding: 10px;
   cursor: pointer;
+  position: relative;
+
+  .arrow {
+    width: 14px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%)
+  }
 }
 
 .accordion-content {
@@ -64,20 +103,4 @@ export default {
   margin: 0;
   width: 100%;
 }
-
-input[type="radio"] {
-  border: none !important;
-  outline: none;
-  /* Дополнительные стили, если необходимо */
-}
-//input[type="radio"] {
-//  -webkit-appearance: none; /* Для Safari и Chrome */
-//  -moz-appearance: none; /* Для Firefox */
-//  //appearance: none;
-//  border: none;
-//  //background: transparent; /* Убираем фон */
-//  outline: none; /* Убираем рамку при фокусе (если нужно) */
-//  //margin: 0; /* Убираем отступы */
-//  //padding: 0; /* Убираем внутренний отступ */
-//}
 </style>

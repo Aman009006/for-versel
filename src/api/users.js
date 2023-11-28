@@ -32,3 +32,13 @@ export function deleteUser (email) {
     }
   })
 }
+
+export function deleteRole (role) {
+  return request({
+    url: authorizedBackendUrl + 'users',
+    method: 'delete',
+    data: {
+      role: role
+    }
+  })
+}

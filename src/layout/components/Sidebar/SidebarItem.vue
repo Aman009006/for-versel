@@ -1,11 +1,23 @@
 <template>
   <div v-if="!item.hidden">
+    <template v-if="isIntents(item)">
+      <app-link @click="removeSearchValue" :to="resolvePath(onlyOneChild.path)">
+        <el-menu-item
+            :index="resolvePath(onlyOneChild.path)"
+            :class="{ 'submenu-title-noDropdown': !isNest, 'is-intent': isIntents(item)}">
+            <item
+              :popper-class="isNest ? 'hidden-popper' : ''"
+              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
+              :title="onlyOneChild.meta.title" />
+          </el-menu-item>
+      </app-link>
+    </template>
     <template
-      v-if="hasOneShowingChild(item.children, item) &&
+      v-else-if="hasOneShowingChild(item.children, item) &&
         (!onlyOneChild.children || onlyOneChild.noShowingChildren) &&
         !item.alwaysShow
         ">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <app-link @click="removeSearchValue" v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-badge
           value="Neu"
           class="item"
@@ -21,30 +33,19 @@
         </el-badge>
       </app-link>
     </template>
-    <template v-else-if="isIntents(item)">
-      <app-link :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item
-            :index="resolvePath(onlyOneChild.path)"
-            :class="{ 'submenu-title-noDropdown': !isNestm, 'is-intent': isIntents(item)}">
-            <item
-              :popper-class="isNest ? 'hidden-popper' : ''"
-              :icon="onlyOneChild.meta.icon || (onlyOneChild.meta && onlyOneChild.meta.icon)"
-              :title="onlyOneChild.meta.placeholderTitle" />
-          </el-menu-item>
-      </app-link>
-    </template>
+
     <!--
         meaning of attribute "ref": This makes this HTML-Tag (el-submenu) referenceable by parent components.
         https://blog.logrocket.com/how-to-use-refs-to-access-your-application-dom-in-vue-js/
         This is used here for FixiOSBug.js to reference this element.
        -->
     <template
-      v-else-if="basePath === paths.benutzer">
-      <app-link :to="paths.benutzer">
+      v-else-if="basePath === paths.users">
+      <app-link @click="removeSearchValue" :to="paths.users">
         <el-badge
           class="item">
           <el-menu-item
-            :index="resolvePath(paths.benutzer)"
+            :index="resolvePath(paths.users)"
             :class="{ 'submenu-title-noDropdown': !isNest }">
             <item
               :popper-class="isNest ? 'hidden-popper' : ''"
@@ -56,12 +57,12 @@
 
       <sidebar-item
         v-if="isUserPage"
-        v-for="child in item.children.length && item.children.slice(1)"
+        v-for="child in item.children.slice(1)"
         :key="child.path"
         :is-nest="true"
         :item="child"
         :base-path="resolvePath(child.path)"
-        class="nest-menu"
+        class="nest-menu sub-navigation"
       />
     </template>
 
@@ -96,6 +97,8 @@ import AppLink from "./Link.vue";
 import FixiOSBug from "./FixiOSBug";
 import {paths} from "@/constants";
 import "../../../styles/variables.module.scss"
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+
 export default {
   name: "SidebarItem",
   computed: {
@@ -136,9 +139,9 @@ export default {
   methods: {
     isBenutzerPage(route) {
       return (
-        route.fullPath.includes(paths.benutzer) ||
-        route.fullPath.includes(paths.benutzerRole) ||
-        route.fullPath.includes(paths.benutzerBerechtigungs)
+        route.fullPath.includes(paths.users) ||
+        route.fullPath.includes(paths.permissionSets) ||
+        route.fullPath.includes(paths.permissionSettings)
       );
     },
     hasOneShowingChild(children = [], parent) {
@@ -171,16 +174,9 @@ export default {
         return true;
       }
     },
-    // isUsersPage(page) {
-    //   console.log(window.location.href, page)
-    //   const foundIndex = window.location.href.indexOf(page);
-    //
-    //   if (foundIndex !== -1) {
-    //     return true
-    //   } else {
-    //     return false
-    //   }
-    // },
+    removeSearchValue() {
+      SearchUtilities.removeSearchTextFromStore(this.$store)
+    },
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath;
@@ -205,6 +201,10 @@ export default {
     right: 50px;
     top: 10px;
   }
+}
+
+.sub-navigation li {
+  padding-left: 30px !important;
 }
 
 .nest-menu .el-badge {

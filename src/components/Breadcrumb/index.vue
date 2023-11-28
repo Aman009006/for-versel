@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { intentConstants } from '@/constants'
+
 export default {
   data() {
     return {
@@ -34,15 +36,20 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      // only show routes with meta.title
-      let matched = this.$route.matched.filter(
-        (item) => item.meta && item.meta.title
-      );
-      const first = matched[0];
+      // combine intent info into breadcrumb
+      if (this.$route.fullPath.includes('/intent')) {
+        const intentBreadcrumbElements = this.defineIntentBreadcrumb();
+        this.levelList = intentBreadcrumbElements;
+      } else {
+        // only show routes with meta.title
+        let matched = this.$route.matched.filter(
+          (item) => item.meta && item.meta.title
+        );
 
-      this.levelList = matched.filter(
-        (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
-      );
+        this.levelList = matched.filter(
+          (item) => item.meta && item.meta.title && item.meta.breadcrumb !== false
+        );
+      }
     },
     isHome(route) {
       const name = route && route.name;
@@ -51,6 +58,35 @@ export default {
       }
       return name.trim().toLocaleLowerCase() === "Home".toLocaleLowerCase();
     },
+    defineIntentBreadcrumb() {
+      const route = this.$route;
+      const routes = this.$store.getters.permission_routes;
+      const intentBreadcrumbElements = {};
+
+      const intentDefault = routes.find(item => item.path === '/intents').children[0];
+      const intentGroup = this.findIntentGroup(routes, route);
+      const intent = this.findVirtualIntent(routes, route);
+
+      const intentData = [intentDefault, intentGroup, intent];
+      
+      for (let i = 0; i < intentData.length; i++) {
+        if (intentData[i]) {
+          intentBreadcrumbElements[i] = intentData[i];
+        }
+      }
+      return intentBreadcrumbElements;
+    },
+    findIntentGroup(routes, route) {
+      const intentGroups = routes.find(item => item.name === intentConstants.intentGroups);
+      return intentGroups.children.find(item => item.meta.title === route.meta.title || item.meta.title === route.meta.intentGroup);
+    },
+    findVirtualIntent(routes, route) {
+      if (!route.meta.intent) {
+        return;
+      }
+      const virtualIntent = routes.find(item => item.name === intentConstants.intents);
+      return virtualIntent.children.find(item => item.meta.title === route.meta.title);
+    }
   },
 };
 </script>
@@ -68,7 +104,8 @@ export default {
     cursor: text;
   }
 }
-.breadcrumb-placeholder{
+
+.breadcrumb-placeholder {
   margin-bottom: 52px
 }
 </style>

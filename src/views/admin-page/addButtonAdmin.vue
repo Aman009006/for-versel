@@ -1,11 +1,14 @@
 <template>
-  <el-button
-    class="add-btn"
-    icon="icon-Plus"
-    @click="openModal()"
-  >
-    Nutzer Hinzufügen
-  </el-button>
+  <div class="add-button-content">
+    <el-button
+        :class="canCreate ? 'add-btn' : 'cancel-btn'"
+        icon="icon-Plus"
+        :style="!canCreate && 'margin-top: 10px; '"
+        @click="openModal()"
+    >
+      Nutzer Hinzufügen
+    </el-button>
+  </div>
 
   <div class="modal" v-if="showModal">
     <div class="modal-content">
@@ -20,11 +23,7 @@
       </div>
       <div class="form-group">
         <p>Rolle</p>
-        <select v-model="role" class="custom-select">
-          <option>Admin</option>
-          <option>Read</option>
-          <option>Write</option>
-        </select>
+        <SingleSelect @selectOption="setEditableUserRole" isCreate :options="options"></SingleSelect>
       </div>
       <div class="modal-buttons">
         <button class="cancel-btn" @click="cancel">Abbrechen</button>
@@ -36,45 +35,65 @@
 </template>
 
 <script>
-import UsersUtilities from "@/store/utilities/UsersUtilities";
 import {addUser} from "@/api/users";
+import SingleSelect from "@/components/SingleSelect/SingleSelect.vue";
+import UsersUtilities from "@/store/utilities/UsersUtilities";
+import {defaultRole} from "@/constants";
 
 export default {
+  components: {SingleSelect},
   data() {
     return {
       showModal: false,
       email: '',
       name: '',
-      role: 'Read'
+      role: defaultRole,
+      options: this.$store.getters.allRoles,
     };
+  },
+  props: {
+    canCreate: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
     openModal() {
-      this.showModal = true;
+      if (this.canCreate) {
+        this.showModal = true;
+      } else {
+        this.$message({
+          message: "Sie haben keine Berechtigung zum Hinzufügen neuer Benutzer",
+          type: "error",
+        });
+      }
     },
     save() {
       this.setUser();
+    },
+    setEditableUserRole(role) {
+      this.role = role;
     },
     cancel() {
       this.showModal = false;
       this.email = "";
       this.name = "";
-      this.role = "Read";
+      this.role = defaultRole;
     },
-    isValidEmail (email) {
+    isValidEmail(email) {
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       return emailRegex.test(email);
     },
     async setUser() {
       const data = {
         email: this.email,
-        role: this.role,
+        role: this.role?.toLowerCase(),
         name: this.name
       }
 
       if (!this.isValidEmail(this.email) || (this.name === '')) {
         this.$message({
-          message: "Email is invalid",
+          message: "Name or E-mail is invalid",
           type: "warning",
         });
         return false;
@@ -85,6 +104,7 @@ export default {
             message: "Der neue email wurde erfolgreich gespeichert",
             type: "success",
           });
+          await UsersUtilities.fetchUsers(this.$store);
           this.cancel()
         }
         return setSuccessful;
@@ -97,6 +117,13 @@ export default {
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
+.add-button-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .modal {
   display: flex;
   align-items: center;
@@ -107,6 +134,7 @@ export default {
   height: 100vh;
   top: 0;
   left: 0;
+
   .modal-bg {
     width: 100%;
     height: 100vh;
@@ -115,6 +143,7 @@ export default {
     left: 0;
     background: rgba(153, 153, 153, 0.70);
   }
+
   .modal-content {
     z-index: 1002;
 
@@ -122,14 +151,17 @@ export default {
     background: $hsag-white;
     width: 450px;
   }
+
   h3 {
     font-size: 30px;
     font-weight: 400;
     line-height: normal;
     margin: 0 0 10px 0;
   }
+
   .form-group {
     display: block;
+
     p {
       margin: 0 0 5px 0;
       color: $hsag-bluegrey;
@@ -137,6 +169,7 @@ export default {
       font-weight: 400;
       line-height: normal;
     }
+
     input {
       padding: 10px 20px;
       border-radius: 8px;
@@ -149,11 +182,14 @@ export default {
       margin-bottom: 10px;
     }
   }
+
   .modal-buttons {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
+    margin-top: 10px;
+
     button {
       padding: 10px;
       border-radius: 5px;

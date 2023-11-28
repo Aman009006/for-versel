@@ -1,0 +1,30 @@
+
+.accordion-subItem {
+  padding: 10px 10px 10px 30px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subItem:nth-child(odd) {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.02) 100%), var(--hsag-Lichtgrau, #F1F6F9);
+}
+
+.accordion-subItem-title {
+  margin: 0;
+  width: 100%;
+}
+
+.radio-input {
+  &:nth-child(2n),
+  &:nth-child(3n) {
+    width: 174px;
+
+    &:nth-child(3n) {
+      width: 326px;
+    }
+  }
+}

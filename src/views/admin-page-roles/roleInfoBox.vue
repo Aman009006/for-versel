@@ -8,7 +8,7 @@
         </p>
 
         <p style="font-size: 12px">
-          Über den Bearbeiten Button kommt man in die Auswahl der Berechtigungs-Optionen für die ausgewählte Rolle.
+          Über den “Bearbeiten” Button kann man die Berechtigungs-Optionen für die ausgewählte Rolle bearbeiten.
         </p>
 
       </span>

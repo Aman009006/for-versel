@@ -3,7 +3,7 @@
     <template #default="{ row }">
       <template v-if="!isPlaceholderEditing(row)">
         <el-button
-          class="delete-btn"
+          :class="canDelete ? 'delete-btn' : 'cancel-btn'"
           icon="icon-Delete"
           @click="deletePlaceholder(row)"
         />
@@ -23,6 +23,12 @@ export default {
       return this.$store.getters.placeholders;
     },
   },
+  props: {
+    canDelete: {
+      type: Boolean,
+      required: true,
+    },
+  },
   methods: {
     isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
@@ -32,32 +38,39 @@ export default {
       return isEditing;
     },
     async deletePlaceholder(row) {
-      this.$confirm(
-        "Soll der Platzhalter wirklich gelöscht werden?",
-        "Achtung",
-        {
-          confirmButtonText: "Ja",
-          cancelButtonText: "Abbrechen",
-          type: "warning",
-        }
-      )
-        .then(async () => {
-          const deletionSuccessful = await deletePlaceholder(row.key);
-          if (deletionSuccessful) {
-            this.$message({
-              message: "Löschen erfolgreich",
-              type: "success",
-            });
-          }
-          await PlaceholderUtilities.fetchPlaceholders(this.$store);
-        })
-        .catch(() => {});
+      if (this.canDelete) {
+        this.$confirm(
+            "Soll der Platzhalter wirklich gelöscht werden?",
+            "Achtung",
+            {
+              confirmButtonText: "Ja",
+              cancelButtonText: "Abbrechen",
+              type: "warning",
+            }
+        )
+            .then(async () => {
+              const deletionSuccessful = await deletePlaceholder(row.key);
+              if (deletionSuccessful) {
+                this.$message({
+                  message: "Löschen erfolgreich",
+                  type: "success",
+                });
+              }
+              await PlaceholderUtilities.fetchPlaceholders(this.$store);
+            })
+            .catch(() => {});
+      } else {
+        this.$message({
+          message: "Sie haben keine Berechtigung zum Löschen von Platzhaltern",
+          type: "error",
+        });
+      }
     },
   },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .delete-btn,
 .delete-btn:hover {
   color: white !important;
@@ -71,8 +84,8 @@ export default {
 }
 
 .delete-btn {
-  background-color: #fa4c4c !important;
-  border-color: #fa4c4c !important;
+  background-color: #FA5050 !important;
+  border-color: #FA5050 !important;
 }
 
 .delete-btn:hover {

@@ -1,13 +1,12 @@
 <template>
   <div class="intent-group-container">
     <div class="intentgroup-info-container">
-      <intentGroupInfoBox :headline="headline"></intentGroupInfobox>
-      <intentSearch
+      <intentGroupInfoBox :headline="intentGroup"></intentGroupInfobox>
+      <searchInput
         class="intent-search"
-        searchScope="intents"
         :searchableArray="intents"
         @filteredArray="updateIntents">
-      </intentSearch>
+      </searchInput>
     </div>
     <div id="intent-hover" class="hidden">
       <span class="svg-container" @click="hideHover">
@@ -21,20 +20,56 @@
       :data="filteredArray"
       stripe
       @row-click="handleHover"
+      :row-class-name="addClassToTableRowMatchingStorage"
       :header-cell-style="{ padding: '0 0 0 20px', height: '50px' }"
       :cell-style="{ padding: '0 0 0 20px', height: '80px' }">
       <el-table-column
         prop="name"
         label="Name"
         width="500">
+        <template #default="{ row }">
+          <p v-html="addHighlightSearchWord(row.name, searchValue)"></p>
+        </template>
       </el-table-column>
       <el-table-column
         prop="description"
         label="Beispiele / Beschreibung">
+        <template #default="{ row }">
+          <p>{{row.description}}</p>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="answers"
+        label="Status">
+        <template v-slot="{ row }">
+          <template v-if="fillRedirectAndAnswerInfo(row) === 'Weiterleitung'">
+            <el-popover
+              placement="top"
+              :width="200"
+              trigger="hover"
+              popper-class="redirect-hover">
+              <template #reference>
+                <a class="intent-redirect-info" :href="findIntentPath(row.answers.redirectsTo)">
+                  <div class="intent-status-pill is-redirect">
+                    <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+                  </div>
+                </a>
+              </template>
+              <p>{{ row.answers.redirectsTo }}</p>
+            </el-popover>
+          </template>
+          <template v-else-if="fillRedirectAndAnswerInfo(row) === 'Keine Antwort'">
+            <div class="intent-status-pill is-no-answer">
+              <p>{{ fillRedirectAndAnswerInfo(row) }}</p>
+            </div>
+          </template>
+          <template v-else>
+          </template>
+        </template>
       </el-table-column>
       <el-table-column
         label="Aktion"
-        width="230">
+        width="180">
         <template v-slot="{ row }">
           <a class="intent-group-button" :href="parsePath(row.name)">
             <el-button>
@@ -49,21 +84,26 @@
 
 <script>
 import intentGroupInfoBox from "./intentGroupInfoBox.vue";
-import intentSearch from "../../../components/IntentSearch/index.vue"
-import { encodePathComponent } from '@/store/modules/permission'
+import searchInput from "@/components/SearchInput/index.vue"
+import { encodePathComponent } from '@/utils/encodePath'
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/LastClickedIntent"
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
 import icons from "@/icons/index";
 import MarkdownIt from "markdown-it";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+import findIntentPath from "@/utils/intents/findIntentPath";
+
 const md = MarkdownIt({ html: true });
 
 export default {
   name: "IntentGroup",
   components: {
     intentGroupInfoBox,
-    intentSearch,
+    searchInput,
   },
   props: {
-    headline: {
+    intentGroup: {
       type: String,
       required: true,
     },
@@ -78,6 +118,13 @@ export default {
       forwarded: false
     };
   },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (from.meta.intent) {
+        vm.startScrollToProcess();
+      }
+    });
+  },
   mounted() {
     addActiveToSidebar('is-intent');
   },
@@ -88,8 +135,12 @@ export default {
     icons() {
       return icons;
     },
+    searchValue() {
+      return this.$store.getters.search
+    }
   },
   methods: {
+    addHighlightSearchWord,
     updateIntents(array) {
       this.filteredArray = array;
     },
@@ -112,7 +163,6 @@ export default {
           this.showHover();
         }, 400);
       }
-
     },
     hideHover() {
       const intentContainer = document.getElementById('intent-hover');
@@ -148,6 +198,39 @@ export default {
     parsePath(path) {
       const basePath = this.$router.currentRoute.value.href;
       return `${basePath}/${encodeURIComponent(encodePathComponent(path))}`
+    },
+    fillRedirectAndAnswerInfo(row) {
+      let result = '';
+      const redirect = row.answers.isRedirected;
+      const hasAnswers = row.answers.answers
+      if (redirect) {
+        result += 'Weiterleitung';
+      } else if (!hasAnswers && !redirect) {
+        result += 'Keine Antwort';
+      }
+      return result;
+    },
+    findIntentPath,
+    getIntentSessionStorage() {
+      const intent = sessionStorage.getItem('lastClickedIntent');
+      const intentGroup = sessionStorage.getItem('lastClickedIntentGroup');
+      return { intent, intentGroup };
+    },
+    startScrollToProcess() {
+      const { intent } = this.getIntentSessionStorage();
+      const handleScrollProcess = new LastClickedIntent(intent, this.intentGroup).handleScrollProcess();
+      return handleScrollProcess;
+    },
+    addClassToTableRowMatchingStorage({ row }) {
+      const storageIntent = sessionStorage.getItem('lastClickedVirtualIntent');
+      const rowIntent = this.technicalIntentName(row);
+      if (rowIntent === storageIntent) {
+        return 'is-storage-intent';
+      }
+    },
+    technicalIntentName(row) {
+      const intentNameGenerator = new IntentNameGenerator(row.intent, row.entity);
+      return intentNameGenerator.getTechnicalIntentName();
     },
   }
 };
@@ -195,6 +278,43 @@ export default {
 
   &.hidden {
     bottom: -300px;
+  }
+}
+
+a.intent-redirect-info {
+  display: block;
+  width: 150px;
+
+  @media screen and (max-width: 1430px) {
+    width: 100px;
+  }
+}
+
+.intent-status-pill {
+  display: flex;
+  position: relative;
+  width: 150px;
+  justify-content: center;
+  padding: 5px 20px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: $hsag-white;
+
+  @media screen and (max-width: 1430px) {
+    width: 100px;
+    padding: 5px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &.is-redirect {
+    background-color: $hsag-warning;
+  }
+
+  &.is-no-answer {
+    background-color: $hsag-error;
   }
 }
 

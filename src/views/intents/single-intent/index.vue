@@ -15,11 +15,14 @@
         v-if="answerConfig != null"
         :readableRedirectToIntentName="answerConfig.redirectToVirtualIntentName
           " />
-
+      <IncomingRedirects
+        v-if="redirectData.length > 0"
+        :incomingRedirectsArray="redirectData" />
       <AnswerTable
         :disabled="isRedirectedToOtherIntent()"
         :answers="answers"
-        :answerConfig="answerConfig" />
+        :answerConfig="answerConfig"
+        :readableIntentName="readableIntentName"/>
     </template>
   </div>
 </template>
@@ -32,12 +35,16 @@ import RedirectionInfoBox from "@/components/Dialogs/RedirectionInfoBox/index.vu
 import AnswerTable from "@/components/Dialogs/AnswerTable/index.vue";
 import { dispatchNames } from "@/constants";
 import { addActiveToSidebar, removeActiveFromSidebar } from "@/utils/sidebar/sidebarUtils";
+import LastClickedIntent from "@/utils/LastClickedIntent"
+import IntentNameGenerator from "@/utils/intents/IntentNameGenerator";
+import IncomingRedirects from "@/components/Dialogs/IncomingRedirects/index.vue";
 
 export default {
   name: "Intent",
   components: {
     DialogInfoBox,
     RedirectionInfoBox,
+    IncomingRedirects,
     AnswerTable,
   },
   props: {},
@@ -45,11 +52,13 @@ export default {
     return {
       dataReady: false,
       parentPath: this.$route.meta.parentPath,
+      technicalIntent: this.technicalIntentName(),
       intentGroup: this.$route.meta.intentGroup,
     };
   },
   mounted() {
     addActiveToSidebar('is-intent');
+    this.setIntentSessionStorage(this.technicalIntent);
   },
   unmounted() {
     removeActiveFromSidebar('is-intent');
@@ -82,16 +91,26 @@ export default {
     readableIntentName() {
       return this.$route.meta.title;
     },
+    redirectData() {
+      return this.getRedirectData();
+    },
   },
   async created() {
     await this.loadAnswers();
     this.refreshRoutesIfNewIntentWasClicked();
   },
   methods: {
+    technicalIntentName() {
+      const intentNameGenerator = new IntentNameGenerator(this.$route.meta.intent, this.$route.meta.entity);
+      return intentNameGenerator.getTechnicalIntentName();
+    },
     isRedirectedToOtherIntent() {
       return this.answerConfig?.redirectToVirtualIntentName != null;
     },
-
+    setIntentSessionStorage(intent) {
+      const lastClickedIntent = new LastClickedIntent(intent, this.intentGroup).addDataToSession();
+      return lastClickedIntent;
+    },
     async refreshRoutesIfNewIntentWasClicked() {
       const newIntentRoutes = getNewIntentRoutes(this.permissionRoutes);
       const routeNames = newIntentRoutes.map((intentRoute) => intentRoute.name);
@@ -107,6 +126,20 @@ export default {
       );
       this.dataReady = true;
     },
+    getRedirectData() {
+      const skillsWithIntents = this.$store.state.permission.skillsWithIntents;
+      const redirectMatched = [];
+      for (const skill of skillsWithIntents) {
+        for (const intent of skill.Intents) {
+          if (intent.answers.redirectsTo === this.$route.meta.title) {
+            redirectMatched.push({
+              name: intent.name
+            });
+          }
+        }
+      }
+      return redirectMatched;
+    }
   },
 };
 </script>

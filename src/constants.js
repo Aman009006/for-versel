@@ -11,9 +11,9 @@ export const links = {
 export const paths = {
   intents: '/intents',
   placeholders: '/placeholders',
-  benutzer: '/benutzer',
-  benutzerRole: '/role',
-  benutzerBerechtigungs: '/berechtigungs',
+  users: '/users',
+  permissionSets: '/permission-sets',
+  permissionSettings: '/permission-settings',
   reporting: '/reporting',
 }
 
@@ -49,9 +49,26 @@ export const buttonTypes = {
 export const defaultEntity = {
   entityName: "noneEntity"
 }
+export const defaultRole = {
+  defaultRole: "Auswählen"
+}
+
+export const intentConstants = {
+  dialogs: "Dialoge",
+  intentGroups: "Intent Groups",
+  intents: "Virtual Intents",
+}
 
 export const headerSearch = {
-  intentArrayIndexInTitle: 1
+  intentArrayIndexInTitle: 2
+}
+export const userAccesses = {
+  placeholders: "placeholders",
+  users: "users",
+  roles: "roles",
+  edit: "edit",
+  create: "create",
+  delete: "delete",
 }
 
 export const buttonLimit = 5

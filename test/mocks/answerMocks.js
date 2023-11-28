@@ -32,3 +32,28 @@ export const answer = {
     description: null,
     buttons: buttons
 };
+
+export const intentSearchValues = {
+    intentGroup: {
+        SkillName: 'testGroup2',
+        Intents: []
+    },
+    intentSingle: {
+        name: 'SingLeInteNt',
+        intent: 'SI_2',
+        entity: {},
+        utterances: ['Was ist der zweite Intent?', 'Den zweiten hätte ich gerne'],
+        description: 'Der Kunde möchte den zweiten Intent ansteuern',
+        texts: [
+            {
+                text: 'Antwort auf den zweiten Intent',
+            }
+        ]
+    }
+};
+
+export const lastClickedIntentData = {
+    virtualIntentName: 'technicalTestIntent',
+    intentGroup: 'testIntentGroup',
+    intentGroupFalse: 'testIntentGroupFalse'
+}

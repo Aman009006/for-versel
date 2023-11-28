@@ -5,7 +5,8 @@ const state = {
   users: [],
   editableUsers: {},
   newUsers: null,
-  userPassword: ''
+  userPassword: '',
+  editableUserRole: ''
 }
 
 const mutations = {
@@ -23,15 +24,13 @@ const mutations = {
     state.newUsers = null;
   },
   addEditingUser: (state, user) => {
-    const originalUser = getUser(state, user);
-    state.editableUsers[user] = ObjectUtils.createCopyOfSerializableObject(originalUser);
+    const originalUser = getUser(state, user.email);
+    state.editableUsers[user.email] = ObjectUtils.createCopyOfSerializableObject(originalUser);
+    state.editableUserRole = user.role;
   },
   deleteEditingUser: (state, userEmail) => {
     delete state.editableUsers[userEmail];
   },
-  addPassword: (state, userPassword) => {
-    state.userPassword = userPassword;
-  }
 }
 
 const actions = {
@@ -50,9 +49,6 @@ const actions = {
   },
   stopEditingUserAction({ commit }, userEmail) {
     commit(mutations.deleteEditingUser.name, userEmail)
-  },
-  editPasswordAction({ commit }, userPassword) {
-    commit(mutations.addPassword.name, userPassword)
   },
 }
 

@@ -1,26 +1,31 @@
 <template>
   <div :class="{ show: show }" class="header-search">
-    <svg-icon :svg-icon-html="icons.search" class="search-icon" @click.stop="click" />
+    <svg-icon :svg-icon-html="icons.search" class="search-icon" @click.stop="click"/>
 
     <el-select v-model="filteredElements" collapse-tags multiple placeholder="Filter" class="header-search-select"
-      @change="initFuse">
-      <el-option v-for="item in activeFilterElements" :key="item" :label="item" :value="item" />
+               @change="initFuse">
+      <el-option v-for="item in activeFilterElements" :key="item" :label="item" :value="item"/>
     </el-select>
 
     <el-select ref="headerSearchSelect" v-model="search" :remote-method="querySearch" filterable default-first-option
-      remote placeholder="Suche" class="header-search-select" popper-class="header-search-popper" @change="change">
-      <el-option v-for="element in options" :key="element.item.path" :value="element.item" class="header-search-option"
-        v-html="getHtmlFormattedElement(element)" />
+               remote placeholder="Suche" class="header-search-select" popper-class="header-search-popper"
+               @change="change">
+      <el-option v-for="element in options" :key="element.item.path" :value="element.item"
+                 class="header-search-option"
+                 v-html="getHtmlFormattedElement(element)"
+                 @click="addSearchToStore()"/>
     </el-select>
   </div>
 </template>
 
 <script>
 import getFuseInstance from "@/utils/headerSearch/getFuseInstance"
-import { humanReadableLabels, headerSearch } from "@/constants";
+import {humanReadableLabels, headerSearch} from "@/constants";
 import icons from "@/icons/index";
 import SearchElementFormatter from "@/utils/headerSearch/SearchElementFormatter"
 import RouteHandler from "@/utils/headerSearch/RouteHandler"
+import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
 
 const filterElementsObject = {
   intentName: {
@@ -49,7 +54,7 @@ const filterElementsArray = [
 ];
 
 const activeFilterElements = filterElementsArray.map(
-  (filterElement) => filterElement.label
+    (filterElement) => filterElement.label
 );
 
 export default {
@@ -62,6 +67,7 @@ export default {
       show: false,
       fuse: undefined,
       filteredElements: activeFilterElements,
+      placeholdersData: [],
       /**
        * the text that the user searches for
        */
@@ -74,6 +80,9 @@ export default {
     },
     skillsWithIntents() {
       return this.$store.getters.skillsWithIntents;
+    },
+    placeholders() {
+      return PlaceholderUtilities.getAllPlaceholders(this.$store);
     },
     activeFilterElements() {
       return activeFilterElements;
@@ -105,10 +114,38 @@ export default {
       }
     },
   },
-  mounted() {
+  async created() {
+    await this.loadDataPlaceholders();
+    this.processPlaceholders();
     this.searchPool = this.generateAndFilterRoutes(this.routes);
   },
   methods: {
+    addSearchToStore() {
+      SearchUtilities.addSearchTextToStore(this.$store, this.userQuery)
+    },
+    async loadDataPlaceholders() {
+      await PlaceholderUtilities.fetchPlaceholders(this.$store);
+    },
+    async processPlaceholders() {
+      const placeholders = this.placeholders;
+      const result = placeholders.flatMap((placeholder) => [
+        {
+          intent: null,
+          intentName: placeholder.key,
+          path: "/placeholders",
+          texts: undefined,
+          title: ['Platzhalter', 'Platzhalterbezeichnung', placeholder.key]
+        },
+        {
+          intent: null,
+          intentName: placeholder.value,
+          path: "/placeholders",
+          texts: undefined,
+          title: ['Platzhalter', 'Wert', placeholder.value]
+        }
+      ]);
+      this.placeholdersData = result;
+    },
     click() {
       this.show = !this.show;
       if (this.show) {
@@ -145,10 +182,10 @@ export default {
         activeFilterElements = this.activeFilterElements;
       }
       const usedFilterElementValues = filterElementsArray.filter(
-        element => activeFilterElements.includes(element.label)
+          element => activeFilterElements.includes(element.label)
       )
       const searchKeys = usedFilterElementValues.map(
-        element => element.searchKey
+          element => element.searchKey
       );
       return searchKeys;
     },
@@ -156,7 +193,9 @@ export default {
       const routeHandler = new RouteHandler(this.skillsWithIntents);
       const generatedRoutes = routeHandler.generateRoutes(routes);
       const filteredRoutes = routeHandler.filterRoutes(generatedRoutes);
-      return filteredRoutes;
+
+      const filteredRoutesAndPlaceholders = filteredRoutes.concat(this.placeholdersData);
+      return filteredRoutesAndPlaceholders;
     },
     querySearch(query) {
       this.userQuery = query;

@@ -25,7 +25,7 @@
 
       <el-table-column align="center" width="130" data="answers">
         <template #default="{ row: answer }">
-          <EditAnswerModal :answer="answer" :answerConfig="answerConfig" />
+          <EditAnswerModal :haveAccess="haveAccess" :answer="answer" :answerConfig="answerConfig" />
         </template>
       </el-table-column>
     </el-table>
@@ -39,6 +39,8 @@ import { humanReadableLabels } from "@/constants";
 import PlaceholderUtilities from "@/store/utilities/PlaceholderUtilities";
 import PlaceholderReplacer from "@/utils/placeholder/placeholderReplacer";
 import MarkdownIt from "markdown-it";
+import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+import {checkAccessesForIntents} from "@/utils/checkAccessesUtils";
 const md = MarkdownIt({ html: false });
 
 export default {
@@ -46,20 +48,29 @@ export default {
     ButtonList,
     EditAnswerModal,
   },
-  props: ["disabled", "answers", "answerConfig"],
+  props: ["disabled", "answers", "answerConfig", "readableIntentName"],
   data() {
     return {
       answerText: humanReadableLabels.answerText,
       placeholderReady: false,
       allPlaceholders: [],
       humanReadableAnswers: [],
+      haveAccess: false,
     };
+  },
+  computed: {
+    searchValue() {
+      return this.$store.getters.search
+    }
   },
   async created() {
     await this.loadData();
   },
   async updated() {
     await this.loadData();
+  },
+  mounted() {
+    this.checkAccesses()
   },
   methods: {
     async loadData() {
@@ -69,7 +80,12 @@ export default {
       this.humanReadableAnswers = new PlaceholderReplacer(this.answers, this.allPlaceholders).replaceAnswers();
     },
     renderToMarkdown(text) {
-      return md.render(text);
+      const renderText = md.render(text);
+      return addHighlightSearchWord(renderText, this.searchValue)
+    },
+    checkAccesses() {
+      const intents = this.$store.getters.accesses;
+      this.haveAccess = checkAccessesForIntents('name', this.readableIntentName, intents);
     },
   },
 };

@@ -56,3 +56,10 @@ export function getInfo(token) {
     params: { token },
   })
 }
+
+export function getRoleAccesses (role) {
+  return request({
+    url: authorizedBackendUrl + `roles/${role}`,
+    method: 'get',
+  })
+}

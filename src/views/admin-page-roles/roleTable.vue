@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="dataReady">
-      <el-table :data="allUsers" stripe>
+      <el-table :data="allDefaultRoles" stripe>
         <el-table-column
           align="start"
           autosize
@@ -10,7 +10,7 @@
           width="270"
         >
           <template #default="{ row }">
-              <span class="text-input">{{ row.email }}</span>
+              <span class="text-input">{{ row.role }}</span>
           </template>
         </el-table-column>
 
@@ -21,13 +21,13 @@
           prop="key"
         >
           <template #default="{ row }">
-              <span class="text-input">{{ row.email }}</span>
+              <span class="text-input">{{ row.description }}</span>
           </template>
         </el-table-column>
-        <editButtons isEditRole eyeType />
+        <editButtons withoutShadow isDefaultRole isEditRole :canDelete="false" :canEdit="canEdit"/>
       </el-table>
 
-      <el-table :data="allUsers" class="custom-roles" stripe>
+      <el-table :data="allNotDefaultRoles" class="custom-roles" stripe>
         <el-table-column
           align="start"
           autosize
@@ -36,7 +36,7 @@
           width="270"
         >
           <template #default="{ row }">
-              <span class="text-input">{{ row.email }}</span>
+              <span class="text-input">{{ row.role }}</span>
           </template>
         </el-table-column>
 
@@ -47,15 +47,16 @@
           prop="key"
         >
           <template #default="{ row }">
-              <span class="text-input">{{ row.email }}</span>
+              <span class="text-input">{{ row.description }}</span>
           </template>
         </el-table-column>
-        <editButtons isEditRole/>
+        <editButtons withoutShadow isEditRole :canDelete="canDelete" :canEdit="canEdit"/>
       </el-table>
 
       <div class="role-table">
         <el-button
-            class="add-btn"
+            :class="canCreate ? 'add-btn' : 'cancel-btn'"
+            :style="!canCreate && 'margin-top: 10px'"
             icon="icon-Plus"
             @click="createNewRole()"
         >
@@ -65,6 +66,72 @@
     </template>
   </div>
 </template>
+
+<script>
+import editButtons from "../admin-page/editButtons.vue";
+import UsersUtilities from "@/store/utilities/UsersUtilities";
+import icons from "@/icons";
+import {paths, userAccesses} from "@/constants";
+import {checkAccessesForActions} from "@/utils/checkAccessesUtils";
+import RoleUtilities from "@/store/utilities/RoleUtilities";
+
+export default {
+  components: {
+    editButtons,
+  },
+  data() {
+    return {
+      dataReady: false,
+      canEdit: false,
+      canCreate: false,
+      canDelete: false,
+    };
+  },
+  computed: {
+    allDefaultRoles() {
+      return UsersUtilities.getDefaultRoles(this.$store);
+    },
+    allNotDefaultRoles() {
+      return UsersUtilities.getNotDefaultRoles(this.$store);
+    },
+    icons() {
+      return icons;
+    },
+  },
+  async created() {
+    /**
+     * Fetch the data when the view is created
+     * and the data is already being observed
+     */
+    await this.loadData();
+  },
+  mounted() {
+    this.checkAccesses()
+  },
+  methods: {
+    checkAccesses() {
+      const intents = this.$store.getters.accesses;
+      this.canEdit = checkAccessesForActions(intents, userAccesses.roles, userAccesses.edit);
+      this.canCreate = checkAccessesForActions(intents, userAccesses.roles, userAccesses.create);
+      this.canDelete = checkAccessesForActions(intents, userAccesses.roles, userAccesses.delete);
+    },
+    createNewRole() {
+        if (this.canCreate) {
+            this.$router.push(paths.permissionSettings);
+        } else {
+            this.$message({
+                message: "Sie haben keine Berechtigung zum Hinzufügen neuer Rollen",
+                type: "error",
+            });
+        }
+    },
+    async loadData() {
+      await RoleUtilities.fetchRoles(this.$store);
+      this.dataReady = true;
+    },
+  },
+};
+</script>
 
 <style lang="scss" >
 @import "@/styles/variables.module.scss";
@@ -79,7 +146,7 @@
   top: 7px;
 }
 .edit-input-password .el-input__wrapper {
-    padding-right: 35px !important;
+  padding-right: 35px !important;
 }
 .custom-roles {
   margin-top: 20px;
@@ -90,48 +157,6 @@
 }
 
 </style>
-
-<script>
-import editButtons from "../admin-page/editButtonsForUsers.vue";
-import UsersUtilities from "@/store/utilities/UsersUtilities";
-import icons from "@/icons";
-import {paths} from "@/constants";
-
-export default {
-  components: {
-    editButtons,
-  },
-  data() {
-    return {
-      dataReady: false,
-    };
-  },
-  computed: {
-    allUsers() {
-      return UsersUtilities.getAllUsers(this.$store);
-    },
-    icons() {
-      return icons;
-    },
-  },
-  async created() {
-    /**
-     * Fetch the data when the view is created
-     * and the data is already being observed
-     */
-    await this.loadData();
-  },
-  methods: {
-    createNewRole() {
-      this.$router.push(paths.benutzerBerechtigungs);
-    },
-    async loadData() {
-      await UsersUtilities.fetchUsers(this.$store);
-      this.dataReady = true;
-    },
-  },
-};
-</script>
 
 
 

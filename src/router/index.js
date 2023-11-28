@@ -62,7 +62,7 @@ export const constantRoutes = [
     ],
   },
   {
-    path: paths.benutzer,
+    path: paths.users,
     component: Layout,
     meta: {
       title: 'Benutzer',
@@ -75,25 +75,25 @@ export const constantRoutes = [
         name: 'Benutzer',
         meta: {
           title: 'Benutzer',
-          parentPath: `#${paths.benutzer}`,
+          parentPath: `#${paths.users}`,
         },
       },
       {
-        path: paths.benutzerRole,
+        path: paths.permissionSets,
         component: AdminRolePage,
         name: 'Rollenübersicht',
         meta: {
           title: 'Rollenübersicht',
-          parentPath: `#${paths.benutzer}`,
+          parentPath: `#${paths.users}`,
         },
       },
       {
-        path: paths.benutzerBerechtigungs,
+        path: paths.permissionSettings,
         component: AdminRolePageEdit,
         name: 'Berechtigungs Optionen',
         meta: {
           title: 'Berechtigungs Optionen',
-          parentPath: `#${paths.benutzer}`,
+          parentPath: `#${paths.users}`,
         },
       },
     ],

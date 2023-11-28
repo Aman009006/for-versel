@@ -1,19 +1,21 @@
 <template>
     <div class="intents-infobox">
-        <a :href="parentPath">
+        <a :href="parentPath" @click="clearSearch">
             <span class="svg-container">
                 <svg-icon :svg-icon-html="icons.arrowleft" />
             </span>
         </a>
         <div class="intent-group-headline">
-            <h2>Dialoge:</h2>
+            <h2>{{ dialogHeadline }}:</h2>
             <h1>{{ headline }}</h1>
         </div>
     </div>
 </template>
-  
+
 <script>
 import icons from "@/icons/index";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+import { intentConstants } from "@/constants";
 
 export default {
     name: "IntentGroupInfoBox",
@@ -26,6 +28,7 @@ export default {
     },
     data() {
         return {
+            dialogHeadline: intentConstants.dialogs,
             parentPath: this.$route.meta.parentPath,
         };
     },
@@ -37,11 +40,14 @@ export default {
     methods: {
         updateIntentGroups(array) {
             this.filteredArray = array;
+        },
+        clearSearch() {
+          SearchUtilities.addSearchTextToStore(this.$store, '')
         }
     },
 };
 </script>
-  
+
 <style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
@@ -78,4 +84,3 @@ export default {
     }
 }
 </style>
-  

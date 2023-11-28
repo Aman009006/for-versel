@@ -3,24 +3,23 @@
         <span class="svg-container">
             <svg-icon :svg-icon-html="icons.search" />
         </span>
-        <el-input :placeholder="placeholder ? placeholder : 'Intent Suche'" v-model="intentSearchValue">
+        <el-input :placeholder="placeholder ? placeholder : 'Intent Suche'" v-model="searchValue">
         </el-input>
     </el-form-item>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import {computed, ref, watch} from "vue";
 import icons from "@/icons/index";
+import {searchComponentData} from "@/utils/componentSearch/componentSearch.js";
+import SearchUtilities from "@/store/utilities/SearchUtilities";
+import { useStore } from 'vuex';
 
 export default {
-    name: "IntentSearch",
+    name: "SearchInput",
     props: {
         searchableArray: {
             type: Array,
-            required: true,
-        },
-        searchScope: {
-            type: String,
             required: true,
         },
         placeholder: {
@@ -32,7 +31,6 @@ export default {
         icons() {
             return icons;
         },
-
     },
     methods: {
         /**
@@ -42,35 +40,34 @@ export default {
         addOverflowToMainApp() {
             document.body.style.overflowY = "scroll";
         }
+
     },
     mounted() {
         this.addOverflowToMainApp();
     },
     setup(props, { emit }) {
-        const intentSearchValue = ref("");
+        const store = useStore();
+        const searchValueFromProps = computed(() => {
+          return store.getters.search;
+        });
+        const searchValue = ref(searchValueFromProps.value);
         const filteredArray = ref(props.searchableArray);
 
-        const ignoreCaseAndCheckInclude = (intent, searchString) => {
-            return intent.toLowerCase().includes(searchString.toLowerCase())
-        }
-
-        watch(intentSearchValue, (newValue) => {
-
+        function filterArray(newValue) {
+          SearchUtilities.addSearchTextToStore(store, newValue)
+          searchValue.value = newValue
             filteredArray.value = props.searchableArray.filter((intent) => {
-                const name = intent.SkillName || intent.name;
-                const technicalIntent = intent.intent
-                if (props.searchScope === 'intentGroup') {
-                    return ignoreCaseAndCheckInclude(name, newValue);
-                } else {
-                    return ignoreCaseAndCheckInclude(name, newValue) || ignoreCaseAndCheckInclude(technicalIntent, newValue);
-                }
+              return searchComponentData(intent, newValue)
             });
 
             emit("filteredArray", filteredArray.value);
-        });
+        }
+
+        watch(searchValue, filterArray, { immediate: true, deep: true })
+        watch(searchValueFromProps, filterArray,{ immediate: true, deep: true })
 
         return {
-            intentSearchValue,
+            searchValue,
             filteredArray
         };
     }

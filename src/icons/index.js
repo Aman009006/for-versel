@@ -50,6 +50,7 @@ import tree from './svg/tree.svg?raw';
 import user from './svg/user.svg?raw';
 import wechat from './svg/wechat.svg?raw';
 import zip from './svg/zip.svg?raw';
+import arrowAccordion from './svg/accordion-arrow.svg?raw';
 
 const icons = {
     icon404,
@@ -103,7 +104,8 @@ const icons = {
     tree,
     user,
     wechat,
-    zip
+    zip,
+    arrowAccordion
 }
 
 export default icons;

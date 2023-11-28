@@ -12,6 +12,16 @@ export default class UsersUtilities {
     }
     return users;
   }
+
+  static getDefaultRoles(store) {
+    const { allRoles } = store.getters;
+    return allRoles.filter(item => item.is_default);
+  }
+
+  static getNotDefaultRoles(store) {
+    const { allRoles } = store.getters;
+    return allRoles.filter(item => !item.is_default);
+  }
   static startCreatingNewUser(store) {
     const dispatchName = this.#getDispatchName('startCreatingNewUserAction');
     store.dispatch(dispatchName);
@@ -20,10 +30,6 @@ export default class UsersUtilities {
   static startEditingUser (store, user) {
     const dispatchName = this.#getDispatchName('startEditingUserAction');
     store.dispatch(dispatchName, user);
-  }
-  static editPassword (store, password) {
-    const dispatchName = this.#getDispatchName('editPasswordAction');
-    store.dispatch(dispatchName, password);
   }
 
   static isUserEditing(store, user) {

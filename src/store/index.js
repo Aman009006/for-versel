@@ -8,6 +8,8 @@ import placeholders from './modules/placeholders';
 import tagsView from './modules/tagsView';
 import user from './modules/user';
 import users from './modules/users';
+import search from './modules/search';
+import role from './modules/role';
 import virtualIntents from './modules/virtualIntents';
 
 const modules = createModules();
@@ -26,6 +28,8 @@ function createModules() {
     tagsView,
     user,
     users,
+    role,
+    search,
     virtualIntents
   };
   return modules;

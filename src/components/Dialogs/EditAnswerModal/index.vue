@@ -1,6 +1,6 @@
 <template>
   <div class="editAnswerModal">
-    <el-button class="edit-btn" icon="icon-Edit" @click="openEditModal()">
+    <el-button :class="haveAccess ? 'edit-btn' : 'cancel-btn'" icon="icon-Edit" @click="openEditModal()">
       Bearbeiten
     </el-button>
     <Teleport to="body">
@@ -48,7 +48,7 @@ export default {
   components: {
     EditAnswer,
   },
-  props: ["answer", "answerConfig"],
+  props: ["answer", "answerConfig", "haveAccess"],
   data() {
     return {
       editModalOpened: false,
@@ -72,14 +72,21 @@ export default {
   },
   methods: {
     openEditModal() {
-      this.$store.dispatch(
-        dispatchNames.resetStateAndSaveCopyOfButtons,
-        this.answer.buttons
-      );
-      this.$store.dispatch(dispatchNames.getVirtualIntents);
-      this.savingCurrently = false;
-      this.saveAnswerClicked = false;
-      this.editModalOpened = true;
+      if (this.haveAccess) {
+        this.$store.dispatch(
+          dispatchNames.resetStateAndSaveCopyOfButtons,
+          this.answer.buttons
+        );
+        this.$store.dispatch(dispatchNames.getVirtualIntents);
+        this.savingCurrently = false;
+        this.saveAnswerClicked = false;
+        this.editModalOpened = true;
+      } else {
+        this.$message({
+          message: "Sie haben keine Berechtigung zum Bearbeiten der Antworttexte",
+          type: "error",
+        });
+      }
     },
     closeEditModal() {
       this.editModalOpened = false;

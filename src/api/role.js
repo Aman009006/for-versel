@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import {authorizedBackendUrl} from "@/utils/backendUrl";
 
 export function getRoutes() {
   return request({
@@ -34,5 +35,27 @@ export function deleteRole(id) {
   return request({
     url: `/vue-element-admin/role/${id}`,
     method: 'delete',
+  })
+}
+
+export function getRolesApi () {
+  return request({
+    url: authorizedBackendUrl + 'roles',
+    method: 'get',
+  })
+}
+
+export function createRole(data) {
+  return request({
+    url: authorizedBackendUrl + `roles`,
+    method: 'post',
+    data,
+  })
+}
+export function editRole(data) {
+  return request({
+    url: authorizedBackendUrl + `roles`,
+    method: 'patch',
+    data,
   })
 }

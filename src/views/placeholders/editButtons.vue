@@ -21,7 +21,7 @@
       <!-- When the editing mode is turned off: -->
       <template v-else>
         <el-button
-          class="edit-btn"
+          :class="canEdit ? 'edit-btn' : 'cancel-btn'"
           icon="icon-Edit"
           @click="startEdit(placeholder)"
         >
@@ -42,6 +42,12 @@ export default {
       return this.$store.getters.placeholders;
     },
   },
+  props: {
+    canEdit: {
+      type: Boolean,
+      required: true,
+    },
+  },
   methods: {
     isPlaceholderEditing(placeholder) {
       const isEditing = PlaceholderUtilities.isPlaceholderEditing(
@@ -51,10 +57,17 @@ export default {
       return isEditing;
     },
     async startEdit(placeholder) {
-      PlaceholderUtilities.startEditingPlaceholder(
-        this.$store,
-        placeholder.key
-      );
+      if (this.canEdit) {
+        PlaceholderUtilities.startEditingPlaceholder(
+          this.$store,
+          placeholder.key
+        );
+      } else {
+        this.$message({
+          message: "Sie haben keine Berechtigung zum Bearbeiten der Platzhalter",
+          type: "error",
+        });
+      }
     },
     removeInputFields(placeholder) {
       PlaceholderUtilities.stopCreatingOrAddingPlaceholder(this.$store, placeholder);
