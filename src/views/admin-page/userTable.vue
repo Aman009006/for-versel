@@ -67,9 +67,9 @@
             </template>
           </template>
         </el-table-column>
-        <editButtons :canEdit="true" :canDelete="true"/>
+        <editButtons :canEdit="canEdit" :canDelete="canDelete"/>
       </el-table>
-      <addButtonAdmin :canCreate="true"/>
+      <addButtonAdmin :canCreate="canCreate"/>
     </template>
   </div>
 </template>
