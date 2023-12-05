@@ -131,7 +131,7 @@ export default {
       const redirectMatched = [];
       for (const skill of skillsWithIntents) {
         for (const intent of skill.Intents) {
-          if (intent.answers.redirectsTo === this.$route.meta.title) {
+          if (intent.answers?.redirectsTo === this.$route.meta.title) {
             redirectMatched.push({
               name: intent.name
             });

@@ -5,7 +5,7 @@
       <div class="radio-input">
         <label>
           <input class="radio-custom" :checked="read" type="radio" :id="title + '2'" :name="title + '1'"
-                 value="option1">
+                 value="option1" :disabled="disabled">
           <span @click="selectedAll(title, 'read',)"
                 :class="`radio-button ${disabled && !read && 'radio-button-disabled'}`"></span>
         </label>
@@ -13,7 +13,7 @@
       <div class="radio-input">
         <label>
           <input class="radio-custom" :checked="write" type="radio" :id="title + '1'" :name="title + '1'"
-                 value="option2">
+                 value="option2" :disabled="disabled">
           <span @click="selectedAll(title, 'write',)"
                 :class="`radio-button ${disabled && !write && 'radio-button-disabled'}`"></span>
         </label>

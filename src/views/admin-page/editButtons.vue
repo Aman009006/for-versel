@@ -164,6 +164,7 @@ export default {
                   message: "Löschen erfolgreich",
                   type: "success",
                 });
+                await RoleUtilities.fetchRoles(this.$store);
               }
             })
             .catch(() => {

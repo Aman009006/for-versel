@@ -171,15 +171,21 @@ export default {
     },
     async finishEdit() {
       if (this.canCreate) {
-
         if (this.roleEdit) {
-          const request = await RoleUtilities.editRoleUtils(this.$store, this.getDataForEditOrCreate());
-          if (request) {
+          await RoleUtilities.editRoleUtils(this.$store, this.getDataForEditOrCreate())
+        .then(() => {
             this.$message({
               message: "Löschen erfolgreich",
               type: "success",
             });
-          }
+            this.$router.push(paths.permissionSets);
+          })
+            .catch(() => {
+              this.$message({
+                message: "ein Fehler ist aufgetreten",
+                type: "error",
+              });
+            })
         } else {
           await RoleUtilities.createRoleUtils(this.$store, this.getDataForEditOrCreate())
               .then(() => {
@@ -195,7 +201,6 @@ export default {
                   type: "error",
                 });
               })
-
         }
       } else {
         this.$message({
