@@ -132,8 +132,8 @@ const actions = {
   },
 
   async setUserAccesses({ commit }) {
-    const { permissions } = await getRoleAccesses('self')
-    commit('SET_USER_ACCESSES', permissions)
+    const { accesses } = await getRoleAccesses('self')
+    commit('SET_USER_ACCESSES', accesses)
   },
 
   async setRoles({ commit }) {

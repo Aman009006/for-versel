@@ -15,12 +15,12 @@ export default class UsersUtilities {
 
   static getDefaultRoles(store) {
     const { allRoles } = store.getters;
-    return allRoles.filter(item => item.is_default);
+    return allRoles.filter(item => item.isDefault);
   }
 
   static getNotDefaultRoles(store) {
     const { allRoles } = store.getters;
-    return allRoles.filter(item => !item.is_default);
+    return allRoles.filter(item => !item.isDefault);
   }
   static startCreatingNewUser(store) {
     const dispatchName = this.#getDispatchName('startCreatingNewUserAction');

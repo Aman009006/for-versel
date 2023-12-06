@@ -40,7 +40,7 @@ const mutations = {
 const actions = {
     async setAccessesRoleAction({ commit }, roleName) {
         const allRoleAccesses = await getRoleAccesses(roleName)
-        commit(mutations.setRoleAccesses.name, allRoleAccesses.permissions)
+        commit(mutations.setRoleAccesses.name, allRoleAccesses.accesses)
         commit(mutations.setRoleName.name, allRoleAccesses.roleName)
         commit(mutations.setRoleDescription.name, allRoleAccesses.roleDescription)
         commit(mutations.setLoading.name, false)

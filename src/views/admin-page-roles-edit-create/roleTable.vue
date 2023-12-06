@@ -136,8 +136,31 @@ export default {
         RoleUtilities.selectOnePermissionInGroup(this.$store, skillName, intentName, key)
       }
     },
+    comparePermissionsArray(arr1, arr2) {
+      const diffPermissions = [];
+
+      for (let i = 0; i < arr1.length; i++) {
+        const permissions1 = arr1[i].permissions;
+        const permissions2 = arr2[i].permissions;
+
+        for (let j = 0; j < permissions1.length; j++) {
+          const permission1 = permissions1[j];
+          const permission2 = permissions2[j];
+
+          if (
+            permission1.write !== permission2.write ||
+            permission1.read !== permission2.read
+          ) {
+            diffPermissions.push(permission1);
+          }
+        }
+      }
+
+      return diffPermissions;
+    },
     getDataForEditOrCreate () {
       const allPermissions = this.$store.getters.roleAccesses;
+      const defaultRoleAccesses = JSON.parse(localStorage.getItem('defaultRoleSettings'));
       const onlyWritePermissions = [];
 
       allPermissions.forEach(skill => {
@@ -152,7 +175,7 @@ export default {
         const dataObj = {
           roleName: roleName,
           roleDescription: this.roleDescription,
-          permissions: onlyWritePermissions,
+          accesses: this.comparePermissionsArray(allPermissions, defaultRoleAccesses),
         };
 
         if (newRoleName) {
@@ -164,7 +187,7 @@ export default {
         return {
           roleName: this.roleName,
           roleDescription: this.roleDescription,
-          permissions: onlyWritePermissions
+          accesses: onlyWritePermissions
         }
       }
 

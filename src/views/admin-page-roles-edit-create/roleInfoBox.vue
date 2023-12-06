@@ -60,6 +60,7 @@ export default {
       this.roleDescription = this.$store.getters.roleDescription;
       await RoleUtilities.fetchRoleAccesses(this.$store, role);
       this.updateIntentGroups(this.$store.getters.roleAccesses);
+      localStorage.setItem('defaultRoleSettings', JSON.stringify(this.$store.getters.roleAccesses))
 
       return true
     }
