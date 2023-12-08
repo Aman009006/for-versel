@@ -4,7 +4,7 @@
       <p class="accordion-title" v-html="addHighlightSearchWord(title, searchValue)"></p>
       <div class="radio-input">
         <label>
-          <input class="radio-custom" :checked="read" type="radio" :id="title + '2'" :name="title + '1'"
+          <input class="radio-custom" :checked="read" type="radio" :id="title + '-read-radio-button'"
                  value="option1" :disabled="disabled">
           <span @click="selectedAll(title, 'read',)"
                 :class="`radio-button ${disabled && !read && 'radio-button-disabled'}`"></span>
@@ -12,7 +12,7 @@
       </div>
       <div class="radio-input">
         <label>
-          <input class="radio-custom" :checked="write" type="radio" :id="title + '1'" :name="title + '1'"
+          <input class="radio-custom" :checked="write" type="radio" :id="title + '-write-radio-button'"
                  value="option2" :disabled="disabled">
           <span @click="selectedAll(title, 'write',)"
                 :class="`radio-button ${disabled && !write && 'radio-button-disabled'}`"></span>

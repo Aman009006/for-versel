@@ -1,5 +1,5 @@
 <template>
-  <div class="placeholder-element-container">
+  <div class="placeholder-element-container infobox-container">
     <placeholderInfoBox />
     <placeholderTable />
   </div>
@@ -17,9 +17,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.placeholder-element-container {
-  padding: 0 50px 30px 50px;
-}
-</style>

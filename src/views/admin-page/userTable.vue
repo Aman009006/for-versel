@@ -58,7 +58,7 @@
         >
           <template #default="{ row }">
             <template v-if="isUserEditing(row)">
-              <SingleSelect :user="row.email" isCreate :options="options" v-model="selectedRole"
+              <SingleSelect :user="row.email" :options="options" v-model="selectedRole"
                             :selectedValue="row.role"></SingleSelect>
             </template>
             <template v-else>
@@ -69,14 +69,14 @@
         </el-table-column>
         <editButtons :canEdit="canEdit" :canDelete="canDelete"/>
       </el-table>
-      <addButtonAdmin :canCreate="canCreate"/>
+      <addUserButton :canCreate="canCreate"/>
     </template>
   </div>
 </template>
 
 <script>
 import editButtons from "./editButtons.vue";
-import addButtonAdmin from "./addButtonAdmin.vue";
+import addUserButton from "./addUserButton.vue";
 import UsersUtilities from "@/store/utilities/UsersUtilities";
 import icons from "@/icons";
 import {Select} from "@element-plus/icons-vue";
@@ -89,7 +89,7 @@ export default {
     SingleSelect,
     Select,
     editButtons,
-    addButtonAdmin,
+    addUserButton,
   },
   data() {
     return {

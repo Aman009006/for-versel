@@ -5,7 +5,7 @@
       <template v-if="isUserEditing(user)">
 
         <el-row class="button-row">
-          <el-col style="margin-right: 10px" :span="12">
+          <el-col class="custom-el-col" :span="12">
             <el-button
                 class="confirm-btn"
                 icon="icon-Check"
@@ -16,10 +16,9 @@
           </el-col>
           <el-col :span="12">
             <el-button
-                style="background: #FA5050; width: 31px;"
                 class="cancel-btn"
                 icon="icon-Close"
-                @click="removeInputFields(user)"
+                @click="removeInputFields()"
             />
           </el-col>
         </el-row>
@@ -30,7 +29,7 @@
         <div v-if="isNotCurrentSelectedUser(user) && !withoutShadow" class="shadow-table"></div>
 
         <el-row class="button-row" align="middle">
-          <el-col style="margin-right: 10px" class="button-col" :span="12">
+          <el-col class="button-col custom-el-col" :span="12">
             <el-button
                 :class="canEdit ? 'edit-btn' : 'cancel-btn'"
                 icon="icon-Edit"
@@ -42,17 +41,15 @@
           <el-col class="button-col" :span="12">
             <el-button
                 v-if="isEditRole"
-                style="border-radius: 10px; padding: 0px; width: 33px;"
-                class="confirm-btn"
+                class="confirm-btn custom-el-button"
                 @click="redirectToEdit(user, true)"
             >
-              <svg-icon style="width: 12px;" :svg-icon-html="icons.eyeOpen"/>
+              <svg-icon class="custom-svg" :svg-icon-html="icons.eyeOpen"/>
             </el-button>
 
             <el-button
                 v-if="!isDefaultRole"
-                style="border-radius: 10px; width: 33px;"
-                :class="canDelete ? 'delete-btn delete-margin' : 'cancel-btn'"
+                :class="canDelete ? 'delete-btn delete-margin custom-el-button' : 'cancel-btn custom-el-button'"
                 icon="icon-Delete"
                 @click="isEditRole ? deleteRole(user) : deleteUser(user)"
             />
@@ -120,8 +117,8 @@ export default {
       }
       return false
     },
-    removeInputFields(user) {
-      UsersUtilities.stopCreatingOrAddingUser(this.$store, user);
+    removeInputFields() {
+      UsersUtilities.stopEditing(this.$store);
     },
     async startEdit(user) {
       if (this.canEdit) {
@@ -179,13 +176,15 @@ export default {
     async deleteUser(user) {
       if (this.canDelete) {
         this.$confirm(
-            `Sind Sie sich sicher, dass sie den Benutzer ${user.email} löschen\n` +
+            `Sind Sie sich sicher, dass sie den Benutzer <strong>“${user.email}”</strong> löschen\n` +
             "wollen? Diese Aktion ist nicht rückgängig zu machen.",
             "Benutzer löschen",
             {
               confirmButtonText: "Ja löschen",
               cancelButtonText: "Abbrechen",
               type: "default",
+              dangerouslyUseHTMLString: true,
+              closeIcon: '<svg-icon>' + icons.close + '</svg-icon>',
             }
         )
             .then(async () => {
@@ -221,7 +220,7 @@ export default {
 
       if (savedSuccessfully) {
         await UsersUtilities.fetchUsers(this.$store);
-        this.removeInputFields(user);
+        this.removeInputFields();
       }
     },
     getEditableUser(userEmail) {
@@ -307,6 +306,19 @@ export default {
 
 .delete-margin {
   margin-left: 12px !important;
+}
+
+.custom-svg {
+  width: 12px !important;
+}
+
+.custom-el-button {
+  border-radius: 10px;
+  width: 33px;
+}
+
+.custom-el-col {
+  margin-right: 10px;
 }
 
 </style>

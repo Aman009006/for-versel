@@ -38,15 +38,8 @@ export default class UsersUtilities {
     return editingEmailKeys.includes(user.email) || this.isNewUser(store, user);
   }
 
-  static stopCreatingOrAddingUser(store, user) {
-    if (this.isNewUser(store, user)) {
-      this.#stopCreatingNewEmail(store);
-    } else {
-      this.#stopEditingEmail(
-        store,
-        user.email
-      );
-    }
+  static stopEditing(store) {
+      this.#stopEditingEmail(store);
   }
 
   static getEditableUser (store, user) {
@@ -67,9 +60,9 @@ export default class UsersUtilities {
     store.dispatch(dispatchName);
   }
 
-  static #stopEditingEmail(store, user) {
+  static #stopEditingEmail(store) {
     const dispatchName = this.#getDispatchName('stopEditingUserAction');
-    store.dispatch(dispatchName, user);
+    store.dispatch(dispatchName);
   }
 
   static #getDispatchName(action) {

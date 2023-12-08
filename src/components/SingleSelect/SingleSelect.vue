@@ -22,9 +22,8 @@ import {defaultRole} from "@/constants";
 export default {
   data() {
     return {
-      dataReady: 'hello',
       isOpen: false,
-      selected: this.selectedValue?.length ? this.selectedValue : defaultRole,
+      selected: this.selectedValue?.length ? this.selectedValue : defaultRole.defaultRole,
     };
   },
   computed: {
@@ -75,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/styles/variables.module.scss";
+
 .arrow-multiselect {
   width: 14px !important;
   height: 28px !important;
@@ -108,13 +109,15 @@ export default {
 }
 .singleSelect-content {
   position: relative;
+  max-width: 100%;
 }
 .create {
   padding: 7px 20px;
   height: 36px;
+  background: $hsag-lightgrey;
 }
 .options-content {
-  max-width: 410px;
+  width: 330px;
   background: #E3E9ED;
   border-radius: 8px;
   box-shadow: 0px 9px 14px 0px rgba(0, 0, 0, 0.25);
@@ -123,10 +126,10 @@ export default {
   position: fixed;
   height: 164px;
   overflow-y: scroll;
-  z-index: 999;
 }
 .options-create {
-  margin-top: -5px;
-  width: 320px;
+  background: $hsag-lightgrey;
+  max-width: 410px;
+  width: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="role-element-container">
+  <div class="role-element-container infobox-container">
     <roleInfoBox />
   </div>
 </template>
@@ -14,8 +14,3 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.role-element-container {
-  padding: 0 50px 30px 50px;
-}
-</style>

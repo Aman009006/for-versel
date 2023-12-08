@@ -126,8 +126,19 @@
   font-weight: normal !important;
 }
 
+.el-message-box .el-button--default {
+  font-size: 12px;
+  font-weight: 700;
+}
 .el-message-box .el-button--default:first-child {
   background-color: $hsag-bluegrey;
+}
+.el-message-box .el-button--default:last-child {
+  background-color: $hsag-blue-light;
+}
+
+.el-message-box__headerbtn:hover .el-icon {
+  color: inherit !important;
 }
 
 .el-button--warning:hover {

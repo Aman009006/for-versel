@@ -12,6 +12,7 @@
 
   <div class="modal" v-if="showModal">
     <div class="modal-content">
+      <svg-icon @click="cancel" class="addUser-modal-close-icon" :svg-icon-html="icons.close"/>
       <h3>Benutzer hinzufügen</h3>
       <div class="form-group">
         <p>Name</p>
@@ -39,6 +40,7 @@ import {addUser} from "@/api/users";
 import SingleSelect from "@/components/SingleSelect/SingleSelect.vue";
 import UsersUtilities from "@/store/utilities/UsersUtilities";
 import {defaultRole} from "@/constants";
+import icons from "@/icons";
 
 export default {
   components: {SingleSelect},
@@ -47,9 +49,14 @@ export default {
       showModal: false,
       email: '',
       name: '',
-      role: defaultRole,
+      role: defaultRole.defaultRole,
       options: this.$store.getters.allRoles,
     };
+  },
+  computed: {
+    icons() {
+      return icons
+    },
   },
   props: {
     canCreate: {
@@ -60,6 +67,7 @@ export default {
   methods: {
     openModal() {
       if (this.canCreate) {
+        UsersUtilities.stopEditing(this.$store);
         this.showModal = true;
       } else {
         this.$message({
@@ -78,7 +86,7 @@ export default {
       this.showModal = false;
       this.email = "";
       this.name = "";
-      this.role = defaultRole;
+      this.role = defaultRole.defaultRole;
     },
     isValidEmail(email) {
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -124,6 +132,14 @@ export default {
   justify-content: flex-end;
 }
 
+.addUser-modal-close-icon {
+  width: 12px !important;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  cursor: pointer;
+}
+
 .modal {
   display: flex;
   align-items: center;
@@ -150,6 +166,7 @@ export default {
     padding: 20px;
     background: $hsag-white;
     width: 450px;
+    position: relative;
   }
 
   h3 {

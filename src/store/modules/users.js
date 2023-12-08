@@ -28,8 +28,8 @@ const mutations = {
     state.editableUsers[user.email] = ObjectUtils.createCopyOfSerializableObject(originalUser);
     state.editableUserRole = user.role;
   },
-  deleteEditingUser: (state, userEmail) => {
-    delete state.editableUsers[userEmail];
+  deleteEditingUser: (state) => {
+    state.editableUsers = {};
   },
 }
 
@@ -47,8 +47,8 @@ const actions = {
   startEditingUserAction({ commit }, user) {
     commit(mutations.addEditingUser.name, user)
   },
-  stopEditingUserAction({ commit }, userEmail) {
-    commit(mutations.deleteEditingUser.name, userEmail)
+  stopEditingUserAction({ commit }) {
+    commit(mutations.deleteEditingUser.name)
   },
 }
 

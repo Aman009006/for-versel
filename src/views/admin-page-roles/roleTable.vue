@@ -133,21 +133,9 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
-.edit-password {
-  position: relative;
-}
-.show-pwd {
-  width: 20px !important;
-  position: absolute;
-  right: 10px;
-  top: 7px;
-}
-.edit-input-password .el-input__wrapper {
-  padding-right: 35px !important;
-}
 .custom-roles {
   margin-top: 20px;
 }

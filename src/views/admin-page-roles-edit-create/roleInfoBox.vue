@@ -89,7 +89,8 @@ export default {
   align-items: center;
   justify-content: space-between;
   .intent-search {
-    min-width: 500px;
+    max-width: 500px;
+    width: 100%;
   }
   p {
     margin-bottom: 0;

@@ -97,6 +97,11 @@
     margin-top: 0;
   }
 
+  span {
+    max-width: 1037px;
+    width: 100%;
+  }
+
   h1 {
     margin-top: 0px;
     color: #303133;
@@ -121,50 +126,20 @@ i.el-tooltip__trigger {
   color: $hsag-blue-light;
 }
 
-.custom-select {
-  padding: 10px 20px;
-  border-radius: 8px;
-  background: $hsag-lightgrey;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
-  border: none;
-  width: 100%;
-  margin-bottom: 10px;
+.el-message-box__title {
+  span {
+    font-size: 30px;
+    font-weight: 400;
+  }
 }
-.radio-custom {
-  display: none;
+.el-message-box__message {
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    color: $hsag-bluegrey;
+  }
 }
-.radio-button {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: $hsag-white;
-  position: relative;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.radio-button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-color: $hsag-blue-light;
-  border-radius: 50%;
-  opacity: 0;
-  transition: 0.2s;
-}
-.radio-button-disabled::before {
-  background-color: #CACACA;
-  opacity: 1;
-}
-.radio-button-disabled {
-  background: #E8E8E8;
-}
-.radio-custom:checked + .radio-button::before {
-  opacity: 1;
+.el-message-box {
+  width: 612px !important;
+  --el-messagebox-width: 612px;
 }

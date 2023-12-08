@@ -11,21 +11,9 @@
           <Accordion>
             <AccordionItem :read="checkIsAllSelected('read', intent.permissions)" :disabled="disabled" :write="checkIsAllSelected('write', intent.permissions)" :title="intent.permissionName">
               <div class="subItem" v-for="subIntent in intent.permissions">
-                  <div class="accordion-subItem">
-                      <p class="accordion-subItem-title" v-html="addHighlightSearchWord(subIntent.name, searchValue)"></p>
-                    <div class="radio-input">
-                      <label>
-                        <input class="radio-custom" :disabled="disabled" :checked="subIntent.read" type="radio" :id="subIntent.name" :name="subIntent.name" value="option1">
-                        <span @click="select(intent.permissionName, subIntent.name, 'read')" :class="`radio-button ${disabled && !subIntent.read && 'radio-button-disabled'} `"></span>
-                      </label>
-                    </div>
-                    <div class="radio-input">
-                      <label class="radio-input">
-                        <input class="radio-custom" :disabled="disabled" :checked="subIntent.write" type="radio" :id="subIntent.name + '1'" :name="subIntent.name" value="option2">
-                        <span @click="select(intent.permissionName, subIntent.name, 'write')" :class="`radio-button ${disabled && !subIntent.write && 'radio-button-disabled'} `"></span>
-                      </label>
-                    </div>
-                  </div>
+                <AccordionSubItem :subIntent='subIntent'
+                                  :intent='intent'
+                                  :disabled='disabled'/>
               </div>
             </AccordionItem>
           </Accordion>
@@ -58,9 +46,11 @@ import {paths, userAccesses} from "@/constants";
 import {checkAccessesForActions} from "@/utils/checkAccessesUtils";
 import RoleUtilities from "@/store/utilities/RoleUtilities";
 import addHighlightSearchWord from "@/utils/addHighlightSearchWordUtils";
+import AccordionSubItem from "@/components/Accordion/AccordionSubItem.vue";
 
 export default {
   components: {
+    AccordionSubItem,
     Accordion,
     AccordionItem
   },
@@ -130,11 +120,6 @@ export default {
       const intentLength = intents?.length;
       const intentWithTrueKey = intents?.filter((intent) => intent[key])
       return intentLength === intentWithTrueKey?.length
-    },
-    select(skillName, intentName, key) {
-      if (!this.disabled) {
-        RoleUtilities.selectOnePermissionInGroup(this.$store, skillName, intentName, key)
-      }
     },
     comparePermissionsArray(arr1, arr2) {
       const diffPermissions = [];
@@ -236,7 +221,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 @import "@/styles/variables.module.scss";
 
 .empty-data {

@@ -14,6 +14,7 @@
 @import './nprogress.scss';
 @import './table.scss';
 @import './accordion.scss';
+@import './radio-input.scss';
 
 body {
   height: 100%;
@@ -137,6 +138,10 @@ aside {
 .components-container {
   margin: 30px 50px;
   position: relative;
+}
+
+.infobox-container {
+  padding: 0 50px 30px 50px;
 }
 
 .pagination-container {

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-element-container">
+  <div class="user-element-container infobox-container">
     <userInfoBox />
 
     <userTable />
@@ -18,9 +18,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.user-element-container {
-  padding: 0 50px 30px 50px;
-}
-</style>
