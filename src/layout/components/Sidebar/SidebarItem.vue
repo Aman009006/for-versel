@@ -98,6 +98,7 @@ import FixiOSBug from "./FixiOSBug";
 import {paths} from "@/constants";
 import "../../../styles/variables.module.scss"
 import SearchUtilities from "@/store/utilities/SearchUtilities";
+import {checkPathUsersPage} from "@/utils/checkPathUsersPage";
 
 export default {
   name: "SidebarItem",
@@ -128,22 +129,16 @@ export default {
     // TODO: refactor with render function
     this.onlyOneChild = null;
     return {
-      isUserPage: !!this.checkPathForUsersPage(this.$route)
+      isUserPage: !!this.checkPathUsersPage(this.$route)
     };
   },
   watch: {
     $route(to, from) {
-      this.isUserPage = this.checkPathForUsersPage(to);
+      this.isUserPage = this.checkPathUsersPage(to);
     },
   },
   methods: {
-    checkPathForUsersPage(route) {
-      return (
-        route.fullPath.includes(paths.users) ||
-        route.fullPath.includes(paths.permissionSets) ||
-        route.fullPath.includes(paths.permissionSettings)
-      );
-    },
+    checkPathUsersPage,
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter((item) => {
         if (item.hidden) {

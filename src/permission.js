@@ -9,6 +9,7 @@ import { isLoggedIn, getRefreshToken } from './api/user'
 import { encodePathComponent } from '@/utils/encodePath'
 import ChatbotWidgetUtils from './utils/ChatbotWidgetUtils'
 import { loadDynamicRoutes } from "@/utils/routes/loadDynamicRoutes";
+import {checkNeedToHideChatbot} from "@/utils/checkPathUsersPage";
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -37,11 +38,11 @@ router.beforeEach(async (to, from, next) => {
       await store.dispatch('user/getCustomerMetainfo')
     }
     // insert the chatbotWidget
-    if (to.path !== '/reporting') {
+    if (checkNeedToHideChatbot(to.path)) {
+      ChatbotWidgetUtils.hideChatbotWidget()
+    } else {
       ChatbotWidgetUtils.insertChatbotWidget()
       ChatbotWidgetUtils.showChatbotWidget()
-    } else {
-      ChatbotWidgetUtils.hideChatbotWidget()
     }
     if (to.path === '/login') {
       // if is logged in, redirect to the home page

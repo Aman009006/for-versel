@@ -279,6 +279,9 @@
   .el-menu-item {
     &.is-active {
       background-color: $hsag-green;
+      &:hover {
+        background-color: $hsag-green-dark;
+      }
     }
 
     &:hover {
