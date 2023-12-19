@@ -28,9 +28,10 @@
       <template v-else>
         <div v-if="isNotCurrentSelectedUser(user) && !withoutShadow" class="shadow-table"></div>
 
-        <el-row class="button-row" align="middle">
+        <el-row :class="isDefaultRole ? 'button-row-wrap' : 'button-row'" align="middle">
           <el-col class="button-col custom-el-col" :span="12">
             <el-button
+                v-if="!isDefaultRole"
                 :class="canEdit ? 'edit-btn' : 'cancel-btn'"
                 icon="icon-Edit"
                 @click="startEdit(user) , isNotCurrentSelectedUser(user)"
@@ -302,6 +303,10 @@ export default {
 
 .button-row {
   flex-wrap: nowrap;
+}
+
+.button-row-wrap {
+  flex-wrap: wrap;
 }
 
 .delete-margin {

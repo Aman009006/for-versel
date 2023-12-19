@@ -3,13 +3,13 @@
     <p class="accordion-subItem-title" v-html="addHighlightSearchWord(subIntent.name, searchValue)"></p>
     <div class="radio-input">
       <label>
-        <input class="radio-custom" :disabled="disabled" :checked="subIntent.read" type="radio" :id="subIntent.name + 'read-radio-button'" value="option1">
+        <input class="radio-custom" :disabled="disabled" :checked="subIntent.read" type="radio" :id="subIntent.name + '-read-radio-button'" value="option1">
         <span @click="select(intent.permissionName, subIntent.name, 'read')" :class="`radio-button ${disabled && !subIntent.read && 'radio-button-disabled'} `"></span>
       </label>
     </div>
     <div class="radio-input">
       <label class="radio-input">
-        <input class="radio-custom" :disabled="disabled" :checked="subIntent.write" type="radio" :id="subIntent.name + 'write-radio-button'" value="option2">
+        <input class="radio-custom" :disabled="disabled" :checked="subIntent.write" type="radio" :id="subIntent.name + '-write-radio-button'" value="option2">
         <span @click="select(intent.permissionName, subIntent.name, 'write')" :class="`radio-button ${disabled && !subIntent.write && 'radio-button-disabled'} `"></span>
       </label>
     </div>

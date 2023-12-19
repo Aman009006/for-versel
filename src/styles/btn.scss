@@ -132,9 +132,11 @@
 }
 .el-message-box .el-button--default:first-child {
   background-color: $hsag-bluegrey;
+  border: none !important;
 }
 .el-message-box .el-button--default:last-child {
   background-color: $hsag-blue-light;
+  border: none !important;
 }
 
 .el-message-box__headerbtn:hover .el-icon {
