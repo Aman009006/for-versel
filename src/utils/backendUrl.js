@@ -1,5 +1,5 @@
 
-const backendUrl = 'https://99d1-212-112-126-244.ngrok-free.app/'
+const backendUrl = 'https://1430-212-112-126-244.ngrok-free.app/'
 export default backendUrl
 
 /**
